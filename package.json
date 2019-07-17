@@ -1,0 +1,53 @@
+{
+  "name": "observable-hooks",
+  "version": "0.1.0",
+  "description": "React hooks for RxJS Observables",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:crimx/observable-hooks.git"
+  },
+  "author": "CRIMX<straybugs@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "shx rm -rf dist && yarn lint && yarn build:esm && yarn build:cjs",
+    "build:esm": "shx rm -rf dist/esm && cross-env NODE_ENV=production tsc -p tsconfig.json --module es2015 --target es5 --outDir dist/esm",
+    "build:cjs": "shx rm -rf dist/cjs && cross-env NODE_ENV=production tsc -p tsconfig.json --module commonjs --target es5 --outDir dist/cjs",
+    "lint": "eslint src/**",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --open --progress --color"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "rxjs": ">=6.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "@typescript-eslint/eslint-plugin": "^1.12.0",
+    "@typescript-eslint/parser": "^1.12.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-standard": "^4.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "prettier": "^1.18.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "rxjs": "^6.5.2",
+    "shx": "^0.3.2",
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  }
+}
