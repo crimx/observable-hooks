@@ -1,7 +1,7 @@
 {
   "name": "observable-hooks",
   "version": "0.1.0",
-  "description": "React hooks for RxJS Observables",
+  "description": "React hooks for RxJS Observables with powerful APIs.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "sideEffects": false,
@@ -16,6 +16,7 @@
     "build:esm": "shx rm -rf dist/esm && cross-env NODE_ENV=production tsc -p tsconfig.json --module es2015 --target es5 --outDir dist/esm",
     "build:cjs": "shx rm -rf dist/cjs && cross-env NODE_ENV=production tsc -p tsconfig.json --module commonjs --target es5 --outDir dist/cjs",
     "lint": "eslint src/**",
+    "doc": "typedoc --mode modules --target ES5 --includes src/**/* --out typedoc",
     "start": "cross-env NODE_ENV=development webpack-dev-server --open --progress --color"
   },
   "peerDependencies": {
@@ -45,6 +46,7 @@
     "rxjs": "^6.5.2",
     "shx": "^0.3.2",
     "ts-loader": "^6.0.4",
+    "typedoc": "^0.14.2",
     "typescript": "^3.5.3",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.6",

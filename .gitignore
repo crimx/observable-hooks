@@ -86,3 +86,5 @@ jspm_packages/
 
 # build directory
 dist
+
+typedoc
