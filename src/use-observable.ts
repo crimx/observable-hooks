@@ -6,25 +6,25 @@ import { useRefFn } from './helpers'
  * Accepts a function that returns a Observable.
  * Optionally accepts an array of dependencies which
  * will be turned into Observable and be passed to the
- * `project` function.
+ * `enhance` function.
  *
- * @param project A function that, when applied to an inputs Observable, returns an Observable.
- * @param inputs An array of dependencies. The first arugment of `project` will emit
+ * @param enhance A function that, when applied to an inputs Observable, returns an Observable.
+ * @param inputs An array of dependencies. The first arugment of `enhance` will emit
  *  the array of all dependencies when one of which has changed.
  */
 export function useObservable<State>(
-  project: () => Observable<State>
+  enhance: () => Observable<State>
 ): Observable<State>
 export function useObservable<State, Inputs extends any[]>(
-  project: (inputs: Observable<Inputs>) => Observable<State>,
+  enhance: (inputs: Observable<Inputs>) => Observable<State>,
   inputs: Inputs
 ): Observable<State>
 export function useObservable<State, Inputs extends any[]>(
-  project: (inputs: Observable<Inputs>) => Observable<State>,
+  enhance: (inputs: Observable<Inputs>) => Observable<State>,
   inputs: Inputs = [] as any
 ): Observable<State> {
   const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))
-  const source$Ref = useRefFn(() => project(inputs$Ref.current))
+  const source$Ref = useRefFn(() => enhance(inputs$Ref.current))
   const firstRef = useRef(true)
   useEffect(() => {
     if (firstRef.current) {
