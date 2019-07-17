@@ -16,11 +16,11 @@ export function useObservable<State>(
   enhance: () => Observable<State>
 ): Observable<State>
 export function useObservable<State, Inputs extends any[]>(
-  enhance: (inputs: Observable<Inputs>) => Observable<State>,
+  enhance: (inputs$: BehaviorSubject<Inputs>) => Observable<State>,
   inputs: Inputs
 ): Observable<State>
 export function useObservable<State, Inputs extends any[]>(
-  enhance: (inputs: Observable<Inputs>) => Observable<State>,
+  enhance: (inputs$: BehaviorSubject<Inputs>) => Observable<State>,
   inputs: Inputs = [] as any
 ): Observable<State> {
   const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))

@@ -6,7 +6,8 @@ import { useObservableCallback } from './use-observable-callback'
 
 /**
  * Like `useState` but with Observable.
- * `startWith` can be used here and won't rigger a rerender.
+ * `startWith` can be used here and won't trigger a initial rerender.
+ * Or just use the optional `initValue`.
  */
 export function useObservableState<Input, State>(
   enhance: (inputs$: Observable<Input>) => Observable<State>

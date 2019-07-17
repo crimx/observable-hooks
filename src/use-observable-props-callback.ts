@@ -8,7 +8,7 @@ import { useObservable } from './use-observable'
  * is called with that value.
  *
  * Note that changes of callback will not trigger
- * a emission. If you need that just create another
+ * an emission. If you need that just create another
  * Observable with `useObservable`.
  */
 export function useObservablePropsCallback<Event>(
