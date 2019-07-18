@@ -10,6 +10,14 @@ import { useObservable } from './use-observable'
  * Note that changes of callback will not trigger
  * an emission. If you need that just create another
  * Observable with `useObservable`.
+ *
+ * Examples:
+ *
+ * ```typescript
+ * const events$ = useObservable(() => interval(1000))
+ *
+ * useObservablePropsCallback(events$, props.onChange)
+ * ```
  */
 export function useObservablePropsCallback<Event>(
   events$: Observable<Event>,

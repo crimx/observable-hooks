@@ -6,8 +6,35 @@ import { useObservableCallback } from './use-observable-callback'
 
 /**
  * Like `useState` but with Observable.
+ *
  * `startWith` can be used here and won't trigger a initial rerender.
+ *
  * Or just use the optional `initValue`.
+ *
+ * Examples:
+ *
+ * ```typescript
+ * const [text, updateText] = useObservableState(
+ *   text$ => text$.pipe(delay(1000))
+ * )
+ * ```
+ *
+ * With init value:
+ *
+ * ```typescript
+ * const [text, updateText] = useObservableState(
+ *   text$ => text$.pipe(delay(1000)),
+ *   'init text'
+ * )
+ * ```
+ *
+ * Or:
+ *
+ * ```typescript
+ * const [text, updateText] = useObservableState(
+ *   text$ => text$.pipe(delay(1000), startWith('init text')),
+ * )
+ * ```
  */
 export function useObservableState<Input, State>(
   enhance: (inputs$: Observable<Input>) => Observable<State>

@@ -4,8 +4,24 @@ import { useRefFn, getEmptySubject } from './helpers'
 
 /**
  * Returns a callback function and a events Observable.
+ *
  * Whenever the callback is called, the Observable will
  * emit the first parameter of the callback.
+ *
+ * Examples:
+ *
+ * ```typescript
+ * const Comp = () => {
+ *   const [onChange, textChange$] = useObservableCallback<
+ *     React.FormEvent<HTMLInputElement>,
+ *     string
+ *   >(events$ => events$.pipe(pluck('currentTarget', 'value')))
+ *
+ *   useSubscription(textChange$, console.log)
+ *
+ *   return <input type="text" onChange={onChange} />
+ * }
+ * ```
  */
 export function useObservableCallback<Event, Output>(
   enhance: (events$: Subject<Event>) => Observable<Output>

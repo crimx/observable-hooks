@@ -8,9 +8,58 @@ import { useRefFn } from './helpers'
  * will be turned into Observable and be passed to the
  * `enhance` function.
  *
- * @param enhance A function that, when applied to an inputs Observable, returns an Observable.
- * @param inputs An array of dependencies. The first arugment of `enhance` will emit
- *  the array of all dependencies when one of which has changed.
+ * @param enhance A function that, when applied to an inputs Observable,
+ * returns an Observable.
+ * @param inputs An array of dependencies. When one of the dependencies
+ * changes the Observable in `enhance` will emit an array of all the dependencies.
+ *
+ * React function components will be called many times during its life cycle,
+ * create or transform Observables in `enhance` function so that the operations
+ * won't be repeatedly performed multiple times. `useObservable` will call `enhance`
+ * once and always return the same Observable.
+ *
+ * Examples:
+ *
+ * ```typescript
+ * interface CompProps {
+ *   isOpen: boolean
+ * }
+ *
+ * const Comp: React.FC<CompProps> = props => {
+ *   const [showPanel, setShowPanel] = useState(false)
+ *
+ *   // Listen props or state change
+ *   const enhanced$ = useObservable(
+ *     inputs$ => inputs$.pipe(map(([isOpen, showPanel]) => isOpen && showPanel)),
+ *     [props.isOpen, showPanel]
+ *   )
+ * }
+ * ```
+ *
+ * ```typescript
+ * // Create Observable
+ * const now$ = useObservable(
+ *   () => interval(1000).pipe(
+ *     map(() => new Date().toLocaleString())
+ *   )
+ * )
+ * ```
+ *
+ * ```typescript
+ * // outers$ are created from other React-unrelated module
+ * const enhanced$ = useObservable(() => outers$.pipe(mapTo(false)))
+ * ```
+ *
+ * ```typescript
+ * // Or combine together
+ * const enhanced$ = useObservable(
+ *   inputs$ => isEven$.pipe(
+ *     withLatestFrom(inputs$),
+ *     map(([isEven, [isOpen]]) => isEven && isOpen)
+ *   ),
+ *   [props.isOpen]
+ * )
+ * ```
  */
 export function useObservable<State>(
   enhance: () => Observable<State>

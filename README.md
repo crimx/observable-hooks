@@ -11,12 +11,12 @@ This project is still in its early stage. Use with caution. PRs are welcome.
 TODO
 
 - Examples
-  - [ ] Create an Observable from props and states with `useObservable`.
-  - [ ] Create an Observable from event callback with `useObservableCallback`.
-  - [ ] Subscribe Observable with `useSubscription`.
-  - [ ] `useState`-like `[state, setState]` with `useObservableState`.
-  - [ ] Call props function with `useObservablePropsCallback`.
-  - [ ] Easily combine or chain Observables together to deal with complex scenarios.
+  - [x] Create an Observable from props and states with `useObservable`.
+  - [x] Create an Observable from event callback with `useObservableCallback`.
+  - [x] Subscribe Observable with `useSubscription`.
+  - [x] `useState`-like `[state, setState]` with `useObservableState`.
+  - [x] Call props function with `useObservablePropsCallback`.
+  - [ ] Typeahead example. (Easily combine or chain Observables together to deal with complex scenarios.)
 - Testing
   - [ ] `useObservable` will not trigger an extra rerender on init.
   - [ ] `useObservableState` will not trigger an extra rerender with `startWith`.
