@@ -8,11 +8,6 @@ import { useRefFn } from './helpers'
  * will be turned into Observable and be passed to the
  * `enhance` function.
  *
- * @param enhance A function that, when applied to an inputs Observable,
- * returns an Observable.
- * @param inputs An array of dependencies. When one of the dependencies
- * changes the Observable in `enhance` will emit an array of all the dependencies.
- *
  * React function components will be called many times during its life cycle,
  * create or transform Observables in `enhance` function so that the operations
  * won't be repeatedly performed multiple times. `useObservable` will call `enhance`
@@ -36,8 +31,9 @@ import { useRefFn } from './helpers'
  * }
  * ```
  *
+ * Create Observable
+ *
  * ```typescript
- * // Create Observable
  * const now$ = useObservable(
  *   () => interval(1000).pipe(
  *     map(() => new Date().toLocaleString())
@@ -45,13 +41,16 @@ import { useRefFn } from './helpers'
  * )
  * ```
  *
+ * Transform Observables:
+ *
  * ```typescript
  * // outers$ are created from other React-unrelated module
  * const enhanced$ = useObservable(() => outers$.pipe(mapTo(false)))
  * ```
  *
+ * Mix them all together:
+ *
  * ```typescript
- * // Or combine together
  * const enhanced$ = useObservable(
  *   inputs$ => isEven$.pipe(
  *     withLatestFrom(inputs$),
@@ -60,10 +59,19 @@ import { useRefFn } from './helpers'
  *   [props.isOpen]
  * )
  * ```
+ *
+ * @param enhance A function that, when applied to an inputs Observable,
+ * returns an Observable.
  */
 export function useObservable<State>(
   enhance: () => Observable<State>
 ): Observable<State>
+/**
+ * @param enhance A function that, when applied to an inputs Observable,
+ * returns an Observable.
+ * @param inputs An array of dependencies. When one of the dependencies
+ * changes the Observable in `enhance` will emit an array of all the dependencies.
+ */
 export function useObservable<State, Inputs extends any[]>(
   enhance: (inputs$: BehaviorSubject<Inputs>) => Observable<State>,
   inputs: Inputs

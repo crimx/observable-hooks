@@ -2,11 +2,13 @@
 
 React hooks for RxJS Observables with powerful APIs.
 
-![mindmap](https://github.com/crimx/observable-hooks/blob/master/observable-hooks.png?raw=true)
-
 Read the doc [here](https://www.crimx.com/observable-hooks).
 
-This project is still in its early stage. Use with caution. PRs are welcome.
+This project is still under heavy development. Use with caution. I will finish testing as soon as possible.
+
+Here is how I designed the APIs.
+
+![mindmap](https://github.com/crimx/observable-hooks/blob/master/observable-hooks.png?raw=true)
 
 TODO
 

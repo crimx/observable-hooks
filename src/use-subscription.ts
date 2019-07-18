@@ -16,6 +16,8 @@ import { useEffect } from 'react'
  * const subscription = useSubscription(events$, e => console.log(e.type))
  * ```
  *
+ * Or:
+ *
  * ```typescript
  * const subscription = useSubscription(events$, {
  *   next: console.log,
