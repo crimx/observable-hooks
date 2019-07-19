@@ -1,0 +1,7 @@
+{
+  "mode": "modules",
+  "module": "commonjs",
+  "target": "ES5",
+  "exclude": "**/src/+(helpers|index).ts",
+  "out": "typedoc"
+}

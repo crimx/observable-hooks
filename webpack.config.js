@@ -1,14 +1,18 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './examples/index.ts',
+  entry: './examples',
   mode: 'development',
   devtool: 'cheap-module-source-map',
   module: {
     rules: [
       {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader']
+      },
+      {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: { loader: 'ts-loader', options: { transpileOnly: true } },
         exclude: /node_modules/
       }
     ]
