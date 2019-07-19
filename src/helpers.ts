@@ -22,7 +22,7 @@ export function useRefFn<T extends NonNullable<object>>(init: () => T) {
 /**
  * Is next micro task tick
  */
-export function isAsync() {
+export function useAsync() {
   const isAsyncRef = useRef(false)
   useRefFn(() =>
     Promise.resolve().then(() => {
