@@ -14,9 +14,9 @@ import { useObservableCallback } from './use-observable-callback'
  * **change to one another during Component's life cycle cause it will**
  * **break hooks order.**
  *
- * `startWith` can be used here and won't trigger a initial rerender.
- *
- * Or just use the optional `initValue`.
+ * `of`, `startWith` and other sync operations can be safely used here and
+ * won't trigger an extra initial rerender. Or just use the optional `initValue`.
+ * But if both are provided, `initValue` will be ignored.
  *
  * Examples:
  *

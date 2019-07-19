@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 /**
  * Accepts an Observable and RxJS subscribe parameters.
  * Deprecated subscribe parameter types are not included
- * but you can use it anyway if writing js.
+ * but you can use it anyway if not writing TypeScript.
  *
  * Subscription will unsubscribe when unmount, you can also
  * unsubscribe manually.
