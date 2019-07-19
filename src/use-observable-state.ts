@@ -117,9 +117,15 @@ export function useObservableState<State, Input = State>(
   useSubscription(states$, state => {
     // console.log(isAsyncRef.current, state, 'ssssss')
     if (isAsyncRef.current) {
+      if (!isRenderedRef.current) {
+        // Set this first so that the
+        // first state from setState will be used
+        isRenderedRef.current = true
+        // Dump the hack state to free memory
+        firstStateRef.current = undefined
+      }
       // trigger rerender
       setState(state)
-      isRenderedRef.current = true
     } else {
       // Here we skip the first setState rerendering
       // by offering our own copy of init state.
