@@ -7,6 +7,8 @@ import { useObservableCallback } from './use-observable-callback'
 /**
  * Like `useState` but with Observable.
  *
+ * Unlike `useState`, you can set and get with different types.
+ *
  * `startWith` can be used here and won't trigger a initial rerender.
  *
  * Or just use the optional `initValue`.
@@ -14,14 +16,23 @@ import { useObservableCallback } from './use-observable-callback'
  * Examples:
  *
  * ```typescript
- * const [text, updateText] = useObservableState(
+ * const [text, updateText] = useObservableState<string>(
  *   text$ => text$.pipe(delay(1000))
+ * )
+ * ```
+ *
+ * With different types
+ *
+ * ```typescript
+ * const [isValid, updateText] = useObservableState<boolean, string>(text$ =>
+ *   text$.pipe(map(text => text.length > 1))
  * )
  * ```
  *
  * With init value:
  *
  * ```typescript
+ * // Types now can be inferred
  * const [text, updateText] = useObservableState(
  *   text$ => text$.pipe(delay(1000)),
  *   'init text'
@@ -31,9 +42,18 @@ import { useObservableCallback } from './use-observable-callback'
  * Or:
  *
  * ```typescript
- * const [text, updateText] = useObservableState(
+ * const [text, updateText] = useObservableState<string>(
  *   text$ => text$.pipe(delay(1000), startWith('init text')),
  * )
+ * ```
+ *
+ * Event listenr:
+ *
+ * ```typescript
+ * const [text, onChange] = useObservableState<
+ *  string,
+ *  React.ChangeEvent<HTMLInputElement>
+ * >(events$ => events$.pipe(pluck('currentTarget', 'value')), '')
  * ```
  */
 export function useObservableState<State, Input = State>(

@@ -8,6 +8,9 @@ import { useRefFn, getEmptySubject } from './helpers'
  * Whenever the callback is called, the Observable will
  * emit the first parameter of the callback.
  *
+ * If you need a value instead of an Observable,
+ * see example on [[useObservableState]].
+ *
  * Examples:
  *
  * ```typescript
