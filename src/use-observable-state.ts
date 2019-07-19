@@ -36,14 +36,14 @@ import { useObservableCallback } from './use-observable-callback'
  * )
  * ```
  */
-export function useObservableState<Input, State>(
+export function useObservableState<State, Input = State>(
   enhance: (inputs$: Observable<Input>) => Observable<State>
 ): [State | undefined, (input: Input) => void]
-export function useObservableState<Input, State>(
+export function useObservableState<State, Input = State>(
   enhance: (inputs$: Observable<Input>) => Observable<State>,
   initValue: State
 ): [State, (input: Input) => void]
-export function useObservableState<Input, State>(
+export function useObservableState<State, Input = State>(
   enhance: (inputs$: Observable<Input>) => Observable<State>,
   initValue?: State
 ): [State | undefined, (input: Input) => void] {
