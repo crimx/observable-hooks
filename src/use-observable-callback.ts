@@ -26,7 +26,7 @@ import { useRefFn, getEmptySubject } from './helpers'
  * }
  * ```
  */
-export function useObservableCallback<Event, Output>(
+export function useObservableCallback<Output, Event = Output>(
   enhance: (events$: Subject<Event>) => Observable<Output>
 ): [(e: Event) => void, Observable<Output>] {
   const events$Ref = useRefFn<Subject<Event>>(getEmptySubject)
