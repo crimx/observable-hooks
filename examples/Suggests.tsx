@@ -3,14 +3,13 @@ import { wikipedia } from './api'
 import {
   map,
   filter,
-  debounceTime,
   distinctUntilChanged,
   switchMap,
   catchError,
   startWith,
   pluck
 } from 'rxjs/operators'
-import { from, of } from 'rxjs'
+import { of, forkJoin, timer } from 'rxjs'
 import { useObservableState, useObservable } from '../src'
 
 export interface SuggestsProps {
@@ -24,10 +23,10 @@ export interface SuggestsItem {
 }
 
 type FetchSuggestsResult =
-  | [SuggestsItem[], 'finish']
-  | [null, 'loading']
-  | [null, 'error']
   | [null, '']
+  | [null, 'loading']
+  | [SuggestsItem[], 'finish']
+  | [null, 'error']
 
 export const Suggests: React.FC<SuggestsProps> = props => {
   const text$ = useObservable(inputs$ => inputs$.pipe(pluck(0)), [props.text])
@@ -36,10 +35,17 @@ export const Suggests: React.FC<SuggestsProps> = props => {
     text$.pipe(
       filter(text => text && text.length > 1),
       distinctUntilChanged(),
-      debounceTime(750),
       switchMap(text =>
-        from(wikipedia(text)).pipe(
-          map(([, titles, contents, hrefs]) => {
+        // delay in sub-stream so that users can see the
+        // searching state quickly. But no actual request
+        // is performed until the delay is hit.
+        forkJoin(
+          // minimum 1s delay to prevent flickering if user got really greate network condition
+          timer(1000),
+          timer(750).pipe(switchMap(() => wikipedia(text)))
+        ).pipe(
+          // move parsing outside so that it can be easily cancelled
+          map(([, [, titles, contents, hrefs]]) => {
             return [
               titles.map((title, i) => ({
                 href: hrefs[i],
