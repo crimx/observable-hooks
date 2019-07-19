@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs'
 import { useSubscription } from './use-subscription'
-import { useState } from 'react'
-import { isAsync } from './helpers'
+import { useState, useRef } from 'react'
+import { useAsync } from './helpers'
 import { useObservableCallback } from './use-observable-callback'
 
 /**
@@ -99,7 +99,11 @@ export function useObservableState<State, Input = State>(
     | [((inputs$: Observable<Input>) => Observable<State>)]
     | [((inputs$: Observable<Input>) => Observable<State>), State]
 ): State | undefined | [State | undefined, (input: Input) => void] {
-  const isAsyncRef = isAsync()
+  const isAsyncRef = useAsync()
+  const isRenderedRef = useRef(false)
+  /** First returned state */
+  const firstStateRef = useRef<State | undefined>(args[1])
+
   const [state, setState] = useState<State | undefined>(args[1])
 
   let callback: undefined | ((input: Input) => void)
@@ -110,16 +114,25 @@ export function useObservableState<State, Input = State>(
     states$ = args[0]
   }
 
-  let returnState = state
-
   useSubscription(states$, state => {
+    // console.log(isAsyncRef.current, state, 'ssssss')
     if (isAsyncRef.current) {
       // trigger rerender
       setState(state)
+      isRenderedRef.current = true
     } else {
-      returnState = state
+      // Here we skip the first setState rerendering
+      // by offering our own copy of init state.
+      //
+      // Because we skip the setState, we need to
+      // keep a copy of this state in case the Component
+      // rerenders before its first setState. (e.g. triggered
+      // by parent Cromponent or other states)
+      firstStateRef.current = state
     }
   })
+
+  const returnState = isRenderedRef.current ? state : firstStateRef.current
 
   return callback ? [returnState, callback] : returnState
 }
