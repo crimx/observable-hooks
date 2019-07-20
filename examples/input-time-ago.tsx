@@ -1,6 +1,6 @@
+import { useObservableState, useObservable } from 'observable-hooks'
 import * as React from 'react'
-import { useObservableState, useObservable } from '../src'
-import { map, switchMap, pluck, startWith } from 'rxjs/operators'
+import { map, switchMap, startWith } from 'rxjs/operators'
 import { interval } from 'rxjs'
 
 export interface InputTimeAgoProps {
@@ -8,18 +8,20 @@ export interface InputTimeAgoProps {
 }
 
 export const InputTimeAgo: React.FC<InputTimeAgoProps> = props => {
-  const text$ = useObservable(inputs$ => inputs$.pipe(pluck(0)), [props.text])
-
-  const [[text, diff]] = useObservableState(() =>
-    text$.pipe(
-      switchMap(text =>
-        interval(1000).pipe(
-          startWith(-1),
-          map(count => [text, fromNow(count + 1)] as [string, string])
-        )
-      )
+  const [text, diff] = useObservableState(
+    useObservable(
+      inputs$ =>
+        inputs$.pipe(
+          switchMap(([text]) =>
+            interval(1000).pipe(
+              startWith(-1),
+              map(count => [text, fromNow(count + 1)] as [string, string])
+            )
+          )
+        ),
+      [props.text]
     )
-  )
+  )!
 
   return (
     <div className="notification">

@@ -1,11 +1,14 @@
-import * as React from 'react'
 import { useObservableState } from '../src'
-import { mapTo } from 'rxjs/operators'
+import * as React from 'react'
+import { mapTo, take } from 'rxjs/operators'
 import { timer, merge } from 'rxjs'
 
 export const Warning: React.FC = () => {
   const [isClose, close] = useObservableState<boolean, any>(inputs$ =>
-    merge(inputs$, timer(3000)).pipe(mapTo(true))
+    merge(inputs$, timer(10000)).pipe(
+      take(1),
+      mapTo(true)
+    )
   )
 
   return isClose ? null : (

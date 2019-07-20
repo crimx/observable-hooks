@@ -1,10 +1,10 @@
-import * as React from 'react'
-import { pluck } from 'rxjs/operators'
 import {
   useObservableCallback,
   useSubscription,
-  useObservablePropsCallback
-} from '../src'
+  useObservablePropsCallback,
+  pluckCurrentTargetValue
+} from 'observable-hooks'
+import * as React from 'react'
 
 export interface InputProps {
   text: string
@@ -15,7 +15,7 @@ export const CustomInput: React.FC<InputProps> = props => {
   const [onChange, textChange$] = useObservableCallback<
     string,
     React.FormEvent<HTMLInputElement>
-  >(events$ => events$.pipe(pluck('currentTarget', 'value')))
+  >(pluckCurrentTargetValue)
 
   useObservablePropsCallback(textChange$, props.onChange)
 

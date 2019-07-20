@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   entry: './examples',
@@ -18,6 +19,9 @@ module.exports = {
     ]
   },
   resolve: {
+    alias: {
+      'observable-hooks': path.join(__dirname, 'src')
+    },
     extensions: ['.tsx', '.ts', '.js']
   },
   plugins: [new HtmlWebpackPlugin()]

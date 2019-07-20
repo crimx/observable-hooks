@@ -4,6 +4,7 @@ import { CustomInput } from './custom-input'
 import { InputTimeAgo } from './input-time-ago'
 import { Suggests } from './Suggests'
 import { Warning } from './Warning'
+import { wikipedia } from './api'
 
 import 'bulma/css/bulma.min.css'
 
@@ -16,7 +17,7 @@ function App() {
         <CustomInput text={text} onChange={updateText} />
         <InputTimeAgo text={text} />
         <Warning />
-        <Suggests text={text} />
+        <Suggests text={text} fetchFunc={wikipedia} />
       </div>
     </section>
   )
