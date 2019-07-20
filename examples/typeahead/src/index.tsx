@@ -16,8 +16,8 @@ function App() {
       <div className="container">
         <CustomInput text={text} onChange={updateText} />
         <InputTimeAgo text={text} />
-        <Warning />
         <Suggests text={text} fetchFunc={wikipedia} />
+        <Warning />
       </div>
     </section>
   )
