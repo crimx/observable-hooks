@@ -4,9 +4,9 @@ React hooks for RxJS Observables with powerful APIs.
 
 Read the doc [here](https://www.crimx.com/observable-hooks).
 
-Play on codesandbox:
+Example are [here](https://github.com/crimx/observable-hooks/tree/master/examples), or play on codesandbox:
 
-- [Typeahead Example](https://codesandbox.io/s/observable-hooks-typeahead-w9bnw)
+- [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
 
 This project is still under heavy development. Use with caution. I will finish testing as soon as possible.
 
@@ -25,5 +25,6 @@ TODO
   - [x] Typeahead example. (Easily combine or chain Observables together to deal with complex scenarios.)
 - Testing
   - [ ] `useObservable` will not trigger an extra rerender on init.
-  - [ ] `useObservableState` will not trigger an extra rerender with `startWith`.
+  - [ ] `useObservableState` will not trigger an extra rerender if the first emitted value is sync.
+  - [ ] `useObservableState` will not lose the fisrt value when rerender is triggered from outside.
   - [ ] `useSubscription` will unsubscribe on unmount.
