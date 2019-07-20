@@ -4,7 +4,7 @@ React hooks for RxJS Observables with powerful APIs.
 
 Read the doc [here](https://www.crimx.com/observable-hooks).
 
-Example are [here](https://github.com/crimx/observable-hooks/tree/master/examples), or play on codesandbox:
+Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/examples). Play on CodeSandbox:
 
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
 
