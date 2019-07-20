@@ -90,17 +90,3 @@ export function useRefFn<T extends NonNullable<object>>(init: () => T) {
   }
   return ref as MutableRefObject<T>
 }
-
-/**
- * Is next micro task tick
- * @ignore
- */
-export function useAsync() {
-  const isAsyncRef = useRef(false)
-  useRefFn(() =>
-    Promise.resolve().then(() => {
-      isAsyncRef.current = true
-    })
-  )
-  return isAsyncRef
-}

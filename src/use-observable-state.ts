@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs'
 import { useSubscription } from './use-subscription'
 import { useState, useRef } from 'react'
-import { useAsync } from './helpers'
 import { useObservableCallback } from './use-observable-callback'
 
 /**
@@ -99,7 +98,7 @@ export function useObservableState<State, Input = State>(
     | [((inputs$: Observable<Input>) => Observable<State>)]
     | [((inputs$: Observable<Input>) => Observable<State>), State]
 ): State | undefined | [State | undefined, (input: Input) => void] {
-  const isAsyncRef = useAsync()
+  const isAsyncRef = useRef(false)
   const isRenderedRef = useRef(false)
   /** First returned state */
   const firstStateRef = useRef<State | undefined>(args[1])
@@ -115,7 +114,6 @@ export function useObservableState<State, Input = State>(
   }
 
   useSubscription(states$, state => {
-    // console.log(isAsyncRef.current, state, 'ssssss')
     if (isAsyncRef.current) {
       if (!isRenderedRef.current) {
         // Set this first so that the
@@ -137,6 +135,10 @@ export function useObservableState<State, Input = State>(
       firstStateRef.current = state
     }
   })
+
+  // the next emitted value in the subscription above
+  // will not be in the current js task.
+  isAsyncRef.current = true
 
   const returnState = isRenderedRef.current ? state : firstStateRef.current
 
