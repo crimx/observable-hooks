@@ -22,8 +22,7 @@
     "build:esm": "shx rm -rf dist/esm && cross-env NODE_ENV=production tsc -p tsconfig.json --module es2015 --target es5 --outDir dist/esm",
     "build:cjs": "shx rm -rf dist/cjs && cross-env NODE_ENV=production tsc -p tsconfig.json --module commonjs --target es5 --outDir dist/cjs",
     "lint": "eslint src/**",
-    "doc": "shx rm -rf typedoc && typedoc src",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --open --progress --color"
+    "doc": "shx rm -rf typedoc && typedoc src"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -37,9 +36,7 @@
     "@types/react-test-renderer": "^16.8.2",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
-    "bulma": "^0.7.5",
     "cross-env": "^5.2.0",
-    "css-loader": "^3.1.0",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^13.0.1",
@@ -49,7 +46,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-standard": "^4.0.0",
-    "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
     "prettier": "^1.18.2",
     "react": "^16.8.6",
@@ -57,13 +53,8 @@
     "react-test-renderer": "^16.8.6",
     "rxjs": "^6.5.2",
     "shx": "^0.3.2",
-    "style-loader": "^0.23.1",
     "ts-jest": "^24.0.2",
-    "ts-loader": "^6.0.4",
     "typedoc": "^0.14.2",
-    "typescript": "^3.5.3",
-    "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "typescript": "^3.5.3"
   }
 }
