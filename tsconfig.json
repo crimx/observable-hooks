@@ -14,5 +14,6 @@
     "jsx": "react",
     "declaration": true,
     "removeComments": true
-  }
+  },
+  "include": ["src"]
 }
