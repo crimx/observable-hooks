@@ -22,7 +22,8 @@
     "build:esm": "shx rm -rf dist/esm && cross-env NODE_ENV=production tsc -p tsconfig.json --module es2015 --target es5 --outDir dist/esm",
     "build:cjs": "shx rm -rf dist/cjs && cross-env NODE_ENV=production tsc -p tsconfig.json --module commonjs --target es5 --outDir dist/cjs",
     "lint": "eslint src/**",
-    "doc": "shx rm -rf typedoc && typedoc src"
+    "doc": "shx rm -rf typedoc && typedoc src",
+    "test": "jest"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -30,6 +31,7 @@
     "rxjs": ">=6.0.0"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^1.1.0",
     "@types/jest": "^24.0.15",
     "@types/react": "^16.8.23",
     "@types/react-dom": "^16.8.4",
@@ -41,6 +43,7 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jest": "^22.12.0",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-promise": "^4.2.1",
