@@ -27,8 +27,9 @@ export function useObservablePropsCallback<Event>(
     callbacks$ => events$.pipe(withLatestFrom(callbacks$)),
     [callback] as [typeof callback]
   )
+  return useSubscription(enhanced$, subscribe)
+}
 
-  return useSubscription(enhanced$, ([e, [callback]]) => {
-    callback(e)
-  })
+function subscribe<E, T extends Function>([e, [callback]]: [E, [T]]) {
+  callback(e)
 }
