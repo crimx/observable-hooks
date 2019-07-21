@@ -4,6 +4,11 @@
 [![Build Status](https://travis-ci.org/crimx/observable-hooks.svg?branch=master)](https://travis-ci.org/crimx/observable-hooks)
 [![Coverage Status](https://coveralls.io/repos/github/crimx/observable-hooks/badge.svg?branch=master)](https://coveralls.io/github/crimx/observable-hooks?branch=master)
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?maxAge=2592000)](http://commitizen.github.io/cz-cli/)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-brightgreen.svg?maxAge=2592000)](https://conventionalcommits.org)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 React hooks for RxJS Observables with powerful APIs.
 
 - Seamless integration of React and RxJS. Comes with an upgraded version of `setState`.
