@@ -9,9 +9,9 @@ import { useObservableCallback } from './use-observable-callback'
  * Unlike `useState`, you can also set and get with different types by
  * passing a function instead of an Observable.
  *
- * ⚠ **Note: You can pass either a function or an Observable but do not**
- * **change to one another during Component's life cycle cause it will**
- * **break hooks order.**
+ * ⚠ **Note: You can pass either a function or an Observable as first argument**
+ * **but do not change to one another during Component's life cycle because it**
+ * **will break hooks order.**
  *
  * `of`, `startWith` and other sync operations can be safely used here and
  * won't trigger an extra initial rerender.

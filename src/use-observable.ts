@@ -8,9 +8,9 @@ import { useRefFn } from './helpers'
  * will be turned into Observable and be passed to the
  * `init` function.
  *
- * React function components will be called many times during its life cycle,
- * create or transform Observables in `init` function so that the operations
- * won't be repeatedly performed multiple times. `useObservable` will call `init`
+ * React function components will be called many times during its life cycle.
+ * Create or transform Observables in `init` function so that the operations
+ * won't be repeatedly performed. `useObservable` will call `init`
  * once and always return the same Observable.
  *
  * Examples:
@@ -23,7 +23,7 @@ import { useRefFn } from './helpers'
  * const Comp: React.FC<CompProps> = props => {
  *   const [showPanel, setShowPanel] = useState(false)
  *
- *   // Listen props or state change
+ *   // Listen to props or state change
  *   const enhanced$ = useObservable(
  *     inputs$ => inputs$.pipe(map(([isOpen, showPanel]) => isOpen && showPanel)),
  *     [props.isOpen, showPanel]

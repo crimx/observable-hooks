@@ -6,7 +6,7 @@ import { useRefFn, getEmptySubject } from './helpers'
  * Returns a callback function and a events Observable.
  *
  * Whenever the callback is called, the Observable will
- * emit the first parameter of the callback.
+ * emit the first argument of the callback.
  *
  * If you need a value instead of an Observable,
  * see example on [[useObservableState]].
