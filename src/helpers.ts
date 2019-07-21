@@ -44,7 +44,7 @@ export function pluckFirst<T extends ArrayLike<any>>(
  *
  */
 export function pluckCurrentTargetValue<
-  T extends React.SyntheticEvent<any> = React.SyntheticEvent<Element>
+  T extends { currentTarget: { value: any } }
 >(events$: Observable<T>): Observable<T['currentTarget']['value']> {
   return pluck<T, 'currentTarget', 'value'>('currentTarget', 'value')(events$)
 }
@@ -64,7 +64,7 @@ export function pluckCurrentTargetValue<
  *
  */
 export function pluckCurrentTargetChecked<
-  T extends React.SyntheticEvent<any> = React.SyntheticEvent<Element>
+  T extends { currentTarget: { checked: any } }
 >(events$: Observable<T>): Observable<T['currentTarget']['checked']> {
   return pluck<T, 'currentTarget', 'checked'>('currentTarget', 'checked')(
     events$
@@ -80,10 +80,13 @@ export function getEmptySubject<T>() {
 }
 
 /**
- * One-time ref init
- * @ignore
+ * One-time ref init.
+ * @param init A function that returns a non-nullable value. Will be called only once.
+ * @returns A ref object with the returned value.
  */
-export function useRefFn<T extends NonNullable<object>>(init: () => T) {
+export function useRefFn<T extends object | number | string | boolean | symbol>(
+  init: () => T
+) {
   const ref = useRef<T | null>(null)
   if (ref.current === null) {
     ref.current = init()
