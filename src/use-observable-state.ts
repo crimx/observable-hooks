@@ -14,8 +14,10 @@ import { useObservableCallback } from './use-observable-callback'
  * **break hooks order.**
  *
  * `of`, `startWith` and other sync operations can be safely used here and
- * won't trigger an extra initial rerender. Or just use the optional `initValue`.
- * But if both are provided, `initValue` will be ignored.
+ * won't trigger an extra initial rerender.
+ *
+ * You can also use the optional `initState` which is pass to the result not the Observable.
+ * But if both are provided, `initState` will be ignored.
  *
  * Examples:
  *
@@ -82,14 +84,14 @@ export function useObservableState<State>(
 ): State | undefined
 export function useObservableState<State>(
   inputs$: Observable<State>,
-  initValue: State
+  initState: State
 ): State
 export function useObservableState<State, Input = State>(
-  enhance: (inputs$: Observable<Input>) => Observable<State>
+  init: (inputs$: Observable<Input>) => Observable<State>
 ): [State | undefined, (input: Input) => void]
 export function useObservableState<State, Input = State>(
-  enhance: (inputs$: Observable<Input>) => Observable<State>,
-  initValue: State
+  init: (inputs$: Observable<Input>) => Observable<State>,
+  initState: State
 ): [State, (input: Input) => void]
 export function useObservableState<State, Input = State>(
   ...args:

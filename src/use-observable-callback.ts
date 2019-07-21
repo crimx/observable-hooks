@@ -27,10 +27,10 @@ import { useRefFn, getEmptySubject } from './helpers'
  * ```
  */
 export function useObservableCallback<Output, Event = Output>(
-  enhance: (events$: Subject<Event>) => Observable<Output>
+  init: (events$: Subject<Event>) => Observable<Output>
 ): [(e: Event) => void, Observable<Output>] {
   const events$Ref = useRefFn<Subject<Event>>(getEmptySubject)
-  const outputs$Ref = useRefFn(() => enhance(events$Ref.current))
+  const outputs$Ref = useRefFn(() => init(events$Ref.current))
   const callback = useCallback((e: Event) => {
     events$Ref.current.next(e)
   }, [])
