@@ -90,7 +90,7 @@ export function useObservable<State, Inputs extends any[]>(
       return
     }
     inputs$Ref.current.next(inputs)
-  }, inputs || [])
+  }, inputs)
 
   return source$Ref.current
 }
