@@ -4,6 +4,8 @@ node_js:
   - 'stable'
 script:
   - yarn doc
+  - 'yarn test:CI'
+  - yarn build
 deploy:
   provider: pages
   skip_cleanup: true

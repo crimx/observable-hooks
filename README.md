@@ -1,6 +1,15 @@
 # observable-hooks
 
+[![npm-version](https://img.shields.io/npm/v/observable-hooks.svg)](https://www.npmjs.com/package/observable-hooks)
+[![Build Status](https://travis-ci.org/crimx/observable-hooks.svg?branch=master)](https://travis-ci.org/crimx/observable-hooks)
+[![Coverage Status](https://coveralls.io/repos/github/crimx/observable-hooks/badge.svg?branch=master)](https://coveralls.io/github/crimx/observable-hooks?branch=master)
+
 React hooks for RxJS Observables with powerful APIs.
+
+- Seamless integration of React and RxJS. Comes with an upgraded version of `setState`.
+- Fully powered Observable operations. No limitation or compromise.
+- Lightweight and fast. No heavy computations.
+- Well tested.
 
 Read the doc [here](https://www.crimx.com/observable-hooks).
 
@@ -8,23 +17,6 @@ Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/exa
 
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
 
-This project is still under heavy development. Use with caution. I will finish testing as soon as possible.
-
 Here is how I designed the APIs.
 
 ![mindmap](https://github.com/crimx/observable-hooks/blob/master/observable-hooks.png?raw=true)
-
-TODO
-
-- Examples
-  - [x] Create an Observable from props and states with `useObservable`.
-  - [x] Create an Observable from event callback with `useObservableCallback`.
-  - [x] Subscribe Observable with `useSubscription`.
-  - [x] `useState`-like `[state, setState]` with `useObservableState`.
-  - [x] Call props function with `useObservablePropsCallback`.
-  - [x] Typeahead example. (Easily combine or chain Observables together to deal with complex scenarios.)
-- Testing
-  - [ ] `useObservable` will not trigger an extra rerender on init.
-  - [ ] `useObservableState` will not trigger an extra rerender if the first emitted value is sync.
-  - [ ] `useObservableState` will not lose the fisrt value when rerender is triggered from outside.
-  - [ ] `useSubscription` will unsubscribe on unmount.
