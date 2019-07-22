@@ -20,11 +20,35 @@ React hooks for RxJS Observables with powerful APIs.
 - Lightweight and fast. No heavy computations.
 - Fully tested.
 
+## Installation
+
+yarn
+
+```bash
+yarn add observable-hooks
+```
+
+npm
+
+```bash
+npm install --save observable-hooks
+```
+
+## Usage
+
 Read the doc [here](https://www.crimx.com/observable-hooks).
 
 Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/examples). Play on CodeSandbox:
 
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
+
+Note that there are also some useful [utilities](https://www.crimx.com/observable-hooks/modules/_helpers_.html) for common use cases.
+
+All available APIs can be imported from the entry.
+
+```javascript
+import { ... } from 'observable-hooks'
+```
 
 Here is how I designed the APIs.
 
