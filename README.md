@@ -11,10 +11,14 @@
 
 React hooks for RxJS Observables with powerful APIs.
 
-- Seamless integration of React and RxJS. Comes with an upgraded version of `setState`.
-- Fully powered Observable operations. No limitation or compromise.
+- Seamless integration of React and RxJS.
+  - Props and states to Observables?
+  - Observables to props events?
+  - "`setState`" with one type then state value gets different type?
+  - Stream of React Components???
+- Full-powered RxJS. Do what you normally do with Observables. No limitation or compromise.
 - Lightweight and fast. No heavy computations.
-- Well tested.
+- Fully tested.
 
 Read the doc [here](https://www.crimx.com/observable-hooks).
 
