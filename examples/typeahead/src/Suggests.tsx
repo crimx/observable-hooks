@@ -22,21 +22,43 @@ export type SuggestsList = SuggestsItem[]
 
 export type SuggestsFetcher = (text: string) => Observable<SuggestsList>
 
-type FetchSuggestsResult =
-  | [null, '']
-  | [null, 'loading']
-  | [SuggestsList, 'finish']
-  | [null, 'error']
-
 export interface SuggestsProps {
   text: string
   fetchFunc: SuggestsFetcher
 }
 
+const StateDefault: React.FC = () => null
+
+const StateLoading: React.FC = () => (
+  <div className="notification is-primary has-text-centered">Searching...</div>
+)
+
+const StateFinish: React.FC<{ list: SuggestsList }> = props => (
+  <ul>
+    {props.list!.map(item => (
+      <li className="box" key={item.href}>
+        <strong>
+          <a href={item.href} target="_blank" rel="noopener noreferrer">
+            {item.title}
+          </a>
+        </strong>
+        <p>{item.content}</p>
+      </li>
+    ))}
+  </ul>
+)
+
+const StateError: React.FC = () => (
+  <div className="notification is-danger has-text-centered">
+    Failed fetching...
+  </div>
+)
+
 /** Reusable Suggests Component */
 export const Suggests: React.FC<SuggestsProps> = props => {
   const fetchFunc$ = useObservable(pluckFirst, [props.fetchFunc])
-  const [suggests, fetchState] = useObservableState(
+  return useObservableState(
+    // A stream of React elements! I know it's mind-blowing.
     useObservable(
       inputs$ =>
         inputs$.pipe(
@@ -55,48 +77,14 @@ export const Suggests: React.FC<SuggestsProps> = props => {
                 switchMap(([, fetchFunc]) => fetchFunc(text))
               )
             ).pipe(
-              map(
-                ([, suggests]) => [suggests, 'finish'] as FetchSuggestsResult
-              ),
-              startWith([null, 'loading'] as FetchSuggestsResult)
+              map(([, suggests]) => <StateFinish list={suggests} />),
+              startWith(<StateLoading />)
             )
           ),
-          catchError(() => of([null, 'error'] as FetchSuggestsResult)),
-          startWith([null, ''] as FetchSuggestsResult)
+          catchError(() => of(<StateError />)),
+          startWith(<StateDefault />)
         ),
       [props.text]
     )
   )!
-
-  switch (fetchState) {
-    case 'finish':
-      return (
-        <ul>
-          {suggests!.map(item => (
-            <li className="box" key={item.href}>
-              <strong>
-                <a href={item.href} target="_blank" rel="noopener noreferrer">
-                  {item.title}
-                </a>
-              </strong>
-              <p>{item.content}</p>
-            </li>
-          ))}
-        </ul>
-      )
-    case 'loading':
-      return (
-        <div className="notification is-primary has-text-centered">
-          Searching...
-        </div>
-      )
-    case 'error':
-      return (
-        <div className="notification is-danger has-text-centered">
-          Failed fetching...
-        </div>
-      )
-    default:
-      return null
-  }
 }
