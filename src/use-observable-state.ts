@@ -19,6 +19,9 @@ import { useObservableCallback } from './use-observable-callback'
  * You can also use the optional `initState` which is pass to the result not the Observable.
  * But if both are provided, `initState` will be ignored.
  *
+ * It it recommended to use `initState` for simple primitive values and for others,
+ * init in Observable to save some (re)computations.
+ *
  * Examples:
  *
  *
