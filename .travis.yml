@@ -3,9 +3,11 @@ sudo: false
 node_js:
   - 'stable'
 script:
-  - yarn doc
-  - 'yarn test:CI'
+  - yarn test
   - yarn build
+after_success:
+  - yarn doc
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 deploy:
   provider: pages
   skip_cleanup: true
