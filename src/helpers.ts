@@ -56,8 +56,8 @@ export function pluckCurrentTargetValue<
  * Example:
  *
  * ```typescript
- * const [onChange, textChange$] = useObservableCallback<
- *  string,
+ * const [onChange, checked$] = useObservableCallback<
+ *  boolean,
  *  React.FormEvent<HTMLInputElement>
  * >(pluckCurrentTargetChecked)
  * ```
