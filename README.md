@@ -40,6 +40,7 @@ Read the doc [here](https://www.crimx.com/observable-hooks).
 
 Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/examples). Play on CodeSandbox:
 
+- [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/pomodoro-timer)
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
 
 Note that there are also some useful [utilities](https://www.crimx.com/observable-hooks/modules/_helpers_.html) for common use cases.

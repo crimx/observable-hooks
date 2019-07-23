@@ -88,3 +88,5 @@ jspm_packages/
 dist
 
 typedoc
+
+examples/**/yarn.lock
