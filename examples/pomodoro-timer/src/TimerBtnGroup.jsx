@@ -1,4 +1,10 @@
 import * as React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faPlayCircle,
+  faPauseCircle,
+  faUndo
+} from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
 
 export const TimerBtnGroup = ({ state, onChange }) => (
@@ -10,7 +16,7 @@ export const TimerBtnGroup = ({ state, onChange }) => (
       disabled={state === 'started'}
       onClick={() => onChange('started')}
     >
-      <i className="fas fa-play-circle" />
+      <FontAwesomeIcon icon={faPlayCircle} />
     </button>
     <button
       className="button is-dark is-large"
@@ -19,7 +25,7 @@ export const TimerBtnGroup = ({ state, onChange }) => (
       disabled={state !== 'started'}
       onClick={() => onChange('paused')}
     >
-      <i className="fas fa-pause-circle" />
+      <FontAwesomeIcon icon={faPauseCircle} />
     </button>
     <button
       className="button is-dark is-large"
@@ -27,7 +33,7 @@ export const TimerBtnGroup = ({ state, onChange }) => (
       style={{ margin: 5 }}
       onClick={() => onChange('reset')}
     >
-      <i className="fas fa-undo" />
+      <FontAwesomeIcon icon={faUndo} />
     </button>
   </div>
 )
