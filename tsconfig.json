@@ -12,8 +12,7 @@
     "noImplicitAny": true,
     "module": "esnext",
     "jsx": "react",
-    "declaration": true,
-    "removeComments": true
+    "declaration": true
   },
   "include": ["src"]
 }
