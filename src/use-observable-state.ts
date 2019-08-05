@@ -73,13 +73,29 @@ import { useObservableCallback } from './use-observable-callback'
  * )
  * ```
  *
+ * You can use `!` operator to assert non-null values
+ *
+ * ```typescript
+ * // time is string now
+ * const time = useObservableState(
+ *   useObservable(
+ *     () => interval(1000).pipe(
+ *       startWith(-1),
+ *       map(() => new Date().toLocaleString())
+ *     )
+ *   )
+ * )!
+ * ```
+ *
  * Event listenr:
  *
  * ```typescript
+ * import { pluckCurrentTargetValue, useObservableState } from 'observable-hooks'
+ *
  * const [text, onChange] = useObservableState<
  *  string,
  *  React.ChangeEvent<HTMLInputElement>
- * >(events$ => events$.pipe(pluck('currentTarget', 'value')), '')
+ * >(pluckCurrentTargetValue, '')
  * ```
  */
 export function useObservableState<State>(
