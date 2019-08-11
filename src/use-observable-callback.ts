@@ -14,13 +14,15 @@ import { useRefFn, getEmptySubject } from './helpers'
  * Examples:
  *
  * ```typescript
- * import { pluckCurrentTargetValue, useObservableCallback } from 'observable-hooks'
+ * import { useObservableCallback, useSubscription } from 'observable-hooks'
  *
  * const Comp = () => {
  *   const [onChange, textChange$] = useObservableCallback<
- *     React.FormEvent<HTMLInputElement>,
- *     string
- *   >(pluckCurrentTargetValue)
+ *     string,
+ *     React.FormEvent<HTMLInputElement>
+ *   >(event$ => event$.pipe(
+ *     pluck('currentTarget', 'value')
+ *   )) // or just use "pluckCurrentTargetValue" helper
  *
  *   useSubscription(textChange$, console.log)
  *
