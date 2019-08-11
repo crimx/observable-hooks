@@ -73,11 +73,11 @@ export function useObservable<State>(
  * changes the Observable in `init` will emit an array of all the dependencies.
  */
 export function useObservable<State, Inputs extends any[]>(
-  init: (inputs$: BehaviorSubject<Inputs>) => Observable<State>,
+  init: (inputs$: Observable<Inputs>) => Observable<State>,
   inputs: Inputs
 ): Observable<State>
 export function useObservable<State, Inputs extends any[]>(
-  init: (inputs$: BehaviorSubject<Inputs>) => Observable<State>,
+  init: (inputs$: Observable<Inputs>) => Observable<State>,
   inputs: Inputs = [] as any
 ): Observable<State> {
   const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))
