@@ -39,6 +39,7 @@ export function useObservablePropsCallback<Event>(
   return useSubscription(enhanced$, subscribe)
 }
 
+/** @ignore */
 function subscribe<E, T extends Function>([e, [callback]]: [E, [T]]) {
   callback(e)
 }
