@@ -1,4 +1,4 @@
-# observable-hooks
+# [observable-hooks](https://github.com/crimx/observable-hooks)
 
 [![npm-version](https://img.shields.io/npm/v/observable-hooks.svg)](https://www.npmjs.com/package/observable-hooks)
 [![Build Status](https://travis-ci.org/crimx/observable-hooks.svg?branch=master)](https://travis-ci.org/crimx/observable-hooks)
@@ -20,6 +20,14 @@ React hooks for RxJS Observables with powerful APIs.
 - Lightweight and fast. No heavy computations.
 - Fully tested.
 
+## Why?
+
+React added hooks for [reusing stateful logic](https://reactjs.org/docs/hooks-intro.html#its-hard-to-reuse-stateful-logic-between-components).
+Observable is a powerful way to encapsulate both sync and async logic.
+And [testing](https://rxjs-dev.firebaseapp.com/guide/testing/marble-testing) Observables is way easier than testing other async implementations.
+
+Now we can reuse Observable logic joyfully with [observable-hooks](https://github.com/crimx/observable-hooks).
+
 ## Installation
 
 yarn
@@ -38,6 +46,10 @@ npm install --save observable-hooks
 
 Read the doc [here](https://www.crimx.com/observable-hooks).
 
+Here is how I designed the APIs. Might give you a perspective on when use what.
+
+![mindmap](https://github.com/crimx/observable-hooks/blob/master/observable-hooks.png?raw=true)
+
 Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/examples). Play on CodeSandbox:
 
 - [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/pomodoro-timer)
@@ -50,7 +62,3 @@ All available APIs can be imported from the entry.
 ```javascript
 import { ... } from 'observable-hooks'
 ```
-
-Here is how I designed the APIs.
-
-![mindmap](https://github.com/crimx/observable-hooks/blob/master/observable-hooks.png?raw=true)
