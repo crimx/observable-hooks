@@ -18,6 +18,15 @@ import { useObservable } from './use-observable'
  *
  * useObservablePropsCallback(events$, props.onChange)
  * ```
+ *
+ * So why not use [[useSubscription]]?
+ *
+ * ```typescript
+ * useSubscription(events$, props.onChange)
+ * ```
+ *
+ * [[useSubscription]] works the same if `props.onChange` never changes.
+ * `useObservablePropsCallback` ensures the latest `props.onChange` is called.
  */
 export function useObservablePropsCallback<Event>(
   events$: Observable<Event>,
