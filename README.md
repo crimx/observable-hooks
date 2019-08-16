@@ -61,7 +61,7 @@ Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/exa
 - [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/pomodoro-timer)
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
 
-Note that there are also some useful [utilities](https://www.crimx.com/observable-hooks/modules/_helpers_.html) for common use cases.
+Note that there are also some useful [utilities](https://www.crimx.com/observable-hooks/modules/_helpers_.html) for common use cases to reduce garbage collection.
 
 All available APIs can be imported from the entry.
 
