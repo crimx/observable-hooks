@@ -24,9 +24,15 @@ React hooks for RxJS Observables with powerful APIs.
 
 React added hooks for [reusing stateful logic](https://reactjs.org/docs/hooks-intro.html#its-hard-to-reuse-stateful-logic-between-components).
 Observable is a powerful way to encapsulate both sync and async logic.
-And [testing](https://rxjs-dev.firebaseapp.com/guide/testing/marble-testing) Observables is way easier than testing other async implementations.
+And [testing](https://rxjs-dev.firebaseapp.com/guide/testing/marble-testing) Observables is way easier than testing other async implementations in a React Component.
 
 Now we can reuse Observable logic joyfully with [observable-hooks](https://github.com/crimx/observable-hooks).
+
+## What It Is Not
+
+This library is not for replacing state management tools like Redux but to reduce the need of dumping everything into global state just because there used to be no better way to handle it inside React Components.
+
+Using this library does not mean you have to turn everything observable. Abusing Observables is not encouraged. It plays well side by side with other hooks. Use it only on places where it's needed.
 
 ## Installation
 
