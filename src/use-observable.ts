@@ -72,11 +72,11 @@ export function useObservable<State>(
  * @param inputs An array of dependencies. When one of the dependencies
  * changes the Observable in `init` will emit an array of all the dependencies.
  */
-export function useObservable<State, Inputs extends any[]>(
+export function useObservable<State, Inputs extends readonly any[]>(
   init: (inputs$: Observable<Inputs>) => Observable<State>,
   inputs: Inputs
 ): Observable<State>
-export function useObservable<State, Inputs extends any[]>(
+export function useObservable<State, Inputs extends readonly any[]>(
   init: (inputs$: Observable<Inputs>) => Observable<State>,
   inputs: Inputs = [] as any
 ): Observable<State> {
