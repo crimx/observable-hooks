@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/crimx/observable-hooks/compare/v1.0.4...v1.0.5) (2019-08-18)
+
+
+### Bug Fixes
+
+* for types use Readonly instead of readonly ([232d8c7](https://github.com/crimx/observable-hooks/commit/232d8c7))
+
+
+
 ### [1.0.4](https://github.com/crimx/observable-hooks/compare/v1.0.3...v1.0.4) (2019-08-18)
 
 
