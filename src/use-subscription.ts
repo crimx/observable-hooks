@@ -10,6 +10,11 @@ import { useEffect } from 'react'
  * Subscription will unsubscribe when unmount, you can also
  * unsubscribe manually.
  *
+ * Note that `useSubscription` will only subscribe once.
+ * Subsequent changes of the callback functions will be ignored.
+ * If you need that, take a look at [[useObservablePropsCallback]]
+ * or create an stream of callbacks yourself.
+ *
  * Examples:
  *
  * ```typescript
