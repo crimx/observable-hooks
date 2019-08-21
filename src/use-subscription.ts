@@ -39,6 +39,12 @@ import { useEffect, useRef } from 'react'
  *   }
  * })
  * ```
+ *
+ * Invoke props callback
+ *
+ * ```typescript
+ * const subscription = useSubscription(events$, props.onEvent)
+ * ```
  */
 export function useSubscription<T>(stream$: Observable<T>): Subscription
 export function useSubscription<T>(
