@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs'
 import { useSubscription } from './use-subscription'
-import { useState, useRef } from 'react'
+import { useState, useRef, Dispatch, SetStateAction } from 'react'
 import { useObservableCallback } from './use-observable-callback'
 
 /**
@@ -119,12 +119,8 @@ export function useObservableState<State, Input = State>(
     | [((inputs$: Observable<Input>) => Observable<State>)]
     | [((inputs$: Observable<Input>) => Observable<State>), State]
 ): State | undefined | [State | undefined, (input: Input) => void] {
-  const isAsyncRef = useRef(false)
-  const isRenderedRef = useRef(false)
-  /** First returned state */
-  const firstStateRef = useRef<State | undefined>(args[1])
-
-  const [state, setState] = useState<State | undefined>(args[1])
+  const stateRef = useRef<State | undefined>(args[1])
+  const setStateRef = useRef<Dispatch<SetStateAction<State | undefined>>>()
 
   let callback: undefined | ((input: Input) => void)
   let states$: Observable<State>
@@ -135,33 +131,17 @@ export function useObservableState<State, Input = State>(
   }
 
   useSubscription(states$, state => {
-    if (isAsyncRef.current) {
-      if (!isRenderedRef.current) {
-        // Set this first so that the
-        // first state from setState will be used
-        isRenderedRef.current = true
-        // Dump the hack state to free memory
-        firstStateRef.current = undefined
-      }
-      // trigger rerender
-      setState(state)
-    } else {
-      // Here we skip the first setState rerendering
-      // by offering our own copy of init state.
-      //
-      // Because we skip the setState, we need to
-      // keep a copy of this state in case the Component
-      // rerenders before its first setState. (e.g. triggered
-      // by parent Cromponent or other states)
-      firstStateRef.current = state
+    // assign value before setState
+    stateRef.current = state
+
+    if (setStateRef.current) {
+      setStateRef.current(state)
     }
   })
 
-  // the next emitted value in the subscription above
-  // will not be in the current js task.
-  isAsyncRef.current = true
+  // Putting useState after subcription will skip re-rendering
+  // of all sync emitted values from the Observable.
+  setStateRef.current = useState(stateRef.current)[1]
 
-  const returnState = isRenderedRef.current ? state : firstStateRef.current
-
-  return callback ? [returnState, callback] : returnState
+  return callback ? [stateRef.current, callback] : stateRef.current
 }
