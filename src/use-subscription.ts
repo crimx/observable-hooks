@@ -49,56 +49,31 @@ import { useEffect, useRef } from 'react'
 export function useSubscription<T>(stream$: Observable<T>): Subscription
 export function useSubscription<T>(
   stream$: Observable<T>,
-  next: (value: T) => void | null | undefined
+  next: ((value: T) => void) | null | undefined
 ): Subscription
 export function useSubscription<T>(
   stream$: Observable<T>,
-  next: (value: T) => void | null | undefined,
-  error: (error: any) => void | null | undefined
+  next: ((value: T) => void) | null | undefined,
+  error: ((error: any) => void) | null | undefined
 ): Subscription
 export function useSubscription<T>(
   stream$: Observable<T>,
-  next: (value: T) => void | null | undefined,
-  error: (error: any) => void | null | undefined,
-  complete: () => void | null | undefined
+  next: ((value: T) => void) | null | undefined,
+  error: ((error: any) => void) | null | undefined,
+  complete: (() => void) | null | undefined
 ): Subscription
 export function useSubscription<T>(
   stream$: Observable<T>,
-  ...args:
-    | []
-    | [(value: T) => void | null | undefined]
-    | [
-        (value: T) => void | null | undefined,
-        (error: any) => void | null | undefined
-      ]
-    | [
-        (value: T) => void | null | undefined,
-        (error: any) => void | null | undefined,
-        () => void | null | undefined
-      ]
+  ...args: Array<Function | null | undefined>
 ): Subscription {
-  const argsRef = useRef<
-    Readonly<
-      | []
-      | [(value: T) => void | null | undefined]
-      | [
-          (value: T) => void | null | undefined,
-          (error: any) => void | null | undefined
-        ]
-      | [
-          (value: T) => void | null | undefined,
-          (error: any) => void | null | undefined,
-          () => void | null | undefined
-        ]
-    >
-  >(EMPTY_TUPLE)
+  const argsRef = useRef<Readonly<typeof args>>(EMPTY_TUPLE)
   argsRef.current = args
 
   const subscriptionRef = useRefFn(() =>
     stream$.subscribe({
-      next: value => argsRef.current[0] && argsRef.current[0](value),
-      error: error => argsRef.current[1] && argsRef.current[1](error),
-      complete: () => argsRef.current[2] && argsRef.current[2]()
+      next: value => argsRef.current[0] != null && argsRef.current[0]!(value),
+      error: error => argsRef.current[1] != null && argsRef.current[1]!(error),
+      complete: () => argsRef.current[2] != null && argsRef.current[2]!()
     })
   )
 
