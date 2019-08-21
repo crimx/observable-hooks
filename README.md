@@ -43,14 +43,15 @@ import { timer } from 'rxjs'
 import { switchMap, mapTo, startWith } from 'rxjs/operators'
 
 const App = () => {
-  const [isTyping, updateIsTyping] = useObservableState(transformTypingStatus, false)
-  
+  const [isTyping, updateIsTyping] = useObservableState(
+    transformTypingStatus,
+    false
+  )
+
   return (
     <div>
-      <input type='text' onKeyDown={updateIsTyping} />
-      <p>
-        {isTyping ? 'Good you are typing.' : 'Why stop typing?'}
-      </p>
+      <input type="text" onKeyDown={updateIsTyping} />
+      <p>{isTyping ? 'Good you are typing.' : 'Why stop typing?'}</p>
     </div>
   )
 }
@@ -84,7 +85,7 @@ npm install --save observable-hooks
 
 ## Usage
 
-Read the doc [here](https://www.crimx.com/observable-hooks).
+Read the docs [here](https://www.crimx.com/observable-hooks).
 
 Here is how I designed the APIs. Might give you a perspective on when use what.
 
