@@ -1,6 +1,6 @@
 import { useSubscription } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
-import { of, BehaviorSubject, Subject } from 'rxjs'
+import { of, BehaviorSubject, Subject, throwError } from 'rxjs'
 import { useState } from 'react'
 
 describe('useSubscription', () => {
@@ -25,6 +25,37 @@ describe('useSubscription', () => {
     rerender()
     expect(numSpy).toBeCalledTimes(3)
     expect(numSpy).lastCalledWith(3)
+  })
+
+  it('should receive error', () => {
+    const error = new Error('oops')
+    const error$ = throwError(error)
+    const nextSpy = jest.fn()
+    const errorSpy = jest.fn()
+    const completeSpy = jest.fn()
+    const { rerender } = renderHook(() =>
+      useSubscription(error$, nextSpy, errorSpy, completeSpy)
+    )
+    expect(errorSpy).toBeCalledTimes(1)
+    expect(errorSpy).lastCalledWith(error)
+    expect(nextSpy).toBeCalledTimes(0)
+    expect(completeSpy).toBeCalledTimes(0)
+    rerender()
+    expect(errorSpy).toBeCalledTimes(1)
+    expect(nextSpy).toBeCalledTimes(0)
+    expect(completeSpy).toBeCalledTimes(0)
+  })
+
+  it('should receive complete', () => {
+    const num$ = of(1, 2, 3)
+    const completeSpy = jest.fn()
+    const { rerender } = renderHook(() =>
+      useSubscription(num$, null, null, completeSpy)
+    )
+    expect(completeSpy).toBeCalledTimes(1)
+    expect(completeSpy).lastCalledWith()
+    rerender()
+    expect(completeSpy).toBeCalledTimes(1)
   })
 
   it('should invoke the latest callback', () => {

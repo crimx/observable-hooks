@@ -46,21 +46,11 @@ import { useEffect, useRef } from 'react'
  * const subscription = useSubscription(events$, props.onEvent)
  * ```
  */
-export function useSubscription<T>(stream$: Observable<T>): Subscription
 export function useSubscription<T>(
   stream$: Observable<T>,
-  next: ((value: T) => void) | null | undefined
-): Subscription
-export function useSubscription<T>(
-  stream$: Observable<T>,
-  next: ((value: T) => void) | null | undefined,
-  error: ((error: any) => void) | null | undefined
-): Subscription
-export function useSubscription<T>(
-  stream$: Observable<T>,
-  next: ((value: T) => void) | null | undefined,
-  error: ((error: any) => void) | null | undefined,
-  complete: (() => void) | null | undefined
+  next?: ((value: T) => void) | null | undefined,
+  error?: ((error: any) => void) | null | undefined,
+  complete?: (() => void) | null | undefined
 ): Subscription
 export function useSubscription<T>(
   stream$: Observable<T>,
