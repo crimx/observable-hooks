@@ -83,7 +83,7 @@ export function getEmptySubject<T>() {
  * An empty tuple
  * @ignore
  */
-export const emptyTuple: readonly [] = []
+export const EMPTY_TUPLE: Readonly<[]> = []
 
 /**
  * One-time ref init.

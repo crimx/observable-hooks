@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs'
-import { useRefFn, emptyTuple } from './helpers'
+import { useRefFn, EMPTY_TUPLE } from './helpers'
 import { useEffect, useRef } from 'react'
 
 /**
@@ -91,7 +91,7 @@ export function useSubscription<T>(
           () => void | null | undefined
         ]
     >
-  >(emptyTuple)
+  >(EMPTY_TUPLE)
   argsRef.current = args
 
   const subscriptionRef = useRefFn(() =>
@@ -103,7 +103,7 @@ export function useSubscription<T>(
   )
 
   // unsubscribe when unmount
-  useEffect(() => () => subscriptionRef.current.unsubscribe(), [])
+  useEffect(() => () => subscriptionRef.current.unsubscribe(), EMPTY_TUPLE)
 
   return subscriptionRef.current
 }
