@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs'
-import { useCallback } from 'react'
-import { useRefFn, getEmptySubject, EMPTY_TUPLE } from './helpers'
+import { useRef } from 'react'
+import { useRefFn, getEmptySubject } from './helpers'
 
 /**
  * Returns a callback function and a events Observable.
@@ -35,8 +35,8 @@ export function useObservableCallback<Output, Event = Output>(
 ): [(e: Event) => void, Observable<Output>] {
   const events$Ref = useRefFn<Subject<Event>>(getEmptySubject)
   const outputs$Ref = useRefFn(() => init(events$Ref.current))
-  const callback = useCallback((e: Event) => {
+  const callbackRef = useRef((e: Event) => {
     events$Ref.current.next(e)
-  }, EMPTY_TUPLE)
-  return [callback, outputs$Ref.current]
+  })
+  return [callbackRef.current, outputs$Ref.current]
 }
