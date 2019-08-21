@@ -34,6 +34,40 @@ This library is not for replacing state management tools like Redux but to reduc
 
 Using this library does not mean you have to turn everything observable. Abusing Observables is not encouraged. It plays well side by side with other hooks. Use it only on places where it's needed.
 
+## At A Glance
+
+```jsx
+import * as React from 'react'
+import { useObservableState } from 'observable-hooks'
+import { timer } from 'rxjs'
+import { switchMap, mapTo, startWith } from 'rxjs/operators'
+
+const App = () => {
+  const [isTyping, updateIsTyping] = useObservableState(transformTypingStatus, false)
+  
+  return (
+    <div>
+      <input type='text' onKeyDown={updateIsTyping} />
+      <p>
+        {isTyping ? 'Good you are typing.' : 'Why stop typing?'}
+      </p>
+    </div>
+  )
+}
+
+// Logic can be tested like Epic in redux-observable
+function transformTypingStatus(event$) {
+  return event$.pipe(
+    switchMap(() =>
+      timer(1000).pipe(
+        mapTo(false),
+        startWith(true)
+      )
+    )
+  )
+}
+```
+
 ## Installation
 
 yarn
