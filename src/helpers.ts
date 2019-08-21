@@ -72,12 +72,18 @@ export function pluckCurrentTargetChecked<
 }
 
 /**
- * Return a empty Subject
+ * Return an empty Subject
  * @ignore
  */
 export function getEmptySubject<T>() {
   return new Subject<T>()
 }
+
+/**
+ * An empty tuple
+ * @ignore
+ */
+export const emptyTuple: readonly [] = []
 
 /**
  * One-time ref init.
