@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/crimx/observable-hooks/compare/v1.0.5...v2.0.0) (2019-08-21)
+
+
+### refactor
+
+* let use-subscription support closure accessing ([dd06f9e](https://github.com/crimx/observable-hooks/commit/dd06f9e))
+
+
+### BREAKING CHANGES
+
+* useSubscription supports only one way to pass subscribe arguments for simplicity. |useSubscription used to ignore changes of the subscribe functions, now it will always call the latest one.
+
+
+
 ### [1.0.5](https://github.com/crimx/observable-hooks/compare/v1.0.4...v1.0.5) (2019-08-18)
 
 
