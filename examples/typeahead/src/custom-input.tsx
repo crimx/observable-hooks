@@ -1,7 +1,6 @@
 import {
   useObservableCallback,
   useSubscription,
-  useObservablePropsCallback,
   pluckCurrentTargetValue
 } from 'observable-hooks'
 import * as React from 'react'
@@ -17,9 +16,7 @@ export const CustomInput: React.FC<InputProps> = props => {
     React.FormEvent<HTMLInputElement>
   >(pluckCurrentTargetValue)
 
-  useObservablePropsCallback(textChange$, props.onChange)
-
-  useSubscription(textChange$, console.log)
+  useSubscription(textChange$, props.onChange)
 
   return (
     <input
