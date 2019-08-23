@@ -1,6 +1,6 @@
 import { Observable, Subscription } from 'rxjs'
-import { useRefFn, EMPTY_TUPLE } from './helpers'
-import { useEffect, useRef } from 'react'
+import { useRefFn, getEmptyObject, EMPTY_TUPLE } from './helpers'
+import { useEffect } from 'react'
 
 /**
  * Accepts an Observable and optional `next`, `error`, `complete` functions.
@@ -51,19 +51,22 @@ export function useSubscription<T>(
   next?: ((value: T) => void) | null | undefined,
   error?: ((error: any) => void) | null | undefined,
   complete?: (() => void) | null | undefined
-): Subscription
-export function useSubscription<T>(
-  stream$: Observable<T>,
-  ...args: Array<Function | null | undefined>
 ): Subscription {
-  const argsRef = useRef<Readonly<typeof args>>(EMPTY_TUPLE)
-  argsRef.current = args
+  const cbRef = useRefFn<{
+    next?: typeof next
+    error?: typeof error
+    complete?: typeof complete
+  }>(getEmptyObject)
+
+  cbRef.current.next = next
+  cbRef.current.error = error
+  cbRef.current.complete = complete
 
   const subscriptionRef = useRefFn(() =>
     stream$.subscribe({
-      next: value => argsRef.current[0] != null && argsRef.current[0]!(value),
-      error: error => argsRef.current[1] != null && argsRef.current[1]!(error),
-      complete: () => argsRef.current[2] != null && argsRef.current[2]!()
+      next: value => cbRef.current.next && cbRef.current.next(value),
+      error: error => cbRef.current.error && cbRef.current.error(error),
+      complete: () => cbRef.current.complete && cbRef.current.complete()
     })
   )
 
