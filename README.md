@@ -1,8 +1,8 @@
 # [observable-hooks](https://github.com/crimx/observable-hooks)
 
 [![npm-version](https://img.shields.io/npm/v/observable-hooks.svg)](https://www.npmjs.com/package/observable-hooks)
-[![Build Status](https://travis-ci.org/crimx/observable-hooks.svg?branch=master)](https://travis-ci.org/crimx/observable-hooks)
-[![Coverage Status](https://coveralls.io/repos/github/crimx/observable-hooks/badge.svg?branch=master)](https://coveralls.io/github/crimx/observable-hooks?branch=master)
+[![Build Status](https://img.shields.io/travis/com/crimx/observable-hooks/master)](https://travis-ci.com/crimx/observable-hooks)
+[![Coverage Status](https://img.shields.io/coveralls/github/crimx/observable-hooks/master)](https://coveralls.io/github/crimx/observable-hooks?branch=master)
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?maxAge=2592000)](http://commitizen.github.io/cz-cli/)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-brightgreen.svg?maxAge=2592000)](https://conventionalcommits.org)
@@ -14,11 +14,11 @@ React hooks for RxJS Observables with powerful APIs.
 - Seamless integration of React and RxJS.
   - Props and states to Observables?
   - Observables to props events?
-  - "`setState`" with one type then state value gets different type?
+  - Async "`setState`"?
   - Stream of React Components???
-- Full-powered RxJS. Do what you normally do with Observables. No limitation or compromise.
-- Lightweight and fast. No heavy computations.
+- Full-powered RxJS. Do whatever you want with Observables. No limitation or compromise.
 - Fully tested.
+- Lightweight and fast. A lot of efforts had been put into improving integration. This library should have no visible impact on performance.
 
 ## Why?
 
@@ -30,9 +30,9 @@ Now we can reuse Observable logic joyfully with [observable-hooks](https://githu
 
 ## What It Is Not
 
-This library is not for replacing state management tools like Redux but to reduce the need of dumping everything into global state just because there used to be no better way to handle it inside React Components.
+This library is not for replacing state management tools like Redux (though technically it could with its flexible APIs plus other hooks) but to reduce the need of dumping everything into global state just because there used to be no better way to handle it inside React Components.
 
-Using this library does not mean you have to turn everything observable. Abusing Observables is not encouraged. It plays well side by side with other hooks. Use it only on places where it's needed.
+Using this library does not mean you have to turn everything observable. It is not encouraged to abuse Observables. It plays well side by side with other hooks. Use it only on places where it's needed.
 
 ## At A Glance
 
