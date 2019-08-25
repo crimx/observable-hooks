@@ -15,6 +15,12 @@
     "type": "git",
     "url": "git@github.com:crimx/observable-hooks.git"
   },
+  "keywords": [
+    "react",
+    "hooks",
+    "observable",
+    "rxjs"
+  ],
   "author": "CRIMX<straybugs@gmail.com>",
   "license": "MIT",
   "scripts": {
