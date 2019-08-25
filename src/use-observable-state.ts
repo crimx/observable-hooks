@@ -16,11 +16,11 @@ import { useObservableCallback } from './use-observable-callback'
  * `of`, `startWith` and other sync operations can be safely used here and
  * won't trigger an extra initial rerender.
  *
- * You can also use the optional `initState` which is pass to the result not the Observable.
- * But if both are provided, `initState` will be ignored.
+ * You can also use the optional `initState` which will be directly passed to the result.
+ * But if sync values are also emitted from the Observable, `initState` will be ignored.
  *
- * It it recommended to use `initState` for simple primitive values and for others,
- * init in Observable to save some (re)computations.
+ * It it recommended to use `initState` for simple primitive value.
+ * For others, init in Observable to save some (re)computations.
  *
  * Examples:
  *

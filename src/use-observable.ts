@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs'
 import { useRefFn } from './helpers'
 
 /**
- * Accepts a function that returns a Observable.
+ * Accepts a function that returns an Observable.
  * Optionally accepts an array of dependencies which
  * will be turned into Observable and be passed to the
  * `init` function.
