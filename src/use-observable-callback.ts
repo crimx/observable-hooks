@@ -8,6 +8,9 @@ import { useRefFn, getEmptySubject } from './helpers'
  * Whenever the callback is called, the Observable will
  * emit the first argument of the callback.
  *
+ * (From v2.1.0) Optionally accepts a selector function that transforms
+ * a list of event arguments into a single value.
+ *
  * If you need a value instead of an Observable,
  * see example on [[useObservableState]].
  *
@@ -29,14 +32,40 @@ import { useRefFn, getEmptySubject } from './helpers'
  *   return <input type="text" onChange={onChange} />
  * }
  * ```
+ *
+ * Transform event arguments:
+ *
+ * ```typescript
+ * import { useObservableCallback, identity } from 'observable-hooks'
+ *
+ * const [onResize, height$] = useObservableCallback<
+ *   number,
+ *   number,
+ *   [number, number]
+ * >(identity, args => args[1])
+ *
+ * // onResize is called with width and hegiht
+ * // height$ gets height values
+ * onResize(100, 500)
+ * ```
+ *
+ * @param init A function that, when applied to an inputs Observable,
+ * returns an Observable.
+ * @param selector A function that transforms a list of event arguments
+ * into a single value.
  */
-export function useObservableCallback<Output, Event = Output>(
-  init: (events$: Subject<Event>) => Observable<Output>
-): [(e: Event) => void, Observable<Output>] {
+export function useObservableCallback<
+  Output,
+  Event = Output,
+  Args extends any[] = [Event]
+>(
+  init: (events$: Observable<Event>) => Observable<Output>,
+  selector?: (args: Args) => Event
+): [(...args: Args) => void, Observable<Output>] {
   const events$Ref = useRefFn<Subject<Event>>(getEmptySubject)
   const outputs$Ref = useRefFn(() => init(events$Ref.current))
-  const callbackRef = useRef((e: Event) => {
-    events$Ref.current.next(e)
+  const callbackRef = useRef((...args: Args) => {
+    events$Ref.current.next(selector ? selector(args) : args[0])
   })
   return [callbackRef.current, outputs$Ref.current]
 }
