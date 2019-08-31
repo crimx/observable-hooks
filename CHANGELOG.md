@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/crimx/observable-hooks/compare/v2.0.2...v2.1.0) (2019-08-31)
+
+
+### Build System
+
+* target esnext ([19f132b](https://github.com/crimx/observable-hooks/commit/19f132b))
+
+
+### Features
+
+* add selector for useObservableCallback ([af30f0c](https://github.com/crimx/observable-hooks/commit/af30f0c))
+
+
+
 ### [2.0.2](https://github.com/crimx/observable-hooks/compare/v2.0.1...v2.0.2) (2019-08-23)
 
 
