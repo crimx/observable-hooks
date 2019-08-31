@@ -26,8 +26,8 @@
   "scripts": {
     "commit": "git-cz",
     "build": "shx rm -rf dist && yarn lint && yarn build:esm && yarn build:cjs",
-    "build:esm": "shx rm -rf dist/esm && cross-env NODE_ENV=production tsc -p tsconfig.json --module es2015 --target es5 --outDir dist/esm",
-    "build:cjs": "shx rm -rf dist/cjs && cross-env NODE_ENV=production tsc -p tsconfig.json --module commonjs --target es5 --outDir dist/cjs",
+    "build:esm": "shx rm -rf dist/esm && cross-env NODE_ENV=production tsc -p tsconfig.json --module es2015 --outDir dist/esm",
+    "build:cjs": "shx rm -rf dist/cjs && cross-env NODE_ENV=production tsc -p tsconfig.json --module commonjs --outDir dist/cjs",
     "lint": "eslint src/**",
     "doc": "shx rm -rf typedoc && typedoc src",
     "test": "jest",

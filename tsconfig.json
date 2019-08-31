@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     // Target latest version of ECMAScript.
-    "target": "es5",
+    "target": "esnext",
     // Search under node_modules for non-relative imports.
     "moduleResolution": "node",
     // Enable strictest settings like strictNullChecks & noImplicitAny.
