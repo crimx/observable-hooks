@@ -18,7 +18,7 @@ React hooks for RxJS Observables with powerful APIs.
   - Stream of React Components???
 - Full-powered RxJS. Do whatever you want with Observables. No limitation or compromise.
 - Fully tested.
-- Lightweight and fast. A lot of efforts had been put into improving integration. This library should have no visible impact on performance.
+- Lightweight and fast. **741 B** compressed & gzipped. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
 
 ## Why?
 
@@ -34,7 +34,7 @@ This library is not for replacing state management tools like Redux (though tech
 
 Using this library does not mean you have to turn everything observable. It is not encouraged to abuse Observables. It plays well side by side with other hooks. Use it only on places where it's needed.
 
-## At A Glance
+## At a Glance
 
 ```jsx
 import * as React from 'react'
