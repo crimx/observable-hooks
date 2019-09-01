@@ -1,6 +1,7 @@
 import { useObservable, pluckFirst } from '../src'
 import { renderHook } from '@testing-library/react-hooks'
-import { of, merge } from 'rxjs'
+import { of, merge, Observable } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 describe('useObservable', () => {
   it('should call the init function once', () => {
@@ -10,6 +11,25 @@ describe('useObservable', () => {
     rerender()
     expect(timeSpy).toBeCalledTimes(1)
     rerender()
+    expect(timeSpy).toBeCalledTimes(1)
+  })
+
+  it('should call the init function once with inputs', () => {
+    const timeSpy = jest.fn((inputs$: Observable<[number]>) =>
+      inputs$.pipe(map(inputs => inputs[0]))
+    )
+    const { rerender } = renderHook(
+      props => useObservable(timeSpy, [props.value]),
+      {
+        initialProps: {
+          value: 1
+        }
+      }
+    )
+    expect(timeSpy).toBeCalledTimes(1)
+    rerender({ value: 2 })
+    expect(timeSpy).toBeCalledTimes(1)
+    rerender({ value: 3 })
     expect(timeSpy).toBeCalledTimes(1)
   })
 
@@ -28,6 +48,27 @@ describe('useObservable', () => {
     expect(result.current).toBe(enhanced$)
     spy.mockClear()
     expect(spy).toBeCalledTimes(0)
+  })
+
+  it('should always return the same Observable with inputs', () => {
+    const { result, rerender } = renderHook(
+      props => useObservable(pluckFirst, [props.value]),
+      {
+        initialProps: {
+          value: 1
+        }
+      }
+    )
+    const enhanced$ = result.current
+    const spy = jest.fn()
+    enhanced$.subscribe(spy)
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(1)
+    spy.mockClear()
+    rerender({ value: 2 })
+    expect(result.current).toBe(enhanced$)
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(2)
   })
 
   it('should emit value when one of the deps changes', () => {

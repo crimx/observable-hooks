@@ -13,6 +13,10 @@ import { useRefFn } from './helpers'
  * won't be repeatedly performed. `useObservable` will call `init`
  * once and always return the same Observable.
  *
+ * ⚠ **Node:** You can either pass or not pass a dependencies array
+ * but do not change to one another during Component's life cycle.
+ * The length of the dependencies array must also be fixed.
+ *
  * Examples:
  *
  * ```typescript
@@ -77,9 +81,15 @@ export function useObservable<State, Inputs extends Readonly<any[]>>(
   inputs: Inputs
 ): Observable<State>
 export function useObservable<State, Inputs extends Readonly<any[]>>(
-  init: (inputs$: Observable<Inputs>) => Observable<State>,
-  inputs: Inputs = [] as any
+  init:
+    | (() => Observable<State>)
+    | ((inputs$: Observable<Inputs>) => Observable<State>),
+  inputs?: Inputs
 ): Observable<State> {
+  if (!inputs) {
+    return useRefFn(init as () => Observable<State>).current
+  }
+
   const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))
   const source$Ref = useRefFn(() => init(inputs$Ref.current))
   const firstRef = useRef(true)
