@@ -73,18 +73,19 @@ import { useObservableCallback } from './use-observable-callback'
  * )
  * ```
  *
- * You can use `!` operator to assert non-null values
+ * (From v2.1.2) Pass `true` to `WithSyncValues` generic to remove `undefined`
+ * from resulted type.
  *
  * ```typescript
- * // time is string now
- * const time = useObservableState(
+ * // time is `string` now instead of `string | undefined`
+ * const time = useObservableState<string, true>(
  *   useObservable(
  *     () => interval(1000).pipe(
  *       startWith(-1),
  *       map(() => new Date().toLocaleString())
  *     )
  *   )
- * )!
+ * )
  * ```
  *
  * Event listenr:
@@ -98,16 +99,23 @@ import { useObservableCallback } from './use-observable-callback'
  * >(pluckCurrentTargetValue, '')
  * ```
  */
-export function useObservableState<State>(
+export function useObservableState<State, WithSyncValues = false>(
   inputs$: Observable<State>
-): State | undefined
+): WithSyncValues extends false ? State | undefined : State
 export function useObservableState<State>(
   inputs$: Observable<State>,
   initState: State
 ): State
-export function useObservableState<State, Input = State>(
+export function useObservableState<
+  State,
+  Input = State,
+  WithSyncValues = false
+>(
   init: (inputs$: Observable<Input>) => Observable<State>
-): [State | undefined, (input: Input) => void]
+): [
+  WithSyncValues extends false ? State | undefined : State,
+  (input: Input) => void
+]
 export function useObservableState<State, Input = State>(
   init: (inputs$: Observable<Input>) => Observable<State>,
   initState: State
