@@ -9,9 +9,14 @@ import { useObservableCallback } from './use-observable-callback'
  * Unlike `useState`, you can also set and get with different types by
  * passing a function instead of an Observable.
  *
- * ⚠ **Note: You can pass either a function or an Observable as first argument**
- * **but do not change to one another during Component's life cycle because it**
- * **will break hooks order.**
+ * ⚠ **Node:** `useObservableState` will call `init` once and always return
+ * the same Observable. It is not safe to access closure variables
+ * (except Observables) directly inside `init`. Use [[useObservable]] and
+ * `withLatestFrom` instead.
+ *
+ * ⚠ **Note:** You can pass either a function or an Observable as first argument
+ * but do not change to one another during Component's life cycle otherwise it
+ * will break hooks order.
  *
  * `of`, `startWith` and other sync operations can be safely used here and
  * won't trigger an extra initial rerender.

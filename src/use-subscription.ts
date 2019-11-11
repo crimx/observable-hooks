@@ -14,7 +14,7 @@ import { useEffect } from 'react'
  * an emission. If you need that just create another
  * Observable of the callback with [[useObservable]].
  *
- * (From v2.0) You can also access closure in the callback like in `useEffect`.
+ * (From v2.0) You can access closure directly inside callback like in `useEffect`.
  * `useSubscription` will ensure the latest callback is called.
  *
  * Examples:

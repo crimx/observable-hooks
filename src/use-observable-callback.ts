@@ -14,6 +14,11 @@ import { useRefFn, getEmptySubject } from './helpers'
  * If you need a value instead of an Observable,
  * see example on [[useObservableState]].
  *
+ * ⚠ **Node:** `useObservableCallback` will call `init` once and always return
+ * the same Observable. It is not safe to access closure variables
+ * (except Observables) directly inside `init`. Use [[useObservable]] and
+ * `withLatestFrom` instead.
+ *
  * Examples:
  *
  * ```typescript
