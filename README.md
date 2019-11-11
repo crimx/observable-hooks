@@ -106,6 +106,42 @@ import { ... } from 'observable-hooks'
 
 ## Overly Simplified Examples
 
+### Conditional rendering (with vanilla JavaScript)
+
+With observable-hooks you can have a stream of React Components which is like Suspense but armed with the incredible RxJS operators.
+
+```jsx
+import { from, of } from 'rxjs'
+import { map, switchMap, startWith, catchError } from 'rxjs/operators'
+import { useObservableState } from 'observable-hooks'
+import { fetchData } from './api'
+import { SuccessUI, LoadingUI, ErrorUI } from './components'
+
+export function App() {
+  const [status, onFetchData] = useObservableState(
+    event$ => event$.pipe(
+      // initial fetching
+      startWith(),
+      // OMG I don't have to deal with race condition
+      switchMap(event =>
+        from(fetchData(event && event.currentTarget.id)).pipe(
+          map(value => <SuccessUI value={value} />),
+          startWith(<LoadingUI />)
+        )
+      ),
+      catchError(error => of(<ErrorUI error={error} />))
+    )
+  )
+
+  return (
+    <div>
+      <button id="data1" onClick={onFetchData}>fetch</button>
+      {status}
+    </div>
+  )
+}
+```
+
 ### Debounce Text Verification (with vanilla JavaScript)
 
 ```jsx
