@@ -16,7 +16,7 @@ React hooks for RxJS Observables with super flexible APIs.
   - Observables to states and props events.
   - Conditional rendering with stream of React Components. (Or Suspense with [use-suspensible](https://github.com/crimx/use-suspensible))
 - Full-powered RxJS. Do whatever you want with Observables. No limitation or compromise.
-- Lightweight and fast. **886 B** compressed & gzipped. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
+- Lightweight and fast. **741 B** compressed & gzipped. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
 - Fully tested.
 
 ## Why?
