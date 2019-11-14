@@ -9,16 +9,15 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-React hooks for RxJS Observables with powerful APIs.
+React hooks for RxJS Observables with super flexible APIs.
 
 - Seamless integration of React and RxJS.
-  - Props and states to Observables?
-  - Observables to props events?
-  - Async "`setState`"?
-  - Stream of React Components???
+  - Props and states to Observables.
+  - Observables to states and props events.
+  - Conditional rendering with stream of React Components. (Or Suspense with [use-suspensible](https://github.com/crimx/use-suspensible))
 - Full-powered RxJS. Do whatever you want with Observables. No limitation or compromise.
+- Lightweight and fast. **886 B** compressed & gzipped. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
 - Fully tested.
-- Lightweight and fast. **741 B** compressed & gzipped. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
 
 ## Why?
 
@@ -108,7 +107,7 @@ import { ... } from 'observable-hooks'
 
 ### Conditional rendering (with vanilla JavaScript)
 
-With observable-hooks you can have a stream of React Components which is like Suspense but armed with the incredible RxJS operators.
+With observable-hooks you can have a stream of React Components which is like Suspense but armed with the incredible RxJS operators. If you want to you can also use React Suspense with the help of [use-suspensible](https://github.com/crimx/use-suspensible).
 
 ```jsx
 import { from, of } from 'rxjs'
