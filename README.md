@@ -1,6 +1,7 @@
 # [observable-hooks](https://github.com/crimx/observable-hooks)
 
 [![npm-version](https://img.shields.io/npm/v/observable-hooks.svg)](https://www.npmjs.com/package/observable-hooks)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/observable-hooks)](https://bundlephobia.com/result?p=observable-hooks)
 [![Build Status](https://img.shields.io/travis/com/crimx/observable-hooks/master)](https://travis-ci.com/crimx/observable-hooks)
 [![Coverage Status](https://img.shields.io/coveralls/github/crimx/observable-hooks/master)](https://coveralls.io/github/crimx/observable-hooks?branch=master)
 
@@ -19,7 +20,7 @@ React hooks for RxJS Observables with super flexible APIs.
   - Conditional rendering with stream of React Components. (Or Suspense with [use-suspensible](https://github.com/crimx/use-suspensible))
 - Full-powered RxJS. Do whatever you want with Observables. No limitation nor compromise.
 - Fully tested.
-- Lightweight and fast. **741 B** compressed & gzipped. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
+- Tiny and fast. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
 
 ## Why?
 
