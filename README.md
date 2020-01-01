@@ -87,9 +87,9 @@ npm install --save observable-hooks
 
 ## Usage
 
-Read the docs [here](https://www.crimx.com/observable-hooks).
+Read the docs at <https://observable-hooks.js.org>.
 
-Here is how I designed the APIs. Might give you a perspective on when use what.
+Here is how I designed the API. Might give you a perspective on when use what.
 
 ![mindmap](https://github.com/crimx/observable-hooks/blob/master/observable-hooks.png?raw=true)
 
@@ -98,7 +98,7 @@ Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/exa
 - [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/pomodoro-timer)
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
 
-Note that there are also some useful [utilities](https://www.crimx.com/observable-hooks/modules/_helpers_.html) for common use cases to reduce garbage collection.
+Note that there are also some useful [utilities](https://observable-hooks.js.org/modules/_helpers_.html) for common use cases to reduce garbage collection.
 
 All available APIs can be imported from the entry.
 

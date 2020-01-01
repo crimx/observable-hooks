@@ -18,4 +18,5 @@ deploy:
     branch: master
 before_deploy:
   - touch 'typedoc/.nojekyll'
+  - cp CNAME typedoc/
   - sed -i '/typedoc/d' .gitignore
