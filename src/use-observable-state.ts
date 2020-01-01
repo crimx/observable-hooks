@@ -4,28 +4,24 @@ import { useState, useRef, Dispatch, SetStateAction } from 'react'
 import { useObservableCallback } from './use-observable-callback'
 
 /**
- * Like `useState` but with Observable.
+ * A helper to get value from an Observable.
  *
- * Unlike `useState`, you can also set and get with different types by
- * passing a function instead of an Observable.
+ * You can also use the regular `useState` with [[useSubscription]] directly.
+ * But if sync values are emitted from the Observable (e.g. `of` or `startWith`)
+ * extra initial re-renders will be triggered.
  *
- * ⚠ **Node:** `useObservableState` will call `init` once and always return
- * the same Observable. It is not safe to access closure variables
- * (except Observables) directly inside `init`. Use [[useObservable]] and
- * `withLatestFrom` instead.
+ * ⚠ **Note:** `useObservableState` will call `init` once and always return
+ * the same Observable. It is not safe to access closure (except other Observables)
+ * directly inside `init`. Use [[useObservable]] and `withLatestFrom` instead.
  *
- * ⚠ **Note:** You can pass either a function or an Observable as first argument
- * but do not change to one another during Component's life cycle otherwise it
- * will break hooks order.
- *
- * `of`, `startWith` and other sync operations can be safely used here and
- * won't trigger an extra initial rerender.
+ * ⚠ **Note:** Due to hooks policies you can offer either a function or an Observable
+ * as the first argument but do not change to one another during Component's life cycle.
  *
  * You can also use the optional `initState` which will be directly passed to the result.
- * But if sync values are also emitted from the Observable, `initState` will be ignored.
+ * But if sync values are also emitted from the Observable `initState` will be ignored.
  *
  * It it recommended to use `initState` for simple primitive value.
- * For others, init in Observable to save some (re)computations.
+ * For others, init with the Observable to save some (re)computations.
  *
  * Examples:
  *

@@ -12,13 +12,13 @@ import { useRefFn } from './helpers'
  * Create or transform Observables in `init` function so that the operations
  * won't be repeatedly performed.
  *
- * ⚠ **Node:** `useObservable` will call `init` once and always return
- * the same Observable. It is not safe to access closure variables
- * (except Observables) directly inside `init`. You should pass them
- * through the second argument as dependencies.
+ * ⚠ **Note:** `useObservable` will call `init` once and always return
+ * the same Observable. It is not safe to access closure (except other Observables)
+ * directly inside `init`.
+ * You should pass them as dependencies through the second argument.
  *
- * ⚠ **Node:** You can either pass or not pass a dependencies array
- * but do not change to one another during Component's life cycle.
+ * ⚠ **Note:** Due to hooks policies you can either offer or omit the
+ * dependencies array but do not change to one another during Component's life cycle.
  * The length of the dependencies array must also be fixed.
  *
  * Examples:
