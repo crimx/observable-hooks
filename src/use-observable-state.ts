@@ -6,9 +6,9 @@ import { useObservableCallback } from './use-observable-callback'
 /**
  * A helper to get value from an Observable.
  *
- * You can also use the regular `useState` with [[useSubscription]] directly.
- * But if sync values are emitted from the Observable (e.g. `of` or `startWith`)
- * extra initial re-renders will be triggered.
+ * You can also use the regular `useState` with [[useSubscription]] directly
+ * which will trigger extra initial re-renders
+ * when sync values are emitted from the Observable (e.g. `of` or `startWith`).
  *
  * ⚠ **Note:** `useObservableState` will call `init` once and always return
  * the same Observable. It is not safe to access closure (except other Observables)
@@ -26,14 +26,14 @@ import { useObservableCallback } from './use-observable-callback'
  * Examples:
  *
  *
- * Pass an Observable
+ * Offer an Observable
  *
  * ```typescript
  * const count$ = useObservable(() => interval(1000))
  * const count = useObservableState(count$)
  * ```
  *
- * Pass a function
+ * Offer an init function
  *
  * ```typescript
  * const [text, updateText] = useObservableState<string>(
