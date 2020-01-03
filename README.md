@@ -25,18 +25,20 @@ React hooks for RxJS Observables with super flexible APIs.
 ## Why?
 
 React added hooks for [reusing stateful logic](https://reactjs.org/docs/hooks-intro.html#its-hard-to-reuse-stateful-logic-between-components).
-Observable is a powerful way to encapsulate both sync and async logic.
-And [testing](https://rxjs-dev.firebaseapp.com/guide/testing/marble-testing) Observables is way easier than testing other async implementations in a React Component.
 
-Now we can reuse Observable logic joyfully with [observable-hooks](https://github.com/crimx/observable-hooks).
+Observable is a powerful way to encapsulate both sync and async logic.
+
+[Testing](https://rxjs-dev.firebaseapp.com/guide/testing/marble-testing) Observables is also way easier than testing other async implementations.
+
+With [observable-hooks](https://github.com/crimx/observable-hooks) we can create rich reusable Components with ease.
 
 ## What It Is Not
 
-This library is not for replacing state management tools like Redux (though technically it could with its flexible APIs plus other hooks) but to reduce the need of dumping everything into global state just because there used to be no better way to handle it inside React Components.
+This library is not for replacing state management tools like Redux but to reduce the need of dumping everything into global state.
 
-Using this library does not mean you have to turn everything observable. It is not encouraged to abuse Observables. It plays well side by side with other hooks. Use it only on places where it's needed.
+Using this library does not mean you have to turn everything observable which is not encouraged. It plays well side by side with other hooks. Use it only on places where it's needed.
 
-## At a Glance
+## At First Glance
 
 ```jsx
 import * as React from 'react'
@@ -110,7 +112,7 @@ import { ... } from 'observable-hooks'
 
 ### Conditional rendering (with vanilla JavaScript)
 
-With observable-hooks you can have a stream of React Components which is like Suspense but armed with the incredible RxJS operators. If you want to you can also use React Suspense with the help of [use-suspensible](https://github.com/crimx/use-suspensible).
+With observable-hooks you can have a stream of React elements. This is like React Suspense but armed with the incredible RxJS operators. If you want Suspense instead see [use-suspensible](https://github.com/crimx/use-suspensible).
 
 ```jsx
 import { from, of } from 'rxjs'
