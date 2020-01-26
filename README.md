@@ -18,6 +18,7 @@ React hooks for RxJS Observables with super flexible APIs.
   - Props and states to Observables.
   - Observables to states and props events.
   - Conditional rendering with stream of React Components. (Or Suspense with [use-suspensible](https://github.com/crimx/use-suspensible))
+  - No `tap` hack needed. With Epic-like signature funciton is pure and testable.
 - Full-powered RxJS. Do whatever you want with Observables. No limitation nor compromise.
 - Fully tested.
 - Tiny and fast. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
@@ -60,7 +61,7 @@ const App = () => {
   )
 }
 
-// Logic can be tested like Epic in redux-observable
+// Logic is pure and can be tested like Epic in redux-observable
 function transformTypingStatus(event$) {
   return event$.pipe(
     switchMap(() =>
