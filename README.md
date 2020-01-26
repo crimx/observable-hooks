@@ -12,7 +12,7 @@
 
 ![logo](https://github.com/crimx/observable-hooks/blob/master/logo.jpg?raw=true)
 
-React hooks for RxJS Observables with super flexible APIs.
+React hooks for RxJS Observables. Simple, flexible, testable and performant.
 
 - Seamless integration of React and RxJS.
   - Props and states to Observables.
@@ -20,7 +20,7 @@ React hooks for RxJS Observables with super flexible APIs.
   - Conditional rendering with stream of React Components. (Or Suspense with [use-suspensible](https://github.com/crimx/use-suspensible))
   - No `tap` hack needed. With Epic-like signature funciton is pure and testable.
 - Full-powered RxJS. Do whatever you want with Observables. No limitation nor compromise.
-- Fully tested.
+- Fully tested. We believe in stability first. This project will always maintain a 100% coverage.
 - Tiny and fast. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
 
 ## Why?
@@ -102,12 +102,6 @@ Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/exa
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
 
 Note that there are also some useful [utilities](https://observable-hooks.js.org/modules/_helpers_.html) for common use cases to reduce garbage collection.
-
-All available APIs can be imported from the entry.
-
-```javascript
-import { ... } from 'observable-hooks'
-```
 
 ## Overly Simplified Examples
 

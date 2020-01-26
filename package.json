@@ -1,7 +1,7 @@
 {
   "name": "observable-hooks",
   "version": "2.1.4",
-  "description": "React hooks for RxJS Observables with powerful APIs.",
+  "description": "React hooks for RxJS Observables. Simple, flexible, testable and performant.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "typings": "dist/cjs/index.d.ts",
@@ -19,7 +19,8 @@
     "react",
     "hooks",
     "observable",
-    "rxjs"
+    "rxjs",
+    "async"
   ],
   "author": "CRIMX<straybugs@gmail.com>",
   "license": "MIT",
@@ -28,6 +29,8 @@
     "build": "shx rm -rf dist && yarn lint && yarn build:esm && yarn build:cjs",
     "build:esm": "shx rm -rf dist/esm && cross-env NODE_ENV=production tsc -p tsconfig.json --module es2015 --outDir dist/esm",
     "build:cjs": "shx rm -rf dist/cjs && cross-env NODE_ENV=production tsc -p tsconfig.json --module commonjs --outDir dist/cjs",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "lint": "eslint src/**",
     "doc": "shx rm -rf typedoc && typedoc src",
     "test": "jest",
@@ -54,6 +57,7 @@
     "@types/react-test-renderer": "^16.8.2",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
+    "@vuepress/plugin-pwa": "^1.2.0",
     "commitizen": "^4.0.3",
     "coveralls": "^3.0.5",
     "cross-env": "^5.2.0",
@@ -80,6 +84,8 @@
     "standard-version": "^6.0.1",
     "ts-jest": "^24.0.2",
     "typedoc": "^0.14.2",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "vuepress": "^1.2.0",
+    "vuepress-plugin-container": "^2.1.2"
   }
 }
