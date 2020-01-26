@@ -105,7 +105,8 @@ You may alreay notice that the first function argument of [`useObservable`](#use
 [useObservableCallback]: ../api/README.md#useobservablecallback
 [useSubscription]: ../api/README.md#usesubscription
 [useObservableState]: ../api/README.md#useobservablestate
-[identity]: ../api/README.md#identity
-[pluckFirst]: ../api/README.md#pluckfirst
-[pluckCurrentTargetValue]: ../api/README.md#pluckcurrenttargetvalue
-[pluckCurrentTargetChecked]: ../api/README.md#pluckcurrenttargetchecked
+
+[identity]: ../api/helpers.md#identity
+[pluckFirst]: ../api/helpers.md#pluckfirst
+[pluckCurrentTargetValue]: ../api/helpers.md#pluckcurrenttargetvalue
+[pluckCurrentTargetChecked]: ../api/helpers.md#pluckcurrenttargetchecked

@@ -18,57 +18,26 @@ import { useRefFn, getEmptySubject } from './helpers'
  * the same Observable. It is not safe to access closure (except other Observables)
  * directly inside `init`. Use [[useObservable]] and `withLatestFrom` instead.
  *
- * Examples:
+ * @template TOutput Output value within Observable.
+ * @template TInput Selected values.
+ * @template TParams A tuple of event callback parameters.
  *
- * ```typescript
- * import { useObservableCallback, useSubscription } from 'observable-hooks'
- *
- * const Comp = () => {
- *   const [onChange, textChange$] = useObservableCallback<
- *     string,
- *     React.FormEvent<HTMLInputElement>
- *   >(event$ => event$.pipe(
- *     pluck('currentTarget', 'value')
- *   )) // or just use "pluckCurrentTargetValue" helper
- *
- *   useSubscription(textChange$, console.log)
- *
- *   return <input type="text" onChange={onChange} />
- * }
- * ```
- *
- * Transform event arguments:
- *
- * ```typescript
- * import { useObservableCallback, identity } from 'observable-hooks'
- *
- * const [onResize, height$] = useObservableCallback<
- *   number,
- *   number,
- *   [number, number]
- * >(identity, args => args[1])
- *
- * // onResize is called with width and hegiht
- * // height$ gets height values
- * onResize(100, 500)
- * ```
- *
- * @param init A **pure** function that, when applied to an inputs Observable,
+ * @param init A pure function that, when applied to an Observable,
  * returns an Observable.
- * @param selector A function that transforms a list of event arguments
+ * @param selector A function that transforms an array of event arguments
  * into a single value.
  */
 export function useObservableCallback<
-  Output,
-  Event = Output,
-  Args extends any[] = [Event]
+  TOutput,
+  TInput = TOutput,
+  TParams extends Readonly<any[]> = [TInput]
 >(
-  init: (events$: Observable<Event>) => Observable<Output>,
-  selector?: (args: Args) => Event
-): [(...args: Args) => void, Observable<Output>] {
-  const events$Ref = useRefFn<Subject<Event>>(getEmptySubject)
+  init: (events$: Observable<TInput>) => Observable<TOutput>,
+  selector?: (args: TParams) => TInput
+): [(...args: TParams) => void, Observable<TOutput>] {
+  const events$Ref = useRefFn<Subject<TInput>>(getEmptySubject)
   const outputs$Ref = useRefFn(() => init(events$Ref.current))
-  const callbackRef = useRef((...args: Args) => {
+  const callbackRef = useRef((...args: TParams) => {
     events$Ref.current.next(selector ? selector(args) : args[0])
   })
   return [callbackRef.current, outputs$Ref.current]

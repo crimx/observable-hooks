@@ -13,7 +13,7 @@ export function identity<T>(value: T): T {
 }
 
 /**
- * Transform an Observable of Arraylike to an Observable
+ * Maps an Observable of Arraylike to an Observable
  * of the first item.
  *
  * Example:
@@ -22,15 +22,17 @@ export function identity<T>(value: T): T {
  * const text$ = useObservable(pluckFirst, [props.text])
  * ```
  *
+ * @param inputs$ An Observable of arraylike.
+ *
  */
-export function pluckFirst<T extends ArrayLike<any>>(
-  inputs$: Observable<T>
-): Observable<T[0]> {
-  return pluck<T, 0>(0)(inputs$)
+export function pluckFirst<TArr extends ArrayLike<any>>(
+  inputs$: Observable<TArr>
+): Observable<TArr[0]> {
+  return pluck<TArr, 0>(0)(inputs$)
 }
 
 /**
- * Transform an Observable of DOM events to an Observable
+ * Maps an Observable of DOM events to an Observable
  * of the currentTarget value.
  *
  * Example:
@@ -44,13 +46,15 @@ export function pluckFirst<T extends ArrayLike<any>>(
  *
  */
 export function pluckCurrentTargetValue<
-  T extends { currentTarget: { value: any } }
->(events$: Observable<T>): Observable<T['currentTarget']['value']> {
-  return pluck<T, 'currentTarget', 'value'>('currentTarget', 'value')(events$)
+  TEvent extends { currentTarget: { value: any } }
+>(event$: Observable<TEvent>): Observable<TEvent['currentTarget']['value']> {
+  return pluck<TEvent, 'currentTarget', 'value'>('currentTarget', 'value')(
+    event$
+  )
 }
 
 /**
- * Transform an Observable of DOM events to an Observable
+ * Maps an Observable of DOM events to an Observable
  * of the currentTarget checked.
  *
  * Example:
@@ -64,10 +68,10 @@ export function pluckCurrentTargetValue<
  *
  */
 export function pluckCurrentTargetChecked<
-  T extends { currentTarget: { checked: any } }
->(events$: Observable<T>): Observable<T['currentTarget']['checked']> {
-  return pluck<T, 'currentTarget', 'checked'>('currentTarget', 'checked')(
-    events$
+  TEvent extends { currentTarget: { checked: any } }
+>(event$: Observable<TEvent>): Observable<TEvent['currentTarget']['checked']> {
+  return pluck<TEvent, 'currentTarget', 'checked'>('currentTarget', 'checked')(
+    event$
   )
 }
 

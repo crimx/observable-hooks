@@ -12,6 +12,7 @@ module.exports = {
     // edit footer
     docsDir: 'docs',
     editLinks: true,
+    displayAllHeaders: true,
     locales: {
       '/': {
         nav: [
@@ -31,7 +32,14 @@ module.exports = {
               ]
             }
           ],
-          '/api/': [''],
+          '/api/': [
+            {
+              title: 'API Reference', // required
+              collapsable: false, // optional, defaults to true
+              sidebarDepth: 2, // optional, defaults to 1
+              children: ['/api/', '/api/helpers']
+            }
+          ],
           '/guide/': [
             {
               title: 'Guide', // required

@@ -16,123 +16,71 @@ import { useObservableCallback } from './use-observable-callback'
  *
  * ⚠ **Note:** Due to hooks policies you can offer either a function or an Observable
  * as the first argument but do not change to one another during Component's life cycle.
- *
+ *Subscription will auto-unsubscribe when unmount, you can also unsubscribe manually.
  * You can also use the optional `initState` which will be directly passed to the result.
  * But if sync values are also emitted from the Observable `initState` will be ignored.
  *
  * It it recommended to use `initState` for simple primitive value.
  * For others, init with the Observable to save some (re)computations.
  *
- * Examples:
+ * @template TState Output state.
+ * @template TSyncInit Does the Observable emit sync values?
  *
- *
- * Offer an Observable
- *
- * ```typescript
- * const count$ = useObservable(() => interval(1000))
- * const count = useObservableState(count$)
- * ```
- *
- * Offer an init function
- *
- * ```typescript
- * const [text, updateText] = useObservableState<string>(
- *   text$ => text$.pipe(delay(1000))
- * )
- * ```
- *
- * With different types
- *
- * ```typescript
- * const [isValid, updateText] = useObservableState<boolean, string>(text$ =>
- *   text$.pipe(map(text => text.length > 1))
- * )
- * ```
- *
- * With init value:
- *
- * ```typescript
- * const count$ = useObservable(() => interval(1000))
- * const count = useObservableState(count$, -1)
- * ```
- *
- * Or function with init value:
- *
- * ```typescript
- * // Types now can be inferred
- * const [text, updateText] = useObservableState(
- *   text$ => text$.pipe(delay(1000)),
- *   'init text'
- * )
- * ```
- *
- * Or use `startWith`:
- *
- * ```typescript
- * const [text, updateText] = useObservableState<string>(
- *   text$ => text$.pipe(delay(1000), startWith('init text')),
- * )
- * ```
- *
- * (From v2.1.2) Pass `true` to `WithSyncValues` generic to remove `undefined`
- * from resulted type.
- *
- * ```typescript
- * // time is `string` now instead of `string | undefined`
- * const time = useObservableState<string, true>(
- *   useObservable(
- *     () => interval(1000).pipe(
- *       startWith(-1),
- *       map(() => new Date().toLocaleString())
- *     )
- *   )
- * )
- * ```
- *
- * Event listenr:
- *
- * ```typescript
- * import { pluckCurrentTargetValue, useObservableState } from 'observable-hooks'
- *
- * const [text, onChange] = useObservableState<
- *  string,
- *  React.ChangeEvent<HTMLInputElement>
- * >(pluckCurrentTargetValue, '')
- * ```
+ * @param input$ An Observable.
  */
-export function useObservableState<State, WithSyncValues = false>(
-  inputs$: Observable<State>
-): WithSyncValues extends false ? State | undefined : State
-export function useObservableState<State>(
-  inputs$: Observable<State>,
-  initState: State
-): State
-export function useObservableState<
-  State,
-  Input = State,
-  WithSyncValues = false
->(
-  init: (inputs$: Observable<Input>) => Observable<State>
+export function useObservableState<TState, TSyncInit = false>(
+  input$: Observable<TState>
+): TSyncInit extends false ? TState | undefined : TState
+/**
+ * @template TState Output state.
+ *
+ * @param input$ An Observable.
+ * @param initState Initial state.
+ */
+export function useObservableState<TState>(
+  input$: Observable<TState>,
+  initState: TState
+): TState
+/**
+ * @template TState Output state.
+ * @template TInput Input values.
+ * @template TSyncInit Does the Observable emit sync values?
+ *
+ * @param init A pure function that, when applied to an Observable,
+ * returns an Observable.
+ */
+export function useObservableState<TState, TInput = TState, TSyncInit = false>(
+  init: (input$: Observable<TInput>) => Observable<TState>
 ): [
-  WithSyncValues extends false ? State | undefined : State,
-  (input: Input) => void
+  TSyncInit extends false ? TState | undefined : TState,
+  (input: TInput) => void
 ]
-export function useObservableState<State, Input = State>(
-  init: (inputs$: Observable<Input>) => Observable<State>,
-  initState: State
-): [State, (input: Input) => void]
-export function useObservableState<State, Input = State>(
+/**
+ * Different input output types with initial state.
+ *
+ * @template TState Output state.
+ * @template TInput Input values.
+ *
+ * @param init A pure function that, when applied to an Observable,
+ * returns an Observable.
+ * @param initState Initial state.
+ */
+export function useObservableState<TState, TInput = TState>(
+  init: (input$: Observable<TInput>) => Observable<TState>,
+  initState: TState
+): [TState, (input: TInput) => void]
+export function useObservableState<TState, TInput = TState>(
   ...args:
-    | [Observable<State>]
-    | [Observable<State>, State]
-    | [((inputs$: Observable<Input>) => Observable<State>)]
-    | [((inputs$: Observable<Input>) => Observable<State>), State]
-): State | undefined | [State | undefined, (input: Input) => void] {
-  const stateRef = useRef<State | undefined>(args[1])
-  const setStateRef = useRef<Dispatch<SetStateAction<State | undefined>>>()
+    | [Observable<TState>]
+    | [Observable<TState>, TState]
+    | [((input$: Observable<TInput>) => Observable<TState>)]
+    | [((input$: Observable<TInput>) => Observable<TState>), TState]
+): TState | undefined | [TState | undefined, (input: TInput) => void] {
+  const stateRef = useRef<TState | undefined>(args[1])
+  const setStateRef = useRef<Dispatch<SetStateAction<TState | undefined>>>()
 
-  let callback: undefined | ((input: Input) => void)
-  let states$: Observable<State>
+  let callback: undefined | ((input: TInput) => void)
+  let states$: Observable<TState>
   if (typeof args[0] === 'function') {
     ;[callback, states$] = useObservableCallback(args[0])
   } else {

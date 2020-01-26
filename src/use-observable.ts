@@ -21,77 +21,35 @@ import { useRefFn } from './helpers'
  * dependencies array but do not change to one another during Component's life cycle.
  * The length of the dependencies array must also be fixed.
  *
- * Examples:
+ * @template TOutupt Output value in Observable
  *
- * ```typescript
- * interface CompProps {
- *   isOpen: boolean
- * }
- *
- * const Comp: React.FC<CompProps> = props => {
- *   const [showPanel, setShowPanel] = useState(false)
- *
- *   // Listen to props or state change
- *   const enhanced$ = useObservable(
- *     inputs$ => inputs$.pipe(map(([isOpen, showPanel]) => isOpen && showPanel)),
- *     [props.isOpen, showPanel]
- *   )
- * }
- * ```
- *
- * Create Observable
- *
- * ```typescript
- * const now$ = useObservable(
- *   () => interval(1000).pipe(
- *     map(() => new Date().toLocaleString())
- *   )
- * )
- * ```
- *
- * Transform Observables:
- *
- * ```typescript
- * // outers$ are created from other React-unrelated module
- * const enhanced$ = useObservable(() => outers$.pipe(mapTo(false)))
- * ```
- *
- * Mix them all together:
- *
- * ```typescript
- * const enhanced$ = useObservable(
- *   inputs$ => isEven$.pipe(
- *     withLatestFrom(inputs$),
- *     map(([isEven, [isOpen]]) => isEven && isOpen)
- *   ),
- *   [props.isOpen]
- * )
- * ```
- *
- * @param init A function that, when applied to an inputs Observable,
+ * @param init A pure function that, when applied to an Observable,
  * returns an Observable.
  */
-export function useObservable<State>(
-  init: () => Observable<State>
-): Observable<State>
+export function useObservable<TOutupt>(
+  init: () => Observable<TOutupt>
+): Observable<TOutupt>
 /**
- * @param init A function that, when applied to an inputs Observable,
+ * @template TOutupt Output value within Observable.
+ * @template TInputs An readonly tuple of all dependencies.
+ *
+ * @param init A pure function that, when applied to an Observable,
  * returns an Observable.
- * @param inputs An array of dependencies. When one of the dependencies
+ * @param inputs An dependency array with fixed length. When one of the dependencies
  * changes the Observable in `init` will emit an array of all the dependencies.
  */
-export function useObservable<State, Inputs extends Readonly<any[]>>(
-  init: (inputs$: Observable<Inputs>) => Observable<State>,
-  inputs: Inputs
-): Observable<State>
-export function useObservable<State, Inputs extends Readonly<any[]>>(
+export function useObservable<TOutupt, TInputs extends Readonly<any[]>>(
+  init: (inputs$: Observable<TInputs>) => Observable<TOutupt>,
+  inputs: TInputs
+): Observable<TOutupt>
+export function useObservable<TOutupt, TInputs extends Readonly<any[]>>(
   init:
-    | (() => Observable<State>)
-    | ((inputs$: Observable<Inputs>) => Observable<State>),
-  inputs?: Inputs
-): Observable<State> {
+    | (() => Observable<TOutupt>)
+    | ((inputs$: Observable<TInputs>) => Observable<TOutupt>),
+  inputs?: TInputs
+): Observable<TOutupt> {
   if (!inputs) {
-    return useRefFn(init as () => Observable<State>).current
+    return useRefFn(init as () => Observable<TOutupt>).current
   }
 
   const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))

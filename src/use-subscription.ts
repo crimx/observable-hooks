@@ -17,38 +17,16 @@ import { useEffect } from 'react'
  * (From v2.0) You can access closure directly inside callback like in `useEffect`.
  * `useSubscription` will ensure the latest callback is called.
  *
- * Examples:
+ * @template TInput Input value within Observable.
  *
- * ```typescript
- * const subscription = useSubscription(events$, e => console.log(e.type))
- * ```
- *
- * On complete
- *
- * ```typescript
- * const subscription = useSubscription(events$, null, null, () => console.log('complete'))
- * ```
- *
- * Access closure:
- *
- * ```typescript
- * const [debug, setDebug] = useState(false)
- * const subscription = useSubscription(events$, null, error => {
- *   if (debug) {
- *     console.log(error)
- *   }
- * })
- * ```
- *
- * Invoke props callback
- *
- * ```typescript
- * const subscription = useSubscription(events$, props.onEvent)
- * ```
+ * @param input$ Input Observable.
+ * @param next Notify when a new value is emitted.
+ * @param error Notify when a new error is thrown.
+ * @param complete Notify when the Observable is complete.
  */
-export function useSubscription<T>(
-  stream$: Observable<T>,
-  next?: ((value: T) => void) | null | undefined,
+export function useSubscription<TInput>(
+  input$: Observable<TInput>,
+  next?: ((value: TInput) => void) | null | undefined,
   error?: ((error: any) => void) | null | undefined,
   complete?: (() => void) | null | undefined
 ): Subscription {
@@ -63,7 +41,7 @@ export function useSubscription<T>(
   cbRef.current.complete = complete
 
   const subscriptionRef = useRefFn(() =>
-    stream$.subscribe({
+    input$.subscribe({
       next: value => cbRef.current.next && cbRef.current.next(value),
       error: error => cbRef.current.error && cbRef.current.error(error),
       complete: () => cbRef.current.complete && cbRef.current.complete()
