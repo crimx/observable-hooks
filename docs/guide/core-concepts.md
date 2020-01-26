@@ -61,7 +61,7 @@ function App(props) {
 }
 ```
 
-If you already have multiple Observables and want to do something with them together, use [`useObservable`][useObservable] without dependencies.
+If you already have multiple Observables and want to do something with them together, use [`useObservable`][useObservable] but without dependencies.
 
 ```javascript
 const enhanced$ = useObservable(() => {
@@ -98,15 +98,11 @@ const subscription = useSubscription(events$, props.onChange)
 
 ## Helpers
 
-You may alreay notice that the first function argument of [`useObservable`](#useobservable), [`useObservableCallback`](#useobservablecallback) and [`useObservableState`](#useobservablestate) is pure. This makes it highly testable and reuseable. In fact, Observable Hooks offers a few common helpers to reduce garbage collection. They are [`identity`][identity], [`pluckFirst`][pluckFirst], [`pluckCurrentTargetValue`][pluckCurrentTargetValue] and [`pluckCurrentTargetChecked`][pluckCurrentTargetChecked].
-
+You may alreay notice that the first function argument of [`useObservable`](#useobservable), [`useObservableCallback`](#useobservablecallback) and [`useObservableState`](#useobservablestate) is pure. This makes it highly testable and reuseable. In fact, Observable Hooks offers a few common [helpers][helpers] to reduce garbage collection.
 
 [useobservable]: ../api/README.md#useobservable
 [useObservableCallback]: ../api/README.md#useobservablecallback
 [useSubscription]: ../api/README.md#usesubscription
 [useObservableState]: ../api/README.md#useobservablestate
 
-[identity]: ../api/helpers.md#identity
-[pluckFirst]: ../api/helpers.md#pluckfirst
-[pluckCurrentTargetValue]: ../api/helpers.md#pluckcurrenttargetvalue
-[pluckCurrentTargetChecked]: ../api/helpers.md#pluckcurrenttargetchecked
+[helpers]: ../api/helpers.md
