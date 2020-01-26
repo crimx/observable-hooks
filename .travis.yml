@@ -6,17 +6,16 @@ script:
   - yarn test
   - yarn build
 after_success:
-  - yarn doc
+  - yarn docs:build
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: false
-  local_dir: 'typedoc'
+  local_dir: 'docs/.vuepress/dist'
   on:
     branch: master
 before_deploy:
-  - touch 'typedoc/.nojekyll'
-  - cp CNAME typedoc/
-  - sed -i '/typedoc/d' .gitignore
+  - touch 'docs/.vuepress/dist/.nojekyll'
+  - sed -i '/vuepress/d' .gitignore
