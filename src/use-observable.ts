@@ -17,7 +17,7 @@ import { useRefFn } from './helpers'
  * directly inside `init`.
  * You should pass them as dependencies through the second argument.
  *
- * ⚠ **Note:** Due to hooks policies you can either offer or omit the
+ * ⚠ **Note:** Due to hooks policy you can either offer or omit the
  * dependencies array but do not change to one another during Component's life cycle.
  * The length of the dependencies array must also be fixed.
  *

@@ -16,7 +16,7 @@ useObservable will call init once and always return the same Observable. It is n
 :::
 
 ::: danger CAUTION
-Due to hooks policies you can either offer or omit the dependencies array but do not change to one another during Component's life cycle. The length of the dependencies array must also be fixed.
+Due to hooks policy you can either offer or omit the dependencies array but do not change to one another during Component's life cycle. The length of the dependencies array must also be fixed.
 :::
 
 **Type parameters:**
@@ -90,7 +90,7 @@ Returns a callback function and an events Observable.
 
 Whenever the callback is called, the Observable will emit the first argument of the callback.
 
-<Badge text="v2.1.0"/> From <code>v2.1.0</code> optionally accepts a selector function which transforms a list of event arguments into a single value.
+<Badge text="v2.1.0"/> From <code>v2.1.0</code> optionally accepts a selector function which transforms an array of event arguments into a single value.
 
 ::: tip
 If you want value output instead of Observable see example on [useObservableState](#useobservablestate).
@@ -237,7 +237,7 @@ It it recommended to use `initState` for simple primitive value. For others, ini
 :::
 
 ::: danger CAUTION
-Due to hooks policies you can offer either a function or an Observable as the first argument but do not change to one another during Component's life cycle.
+Due to hooks policy you can offer either a function or an Observable as the first argument but do not change to one another during Component's life cycle.
 :::
 
 <Badge text="v2.1.2"/> From <code>v2.1.2</code> you can pass <code>true</code> to <code>TSyncInit</code> generic to remove <code>undefined</code> from resulted type.

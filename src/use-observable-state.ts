@@ -14,7 +14,7 @@ import { useObservableCallback } from './use-observable-callback'
  * the same Observable. It is not safe to access closure (except other Observables)
  * directly inside `init`. Use [[useObservable]] and `withLatestFrom` instead.
  *
- * ⚠ **Note:** Due to hooks policies you can offer either a function or an Observable
+ * ⚠ **Note:** Due to hooks policy you can offer either a function or an Observable
  * as the first argument but do not change to one another during Component's life cycle.
  *Subscription will auto-unsubscribe when unmount, you can also unsubscribe manually.
  * You can also use the optional `initState` which will be directly passed to the result.
