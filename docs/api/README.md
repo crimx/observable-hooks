@@ -180,9 +180,9 @@ Note that changes of callbacks will not trigger an emission. If you need that ju
 Name | Type | Description
 ------ | ------ | ------
 `input$` | `Observable<TInput>` | Input Observable.
-`next` | `null | undefined | (value: TInput): void` | Notify when a new value is emitted.
-`error` | `null | undefined | (error: any): void` | Notify when a new error is thrown.
-`complete` | `null | undefined | (): void` | Notify when the Observable is complete.
+`next` | `null` | undefined | (value: TInput): void` | Notify when a new value is emitted.
+`error` | `null` | undefined | (error: any): void` | Notify when a new error is thrown.
+`complete` | `null` | undefined | (): void` | Notify when the Observable is complete.
 
 **Examples:**
 
@@ -193,7 +193,7 @@ const subscription = useSubscription(events$, e => console.log(e.type))
 On complete
 
 ```typescript
-* const subscription = useSubscription(events$, null, null, () => console.log('complete'
+const subscription = useSubscription(events$, null, null, () => console.log('complete'
 ```
 
 Access closure:
