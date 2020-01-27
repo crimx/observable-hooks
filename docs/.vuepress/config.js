@@ -22,8 +22,9 @@ module.exports = {
         ],
         sidebar: {
           '/examples/': [
+            ['/examples/', 'Simple Examples'],
             {
-              title: 'Examples', // required
+              title: 'Example Projects', // required
               collapsable: false, // optional, defaults to true
               sidebarDepth: 2, // optional, defaults to 1
               children: [
