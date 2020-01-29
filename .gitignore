@@ -87,6 +87,7 @@ docs/.vuepress/dist
 
 # build directory
 dist
+build
 
 typedoc
 

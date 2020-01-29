@@ -1,20 +1,11 @@
 {
-  "name": "observable-hooks",
-  "version": "2.1.5",
+  "name": "observable-hooks-mono",
   "description": "React hooks for RxJS Observables. Simple, flexible, testable and performant.",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "typings": "dist/cjs/index.d.ts",
-  "sideEffects": false,
-  "files": [
-    "dist/**/*",
-    "README.md",
-    "LICENSE"
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:crimx/observable-hooks.git"
-  },
   "keywords": [
     "react",
     "hooks",
@@ -25,38 +16,32 @@
   "author": "CRIMX<straybugs@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "commit": "git-cz",
-    "build": "shx rm -rf dist && yarn lint && yarn build:esm && yarn build:cjs",
-    "build:esm": "shx rm -rf dist/esm && cross-env NODE_ENV=production tsc -p tsconfig.json --module es2015 --outDir dist/esm",
-    "build:cjs": "shx rm -rf dist/cjs && cross-env NODE_ENV=production tsc -p tsconfig.json --module commonjs --outDir dist/cjs",
+    "postinstall": "lerna bootstrap",
+    "build": "lerna run build && lerna bootstrap",
+    "test": "jest --coverage",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "lint": "eslint src/**",
-    "doc": "shx rm -rf typedoc && typedoc src",
-    "test": "jest",
+    "commit": "git-cz",
+    "lint": "eslint packages/**",
     "test:CI": "jest --coverage --coverageReporters=text-lcov | coveralls",
-    "release": "standard-version"
+    "release": "lerna version --conventional-commits",
+    "ship": "lerna run build && lerna publish from-package"
   },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0",
-    "rxjs": ">=6.0.0"
-  },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
-    "@testing-library/react-hooks": "^1.1.0",
+    "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^24.0.15",
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.4",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
     "@types/react-test-renderer": "^16.8.2",
-    "@typescript-eslint/eslint-plugin": "^1.12.0",
-    "@typescript-eslint/parser": "^1.12.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
     "@vuepress/plugin-pwa": "^1.2.0",
     "commitizen": "^4.0.3",
     "coveralls": "^3.0.5",
@@ -74,12 +59,13 @@
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^3.0.1",
     "jest": "^24.8.0",
+    "lerna": "^3.20.2",
     "node-typescript-compiler": "^2.0.0",
     "prettier": "^1.18.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-test-renderer": "^16.8.6",
-    "rxjs": "^6.5.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-test-renderer": "^16.12.0",
+    "rxjs": "^6.5.4",
     "shx": "^0.3.2",
     "standard-version": "^6.0.1",
     "ts-jest": "^24.0.2",

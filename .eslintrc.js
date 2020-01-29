@@ -6,14 +6,15 @@ module.exports = {
   },
   env: {
     browser: true,
-    node: true
+    node: true,
+    'jest/globals': true
   },
   extends: [
     'standard',
     'plugin:prettier/recommended',
     'plugin:react/recommended'
   ],
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'jest'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
@@ -37,7 +38,13 @@ module.exports = {
     // https://github.com/benmosher/eslint-plugin-import/issues/1357
     'import/export': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        args: 'none',
+        ignoreRestSiblings: true
+      }
+    ],
     'no-dupe-class-members': 'off'
   }
 }
