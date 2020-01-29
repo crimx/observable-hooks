@@ -73,8 +73,8 @@ export function useObservableState<TState, TInput = TState>(
   ...args:
     | [Observable<TState>]
     | [Observable<TState>, TState]
-    | [((input$: Observable<TInput>) => Observable<TState>)]
-    | [((input$: Observable<TInput>) => Observable<TState>), TState]
+    | [(input$: Observable<TInput>) => Observable<TState>]
+    | [(input$: Observable<TInput>) => Observable<TState>, TState]
 ): TState | undefined | [TState | undefined, (input: TInput) => void] {
   const stateRef = useRef<TState | undefined>(args[1])
   const setStateRef = useRef<Dispatch<SetStateAction<TState | undefined>>>()

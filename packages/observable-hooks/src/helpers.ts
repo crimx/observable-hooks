@@ -48,9 +48,10 @@ export function pluckFirst<TArr extends ArrayLike<any>>(
 export function pluckCurrentTargetValue<
   TEvent extends { currentTarget: { value: any } }
 >(event$: Observable<TEvent>): Observable<TEvent['currentTarget']['value']> {
-  return pluck<TEvent, 'currentTarget', 'value'>('currentTarget', 'value')(
-    event$
-  )
+  return pluck<TEvent, 'currentTarget', 'value'>(
+    'currentTarget',
+    'value'
+  )(event$)
 }
 
 /**
@@ -70,9 +71,10 @@ export function pluckCurrentTargetValue<
 export function pluckCurrentTargetChecked<
   TEvent extends { currentTarget: { checked: any } }
 >(event$: Observable<TEvent>): Observable<TEvent['currentTarget']['checked']> {
-  return pluck<TEvent, 'currentTarget', 'checked'>('currentTarget', 'checked')(
-    event$
-  )
+  return pluck<TEvent, 'currentTarget', 'checked'>(
+    'currentTarget',
+    'checked'
+  )(event$)
 }
 
 /**
