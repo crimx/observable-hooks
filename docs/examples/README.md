@@ -9,7 +9,7 @@ import { from, of } from 'rxjs'
 import { map, switchMap, startWith, catchError } from 'rxjs/operators'
 import { useObservableState } from 'observable-hooks'
 import { fetchData } from './api'
-import { SuccessUI, LoadingUI, ErrorUI } from './components'
+import { SuccessUI, LoadingUI, FailedUI } from './components'
 
 export function App() {
   const [status, onFetchData] = useObservableState(
@@ -23,7 +23,7 @@ export function App() {
           startWith(<LoadingUI />)
         )
       ),
-      catchError(error => of(<ErrorUI error={error} />))
+      catchError(error => of(<FailedUI error={error} />))
     )
   )
 
