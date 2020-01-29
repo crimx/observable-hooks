@@ -13,6 +13,10 @@ module.exports = {
     docsDir: 'docs',
     editLinks: true,
     displayAllHeaders: true,
+    algolia: {
+      apiKey: '473fd2b63b7c903e3f950d4fef8351d1',
+      indexName: 'observable-hooks'
+    },
     locales: {
       '/': {
         nav: [
