@@ -43,13 +43,8 @@ export function useSubscription<TInput>(
   const subscriptionRef = useRefFn(() =>
     input$.subscribe({
       next: value => cbRef.current.next && cbRef.current.next(value),
-      error: error => {
-        if (cbRef.current.error) {
-          cbRef.current.error(error)
-        } else if (process.env.NODE_ENV !== 'production') {
-          console.error(error)
-        }
-      },
+      error: error =>
+        cbRef.current.error ? cbRef.current.error(error) : console.error(error),
       complete: () => cbRef.current.complete && cbRef.current.complete()
     })
   )
