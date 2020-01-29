@@ -1,7 +1,0 @@
-{
-  "mode": "modules",
-  "module": "commonjs",
-  "target": "ES5",
-  "out": "typedoc",
-  "exclude": "**/use-observable-props-callback.ts"
-}

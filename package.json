@@ -83,7 +83,6 @@
     "shx": "^0.3.2",
     "standard-version": "^6.0.1",
     "ts-jest": "^24.0.2",
-    "typedoc": "^0.14.2",
     "typescript": "^3.5.3",
     "vuepress": "^1.2.0",
     "vuepress-plugin-container": "^2.1.2"
