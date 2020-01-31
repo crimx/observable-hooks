@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs'
+import { Observable, Subject, Subscription } from 'rxjs'
 
 interface Handler<T = any> {
   suspender: Promise<T>
@@ -22,7 +22,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private error: any = null
 
-  private input$: Observable<TInput>
+  private subscription: Subscription
 
   private isSuccess = (value: TInput): value is TOutput => true
 
@@ -42,9 +42,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       this.isSuccess = isSuccess as (value: TInput) => value is TOutput
     }
 
-    this.input$ = input$
-
-    this.input$.subscribe(
+    this.subscription = input$.subscribe(
       this.handleNext,
       this.handleError,
       this.handleComplete
@@ -59,6 +57,10 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       throw this.handler.suspender
     }
     return this.value!
+  }
+
+  destroy(): void {
+    this.subscription.unsubscribe()
   }
 
   private handleNext = (value: TInput): void => {
