@@ -1,5 +1,4 @@
 import { Observable, Subject } from 'rxjs'
-import { share } from 'rxjs/operators'
 
 interface Handler<T = any> {
   suspender: Promise<T>
@@ -7,8 +6,14 @@ interface Handler<T = any> {
   reject: (error?: any) => void
 }
 
+/**
+ * Adapter that rewires Observable to Suspense resource.
+ */
 export class ObservableResource<TInput, TOutput extends TInput = TInput> {
-  // Force update
+  /**
+   * Unlike Promise, Observable is a multiple push mechanism.
+   * Only force update when Suspense needs to restart.
+   */
   readonly shouldUpdate$$ = new Subject<undefined>()
 
   private handler: Handler | null = this.getHandler()
@@ -17,10 +22,15 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private error: any = null
 
-  private input$$: Observable<TInput>
+  private input$: Observable<TInput>
 
   private isValid = (value: TInput): value is TOutput => true
 
+  /**
+   * @param input$ An Observable.
+   * @param isValid A function that determines if the value emitted from
+   * `input$` is valid. Invalid values will trigger Suspense. Default all valid.
+   */
   constructor(
     input$: Observable<TInput>,
     isValid?: TInput extends TOutput
@@ -31,9 +41,9 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       this.isValid = isValid as (value: TInput) => value is TOutput
     }
 
-    this.input$$ = input$ instanceof Subject ? input$ : share<TInput>()(input$)
+    this.input$ = input$
 
-    this.input$$.subscribe(
+    this.input$.subscribe(
       this.handleNext,
       this.handleError,
       this.handleComplete
