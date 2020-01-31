@@ -24,21 +24,22 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private input$: Observable<TInput>
 
-  private isValid = (value: TInput): value is TOutput => true
+  private isSuccess = (value: TInput): value is TOutput => true
 
   /**
    * @param input$ An Observable.
-   * @param isValid A function that determines if the value emitted from
-   * `input$` is valid. Invalid values will trigger Suspense. Default all valid.
+   * @param isSuccess A function that determines if the value emitted from
+   * `input$` is of success state. If false a Suspense is triggered.
+   *  Default all true.
    */
   constructor(
     input$: Observable<TInput>,
-    isValid?: TInput extends TOutput
+    isSuccess?: TInput extends TOutput
       ? (value: TInput) => boolean
       : (value: TInput) => value is TOutput
   ) {
-    if (isValid) {
-      this.isValid = isValid as (value: TInput) => value is TOutput
+    if (isSuccess) {
+      this.isSuccess = isSuccess as (value: TInput) => value is TOutput
     }
 
     this.input$ = input$
@@ -62,7 +63,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private handleNext = (value: TInput): void => {
     this.error = null
-    if (this.isValid(value)) {
+    if (this.isSuccess(value)) {
       const isDiff = this.value !== value
       this.value = value
       if (this.handler) {
@@ -75,7 +76,9 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
         this.shouldUpdate$$.next()
       }
     } else if (!this.handler) {
+      // start a new Suspense
       this.handler = this.getHandler()
+      this.shouldUpdate$$.next()
     }
   }
 
@@ -92,6 +95,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private handleComplete = (): void => {
     if (this.handler) {
+      // Last check on next tick
       setTimeout(() => {
         if (this.handler) {
           this.error = new Error('Suspender ended unexpectedly.')
