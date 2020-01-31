@@ -61,6 +61,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   destroy(): void {
     this.subscription.unsubscribe()
+    this.shouldUpdate$$.complete()
   }
 
   private handleNext = (value: TInput): void => {
