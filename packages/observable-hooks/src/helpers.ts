@@ -1,7 +1,7 @@
 /**
  * Useful utilities
  */
-import { useRef, MutableRefObject } from 'react'
+import { useRef, MutableRefObject, useState } from 'react'
 import { Subject, Observable } from 'rxjs'
 import { pluck } from 'rxjs/operators'
 
@@ -112,4 +112,12 @@ export function useRefFn<T extends object | number | string | boolean | symbol>(
     ref.current = init()
   }
   return ref as MutableRefObject<T>
+}
+
+/**
+ * Force re-render Component.
+ */
+export function useForceUpdate(): () => void {
+  const updateState = useState(0)[1]
+  return () => updateState(n => (n + 1) % 1000000)
 }
