@@ -3,7 +3,6 @@ import { Observable, Subject, Subscription } from 'rxjs'
 interface Handler<T = any> {
   suspender: Promise<T>
   resolve: (value?: T) => void
-  reject: (error?: any) => void
 }
 
 /**
@@ -62,6 +61,12 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
   destroy(): void {
     this.subscription.unsubscribe()
     this.shouldUpdate$$.complete()
+    if (this.handler) {
+      this.error = new Error('Resource has been destroyed.')
+      const { resolve } = this.handler
+      this.handler = null
+      resolve()
+    }
   }
 
   private handleNext = (value: TInput): void => {
@@ -88,9 +93,11 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
   private handleError = (error: any): void => {
     this.error = error
     if (this.handler) {
-      const { reject } = this.handler
+      const { resolve } = this.handler
       this.handler = null
-      reject(error)
+      // Resolve instead of reject so that
+      // the resource itself won't throw error
+      resolve()
     } else {
       this.shouldUpdate$$.next()
     }
@@ -98,23 +105,19 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private handleComplete = (): void => {
     if (this.handler) {
-      // Last check on next tick
-      setTimeout(() => {
-        if (this.handler) {
-          this.error = new Error('Suspender ended unexpectedly.')
-          const { reject } = this.handler
-          this.handler = null
-          reject(this.error)
-        }
-      }, 0)
+      this.error = new Error('Suspender ended unexpectedly.')
+      const { resolve } = this.handler
+      this.handler = null
+      // Resolve instead of reject so that
+      // the resource itself won't throw error
+      resolve()
     }
   }
 
   private getHandler(): Handler {
     const handler: Partial<Handler> = {}
-    handler.suspender = new Promise((resolve, reject) => {
+    handler.suspender = new Promise(resolve => {
       handler.resolve = resolve
-      handler.reject = reject
     })
     return handler as Handler
   }
