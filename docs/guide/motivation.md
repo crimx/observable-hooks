@@ -15,3 +15,9 @@ Yes there is a learning curve on RxJS but that is mostly a one-time conceptual t
 ## Why Another Library
 
 Beforing creating observable-hooks we had tried other libraries like [reactjs-hooks-rxjs](https://github.com/leandrohsilveira/reactjs-hooks-rxjs) which is too simple and [rxjs-hooks](https://github.com/LeetCode-OpenSource/rxjs-hooks) in which we found typing issues that were unable to fix.
+
+## What It Is Not
+
+This library is not for replacing state management tools like Redux but to reduce the need of dumping everything into global state.
+
+Using this library does not mean you have to turn everything observable which is not encouraged. It plays well side by side with other hooks. Use it only on places where it's needed.
