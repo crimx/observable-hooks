@@ -17,7 +17,8 @@ React hooks for RxJS Observables. Simple, flexible, testable and performant.
 - Seamless integration of React and RxJS.
   - Props and states to Observables.
   - Observables to states and props events.
-  - Conditional rendering with stream of React Components. (Or Suspense with [use-suspensible](https://github.com/crimx/use-suspensible))
+  - Conditional rendering with stream of React Components.
+  - Render-as-You-Fetch with React Suspense.
   - No `tap` hack needed. With Epic-like signature funciton is pure and testable.
 - Full-powered RxJS. Do whatever you want with Observables. No limitation nor compromise.
 - Fully tested. We believe in stability first. This project will always maintain a 100% coverage.

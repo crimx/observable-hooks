@@ -2,12 +2,18 @@ import { useSubscription } from './use-subscription'
 import { useForceUpdate } from './helpers'
 import { ObservableResource } from './observable-resource'
 
+/**
+ * Consume the Observable resource.
+ *
+ * Unlike Promise, Observable is a multiple push mechanism.
+ * This hook triggers extra re-rendering when Suspense should restart.
+ *
+ * @param resource Observable resource
+ */
 export function useObservableSuspense<TInput, TOutput extends TInput = TInput>(
   resource: ObservableResource<TInput, TOutput>
 ): TOutput {
   const forceUpdate = useForceUpdate()
-  // Unlike Promise, Observable is a multiple push mechanism.
-  // Only force update when Suspense needs to restart.
   useSubscription(resource.shouldUpdate$$, forceUpdate)
   return resource.read()
 }

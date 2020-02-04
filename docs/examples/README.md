@@ -2,7 +2,7 @@
 
 ## Conditional rendering (Vanilla JavaScript)
 
-With observable-hooks you can have a stream of React elements. This is like React Suspense but armed with the incredible RxJS operators. If you want Suspense instead see [use-suspensible](https://github.com/crimx/use-suspensible).
+With observable-hooks you can have a stream of React elements. This is like React Suspense but armed with the incredible RxJS operators. If you want Suspense instead see [Render-as-You-Fetch (using Suspense)](../guide/render-as-you-fetch-suspense.md).
 
 ```jsx
 import { from, of } from 'rxjs'

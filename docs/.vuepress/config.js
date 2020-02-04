@@ -12,7 +12,6 @@ module.exports = {
     // edit footer
     docsDir: 'docs',
     editLinks: true,
-    displayAllHeaders: true,
     algolia: {
       apiKey: '473fd2b63b7c903e3f950d4fef8351d1',
       indexName: 'observable-hooks'
@@ -33,7 +32,8 @@ module.exports = {
               sidebarDepth: 2, // optional, defaults to 1
               children: [
                 ['/examples/typeahead', 'Typeahead'],
-                ['/examples/pomodoro-timer', 'Pomodoro Timer']
+                ['/examples/pomodoro-timer', 'Pomodoro Timer'],
+                ['/examples/suspense', 'Render-as-You-Fetch (using Suspense)']
               ]
             }
           ],
@@ -42,7 +42,7 @@ module.exports = {
               title: 'API Reference', // required
               collapsable: false, // optional, defaults to true
               sidebarDepth: 2, // optional, defaults to 1
-              children: ['/api/', '/api/helpers']
+              children: ['/api/', '/api/suspense', '/api/helpers']
             }
           ],
           '/guide/': [
@@ -51,6 +51,12 @@ module.exports = {
               collapsable: false, // optional, defaults to true
               sidebarDepth: 2, // optional, defaults to 1
               children: ['/guide/', '/guide/motivation', '/guide/core-concepts']
+            },
+            {
+              title: 'Advanced', // required
+              collapsable: false, // optional, defaults to true
+              sidebarDepth: 2, // optional, defaults to 1
+              children: ['/guide/render-as-you-fetch-suspense']
             }
           ]
         },

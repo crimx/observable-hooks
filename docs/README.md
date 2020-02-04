@@ -7,7 +7,7 @@ actionText: Get Started →
 actionLink: /guide/
 features:
 - title: 💫Seamless Integration
-  details: Props, states and Observables can be nicely converted to each other with pure function. No `tap` hack needed.
+  details: Props, states and Observables can be nicely converted to each other with pure function. No `tap` hack needed. Supports Render-as-You-Fetch pattern with React Suspense.
 - title: ☯️Full-powered RxJS
   details: Do whatever you want with Observables. No limitation nor compromise.
 - title: 🛡Fully tested

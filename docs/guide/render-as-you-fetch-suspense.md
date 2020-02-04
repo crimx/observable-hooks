@@ -4,19 +4,16 @@ Observable-hooks offers first-class React Suspense support!
 
 Also see the [suspense](/examples/suspense.html) example project.
 
-::: tip
-See [why](./render-as-you-fetch-observable.md) a stream of React Components could be a better choice for conditional rendering.
-:::
-
 ## Benefits of Observable as Data Source
 
 ### Multiple Push
 
 Since Observable implements multiple push protocol:
 
-| | SINGLE | MULTIPLE |
-| Pull | `Function` | `Iterator` |
-| Push | `Promise` | `Observable` |
+|      |   SINGLE   |   MULTIPLE   |
+| ---- | ---------- | ------------ |
+| Pull | `Function` |  `Iterator`  |
+| Push | `Promise`  | `Observable` |
 
 You can just keep pushing `next` values for new requests instead of replacing the resource.
 
@@ -35,7 +32,7 @@ Just `switchMap` and consume the resource as usual.
 
 ## Usage
 
-Just like the [Render-as-You-Fetch (using Suspense)](https://reactjs.org/docs/concurrent-mode-suspense.html#approach-3-render-as-you-fetch-using-suspense) in React Docs, we first define the data source, then use it directly in Components under Suspense Components.
+Just like the [Render-as-You-Fetch (using Suspense)](https://reactjs.org/docs/concurrent-mode-suspense.html#approach-3-render-as-you-fetch-using-suspense) in React Docs, we first define the data source, then use it directly in Components under Suspense context.
 
 ### Observable Resource
 
@@ -91,11 +88,17 @@ function ProfileTimeline() {
 }
 ```
 
-### Re-trigger Suspense
+### Stale-While-Revalidate Pattern
 
 By default `ObservableResource` will treat every value as "success" value, which means when new value is emitted, the Component will just re-render itself with the new value.
 
-`ObservableResource` also accepts an extra function that determine the if the value is of success state. If false then a Suspense is triggered.
+This is also known as Stale-While-Revalidate, a cache invalidation strategy popularized by [HTTP RFC 5861](https://tools.ietf.org/html/rfc5861).
+
+It first returns the data from cache (stale), then sends the fetch request (revalidate), and finally comes with the up-to-date data again.
+
+### Re-trigger Suspense
+
+To re-trigger Suspense `ObservableResource` also accepts an extra function that determines if the value is of success state. If `false` then a Suspense is triggered.
 
 ```javascript
 export const userResource = new ObservableResource(

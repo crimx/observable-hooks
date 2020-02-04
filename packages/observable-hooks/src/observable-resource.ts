@@ -6,7 +6,7 @@ interface Handler<T = any> {
 }
 
 /**
- * Adapter that rewires Observable to Suspense resource.
+ * Rewires Observable to Relay-like Suspense resource.
  */
 export class ObservableResource<TInput, TOutput extends TInput = TInput> {
   /**
