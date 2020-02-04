@@ -4,7 +4,10 @@
 
 ```typescript
 useObservable<TOutput>(init: function): Observable<TOutput>
-useObservable<TOutput, TInputs>(init: function, inputs: TInputs): Observable<TOutput>
+useObservable<TOutput, TInputs>(
+  init: function,
+  inputs: TInputs
+): Observable<TOutput>
 ```
 
 React function components will be called many times during its life cycle. Create or transform Observables in init function so that the operations won't be repeatedly performed.
@@ -82,7 +85,8 @@ const enhanced$ = useObservable(
 
 ```typescript
 useObservableCallback<TOutput, TInput, TParams>(
-  init: function, selector?: undefined | function
+  init: function,
+  selector?: undefined | function
 ): [function, Observable<TOutput>]
 ```
 
@@ -216,10 +220,20 @@ const subscription = useSubscription(events$, props.onEvent)
 ## useObservableState
 
 ```typescript
-useObservableState<TState, TSyncInit>(input$: Observable<TState>): TSyncInit extends false ? TState | undefined : TState
-useObservableState<TState>(input$: Observable<TState>, initState: TState): TState
-useObservableState<TState, TInput, TSyncInit>(init: function): [TSyncInit extends false ? TState | undefined : TState, function]
-useObservableState<TState, TInput>(init: function, initState: TState): [TState, function]
+useObservableState<TState, TSyncInit>(
+  input$: Observable<TState>
+): TSyncInit extends false ? TState | undefined : TState
+useObservableState<TState>(
+  input$: Observable<TState>,
+  initState: TState
+): TState
+useObservableState<TState, TInput, TSyncInit>(
+  init: function
+): [TSyncInit extends false ? TState | undefined : TState, function]
+useObservableState<TState, TInput>(
+  init: function,
+  initState: TState
+): [TState, function]
 ```
 
 A helper to get value from an Observable.

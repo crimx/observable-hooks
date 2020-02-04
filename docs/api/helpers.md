@@ -1,5 +1,7 @@
 # Helpers
 
+Reduce garbage collection burden.
+
 ## pluckFirst
 
 ```typescript
