@@ -8,7 +8,7 @@ See [Render-as-You-Fetch (using Suspense)](../guide/render-as-you-fetch-suspense
 Class ObservableResource<TInput, TOutput>
 ```
 
-Rewires Observable to Relay-like Suspense resource.
+<Badge text="v2.2.0"/> Rewires Observable to Relay-like Suspense resource.
 
 **Type parameters:**
 
@@ -51,6 +51,11 @@ useObservableSuspense<TInput, TOutput>(
   resource: ObservableResource<TInput, TOutput>
 ): TOutput
 ```
+
+<Badge text="v2.2.0"/> Consume the Observable resource.
+
+Unlike Promise, Observable implements multiple push protocol.
+This hook triggers necessary re-rendering when Suspense should restart.
 
 **Type parameters:**
 
