@@ -15,7 +15,7 @@ React function components will be called many times during its life cycle. Creat
 Accepts a function that returns an Observable. Optionally accepts an array of dependencies which will be turned into Observable and be passed to the init function.
 
 ::: warning
-useObservable will call init once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside init. You should pass them as dependencies through the second argument.
+`useObservable` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. You should pass them as dependencies through the second argument.
 :::
 
 ::: danger CAUTION
@@ -103,7 +103,7 @@ If you want value output instead of Observable see example on [useObservableStat
 ::: warning
 `useObservableCallback` will call `init` once and always return
 the same Observable. It is not safe to access closure (except other Observables)
-directly inside `init`. Use [useObservable](#useobservable) and `withLatestFrom` instead.
+directly inside `init`. Use [`useObservable`](#useobservable) and `withLatestFrom` instead.
 :::
 
 **Type parameters:**
@@ -172,7 +172,7 @@ Subscription will auto-unsubscribe when unmount, you can also unsubscribe manual
 Accepts an Observable and optional `next`, `error`, `complete` functions. These functions must be in correct order. Use `undefined` or `null` for placeholder.
 
 ::: warning
-Note that changes of callbacks will not trigger an emission. If you need that just create another Observable of the callback with [useObservable](#useobservable).
+Note that changes of callbacks will not trigger an emission. If you need that just create another Observable of the callback with [`useObservable`](#useobservable).
 :::
 
 **Type parameters:**
@@ -247,7 +247,7 @@ It it recommended to use `initState` for simple primitive value. For others, ini
 :::
 
 ::: warning
-`useObservableState` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. Use [useObservable](#useobservable) and `withLatestFrom` instead.
+`useObservableState` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. Use [`useObservable`](#useobservable) and `withLatestFrom` instead.
 :::
 
 ::: danger CAUTION

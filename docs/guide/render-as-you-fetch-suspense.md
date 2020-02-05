@@ -104,7 +104,7 @@ To re-trigger Suspense `ObservableResource` also accepts an extra function that 
 export const userResource = new ObservableResource(
   userResource$$,
   // Trigger Suspense on null and undefined
-  value => !!value
+  value => value != null
 )
 ```
 

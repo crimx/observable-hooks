@@ -86,7 +86,7 @@ const subscription = useSubscription(events$, null, error => {
 })
 ```
 
-Directly reference props:
+Reference props directly:
 
 ```javascript
 const subscription = useSubscription(events$, props.onChange)
