@@ -30,6 +30,10 @@ function App() {
 
 Just `switchMap` and consume the resource as usual.
 
+### Advanced Control
+
+With abundant Observable operators you can easily chain subsequent requests, add timeout and retries or other advanced operations over multiple streams.
+
 ## Usage
 
 Just like the [Render-as-You-Fetch (using Suspense)](https://reactjs.org/docs/concurrent-mode-suspense.html#approach-3-render-as-you-fetch-using-suspense) in React Docs, we first define the data source, then use it directly in Components under Suspense context.
