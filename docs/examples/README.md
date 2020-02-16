@@ -2,7 +2,12 @@
 
 ## Conditional rendering (Vanilla JavaScript)
 
-With observable-hooks you can have a stream of React elements. This is like React Suspense but armed with the incredible RxJS operators. If you want Suspense instead see [Render-as-You-Fetch (using Suspense)](../guide/render-as-you-fetch-suspense.md).
+With observable-hooks you can have a stream of React elements. If you want Suspense instead see [Render-as-You-Fetch (using Suspense)](../guide/render-as-you-fetch-suspense.md).
+
+Will this affects the virtual DOM? No. React elements are just objects. In fact this will be faster than Suspense or Error Boudaries on re-rendering because:
+
+1. It does not `throw` and rely on `try`, `catch`. But one may argue that the latter enables context-like usage.
+2. It does not render every branches on rendering, or even not re-render any branch at all if no new value is emitted. It is like a natural memo for elements.
 
 ```jsx
 import { from, of } from 'rxjs'
