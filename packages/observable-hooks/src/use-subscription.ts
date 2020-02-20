@@ -47,7 +47,6 @@ export function useSubscription<TInput>(
         if (cbRef.current.error) {
           cbRef.current.error(error)
         } else {
-          // let error boundaries handle it
           throw error
         }
       },
