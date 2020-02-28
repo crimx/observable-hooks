@@ -34,6 +34,10 @@ Name | Type | Description
 `init` | `(inputs$: Observable<TInputs>): Observable<TOutput>` | A pure function that, when applied to an Observable, returns an Observable.
 `inputs` | `TInputs` | An optional dependency array with fixed length. When one of the dependencies changes the Observable in `init` will emit an array of all the dependencies.
 
+**Returns:**
+
+`Observable<TOutput>` Always the same Observable.
+
 **Examples:**
 
 ```typescript
@@ -119,6 +123,10 @@ Name | Type | Description
 `init` | `(inputs$: Observable<TInputs>): Observable<TOutput>` | A pure function that, when applied to an Observable, returns an Observable.
 `selector` | `(args: TParams): TInput` | An optional function that transforms an array of event arguments into a single value.
 
+**Returns:**
+
+`[(...args: TParams): void, Observable<TOutput>]` A tuple with the same callback-Observable pair.
+
 **Examples:**
 
 ```typescript
@@ -167,7 +175,7 @@ useSubscription<TInput>(
 
 Subscription will auto-unsubscribe when unmount, you can also unsubscribe manually.
 
-<Badge text="v2.0.0"/> From <code>v2.0.0</code> you can reference closure variables directly inside callback. useSubscription will ensure the latest callback is called.
+<Badge text="v2.0.0"/> From <code>v2.0.0</code> you can reference closure variables directly inside callback. <code>useSubscription</code> will ensure the latest callback is called.
 
 Accepts an Observable and optional `next`, `error`, `complete` functions. These functions must be in correct order. Use `undefined` or `null` for placeholder.
 
@@ -183,10 +191,14 @@ Note that changes of callbacks will not trigger an emission. If you need that ju
 
 Name | Type | Description
 ------ | ------ | ------
-`input$` | `Observable<TInput>` | Input Observable.
-`next` | `null` | undefined | (value: TInput): void` | Notify when a new value is emitted.
-`error` | `null` | undefined | (error: any): void` | Notify when a new error is thrown.
-`complete` | `null` | undefined | (): void` | Notify when the Observable is complete.
+`input$` | `Observable<TInput> | null | undefined` | Input Observable.
+`next` | `(value: TInput): void | null | undefined` | Notify when a new value is emitted.
+`error` | `(error: any): void | null | undefined` | Notify when a new error is thrown.
+`complete` | `(): void | null | undefined` | Notify when the Observable is complete.
+
+**Returns:**
+
+`Subscription` RxJs Subscription object.
 
 **Examples:**
 
@@ -256,6 +268,26 @@ Due to hooks policy you can offer either a function or an Observable as the firs
 
 <Badge text="v2.1.2"/> From <code>v2.1.2</code> you can pass <code>true</code> to <code>TSyncInit</code> generic to remove <code>undefined</code> from resulted type.
 
+---
+
+**Type parameters:**
+
+- `TState` Output state.
+- `TSyncInit` Does the Observable emit sync values?
+
+**Parameters:**
+
+Name | Type | Description
+------ | ------ | ------
+`input$` | `Observable<TState>` | An Observable.
+`initState` | `TState` | Optional initial state.
+
+**Returns:**
+
+`TState` State value.
+
+---
+
 **Type parameters:**
 
 - `TState` Output state.
@@ -266,13 +298,14 @@ Due to hooks policy you can offer either a function or an Observable as the firs
 
 Name | Type | Description
 ------ | ------ | ------
-`input$` | `Observable<TState>` | An Observable.
-`initState` | `TState` | Optional initial state.
-
-Name | Type | Description
------- | ------ | ------
 `init` | `(input$: Observable<TInput>): Observable<TState>` | A pure function that, when applied to an Observable, returns an Observable.
 `initState` | `TState` | Optional initial state.
+
+**Returns:**
+
+`[TState, (input: TInput) => void]` A tuple with state-setState pair.
+
+---
 
 **Examples:**
 
@@ -316,26 +349,27 @@ const [text, updateText] = useObservableState(
 )
 ```
 
-Or use `startWith`:
-
-```typescript
-const [text, updateText] = useObservableState<string>(
-  text$ => text$.pipe(delay(1000), startWith('init text')),
-)
-```
-
-Pass `true` to `TSyncInit` generic to remove `undefined` from resulted type.
+Or use `startWith`. Pass `true` to `TSyncInit` generic to remove `undefined` from resulted type.
 
 ```typescript
 // time is `string` now instead of `string | undefined`
-const time = useObservableState<string, true>(
-  useObservable(
-    () => interval(1000).pipe(
+const [text, updateText] = useObservableState<string, string, true>(
+  text$ => text$.pipe(delay(1000), startWith('init text'))
+)
+```
+
+For Observables you can also use the non-null assertion operator `!`.
+
+```typescript
+// time is `string` now instead of `string | undefined`
+const time = useObservableState(
+  useObservable(() =>
+    interval(1000).pipe(
       startWith(-1),
       map(() => new Date().toLocaleString())
     )
   )
-)
+)!
 ```
 
 Event listener:

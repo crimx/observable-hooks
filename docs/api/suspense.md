@@ -29,7 +29,7 @@ new ObservableResource(
 Name | Type | Description
 ------ | ------ | ------
 `input$` | `Observable<TInput>` | An Observable.
-`isSuccess` | `(value: TInput) => value is TOutput` | Optional function that determines if the value emitted from `input$` is of success state. If false a Suspense is triggered. Default all true.
+`isSuccess` | `(value: TInput): value is TOutput` | Optional function that determines if the value emitted from `input$` is of success state. If false a Suspense is triggered. Default all true.
 
 **Public Properties:**
 
@@ -41,8 +41,8 @@ Name | Type | Description
 
 Name | Type | Description
 ------ | ------ | ------
-`read` | `() => TOutput` | Return cached value on success state. Throw suspender on pending state. Throw error on error state.
-`destroy` | `() => void` | UnSubscribe input Observable.
+`read` | `(): TOutput` | Return cached value on success state. Throw suspender on pending state. Throw error on error state.
+`destroy` | `(): void` | UnSubscribe input Observable.
 
 ## useObservableSuspense
 
@@ -67,3 +67,7 @@ This hook triggers necessary re-rendering when Suspense should restart.
 Name | Type | Description
 ------ | ------ | ------
 `resource` | `ObservableResource<TInput, TOutput>` | Observable resource.
+
+**Returns:**
+
+`TOutput` resouce value.

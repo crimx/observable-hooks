@@ -20,6 +20,10 @@ Name | Type | Description
 ------ | ------ | ------
 `inputs$` | `Observable<TArr>` | An Observable of arraylike.
 
+**Returns:**
+
+`Observable<TArr[0]>` Observable of the first item.
+
 **Examples:**
 
 ```typescript
@@ -46,6 +50,10 @@ Maps an Observable of DOM events to an Observable of the currentTarget value.
 Name | Type | Description
 ------ | ------ | ------
 `event$` | `Observable<TEvent>` | An Observable of events.
+
+**Returns:**
+
+`Observable<TEvent["currentTarget"]["value"]>` An Observable of event `currentTarget.value`.
 
 **Examples:**
 
@@ -76,6 +84,10 @@ Name | Type | Description
 ------ | ------ | ------
 `event$` | `Observable<TEvent>` | An Observable of events.
 
+**Returns:**
+
+`Observable<TEvent["currentTarget"]["checked"]>` An Observable of event `currentTarget.checked`.
+
 **Examples:**
 
 ```typescript
@@ -103,6 +115,10 @@ Name | Type | Description
 ------ | ------ | ------
 `value` | `T` | Any value.
 
+**Returns:**
+
+`T` The first argument.
+
 ## useRefFn
 
 One-time ref init.
@@ -121,3 +137,6 @@ Name | Type | Description
 ------ | ------ | ------
 `init` | `(): T` | A function that returns a non-nullable value. Will be called only once.
 
+**Returns:**
+
+`MutableRefObject<T>` A Ref object with the value.
