@@ -1,5 +1,6 @@
 import { useObservable, pluckFirst } from '../src'
-import { renderHook } from '@testing-library/react-hooks'
+import { renderHook, act } from '@testing-library/react-hooks'
+import { useState } from 'react'
 import { of, merge, Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
@@ -69,6 +70,42 @@ describe('useObservable', () => {
     expect(result.current).toBe(enhanced$)
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith(2)
+  })
+
+  it('should be able to be shared with multipule observers', () => {
+    const { result } = renderHook(() => {
+      const [state, setState] = useState(1)
+      const stream$ = useObservable(pluckFirst, [state])
+      return { setState, stream$ }
+    })
+
+    const { setState, stream$ } = result.current
+
+    const spies = Array.from(Array(10)).map(() => jest.fn())
+    spies.forEach(spy => stream$.subscribe(spy))
+
+    spies.forEach(spy => {
+      expect(spy).toBeCalledTimes(1)
+      expect(spy).toBeCalledWith(1)
+    })
+
+    act(() => setState(2))
+    spies.forEach(spy => {
+      expect(spy).toBeCalledTimes(2)
+      expect(spy).toBeCalledWith(2)
+    })
+
+    act(() => setState(2))
+    spies.forEach(spy => {
+      expect(spy).toBeCalledTimes(2)
+      expect(spy).toBeCalledWith(2)
+    })
+
+    act(() => setState(3))
+    spies.forEach(spy => {
+      expect(spy).toBeCalledTimes(3)
+      expect(spy).toBeCalledWith(3)
+    })
   })
 
   it('should emit value when one of the deps changes', () => {
