@@ -101,5 +101,6 @@ Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/exa
 
 - [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/pomodoro-timer)
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
+- [Render-as-You-Fetch using Suspense](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/suspense)
 
 Note that there are also some useful [utilities](https://observable-hooks.js.org/modules/_helpers_.html) for common use cases to reduce garbage collection.
