@@ -14,7 +14,11 @@ Yes there is a learning curve on RxJS but that is mostly a one-time conceptual t
 
 ## Why Another Library
 
-Beforing creating observable-hooks we had tried other libraries like [reactjs-hooks-rxjs](https://github.com/leandrohsilveira/reactjs-hooks-rxjs) which is too simple and [rxjs-hooks](https://github.com/LeetCode-OpenSource/rxjs-hooks) in which we found typing issues that were unable to fix.
+We first tried [rxjs-hooks](https://github.com/LeetCode-OpenSource/rxjs-hooks) but quickly encountered some [tricky TypeScript issues](https://github.com/LeetCode-OpenSource/rxjs-hooks/issues/60). We also think the `useEventCallback` is [taking too much responsibilities](https://github.com/LeetCode-OpenSource/rxjs-hooks/blob/505d71901a9ca7827472d750455d44e5bc3d9f48/src/use-event-callback.ts#L77-L80) which is a performance issue that is hard to fix due to [rules of hooks](https://reactjs.org/docs/hooks-rules.html#only-call-hooks-at-the-top-level).
+
+Unfortunately the project is not actively developed as the team has shifted focus to the redux-observable-like [ayanami](https://github.com/LeetCode-OpenSource/ayanami) project.
+
+Ultimately we rethought the whole integration, redesigned API from the ground up and created observable-hooks for connecting RxJS Observable to React Components.
 
 ## What It Is Not
 
