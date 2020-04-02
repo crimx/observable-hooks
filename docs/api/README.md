@@ -198,7 +198,7 @@ Name | Type | Description
 
 **Returns:**
 
-`Subscription` RxJs Subscription object.
+`Subscription` RxJS Subscription object.
 
 **Examples:**
 
@@ -378,7 +378,7 @@ Event listener:
 import { pluckCurrentTargetValue, useObservableState } from 'observable-hooks'
 
 const [text, onChange] = useObservableState<
-string,
-React.ChangeEvent<HTMLInputElement>
+  string,
+  React.ChangeEvent<HTMLInputElement>
 >(pluckCurrentTargetValue, '')
 ```
