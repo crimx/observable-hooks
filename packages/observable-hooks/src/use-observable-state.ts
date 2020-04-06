@@ -88,11 +88,13 @@ export function useObservableState<TState, TInput = TState>(
   }
 
   useSubscription(states$, state => {
-    // assign value before setState
-    stateRef.current = state
+    if (stateRef.current !== state) {
+      // assign value before setState
+      stateRef.current = state
 
-    if (setStateRef.current) {
-      setStateRef.current(state)
+      if (setStateRef.current) {
+        setStateRef.current(state)
+      }
     }
   })
 
