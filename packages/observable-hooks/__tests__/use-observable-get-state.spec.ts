@@ -1,17 +1,17 @@
-import { useObservableSubState } from '../src'
+import { useObservableGetState } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { of, Subject, BehaviorSubject } from 'rxjs'
 
-describe('useObservableSubState', () => {
+describe('useObservableGetState', () => {
   it('should have the synced init value from Observable without rerendering', () => {
     const outer$ = of(1, 2, 3)
-    const { result } = renderHook(() => useObservableSubState(outer$))
+    const { result } = renderHook(() => useObservableGetState(outer$))
     expect(result.current).toBe(3)
   })
 
   it('should not lose the init value from sync Observable when rerendering trigger from other props or states', () => {
     const outer$ = of(1, 2, 3)
-    const { result, rerender } = renderHook(() => useObservableSubState(outer$))
+    const { result, rerender } = renderHook(() => useObservableGetState(outer$))
     expect(result.current).toBe(3)
     rerender()
     expect(result.current).toBe(3)
@@ -19,7 +19,7 @@ describe('useObservableSubState', () => {
 
   it('should update value when the Observable emits value', () => {
     const outer$$ = new Subject<number>()
-    const { result } = renderHook(() => useObservableSubState(outer$$))
+    const { result } = renderHook(() => useObservableGetState(outer$$))
     expect(result.current).toBeUndefined()
 
     act(() => outer$$.next(1))
@@ -31,7 +31,7 @@ describe('useObservableSubState', () => {
 
   it('should get value with 1-level path', () => {
     const outer$$ = new BehaviorSubject({ a: 'a' })
-    const { result } = renderHook(() => useObservableSubState(outer$$, 'a'))
+    const { result } = renderHook(() => useObservableGetState(outer$$, 'a'))
     expect(result.current).toBe('a')
 
     act(() => outer$$.next({ a: 'b' }))
@@ -41,7 +41,7 @@ describe('useObservableSubState', () => {
   it('should get value with 3-level path', () => {
     const outer$$ = new BehaviorSubject({ a: { b: { c: 'a' } } })
     const { result } = renderHook(() =>
-      useObservableSubState(outer$$, 'a', 'b', 'c')
+      useObservableGetState(outer$$, 'a', 'b', 'c')
     )
     expect(result.current).toBe('a')
 
