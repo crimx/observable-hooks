@@ -119,5 +119,9 @@ export function useRefFn<T extends object | number | string | boolean | symbol>(
  */
 export function useForceUpdate(): () => void {
   const updateState = useState(0)[1]
-  return () => updateState(n => (n + 1) % 1000000)
+  return useRef(() => updateState(increment)).current
+}
+
+function increment(n: number): number {
+  return (n + 1) % 1000000
 }
