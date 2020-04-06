@@ -156,10 +156,6 @@ export function useObservableSubState<
 ): TState[A][B][C][D][E][F][G][H][I][J] | undefined
 export function useObservableSubState<TState>(
   state$: Observable<TState>,
-  ...path: Array<string | number | symbol>
-): any
-export function useObservableSubState<TState>(
-  state$: Observable<TState>,
   ...path: any[]
 ) {
   return useObservableState(
