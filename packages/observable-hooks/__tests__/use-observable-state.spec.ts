@@ -47,6 +47,27 @@ describe('useObservableState', () => {
       expect(result.current[0]).toBe('test2')
     })
 
+    it('should not trigger rerendering when value is not changed', () => {
+      const spy = jest.fn()
+      const { result } = renderHook(() => {
+        spy()
+        return useObservableState<string, number>(input$ =>
+          input$.pipe(map(input => 'test' + input))
+        )
+      })
+      const [state, updateState] = result.current
+      expect(state).toBeUndefined()
+      expect(spy).toHaveBeenCalledTimes(1)
+
+      act(() => updateState(1))
+      expect(result.current[0]).toBe('test1')
+      expect(spy).toHaveBeenCalledTimes(2)
+
+      act(() => updateState(1))
+      expect(result.current[0]).toBe('test1')
+      expect(spy).toHaveBeenCalledTimes(2)
+    })
+
     it('should get the init state if given', () => {
       const { result } = renderHook(() => useObservableState(identity, 1))
       expect(result.current[0]).toBe(1)
