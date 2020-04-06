@@ -96,6 +96,14 @@ const subscription = useSubscription(events$, props.onChange)
 
 [`useObservableState`][useObservableState] is a sugar of [`useObservable`](#useobservable) + [`useSubscription`](#usesubscription) + `useState` to get states from Observables. Unlike directly setting state on subscription, [`useObservableState`][useObservableState] will skip any initial sync re-rendering.
 
+### useObservableSubState
+
+[`useObservableSubState`][useObservableSubState] gets value at path of the state from Observable and only watches changes of the resulted value. This is handy if you only need a portion of an object.
+
+::: tip
+You can easily implement your own version should you need a fancier transformation. In fact [`useObservableSubState`][useObservableSubState] is just [`useObservableState`][useObservableState] with a few lines of code.
+:::
+
 ## Helpers
 
 You may alreay notice that the first function argument of [`useObservable`](#useobservable), [`useObservableCallback`](#useobservablecallback) and [`useObservableState`](#useobservablestate) is pure. This makes it highly testable and reuseable. In fact, Observable Hooks offers a few common [helpers][helpers] to reduce garbage collection.
@@ -104,5 +112,6 @@ You may alreay notice that the first function argument of [`useObservable`](#use
 [useObservableCallback]: ../api/README.md#useobservablecallback
 [useSubscription]: ../api/README.md#usesubscription
 [useObservableState]: ../api/README.md#useobservablestate
+[useObservableSubState]: ../api/README.md#useobservableSubstate
 
 [helpers]: ../api/helpers.md

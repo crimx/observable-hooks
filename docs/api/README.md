@@ -382,3 +382,59 @@ const [text, onChange] = useObservableState<
   React.ChangeEvent<HTMLInputElement>
 >(pluckCurrentTargetValue, '')
 ```
+
+## useObservableSubState
+
+```typescript
+useObservableSubState<TState>(
+  input$: Observable<TState>
+): TState | undefined
+useObservableSubState<
+  TState,
+  A extends keyof TState,
+>(
+  state$: Observable<TState>,
+  pA: A,
+): TState[A] | undefined
+useObservableSubState<
+  TState,
+  A extends keyof TState,
+  B extends keyof TState[A],
+>(
+  state$: Observable<TState>,
+  pA: A,
+  pB: B,
+): TState[A][B] | undefined
+...
+```
+
+<Badge text="v2.3.0"/> From <code>v2.3.0</code>. Get value at path of state from an Observable.
+
+Only changes of the resulted value would trigger rerendering.
+
+**Type parameters:**
+
+- `TState` Output state.
+
+**Parameters:**
+
+Name | Type | Description
+------ | ------ | ------
+`state$` | `Observable<TState>` | An Observable.
+`pA` | `keyof TState` | Key of `TState`.
+`pB` | `keyof TState[A]` | Key of `TState[A]`.
+`pC` | `keyof TState[A][B]` | Key of `TState[A][B]`.
+`...`| `...` | `....`
+
+**Returns:**
+
+`TState[A][B]...` Value at path of `TState`.
+
+**Examples:**
+
+```typescript
+const state$ = of({ a: { b: { c: 'abc' } } })
+
+// 'abc'
+const text = useObservableSubState(state$, 'a', 'b', 'c')!
+```
