@@ -383,20 +383,20 @@ const [text, onChange] = useObservableState<
 >(pluckCurrentTargetValue, '')
 ```
 
-## useObservableSubState
+## useObservableGetState
 
 ```typescript
-useObservableSubState<TState>(
-  input$: Observable<TState>
+useObservableGetState<TState>(
+  state$: Observable<TState>
 ): TState | undefined
-useObservableSubState<
+useObservableGetState<
   TState,
   A extends keyof TState,
 >(
   state$: Observable<TState>,
   pA: A,
 ): TState[A] | undefined
-useObservableSubState<
+useObservableGetState<
   TState,
   A extends keyof TState,
   B extends keyof TState[A],
@@ -410,7 +410,11 @@ useObservableSubState<
 
 <Badge text="v2.3.0"/> From <code>v2.3.0</code>. Get value at path of state from an Observable.
 
-Only changes of the resulted value would trigger rerendering.
+Only changes of the resulted value will trigger a rerendering.
+
+::: warning
+Unreachable path will throw errors.
+:::
 
 **Type parameters:**
 
@@ -428,7 +432,7 @@ Name | Type | Description
 
 **Returns:**
 
-`TState[A][B]...` Value at path of `TState`.
+`TState[A][B]... | undefined` Value at path of `TState`.
 
 **Examples:**
 
@@ -436,5 +440,50 @@ Name | Type | Description
 const state$ = of({ a: { b: { c: 'abc' } } })
 
 // 'abc'
-const text = useObservableSubState(state$, 'a', 'b', 'c')!
+const text = useObservableGetState(state$, 'a', 'b', 'c')!
+```
+
+## useObservablePickState
+
+```typescript
+useObservablePickState<
+  TState,
+  TKeys extends Array<keyof TState>
+>(
+  state$: Observable<TState>,
+  ...keys: TKeys
+): { [K in TKeys[number]]: TState[K] } | undefined
+```
+
+<Badge text="v2.3.2"/> From <code>v2.3.2</code>. Creates an object composed of the picked state properties.
+
+Changes of any of these properties will trigger a rerendering.
+
+::: warning
+Unreachable path will throw errors.
+:::
+
+**Type parameters:**
+
+- `TState` Output state.
+- `TKeys` keys of state.
+
+**Parameters:**
+
+Name | Type | Description
+------ | ------ | ------
+`state$` | `Observable<TState>` | An Observable.
+`...path` | `Array<keyof TState>` | Keys of `TState`.
+
+**Returns:**
+
+`{ [K in TKeys[number]]: TState[K] } | undefined` Partial `TState`.
+
+**Examples:**
+
+```typescript
+const state$ = of({ a: 'a', b: 'b', c: 'c', d: 'd' })
+
+// { a: 'a', b: 'b', c: 'c' }
+const picked = useObservablePickState(state$, 'a', 'b', 'c')!
 ```

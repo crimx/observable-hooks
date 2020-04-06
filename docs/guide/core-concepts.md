@@ -96,13 +96,17 @@ const subscription = useSubscription(events$, props.onChange)
 
 [`useObservableState`][useObservableState] is a sugar of [`useObservable`](#useobservable) + [`useSubscription`](#usesubscription) + `useState` to get states from Observables. Unlike directly setting state on subscription, [`useObservableState`][useObservableState] will skip any initial sync re-rendering.
 
-### useObservableSubState
+### useObservableGetState
 
-[`useObservableSubState`][useObservableSubState] gets value at path of the state from Observable and only watches changes of the resulted value. This is handy if you only need a portion of an object.
+[`useObservableGetState`][useObservableGetState] gets the value at path of state Only changes of the resulted value will trigger a rerendering. This is handy if you only need a portion of an object.
 
 ::: tip
-You can easily implement your own version should you need a fancier transformation. In fact [`useObservableSubState`][useObservableSubState] is just [`useObservableState`][useObservableState] with a few lines of code.
+You can easily implement your own version should you need a fancier transformation. In fact [`useObservableGetState`][useObservableGetState] is just [`useObservableState`][useObservableState] with a few lines of code.
 :::
+
+### useObservablePickState
+
+[`useObservablePickState`][useObservablePickState] Creates an object composed of the picked state properties. Changes of any of these properties will trigger a rerendering.
 
 ## Helpers
 
@@ -112,6 +116,7 @@ You may alreay notice that the first function argument of [`useObservable`](#use
 [useObservableCallback]: ../api/README.md#useobservablecallback
 [useSubscription]: ../api/README.md#usesubscription
 [useObservableState]: ../api/README.md#useobservablestate
-[useObservableSubState]: ../api/README.md#useobservableSubstate
+[useObservableGetState]: ../api/README.md#useobservableGetstate
+[useObservablePickState]: ../api/README.md#useobservablePickstate
 
 [helpers]: ../api/helpers.md
