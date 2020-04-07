@@ -15,11 +15,11 @@ React function components will be called many times during its life cycle. Creat
 Accepts a function that returns an Observable. Optionally accepts an array of dependencies which will be turned into Observable and be passed to the init function.
 
 ::: warning
-`useObservable` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. You should pass them as dependencies through the second argument.
+`useObservable` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. You should use [`ref`][use-ref] or pass them as dependencies through the second argument.
 :::
 
 ::: danger CAUTION
-Due to hooks policy you can either offer or omit the dependencies array but do not change to one another during Component's life cycle. The length of the dependencies array must also be fixed.
+Due to [rules of hooks][rules-of-hooks] you can either offer or omit the dependencies array but do not change to one another during Component's life cycle. The length of the dependencies array must also be fixed.
 :::
 
 **Type parameters:**
@@ -107,7 +107,7 @@ If you want value output instead of Observable see example on [useObservableStat
 ::: warning
 `useObservableCallback` will call `init` once and always return
 the same Observable. It is not safe to access closure (except other Observables)
-directly inside `init`. Use [`useObservable`](#useobservable) and `withLatestFrom` instead.
+directly inside `init`. Use [`ref`][use-ref] or [`useObservable`](#useobservable) with `withLatestFrom` instead.
 :::
 
 **Type parameters:**
@@ -259,11 +259,11 @@ It it recommended to use `initState` for simple primitive value. For others, ini
 :::
 
 ::: warning
-`useObservableState` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. Use [`useObservable`](#useobservable) and `withLatestFrom` instead.
+`useObservableState` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. Use [`ref`][use-ref] or [`useObservable`](#useobservable) with `withLatestFrom` instead.
 :::
 
 ::: danger CAUTION
-Due to hooks policy you can offer either a function or an Observable as the first argument but do not change to one another during Component's life cycle.
+Due to [rules of hooks][rules-of-hooks] you can offer either a function or an Observable as the first argument but do not change to one another during Component's life cycle.
 :::
 
 <Badge text="v2.1.2"/> From <code>v2.1.2</code> you can pass <code>true</code> to <code>TSyncInit</code> generic to remove <code>undefined</code> from resulted type.
@@ -487,3 +487,6 @@ const state$ = of({ a: 'a', b: 'b', c: 'c', d: 'd' })
 // { a: 'a', b: 'b', c: 'c' }
 const picked = useObservablePickState(state$, 'a', 'b', 'c')!
 ```
+
+[rules-of-hooks]: https://reactjs.org/docs/hooks-rules.html
+[use-ref]: https://reactjs.org/docs/hooks-reference.html#useref

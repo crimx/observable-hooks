@@ -16,7 +16,7 @@ import { useRefFn, getEmptySubject } from './helpers'
  *
  * ⚠ **Note:** `useObservableCallback` will call `init` once and always return
  * the same Observable. It is not safe to access closure (except other Observables)
- * directly inside `init`. Use [[useObservable]] and `withLatestFrom` instead.
+ * directly inside `init`. Use ref or [[useObservable]] with `withLatestFrom` instead.
  *
  * @template TOutput Output value within Observable.
  * @template TInput Selected values.

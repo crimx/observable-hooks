@@ -15,9 +15,9 @@ import { useRefFn } from './helpers'
  * ⚠ **Note:** `useObservable` will call `init` once and always return
  * the same Observable. It is not safe to access closure (except other Observables)
  * directly inside `init`.
- * You should pass them as dependencies through the second argument.
+ * You should use ref or pass them as dependencies through the second argument.
  *
- * ⚠ **Note:** Due to hooks policy you can either offer or omit the
+ * ⚠ **Note:** Due to rules of hooks you can either offer or omit the
  * dependencies array but do not change to one another during Component's life cycle.
  * The length of the dependencies array must also be fixed.
  *

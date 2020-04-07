@@ -110,7 +110,7 @@ You can easily implement your own version should you need a fancier transformati
 
 ## Helpers
 
-You may alreay notice that the first function argument of [`useObservable`](#useobservable), [`useObservableCallback`](#useobservablecallback) and [`useObservableState`](#useobservablestate) is pure. This makes it highly testable and reuseable. In fact, Observable Hooks offers a few common [helpers][helpers] to reduce garbage collection.
+You may alreay notice that the first function parameter of [`useObservable`](#useobservable), [`useObservableCallback`](#useobservablecallback) and [`useObservableState`](#useobservablestate) is pure. This makes it highly testable and reuseable. In fact, Observable Hooks offers a few common [helpers][helpers] to reduce garbage collection.
 
 [useobservable]: ../api/README.md#useobservable
 [useObservableCallback]: ../api/README.md#useobservablecallback
