@@ -1,4 +1,5 @@
 export { useObservable } from './use-observable'
+export { useLayoutObservable } from './use-layout-observable'
 export { useObservableCallback } from './use-observable-callback'
 export { useSubscription } from './use-subscription'
 export { useObservableState } from './use-observable-state'
@@ -9,6 +10,7 @@ export { useObservableSuspense } from './use-observable-suspense'
 export { ObservableResource } from './observable-resource'
 export {
   useRefFn,
+  useForceUpdate,
   identity,
   pluckFirst,
   pluckCurrentTargetValue,

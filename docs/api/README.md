@@ -85,6 +85,12 @@ const enhanced$ = useObservable(
 )
 ```
 
+## useLayoutObservable
+
+If no dependencies provided it is identical with [`useObservable`](#useobservable). Otherwise it uses [`useLayoutEffect`](https://reactjs.org/docs/hooks-reference.html#uselayouteffect) to listen props and state changes.
+
+This is useful if you need values before next paint.
+
 ## useObservableCallback
 
 ```typescript

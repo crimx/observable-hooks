@@ -8,11 +8,11 @@
 
 Producers produce normal values. Normal values can be converted into Observables via many different helpers which use `observable.next` under the hood.
 
+In the context of React Function Component, changes of props, states and any variable can be captured with the `useEffect` and `useLayoutEffect` hooks. This makes it a valid Producer.
+
 ### useObservable
 
-In the context of React Function Component, changes of props, states and any variable can be captured with the `useEffect` hook. This makes it a valid Producer.
-
-Observable Hooks offers [`useObservable`][useObservable] to convert these values into Observables.
+Observable Hooks offers [`useObservable`][useObservable] and [`useLayoutObservable`][useLayoutObservable] to convert these values into Observables.
 
 ### useObservableCallback
 
@@ -113,6 +113,7 @@ You can easily implement your own version should you need a fancier transformati
 You may alreay notice that the first function parameter of [`useObservable`](#useobservable), [`useObservableCallback`](#useobservablecallback) and [`useObservableState`](#useobservablestate) is pure. This makes it highly testable and reuseable. In fact, Observable Hooks offers a few common [helpers][helpers] to reduce garbage collection.
 
 [useobservable]: ../api/README.md#useobservable
+[useLayoutObservable]: ../api/README.md#useLayoutObservable
 [useObservableCallback]: ../api/README.md#useobservablecallback
 [useSubscription]: ../api/README.md#usesubscription
 [useObservableState]: ../api/README.md#useobservablestate

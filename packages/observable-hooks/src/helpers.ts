@@ -1,7 +1,13 @@
 /**
  * Useful utilities
  */
-import { useRef, MutableRefObject, useState } from 'react'
+import {
+  useRef,
+  MutableRefObject,
+  useState,
+  useLayoutEffect,
+  useEffect
+} from 'react'
 import { Subject, Observable } from 'rxjs'
 import { pluck } from 'rxjs/operators'
 
@@ -115,7 +121,7 @@ export function useRefFn<T extends object | number | string | boolean | symbol>(
 }
 
 /**
- * Force re-render Component.
+ * Force re-renders Component.
  */
 export function useForceUpdate(): () => void {
   const updateState = useState(0)[1]
@@ -125,3 +131,14 @@ export function useForceUpdate(): () => void {
 function increment(n: number): number {
   return (n + 1) % 1000000
 }
+
+/**
+ * Prevent React warning when using useLayoutEffect on server.
+ */
+export const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' &&
+  typeof window.document !== 'undefined' &&
+  typeof window.document.createElement !== 'undefined'
+    ? useLayoutEffect
+    : /* istanbul ignore next: both are not called on server */
+      useEffect

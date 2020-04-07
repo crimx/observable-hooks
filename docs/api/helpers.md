@@ -140,3 +140,15 @@ Name | Type | Description
 **Returns:**
 
 `MutableRefObject<T>` A Ref object with the value.
+
+## useForceUpdate
+
+Force re-renders Component.
+
+```typescript
+useForceUpdate(): () => void
+```
+
+**Returns:**
+
+`() => void` A callback which re-renders component when called.
