@@ -56,7 +56,10 @@ module.exports = {
               title: 'Advanced', // required
               collapsable: false, // optional, defaults to true
               sidebarDepth: 2, // optional, defaults to 1
-              children: ['/guide/render-as-you-fetch-suspense']
+              children: [
+                '/guide/context',
+                '/guide/render-as-you-fetch-suspense'
+              ]
             }
           ]
         },
