@@ -196,4 +196,29 @@ describe('useSubscription', () => {
     num$$.next(3)
     expect(numSpy).toBeCalledTimes(0)
   })
+
+  it('should unsubscribe old Observable and subscribe to new one when it changes.', () => {
+    const num1$ = of(1)
+    const num2$ = of(2)
+    const numSpy = jest.fn()
+
+    const { rerender } = renderHook(
+      props => {
+        useSubscription(props.input$, numSpy)
+      },
+      {
+        initialProps: {
+          input$: num1$
+        }
+      }
+    )
+
+    expect(numSpy).toBeCalledTimes(1)
+    expect(numSpy).lastCalledWith(1)
+
+    rerender({ input$: num2$ })
+
+    expect(numSpy).toBeCalledTimes(2)
+    expect(numSpy).lastCalledWith(2)
+  })
 })

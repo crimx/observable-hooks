@@ -1,6 +1,6 @@
 import { Observable, Subscription } from 'rxjs'
 import { useRefFn, getEmptyObject, EMPTY_TUPLE } from './helpers'
-import { useEffect } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 
 /**
  * Accepts an Observable and optional `next`, `error`, `complete` functions.
@@ -16,6 +16,9 @@ import { useEffect } from 'react'
  *
  * (From v2.0) You can access closure directly inside callback like in `useEffect`.
  * `useSubscription` will ensure the latest callback is called.
+ *
+ * (From v2.3.4) when the Observable changes `useSubscription` will automatically
+ * unsubscribe the old one and resubscribe to the new one.
  *
  * @template TInput Input value within Observable.
  *
@@ -40,8 +43,13 @@ export function useSubscription<TInput>(
   cbRef.current.error = error
   cbRef.current.complete = complete
 
-  const subscriptionRef = useRefFn(() =>
-    input$.subscribe({
+  const subscriptionRef = useRef<Subscription>()
+
+  subscriptionRef.current = useMemo(() => {
+    if (subscriptionRef.current) {
+      subscriptionRef.current.unsubscribe()
+    }
+    return input$.subscribe({
       next: value => cbRef.current.next && cbRef.current.next(value),
       error: error => {
         if (cbRef.current.error) {
@@ -52,10 +60,10 @@ export function useSubscription<TInput>(
       },
       complete: () => cbRef.current.complete && cbRef.current.complete()
     })
-  )
+  }, [input$])
 
   // unsubscribe when unmount
-  useEffect(() => () => subscriptionRef.current.unsubscribe(), EMPTY_TUPLE)
+  useEffect(() => () => subscriptionRef.current!.unsubscribe(), EMPTY_TUPLE)
 
-  return subscriptionRef.current
+  return subscriptionRef.current!
 }

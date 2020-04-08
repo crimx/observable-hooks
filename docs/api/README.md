@@ -183,6 +183,8 @@ Subscription will auto-unsubscribe when unmount, you can also unsubscribe manual
 
 <Badge text="v2.0.0"/> From <code>v2.0.0</code> you can reference closure variables directly inside callback. <code>useSubscription</code> will ensure the latest callback is called.
 
+<Badge text="v2.3.4"/> From <code>v2.3.4</code> when the Observable changes `useSubscription` will automatically unsubscribe the old one and resubscribe to the new one.
+
 Accepts an Observable and optional `next`, `error`, `complete` functions. These functions must be in correct order. Use `undefined` or `null` for placeholder.
 
 ::: warning
