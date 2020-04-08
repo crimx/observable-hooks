@@ -5,12 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [2.3.4](https://github.com/crimx/observable-hooks/compare/v2.3.3...v2.3.4) (2020-04-08)
 
-**Note:** Version bump only for package pomodoro-timer
-
-
-
-
-
-# [2.2.0](https://github.com/crimx/observable-hooks/compare/v2.1.5...v2.2.0) (2020-02-04)
-
-**Note:** Version bump only for package pomodoro-timer
+**Note:** Version bump only for package context

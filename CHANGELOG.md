@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.4](https://github.com/crimx/observable-hooks/compare/v2.3.3...v2.3.4) (2020-04-08)
+
+
+### Bug Fixes
+
+* **use-subscription:** unsubscribe when Observable changes ([0e43053](https://github.com/crimx/observable-hooks/commit/0e430534a46ad4a1574ee850e3bf93140db690c7))
+
+
+
+
+
 # [2.2.0](https://github.com/crimx/observable-hooks/compare/v2.1.5...v2.2.0) (2020-02-04)
 
 
