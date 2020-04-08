@@ -8,7 +8,7 @@
 
 Producers produce normal values. Normal values can be converted into Observables via many different helpers which use `observable.next` under the hood.
 
-In the context of React Function Component, changes of props, states and any variable can be captured with the `useEffect` and `useLayoutEffect` hooks. This makes it a valid Producer.
+In the context of React Function Component, changes of props, states and context will trigger re-rendering. Then any variable changes can be captured with the `useEffect` and `useLayoutEffect` hooks. This makes it a valid Producer.
 
 ### useObservable
 

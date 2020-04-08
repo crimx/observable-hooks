@@ -17,7 +17,7 @@
   "license": "MIT",
   "scripts": {
     "postinstall": "lerna bootstrap",
-    "build": "lerna run build && lerna bootstrap",
+    "build": "lerna run --scope 'observable-*' build && lerna bootstrap",
     "test": "jest --coverage",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
