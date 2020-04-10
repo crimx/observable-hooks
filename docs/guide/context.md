@@ -1,4 +1,4 @@
-# Observable Hooks with React Context
+# With React Context
 
 [React Context](https://reactjs.org/docs/context.html) is an easy way to share data at any level down the component tree.
 
@@ -26,7 +26,7 @@ const normalValueList$ = useObservable(
 
 You can also pass Observables down the Context.
 
-You can subscribe to the Observable directly with [`useSubscription`](./README/md#usesubscription) which will automatically unsubscribe the old one and resubscribe to the new one.
+These Observables can be subscribed directly with [`useSubscription`](./README/md#usesubscription) which will automatically unsubscribe the old one and resubscribe to the new one.
 
 ```javascript
 const num$ = useContext(ObservableValueContext)
@@ -35,7 +35,7 @@ useSubscription(num$, value => {
 })
 ```
 
-[`useObservableState`](./README/md#useobservablestate) and other state hooks works the same as they use `useSubscription` under the hood.
+[`useObservableState`](./README/md#useobservablestate) and other state hooks work the same as they use `useSubscription` under the hood.
 
 ```javascript
 const num$ = useContext(ObservableValueContext)
