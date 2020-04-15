@@ -5,8 +5,8 @@ node_js:
 script:
   - yarn test
   - yarn build
-after_success:
   - yarn docs:build
+after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 deploy:
   provider: pages
