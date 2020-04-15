@@ -1,6 +1,6 @@
 # Motivation
 
-The main motivation of creating `observable-hooks` is that we want a simple, flexible, testable and performant solution to reuse complex async logic (e.g. animation and user interaction sequence) with the Component.
+The main motivation of creating `observable-hooks` is that we want a simple, flexible, testable and performant solution to reuse complex async logic (e.g. intricate animation and user interaction sequence) with the Component.
 
 ## Why RxJS in Hooks
 

@@ -75,7 +75,7 @@ Observers consume values emitted from Observables and perform side effects.
 
 ### useSubscription
 
-Instead of manually subscribe Observables, use [`useSubscription`][useSubscription] which will auto-unsubscribe on unmount. You can also reference closure variables directly inside callback. [`useSubscription`][useSubscription] will ensure the latest callback is called.
+Instead of manually subscribe Observables, use [`useSubscription`][useSubscription] which will auto-unsubscribe on unmount or Observable changes. You can also reference closure variables directly inside callback. [`useSubscription`][useSubscription] will ensure the latest callback is called.
 
 ```javascript
 const [debug, setDebug] = useState(false)
@@ -98,7 +98,7 @@ const subscription = useSubscription(events$, props.onChange)
 
 ### useObservableGetState
 
-[`useObservableGetState`][useObservableGetState] gets the value at path of state Only changes of the resulted value will trigger a rerendering. This is handy if you only need a portion of an object.
+[`useObservableGetState`][useObservableGetState] gets the value at path of state. Only changes of the resulted value will trigger a rerendering. This is handy if you only need a portion of an object.
 
 ::: tip
 You can easily implement your own version should you need a fancier transformation. In fact [`useObservableGetState`][useObservableGetState] is just [`useObservableState`][useObservableState] with a few lines of code.
