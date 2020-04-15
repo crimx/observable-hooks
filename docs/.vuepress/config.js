@@ -33,7 +33,7 @@ module.exports = {
               children: [
                 ['/examples/typeahead', 'Typeahead'],
                 ['/examples/pomodoro-timer', 'Pomodoro Timer'],
-                ['/examples/Context', 'React Context'],
+                ['/examples/context', 'React Context'],
                 ['/examples/suspense', 'Render-as-You-Fetch (using Suspense)']
               ]
             }
