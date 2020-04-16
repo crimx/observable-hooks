@@ -95,7 +95,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
     if (this.handler) {
       const { resolve } = this.handler
       this.handler = null
-      // Errors thrown from the resource is not catchable by error boundaries.
+      // Errors thrown from the request is not catchable by error boundaries.
       // Here we resolve the suspender and let this.read throw the error.
       resolve()
     } else {
@@ -108,7 +108,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       this.error = new Error('Suspender ended unexpectedly.')
       const { resolve } = this.handler
       this.handler = null
-      // Errors thrown from the resource is not catchable by error boundaries.
+      // Errors thrown from the request is not catchable by error boundaries.
       // Here we resolve the suspender and let this.read throw the error.
       resolve()
     }
