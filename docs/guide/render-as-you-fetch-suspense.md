@@ -136,4 +136,4 @@ const resouce = new ObservableResource(
 
 ### Error Handling
 
-Define an error boundary following the instructions on [React Docs](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors).
+Errors from Observables will be collected and re-thrown by `ObservableResource` as rendering errors. Define an error boundary following the instructions on [React Docs](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors).
