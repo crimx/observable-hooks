@@ -112,9 +112,7 @@ export const App: FC<AppProps> = props => {
           shouldSendBeacon ? timer(1000).pipe(mapTo(beacon)) : empty()
         )
       ),
-    // `as const` is a simple way to make an array tuple.
-    // You can also use `as [boolean, string]` or `as [typeof xxx, typeof xxx]`
-    [shouldSendBeacon, props.beacon] as const
+    [shouldSendBeacon, props.beacon]
   )
 
   useSubscription(beacon$, sendBeacon)
