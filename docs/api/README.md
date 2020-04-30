@@ -193,7 +193,7 @@ Note that changes of callbacks will not trigger an emission. If you need that ju
 
 ::: warning
 Due to the design of RxJS, once an error occurs in an observable, the observable is killed. You should prevent errors from reaching observables or [`catchError`][catchError] in sub-observables. You can also make the observable as state and replace it on error. `useSubscription` will automatically switch to the new one.
-::: warning
+:::
 
 **Type parameters:**
 
