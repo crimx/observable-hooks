@@ -43,6 +43,7 @@ Name | Type | Description
 ------ | ------ | ------
 `read` | `(): TOutput` | Return cached value on success state. Throw suspender on pending state. Throw error on error state.
 `destroy` | `(): void` | UnSubscribe input Observable.
+`reload` | `(newInput$?: Observable<TInput>): void` | <Badge text="v2.3.5"/> Clean up and resubscribe input Observable. For errored hot observable there is no way to resubscribe hence a `newInput$` must be provided. Otherwise if omitted the original observable will be resubscribed. It is recommended to use cold observable if possible for easy reloading. (Also for those who are unfamiliar with observable temperature, even though a `Subject` is hot, `subject.pipe(...)` is cold.)
 
 ## useObservableSuspense
 

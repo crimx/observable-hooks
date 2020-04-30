@@ -3,6 +3,7 @@ import React, { Suspense } from 'react'
 import { render, unmountComponentAtNode } from 'react-dom'
 import { act } from 'react-dom/test-utils'
 import { of, Subject, BehaviorSubject, EMPTY } from 'rxjs'
+import { map } from 'rxjs/operators'
 
 function timer(delay = 0) {
   return new Promise<undefined>(resolve => setTimeout(resolve, delay))
@@ -27,9 +28,11 @@ describe('useObservableSuspense', () => {
       value?: TOuput | Error
       renderCount: number
       getStatus: () => SuspenseState
+      clearError: () => void
     } = {
       renderCount: 0,
-      getStatus: () => (container.textContent || '').trim() as SuspenseState
+      getStatus: () => (container.textContent || '').trim() as SuspenseState,
+      clearError: () => {}
     }
 
     class ErrorBoundary extends React.Component {
@@ -38,6 +41,11 @@ describe('useObservableSuspense', () => {
       static getDerivedStateFromError(error: Error) {
         result.value = error
         return { hasError: true }
+      }
+
+      constructor(props: {}) {
+        super(props)
+        result.clearError = () => act(() => this.setState({ hasError: false }))
       }
 
       render() {
@@ -253,10 +261,11 @@ describe('useObservableSuspense', () => {
       topLevelErrors = []
     })
 
-    it('should throw error when the Observable is initially empty', async () => {
+    it('should throw error when the Observable is initially completed', async () => {
       const inputResource = new ObservableResource(EMPTY)
       const result = renderHook(inputResource)
-      // ErrorBoundary rerendering
+      // 1. initial rendering, catch the error and force update
+      // 2. rerendering, throw the error
       expect(result.renderCount).toBe(2)
       expect(result.value).toBeInstanceOf(Error)
       expect(result.getStatus()).toBe('error')
@@ -272,12 +281,12 @@ describe('useObservableSuspense', () => {
       expect(result.getStatus()).toBe('pending')
       expect(topLevelErrors.length).toBe(0)
 
+      result.renderCount = 0
       await actSuspense(() => input$.error(new Error('oops')))
 
-      // 1. Suspense rerendering
-      // 2. useObservableSuspense throws the error
-      // 3. ErrorBoundary rerendering
-      expect(result.renderCount).toBe(3)
+      // 1. Suspense rerendering, catch the error and force update
+      // 2. rerendering, throw the error
+      expect(result.renderCount).toBe(2)
       expect(result.value).toBeInstanceOf(Error)
       expect((result.value as Error).message).toBe('oops')
       expect(result.getStatus()).toBe('error')
@@ -293,16 +302,161 @@ describe('useObservableSuspense', () => {
       expect(result.getStatus()).toBe('success')
       expect(topLevelErrors.length).toBe(0)
 
+      result.renderCount = 0
       await actSuspense(() => input$.error(new Error('oops')))
 
-      // 1. useObservableSuspense force update
-      // 2. useObservableSuspense throws the error
-      // 3. ErrorBoundary rerendering
-      expect(result.renderCount).toBe(3)
+      // 1. Suspense rerendering, catch the error and force update
+      // 2. rerendering, throw the error
+      expect(result.renderCount).toBe(2)
       expect(result.value).toBeInstanceOf(Error)
       expect((result.value as Error).message).toBe('oops')
       expect(result.getStatus()).toBe('error')
       expect(topLevelErrors.length).toBe(1)
+    })
+
+    it('should resume after reloads on errored cold observable', async () => {
+      const input$ = new Subject<number | Error>()
+      const coldInput$ = input$.pipe(
+        map(x => {
+          if (x instanceof Error) {
+            throw x
+          }
+          return x
+        })
+      )
+
+      const inputResource = new ObservableResource(coldInput$)
+      const result = renderHook(inputResource)
+      expect(result.renderCount).toBe(1)
+      expect(result.getStatus()).toBe('pending')
+      expect(topLevelErrors.length).toBe(0)
+
+      result.renderCount = 0
+      await actSuspense(() => input$.next(1))
+
+      expect(result.renderCount).toBe(1)
+      expect(result.value).toBe(1)
+      expect(result.getStatus()).toBe('success')
+      expect(topLevelErrors.length).toBe(0)
+
+      result.renderCount = 0
+      await actSuspense(() => input$.next(new Error('oops')))
+
+      // 1. Suspense rerendering, catch the error and force update
+      // 2. rerendering, throw the error
+      expect(result.renderCount).toBe(2)
+      expect(result.value).toBeInstanceOf(Error)
+      expect((result.value as Error).message).toBe('oops')
+      expect(result.getStatus()).toBe('error')
+      expect(topLevelErrors.length).toBe(1)
+
+      result.clearError()
+      result.renderCount = 0
+      await actSuspense(() => input$.next(2))
+
+      expect(result.renderCount).toBe(0)
+      expect(result.value).toBeInstanceOf(Error)
+      expect((result.value as Error).message).toBe('oops')
+      expect(result.getStatus()).toBe('error')
+
+      act(() => inputResource.reload())
+      result.renderCount = 0
+      result.clearError()
+      await actSuspense(() => input$.next(3))
+
+      /** 1. inputResource.reload */
+      /** 2. clearError */
+      expect(result.renderCount).toBe(2)
+      expect(result.value).toBe(3)
+      expect(result.getStatus()).toBe('success')
+    })
+
+    it('should resume after reloads on errored hot observable', async () => {
+      const input$ = new BehaviorSubject<number>(1)
+      const inputResource = new ObservableResource(input$)
+      const result = renderHook(inputResource)
+      expect(result.renderCount).toBe(1)
+      expect(result.value).toBe(1)
+      expect(result.getStatus()).toBe('success')
+      expect(topLevelErrors.length).toBe(0)
+
+      result.renderCount = 0
+      await actSuspense(() => input$.error(new Error('oops')))
+
+      // 1. Suspense rerendering, catch the error and force update
+      // 2. rerendering, throw the error
+      expect(result.renderCount).toBe(2)
+      expect(result.value).toBeInstanceOf(Error)
+      expect((result.value as Error).message).toBe('oops')
+      expect(result.getStatus()).toBe('error')
+      expect(topLevelErrors.length).toBe(1)
+
+      result.clearError()
+      result.renderCount = 0
+      await actSuspense(() => input$.next(2))
+
+      expect(result.renderCount).toBe(0)
+      expect(result.value).toBeInstanceOf(Error)
+      expect((result.value as Error).message).toBe('oops')
+      expect(result.getStatus()).toBe('error')
+
+      const newInput$ = new BehaviorSubject<number>(1)
+      act(() => inputResource.reload(newInput$))
+      result.renderCount = 0
+      result.clearError()
+      await actSuspense(() => newInput$.next(3))
+
+      /** 1. inputResource.reload */
+      /** 2. clearError */
+      expect(result.renderCount).toBe(2)
+      expect(result.value).toBe(3)
+      expect(result.getStatus()).toBe('success')
+    })
+
+    it('should clean up properties when reloads', async () => {
+      const input$ = new Subject<number | Error>()
+      const coldInput$ = input$.pipe(
+        map(x => {
+          if (x instanceof Error) {
+            throw x
+          }
+          return x
+        })
+      )
+
+      const inputResource = new ObservableResource(coldInput$)
+      const result = renderHook(inputResource)
+      expect(result.getStatus()).toBe('pending')
+      expect(result.renderCount).toBe(1)
+
+      result.renderCount = 0
+      act(() => inputResource.reload())
+
+      expect(result.getStatus()).toBe('pending')
+      expect(result.renderCount).toBe(0)
+
+      result.renderCount = 0
+      await actSuspense(() => input$.next(2))
+
+      expect(result.renderCount).toBe(1)
+      expect(result.value).toBe(2)
+      expect(result.getStatus()).toBe('success')
+
+      result.renderCount = 0
+      inputResource.destroy()
+
+      expect(inputResource.shouldUpdate$$.isStopped).toBe(true)
+      expect(result.renderCount).toBe(0)
+
+      result.renderCount = 0
+      let error: Error | undefined
+      try {
+        inputResource.reload()
+      } catch (e) {
+        error = e
+      }
+
+      expect(error).toBeInstanceOf(Error)
     })
   })
 })

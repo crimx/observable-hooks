@@ -21,6 +21,8 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private error: any = null
 
+  private input$: Observable<TInput>
+
   private subscription: Subscription
 
   private isSuccess = (value: TInput): value is TOutput => true
@@ -41,6 +43,8 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       this.isSuccess = isSuccess as (value: TInput) => value is TOutput
     }
 
+    this.input$ = input$
+
     this.subscription = input$.subscribe(
       this.handleNext,
       this.handleError,
@@ -56,6 +60,31 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       throw this.handler.suspender
     }
     return this.value!
+  }
+
+  reload(newInput$?: Observable<TInput>): void {
+    if (this.shouldUpdate$$.isStopped) {
+      throw new Error('Cannot reload a destroyed Observable Resource')
+    }
+
+    if (newInput$) {
+      this.input$ = newInput$
+    }
+
+    this.subscription.unsubscribe()
+
+    this.error = null
+
+    if (this.handler) {
+      this.handler.resolve()
+      this.handler = this.getHandler()
+    }
+
+    this.subscription = this.input$.subscribe(
+      this.handleNext,
+      this.handleError,
+      this.handleComplete
+    )
   }
 
   destroy(): void {

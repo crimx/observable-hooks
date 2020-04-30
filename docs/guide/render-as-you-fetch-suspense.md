@@ -137,3 +137,9 @@ const resouce = new ObservableResource(
 ### Error Handling
 
 Errors from Observables will be collected and re-thrown by `ObservableResource` as rendering errors. Define an error boundary following the instructions on [React Docs](https://reactjs.org/docs/concurrent-mode-suspense.html#handling-errors).
+
+Do note that due to the design of RxJS, once an error occurs in an observble, the observable is killed. You should prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
+
+If error occurs in the observable, call `resource.reload()` before you decide to bring back the component(e.g. call it from the error boundary). For cold observable call `resource.reload()`, for hot observable `resource.reload(newObservable$)`. It is recommended to use cold observable in `ObservableResource` if possible for easy reloading.
+
+[catchError]: https://rxjs-dev.firebaseapp.com/api/operators/catchError
