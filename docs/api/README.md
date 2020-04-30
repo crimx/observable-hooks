@@ -191,6 +191,10 @@ Accepts an Observable and optional `next`, `error`, `complete` functions. These 
 Note that changes of callbacks will not trigger an emission. If you need that just create another Observable of the callback with [`useObservable`](#useobservable).
 :::
 
+::: warning
+Due to the design of RxJS, once an error occurs in an observable, the observable is killed. You should prevent errors from reaching observables or [`catchError`][catchError] in sub-observables. You can also make the observable as state and replace it on error. `useSubscription` will automatically switch to the new one.
+::: warning
+
 **Type parameters:**
 
 - `TInput` Input value within Observable.
@@ -266,12 +270,16 @@ You can also use the regular `useState` with [useSubscription](#usesubscription)
 It it recommended to use `initState` for simple primitive value. For others, init with the Observable to save some (re)computations.
 :::
 
+::: danger CAUTION
+Due to [rules of hooks][rules-of-hooks] you can offer either a function or an Observable as the first argument but do not change to one another during Component's life cycle.
+:::
+
 ::: warning
 `useObservableState` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. Use [`ref`][use-ref] or [`useObservable`](#useobservable) with `withLatestFrom` instead.
 :::
 
-::: danger CAUTION
-Due to [rules of hooks][rules-of-hooks] you can offer either a function or an Observable as the first argument but do not change to one another during Component's life cycle.
+::: warning
+Unhandled errors from the observable will be caught and logged. In non-production mode the context of `useObservableState` itself will also be logged. But do note that due to the design of RxJS, once an error occurs in an observable, the observable is killed. You should prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
 :::
 
 <Badge text="v2.1.2"/> From <code>v2.1.2</code> you can pass <code>true</code> to <code>TSyncInit</code> generic to remove <code>undefined</code> from resulted type.
@@ -498,3 +506,4 @@ const picked = useObservablePickState(state$, 'a', 'b', 'c')!
 
 [rules-of-hooks]: https://reactjs.org/docs/hooks-rules.html
 [use-ref]: https://reactjs.org/docs/hooks-reference.html#useref
+[catchError]: https://rxjs-dev.firebaseapp.com/api/operators/catchError

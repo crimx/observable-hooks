@@ -20,6 +20,12 @@ import { useEffect, useMemo, useRef } from 'react'
  * (From v2.3.4) when the Observable changes `useSubscription` will automatically
  * unsubscribe the old one and resubscribe to the new one.
  *
+ * ⚠ **Note:** Due to the design of RxJS, once an error occurs in an observable, the observable
+ * is killed.
+ * You should prevent errors from reaching observables or `catchError` in sub-observables.
+ * You can also make the observable as state and replace it on error.
+ * `useSubscription` will automatically switch to the new one.
+ *
  * @template TInput Input value within Observable.
  *
  * @param input$ Input Observable.
