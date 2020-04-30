@@ -1,6 +1,6 @@
 import { useObservableState, identity } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
-import { of, Subject } from 'rxjs'
+import { of, Subject, throwError } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 describe('useObservableState', () => {
@@ -77,6 +77,39 @@ describe('useObservableState', () => {
       const { result } = renderHook(() => useObservableState(() => of(1, 2), 3))
       expect(result.current[0]).toBe(2)
     })
+
+    it('should log error and context when observable emits error', () => {
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+      expect(spy).not.toHaveBeenCalled()
+
+      const { result } = renderHook(() =>
+        useObservableState(() => throwError(new Error('opps')))
+      )
+      expect(result.current[0]).toBeUndefined()
+
+      expect(spy).toHaveBeenCalledTimes(2)
+
+      spy.mockRestore()
+    })
+
+    it('should not record context on production', () => {
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
+      const { NODE_ENV } = process.env
+      process.env.NODE_ENV = 'production'
+
+      expect(spy).not.toHaveBeenCalled()
+
+      const { result } = renderHook(() =>
+        useObservableState(() => throwError(new Error('opps')))
+      )
+      expect(result.current[0]).toBeUndefined()
+
+      expect(spy).toHaveBeenCalledTimes(1)
+
+      process.env.NODE_ENV = NODE_ENV
+      spy.mockRestore()
+    })
   })
 
   describe('with init Observable', () => {
@@ -118,6 +151,37 @@ describe('useObservableState', () => {
       const outer$ = of(1, 2)
       const { result } = renderHook(() => useObservableState(outer$, 3))
       expect(result.current).toBe(2)
+    })
+
+    it('should log error and context when observable emits error', () => {
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+      expect(spy).not.toHaveBeenCalled()
+
+      const outer$ = throwError(new Error('opps'))
+      const { result } = renderHook(() => useObservableState(outer$, 3))
+      expect(result.current).toBe(3)
+
+      expect(spy).toHaveBeenCalledTimes(2)
+
+      spy.mockRestore()
+    })
+
+    it('should not record context on production', () => {
+      const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
+      const { NODE_ENV } = process.env
+      process.env.NODE_ENV = 'production'
+
+      expect(spy).not.toHaveBeenCalled()
+
+      const outer$ = throwError(new Error('opps'))
+      const { result } = renderHook(() => useObservableState(outer$, 3))
+      expect(result.current).toBe(3)
+
+      expect(spy).toHaveBeenCalledTimes(1)
+
+      process.env.NODE_ENV = NODE_ENV
+      spy.mockRestore()
     })
   })
 })
