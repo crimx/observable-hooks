@@ -17,6 +17,12 @@ import { useObservableCallback } from './use-observable-callback'
  * ⚠ **Note:** Due to rules of hooks you can offer either a function or an Observable
  * as the first argument but do not change to one another during Component's life cycle.
  *
+ * ⚠ **Note:** Unhandled errors from the observable will be caught and logged.
+ * In non-production mode the context of `useObservableState` itself will also be logged.
+ * But do note that due to the design of RxJS, once an error occurs in an observable, the observable
+ * is killed.
+ * You should prevent errors from reaching observables or `catchError` in sub-observables.
+ *
  * Subscription will auto-unsubscribe when unmount, you can also unsubscribe manually.
  * You can also use the optional `initState` which will be directly passed to the result.
  * But if sync values are also emitted from the Observable `initState` will be ignored.
@@ -80,6 +86,12 @@ export function useObservableState<TState, TInput = TState>(
   const stateRef = useRef<TState | undefined>(args[1])
   const setStateRef = useRef<Dispatch<SetStateAction<TState | undefined>>>()
 
+  // Record context where the observable subscribed used for easy debugging
+  let errorContext: Error | undefined
+  if (!errorContext && process.env.NODE_ENV !== 'production') {
+    errorContext = new Error('The above error is related to:')
+  }
+
   let callback: undefined | ((input: TInput) => void)
   let states$: Observable<TState>
   if (typeof args[0] === 'function') {
@@ -88,16 +100,25 @@ export function useObservableState<TState, TInput = TState>(
     states$ = args[0]
   }
 
-  useSubscription(states$, state => {
-    if (stateRef.current !== state) {
-      // assign value before setState
-      stateRef.current = state
+  useSubscription(
+    states$,
+    state => {
+      if (stateRef.current !== state) {
+        // assign value before setState
+        stateRef.current = state
 
-      if (setStateRef.current) {
-        setStateRef.current(state)
+        if (setStateRef.current) {
+          setStateRef.current(state)
+        }
+      }
+    },
+    error => {
+      console.error(error)
+      if (errorContext) {
+        console.error(errorContext)
       }
     }
-  })
+  )
 
   // Putting useState after subcription will skip re-rendering
   // of all sync emitted values from the Observable.
