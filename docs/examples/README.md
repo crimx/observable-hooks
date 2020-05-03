@@ -14,21 +14,23 @@ import { from, of } from 'rxjs'
 import { map, switchMap, startWith, catchError } from 'rxjs/operators'
 import { useObservableState } from 'observable-hooks'
 import { fetchData } from './api'
-import { SuccessUI, LoadingUI, FailedUI } from './components'
+import { DefaultUI, SuccessUI, LoadingUI, FailedUI } from './components'
 
 export function App() {
   const [status, onFetchData] = useObservableState(
     event$ => event$.pipe(
-      // initial fetching
-      startWith(),
       // OMG I don't have to deal with race condition
       switchMap(event =>
-        from(fetchData(event && event.currentTarget.id)).pipe(
+        from(fetchData(event.currentTarget.id)).pipe(
           map(value => <SuccessUI value={value} />),
+          // handle errors on sub-stream so that main stream stays alive
+          catchError(error => of(<FailedUI error={error} />)),
+          // show loading state immediately
           startWith(<LoadingUI />)
         )
       ),
-      catchError(error => of(<FailedUI error={error} />))
+      // initial state
+      startWith(<DefaultUI />)
     )
   )
 
@@ -112,7 +114,9 @@ export const App: FC<AppProps> = props => {
           shouldSendBeacon ? timer(1000).pipe(mapTo(beacon)) : empty()
         )
       ),
-    [shouldSendBeacon, props.beacon]
+    // `as const` is a simple way to make an array tuple.
+    // You can also use `as [boolean, string]` or `as [typeof xxx, typeof xxx]`
+    [shouldSendBeacon, props.beacon] as const
   )
 
   useSubscription(beacon$, sendBeacon)

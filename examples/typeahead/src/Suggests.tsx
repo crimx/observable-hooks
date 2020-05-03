@@ -1,16 +1,14 @@
-import { useObservableState, useObservable, pluckFirst } from 'observable-hooks'
+import { useObservableState, useObservable } from 'observable-hooks'
 import * as React from 'react'
 import {
-  filter,
   map,
   distinctUntilChanged,
   switchMap,
   catchError,
   startWith,
-  withLatestFrom,
   tap
 } from 'rxjs/operators'
-import { of, forkJoin, timer, Observable } from 'rxjs'
+import { of, timer, Observable } from 'rxjs'
 
 export interface SuggestsItem {
   href: string
@@ -56,35 +54,32 @@ const StateError: React.FC = () => (
 
 /** Reusable Suggests Component */
 export const Suggests: React.FC<SuggestsProps> = props => {
-  const fetchFunc$ = useObservable(pluckFirst, [props.fetchFunc])
-  return useObservableState(
-    // A stream of React elements! I know it's mind-blowing.
-    useObservable(
-      inputs$ =>
-        inputs$.pipe(
-          filter(([text]) => text.length > 1),
-          distinctUntilChanged(),
-          switchMap(([text]) =>
-            // delay in sub-stream so that users can see the
-            // searching state quickly. But no actual request
-            // is performed until the delay is hit.
-            forkJoin(
-              // minimum 1s delay to prevent flickering if user got really greate network condition
-              timer(1000),
+  const status$ = useObservable(
+    // A stream of React elements!
+    inputs$ =>
+      inputs$.pipe(
+        distinctUntilChanged((a, b) => a[0] === b[0]),
+        switchMap(([text, fetchFunc]) =>
+          text
+            ? // delay in sub-stream so that users can see the
+              // searching state quickly. But no actual request
+              // is performed until the delay is hit.
               timer(750).pipe(
                 tap(() => console.log('>>> really start searching...')),
-                withLatestFrom(fetchFunc$),
-                switchMap(([, fetchFunc]) => fetchFunc(text))
+                switchMap(() => fetchFunc(text)),
+                map(suggests => <StateFinish list={suggests} />),
+                // handle errors on sub-stream so that main stream stays alive
+                catchError(() => of(<StateError />)),
+                // show loading state immediately
+                startWith(<StateLoading />)
               )
-            ).pipe(
-              map(([, suggests]) => <StateFinish list={suggests} />),
-              startWith(<StateLoading />)
-            )
-          ),
-          catchError(() => of(<StateError />)),
-          startWith(<StateDefault />)
+            : // cancel handling response, reset default state
+              of(<StateDefault />)
         ),
-      [props.text]
-    )
-  )!
+        // initial state
+        startWith(<StateDefault />)
+      ),
+    [props.text, props.fetchFunc] as const
+  )
+  return useObservableState(status$)!
 }
