@@ -59,7 +59,8 @@ module.exports = {
               sidebarDepth: 2, // optional, defaults to 1
               children: [
                 '/guide/context',
-                '/guide/render-as-you-fetch-suspense'
+                '/guide/render-as-you-fetch-suspense',
+                '/guide/react-independent-epics'
               ]
             }
           ]
