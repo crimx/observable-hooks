@@ -1,6 +1,6 @@
 import { Observable, Subscription } from 'rxjs'
-import { useRefFn, getEmptyObject, EMPTY_TUPLE } from './helpers'
-import { useEffect, useMemo, useRef } from 'react'
+import { useRefFn, getEmptyObject } from './helpers'
+import { useEffect, useRef } from 'react'
 
 /**
  * Accepts an Observable and optional `next`, `error`, `complete` functions.
@@ -9,6 +9,10 @@ import { useEffect, useMemo, useRef } from 'react'
  *
  * Subscription will unsubscribe when unmount, you can also
  * unsubscribe manually.
+ *
+ * To make it concurrent mode compatible, the subscription happens in commit phase
+ * which means even the Observable emits synchronous values
+ * they will arrive after the first rendering.
  *
  * Note that changes of callbacks will not trigger
  * an emission. If you need that just create another
@@ -38,7 +42,7 @@ export function useSubscription<TInput>(
   next?: ((value: TInput) => void) | null | undefined,
   error?: ((error: any) => void) | null | undefined,
   complete?: (() => void) | null | undefined
-): Subscription {
+): Subscription | undefined {
   const cbRef = useRefFn<{
     next?: typeof next
     error?: typeof error
@@ -51,11 +55,12 @@ export function useSubscription<TInput>(
 
   const subscriptionRef = useRef<Subscription>()
 
-  subscriptionRef.current = useMemo(() => {
+  useEffect(() => {
     if (subscriptionRef.current) {
       subscriptionRef.current.unsubscribe()
     }
-    return input$.subscribe({
+
+    subscriptionRef.current = input$.subscribe({
       next: value => cbRef.current.next && cbRef.current.next(value),
       error: error => {
         if (cbRef.current.error) {
@@ -66,10 +71,13 @@ export function useSubscription<TInput>(
       },
       complete: () => cbRef.current.complete && cbRef.current.complete()
     })
+
+    return () => {
+      if (subscriptionRef.current) {
+        subscriptionRef.current.unsubscribe()
+      }
+    }
   }, [input$])
 
-  // unsubscribe when unmount
-  useEffect(() => () => subscriptionRef.current!.unsubscribe(), EMPTY_TUPLE)
-
-  return subscriptionRef.current!
+  return subscriptionRef.current
 }
