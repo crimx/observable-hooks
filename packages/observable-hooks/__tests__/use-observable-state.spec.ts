@@ -104,18 +104,18 @@ describe('useObservableState', () => {
         )
       )
 
-      let [state, action] = result.current
+      let [state, dispatch] = result.current
       expect(state).toEqual({ value1: 'value1', value2: 2 })
 
       act(() => {
-        action({ type: 'UPDATE_VALUE1', payload: 'value2' })
+        dispatch({ type: 'UPDATE_VALUE1', payload: 'value2' })
       })
 
       state = result.current[0]
       expect(state).toEqual({ value1: 'value2', value2: 2 })
 
       act(() => {
-        action({ type: 'INCREMENT_VALUE2' })
+        dispatch({ type: 'INCREMENT_VALUE2' })
       })
 
       state = result.current[0]
