@@ -10,7 +10,7 @@ import { useEffect, useRef } from 'react'
  * Subscription will unsubscribe when unmount, you can also
  * unsubscribe manually.
  *
- * To make it concurrent mode compatible, the subscription happens in commit phase
+ * ⚠ **Note:** To make it concurrent mode compatible, the subscription happens in commit phase
  * which means even the Observable emits synchronous values
  * they will arrive after the first rendering.
  *
@@ -59,11 +59,7 @@ export function useSubscription<TInput>(
   const errorRef = useRef<Error | null>()
 
   useEffect(() => {
-    if (subscriptionRef.current) {
-      subscriptionRef.current.unsubscribe()
-    }
-
-    subscriptionRef.current = input$.subscribe({
+    const subscription = input$.subscribe({
       next: value => {
         errorRef.current = null
         if (cbRef.current.next) {
@@ -75,7 +71,6 @@ export function useSubscription<TInput>(
           errorRef.current = null
           return cbRef.current.error(error)
         }
-
         errorRef.current = error
         forceUpdate()
       },
@@ -86,10 +81,10 @@ export function useSubscription<TInput>(
       }
     })
 
+    subscriptionRef.current = subscription
+
     return () => {
-      if (subscriptionRef.current) {
-        subscriptionRef.current.unsubscribe()
-      }
+      subscription.unsubscribe()
     }
   }, [input$])
 
