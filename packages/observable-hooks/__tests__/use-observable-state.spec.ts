@@ -1,7 +1,7 @@
 import { useObservableState, identity } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { of, Subject, throwError } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, scan } from 'rxjs/operators'
 
 describe('useObservableState', () => {
   describe('with init function', () => {
@@ -62,6 +62,64 @@ describe('useObservableState', () => {
       )
       expect(result.error).toBeInstanceOf(Error)
       expect(result.error.message).toBe('opps')
+    })
+
+    it('should support reducer pattern', () => {
+      interface StoreState {
+        value1: string
+        value2: number
+      }
+
+      type StoreAction =
+        | {
+            type: 'UPDATE_VALUE1'
+            payload: string
+          }
+        | {
+            type: 'INCREMENT_VALUE2'
+          }
+
+      const { result } = renderHook(() =>
+        useObservableState<StoreState, StoreAction>(
+          (action$, initialState) =>
+            action$.pipe(
+              scan((state, action) => {
+                switch (action.type) {
+                  case 'UPDATE_VALUE1':
+                    return {
+                      ...state,
+                      value1: action.payload
+                    }
+                  case 'INCREMENT_VALUE2':
+                    return {
+                      ...state,
+                      value2: state.value2 + 1
+                    }
+                  default:
+                    return state
+                }
+              }, initialState)
+            ),
+          { value1: 'value1', value2: 2 }
+        )
+      )
+
+      let [state, action] = result.current
+      expect(state).toEqual({ value1: 'value1', value2: 2 })
+
+      act(() => {
+        action({ type: 'UPDATE_VALUE1', payload: 'value2' })
+      })
+
+      state = result.current[0]
+      expect(state).toEqual({ value1: 'value2', value2: 2 })
+
+      act(() => {
+        action({ type: 'INCREMENT_VALUE2' })
+      })
+
+      state = result.current[0]
+      expect(state).toEqual({ value1: 'value2', value2: 3 })
     })
   })
 
