@@ -1,5 +1,5 @@
 import { Observable, isObservable, Subject } from 'rxjs'
-import { useState, useRef } from 'react'
+import { useState, useRef, useDebugValue } from 'react'
 import { useSubscription } from './use-subscription'
 import { useRefFn, getEmptySubject } from './helpers'
 
@@ -116,7 +116,10 @@ export function useObservableState<TState, TInput = TState>(
     callback = useRef((state: TInput) => input$Ref.current.next(state)).current
   }
 
-  useSubscription(state$, state => setState(state))
+  useSubscription(state$, setState)
+
+  // Display state in React DevTools.
+  useDebugValue(state)
 
   return callback ? [state, callback] : state
 }
