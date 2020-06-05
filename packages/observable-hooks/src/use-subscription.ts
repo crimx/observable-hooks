@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs'
-import { useRefFn, getEmptyObject } from './helpers'
+import { useRefFn, getEmptyObject, useForceUpdate } from './helpers'
 import { useEffect, useRef } from 'react'
 
 /**
@@ -53,7 +53,10 @@ export function useSubscription<TInput>(
   cbRef.current.error = error
   cbRef.current.complete = complete
 
+  const forceUpdate = useForceUpdate()
+
   const subscriptionRef = useRef<Subscription>()
+  const errorRef = useRef<Error | null>()
 
   useEffect(() => {
     if (subscriptionRef.current) {
@@ -61,15 +64,26 @@ export function useSubscription<TInput>(
     }
 
     subscriptionRef.current = input$.subscribe({
-      next: value => cbRef.current.next && cbRef.current.next(value),
-      error: error => {
-        if (cbRef.current.error) {
-          cbRef.current.error(error)
-        } else {
-          throw error
+      next: value => {
+        errorRef.current = null
+        if (cbRef.current.next) {
+          return cbRef.current.next(value)
         }
       },
-      complete: () => cbRef.current.complete && cbRef.current.complete()
+      error: error => {
+        if (cbRef.current.error) {
+          errorRef.current = null
+          return cbRef.current.error(error)
+        }
+
+        errorRef.current = error
+        forceUpdate()
+      },
+      complete: () => {
+        if (cbRef.current.complete) {
+          return cbRef.current.complete()
+        }
+      }
     })
 
     return () => {
@@ -78,6 +92,11 @@ export function useSubscription<TInput>(
       }
     }
   }, [input$])
+
+  if (errorRef.current) {
+    // Let error boundary catch the error
+    throw errorRef.current
+  }
 
   return subscriptionRef.current
 }

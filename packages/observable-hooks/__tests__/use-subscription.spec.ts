@@ -4,11 +4,13 @@ import { of, BehaviorSubject, Subject, throwError } from 'rxjs'
 import { useState } from 'react'
 
 describe('useSubscription', () => {
-  it('should always return the same Subscription', () => {
+  it('should always return the same Subscription after first rendering', () => {
     const num$ = of(1, 2, 3)
     const { result, rerender } = renderHook(() =>
       useSubscription(num$, () => {})
     )
+    expect(result.current).toBeUndefined()
+    rerender()
     const firstSubscription = result.current
     rerender()
     expect(firstSubscription).toBe(result.current)
@@ -52,30 +54,20 @@ describe('useSubscription', () => {
     const nextSpy = jest.fn()
     const completeSpy = jest.fn()
 
-    const topLevelErrors: Error[] = []
-    function handleTopLevelError(event: ErrorEvent) {
-      topLevelErrors.push(event.error)
-      event.preventDefault()
-    }
-    window.addEventListener('error', handleTopLevelError)
-
-    const { rerender } = renderHook(() =>
+    const { rerender, result } = renderHook(() =>
       useSubscription(error$, nextSpy, null, completeSpy)
     )
-    // RxJS collects errors on next tick
-    await new Promise(resolve => setTimeout(resolve, 0))
 
-    expect(topLevelErrors).toHaveLength(1)
-    expect(topLevelErrors[0]).toBe(error)
+    expect(result.error).toBeInstanceOf(Error)
+    expect(result.error.message).toBe('oops')
     expect(nextSpy).toBeCalledTimes(0)
     expect(completeSpy).toBeCalledTimes(0)
 
     rerender()
-    expect(topLevelErrors).toHaveLength(1)
+    expect(result.error).toBeInstanceOf(Error)
+    expect(result.error.message).toBe('oops')
     expect(nextSpy).toBeCalledTimes(0)
     expect(completeSpy).toBeCalledTimes(0)
-
-    window.removeEventListener('error', handleTopLevelError)
   })
 
   it('should receive complete', () => {
