@@ -9,12 +9,18 @@ describe('useObservableGetState', () => {
     expect(result.current).toBe(3)
   })
 
-  it('should not lose the init value from sync Observable when rerendering trigger from other props or states', () => {
-    const outer$ = of(1, 2, 3)
-    const { result, rerender } = renderHook(() => useObservableGetState(outer$))
-    expect(result.current).toBe(3)
-    rerender()
-    expect(result.current).toBe(3)
+  it('should start receiving values after first rendering', () => {
+    const spy = jest.fn()
+    const outer$ = of({ a: { b: 1 } }, { a: { b: 2 } }, { a: { b: 3 } })
+    const { result } = renderHook(() => {
+      const state = useObservableGetState(outer$, 'a', 'b')
+      spy(state)
+      return state
+    })
+    expect(result.current).toEqual(3)
+    expect(spy).toHaveBeenCalledTimes(2)
+    expect(spy).toHaveBeenNthCalledWith(1, undefined)
+    expect(spy).toHaveBeenNthCalledWith(2, 3)
   })
 
   it('should update value when the Observable emits value', () => {

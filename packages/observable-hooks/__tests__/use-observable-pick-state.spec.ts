@@ -3,20 +3,18 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import { of, Subject, BehaviorSubject } from 'rxjs'
 
 describe('useObservablePickState', () => {
-  it('should have the synced init value from Observable without rerendering', () => {
+  it('should start receiving values after first rendering', () => {
+    const spy = jest.fn()
     const outer$ = of({ a: 'a' }, { a: 'b' }, { a: 'c' })
-    const { result } = renderHook(() => useObservablePickState(outer$, 'a'))
+    const { result } = renderHook(() => {
+      const state = useObservablePickState(outer$, 'a')
+      spy(state)
+      return state
+    })
     expect(result.current).toEqual({ a: 'c' })
-  })
-
-  it('should not lose the init value from sync Observable when rerendering trigger from other props or states', () => {
-    const outer$ = of({ a: 'a' }, { a: 'b' }, { a: 'c' })
-    const { result, rerender } = renderHook(() =>
-      useObservablePickState(outer$, 'a')
-    )
-    expect(result.current).toEqual({ a: 'c' })
-    rerender()
-    expect(result.current).toEqual({ a: 'c' })
+    expect(spy).toHaveBeenCalledTimes(2)
+    expect(spy).toHaveBeenNthCalledWith(1, undefined)
+    expect(spy).toHaveBeenNthCalledWith(2, { a: 'c' })
   })
 
   it('should update value when the Observable emits value', () => {
