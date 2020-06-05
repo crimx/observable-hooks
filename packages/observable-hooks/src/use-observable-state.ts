@@ -20,6 +20,9 @@ import { useRefFn, getEmptySubject } from './helpers'
  *    )
  *    ```
  *
+ * The `initialState` can be either the state or a function that returns the state,
+ * just like `useState`.
+ *
  * ⚠ **Note:** These two ways use different hooks, choose either one each time
  * and do not change to the other one during Component's life cycle.
  *

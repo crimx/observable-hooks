@@ -100,7 +100,7 @@ describe('useObservableState', () => {
                 }
               }, initialState)
             ),
-          { value1: 'value1', value2: 2 }
+          () => ({ value1: 'value1', value2: 2 })
         )
       )
 
