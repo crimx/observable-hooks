@@ -1,3 +1,4 @@
+import { useDebugValue } from 'react'
 import { Observable } from 'rxjs'
 import { map, distinctUntilChanged } from 'rxjs/operators'
 import { useObservableState } from './use-observable-state'
@@ -18,7 +19,7 @@ export function useObservablePickState<
   state$: Observable<TState>,
   ...keys: TKeys
 ): { [K in TKeys[number]]: TState[K] } | undefined {
-  return useObservableState(
+  const value = useObservableState(
     useObservable(() =>
       state$.pipe(
         distinctUntilChanged((s1, s2) => keys.every(k => s1[k] === s2[k])),
@@ -32,4 +33,6 @@ export function useObservablePickState<
       )
     )
   )
+  useDebugValue(value)
+  return value
 }

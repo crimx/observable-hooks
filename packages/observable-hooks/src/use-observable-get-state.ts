@@ -1,3 +1,4 @@
+import { useDebugValue } from 'react'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { useObservableState } from './use-observable-state'
@@ -165,9 +166,11 @@ export function useObservableGetState<TState>(
   state$: Observable<TState>,
   ...path: any[]
 ) {
-  return useObservableState(
+  const value = useObservableState(
     useObservable(() => state$.pipe(map(state => path.reduce(getValue, state))))
   )
+  useDebugValue(value)
+  return value
 }
 
 function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {

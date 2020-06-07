@@ -1,3 +1,4 @@
+import { useDebugValue } from 'react'
 import { useSubscription } from './use-subscription'
 import { useForceUpdate } from './helpers'
 import { ObservableResource } from './observable-resource'
@@ -15,5 +16,8 @@ export function useObservableSuspense<TInput, TOutput extends TInput = TInput>(
 ): TOutput {
   const forceUpdate = useForceUpdate()
   useSubscription(resource.shouldUpdate$$, forceUpdate)
-  return resource.read()
+
+  const value = resource.read()
+  useDebugValue(value)
+  return value
 }
