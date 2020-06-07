@@ -129,17 +129,17 @@ useRefFn<T>(init: function): MutableRefObject<T>
 
 **Type parameters:**
 
-- `T` object | number | string | boolean | symbol.
+- `T` any.
 
 **Parameters:**
 
 Name | Type | Description
 ------ | ------ | ------
-`init` | `(): T` | A function that returns a non-nullable value. Will be called only once.
+`init` | `(): T` | A function that returns a value. Will be called only once.
 
 **Returns:**
 
-`MutableRefObject<T>` A Ref object with the value.
+`MutableRefObject<T>` A Ref object with the returned value.
 
 ## useForceUpdate
 
