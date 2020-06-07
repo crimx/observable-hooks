@@ -13,7 +13,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
    * Unlike Promise, Observable is a multiple push mechanism.
    * Only force update when Suspense needs to restart.
    */
-  readonly shouldUpdate$$ = new Subject<undefined>()
+  readonly shouldUpdate$$ = new Subject<{ current: TOutput } | undefined>()
 
   private handler: Handler | null = this.getHandler()
 
@@ -109,8 +109,9 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
         const { resolve } = this.handler
         this.handler = null
         resolve()
-      } else if (isDiff) {
-        this.shouldUpdate$$.next()
+      }
+      if (isDiff) {
+        this.shouldUpdate$$.next({ current: value })
       }
     } else if (!this.handler) {
       // start a new Suspense

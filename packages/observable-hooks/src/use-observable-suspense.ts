@@ -1,4 +1,4 @@
-import { useDebugValue } from 'react'
+import { useDebugValue, useState } from 'react'
 import { useSubscription } from './use-subscription'
 import { useForceUpdate } from './helpers'
 import { ObservableResource } from './observable-resource'
@@ -14,10 +14,20 @@ import { ObservableResource } from './observable-resource'
 export function useObservableSuspense<TInput, TOutput extends TInput = TInput>(
   resource: ObservableResource<TInput, TOutput>
 ): TOutput {
+  const resourceValue = resource.read()
+  const [state, setState] = useState<TOutput>(resourceValue)
   const forceUpdate = useForceUpdate()
-  useSubscription(resource.shouldUpdate$$, forceUpdate)
 
-  const value = resource.read()
-  useDebugValue(value)
-  return value
+  useSubscription(resource.shouldUpdate$$, valueRef => {
+    // ObservableResource supports Stale-While-Revalidate pattern.
+    // Schedule states to prevent tearing.
+    if (valueRef) {
+      setState(valueRef.current)
+    } else {
+      forceUpdate()
+    }
+  })
+
+  useDebugValue(state)
+  return state
 }
