@@ -11,17 +11,34 @@
 
 ![logo](https://github.com/crimx/observable-hooks/blob/master/logo.jpg?raw=true)
 
-React hooks for RxJS Observables. Simple, flexible, testable and performant.
+Concurrent mode safe React hooks for RxJS Observables. Simple, flexible, testable and performant.
 
 - Seamless integration of React and RxJS.
   - Props and states to Observables.
   - Observables to states and props events.
   - Conditional rendering with stream of React Components.
+  - **Concurrent mode safe**.
   - Render-as-You-Fetch with React Suspense.
   - No `tap` hack needed. With Epic-like signature Observable operation is pure and testable.
 - Full-powered RxJS. Do whatever you want with Observables. No limitation nor compromise.
 - Fully tested. We believe in stability first. This project will always maintain a 100% coverage.
 - Tiny and fast. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
+
+## Installation
+
+The concurrent mode safe version is in alpha. [Docs][docs] is also up-to-date. Looking forward to your feedback!
+
+yarn
+
+```bash
+yarn add observable-hooks@alpha
+```
+
+npm
+
+```bash
+npm install --save observable-hooks@alpha
+```
 
 ## Why?
 
@@ -74,27 +91,9 @@ function transformTypingStatus(event$) {
 }
 ```
 
-## Installation
-
-yarn
-
-```bash
-yarn add observable-hooks
-```
-
-npm
-
-```bash
-npm install --save observable-hooks
-```
-
 ## Usage
 
 Read the docs at <https://observable-hooks.js.org>.
-
-Here is how I designed the API. Might give you a perspective on when use what.
-
-![mindmap](https://github.com/crimx/observable-hooks/blob/master/observable-hooks.png?raw=true)
 
 Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/examples). Play on CodeSandbox:
 
@@ -103,3 +102,5 @@ Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/exa
 - [Render-as-You-Fetch using Suspense](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/suspense)
 
 Note that there are also some useful [utilities](https://observable-hooks.js.org/api/helpers.html) for common use cases to reduce garbage collection.
+
+[docs]: https://observable-hooks.js.org
