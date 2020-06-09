@@ -92,14 +92,6 @@ export function getEmptySubject<T>() {
 }
 
 /**
- * Return an empty object
- * @ignore
- */
-export function getEmptyObject() {
-  return {}
-}
-
-/**
  * An empty tuple
  * @ignore
  */
