@@ -5,30 +5,43 @@ import { useObservableState } from './use-observable-state'
 import { useObservable } from './use-observable'
 
 /**
- * Gets the value at path of state.
+ * Gets the value at path of state. Similar to lodash `get`.
  * Only changes of the resulted value will trigger a rerendering.
  * Errors are thrown on unreachable path.
  *
  * @param state$ Output state.
  */
 export function useObservableGetState<TState>(
-  state$: Observable<TState>
-): TState | undefined
+  state$: Observable<TState>,
+  initialState: TState | (() => TState)
+): TState
 export function useObservableGetState<TState, A extends keyof TState>(
   state$: Observable<TState>,
+  initialState: TState[A] | (() => TState[A]),
   pA: A
-): TState[A] | undefined
+): TState[A]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
   B extends keyof TState[A]
->(state$: Observable<TState>, pA: A, pB: B): TState[A][B] | undefined
+>(
+  state$: Observable<TState>,
+  initialState: TState[A][B] | (() => TState[A][B]),
+  pA: A,
+  pB: B
+): TState[A][B]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
   B extends keyof TState[A],
   C extends keyof TState[A][B]
->(state$: Observable<TState>, pA: A, pB: B, pC: C): TState[A][B][C] | undefined
+>(
+  state$: Observable<TState>,
+  initialState: TState[A][B][C] | (() => TState[A][B][C]),
+  pA: A,
+  pB: B,
+  pC: C
+): TState[A][B][C]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -37,11 +50,12 @@ export function useObservableGetState<
   D extends keyof TState[A][B][C]
 >(
   state$: Observable<TState>,
+  initialState: TState[A][B][C][D] | (() => TState[A][B][C][D]),
   pA: A,
   pB: B,
   pC: C,
   pD: D
-): TState[A][B][C][D] | undefined
+): TState[A][B][C][D]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -51,12 +65,13 @@ export function useObservableGetState<
   E extends keyof TState[A][B][C][D]
 >(
   state$: Observable<TState>,
+  initialState: TState[A][B][C][D][E] | (() => TState[A][B][C][D][E]),
   pA: A,
   pB: B,
   pC: C,
   pD: D,
   pE: E
-): TState[A][B][C][D][E] | undefined
+): TState[A][B][C][D][E]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -67,13 +82,14 @@ export function useObservableGetState<
   F extends keyof TState[A][B][C][D][E]
 >(
   state$: Observable<TState>,
+  initialState: TState[A][B][C][D][E][F] | (() => TState[A][B][C][D][E][F]),
   pA: A,
   pB: B,
   pC: C,
   pD: D,
   pE: E,
   pF: F
-): TState[A][B][C][D][E][F] | undefined
+): TState[A][B][C][D][E][F]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -85,6 +101,9 @@ export function useObservableGetState<
   G extends keyof TState[A][B][C][D][E][F]
 >(
   state$: Observable<TState>,
+  initialState:
+    | TState[A][B][C][D][E][F][G]
+    | (() => TState[A][B][C][D][E][F][G]),
   pA: A,
   pB: B,
   pC: C,
@@ -92,7 +111,7 @@ export function useObservableGetState<
   pE: E,
   pF: F,
   pG: G
-): TState[A][B][C][D][E][F][G] | undefined
+): TState[A][B][C][D][E][F][G]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -105,6 +124,9 @@ export function useObservableGetState<
   H extends keyof TState[A][B][C][D][E][F][G]
 >(
   state$: Observable<TState>,
+  initialState:
+    | TState[A][B][C][D][E][F][G][H]
+    | (() => TState[A][B][C][D][E][F][G][H]),
   pA: A,
   pB: B,
   pC: C,
@@ -113,7 +135,7 @@ export function useObservableGetState<
   pF: F,
   pG: G,
   pH: H
-): TState[A][B][C][D][E][F][G][H] | undefined
+): TState[A][B][C][D][E][F][G][H]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -127,6 +149,9 @@ export function useObservableGetState<
   I extends keyof TState[A][B][C][D][E][F][G][H]
 >(
   state$: Observable<TState>,
+  initialState:
+    | TState[A][B][C][D][E][F][G][H][I]
+    | (() => TState[A][B][C][D][E][F][G][H][I]),
   pA: A,
   pB: B,
   pC: C,
@@ -136,7 +161,7 @@ export function useObservableGetState<
   pG: G,
   pH: H,
   pI: I
-): TState[A][B][C][D][E][F][G][H][I] | undefined
+): TState[A][B][C][D][E][F][G][H][I]
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -151,6 +176,9 @@ export function useObservableGetState<
   J extends keyof TState[A][B][C][D][E][F][G][H][I]
 >(
   state$: Observable<TState>,
+  initialState:
+    | TState[A][B][C][D][E][F][G][H][I][J]
+    | (() => TState[A][B][C][D][E][F][G][H][I][J]),
   pA: A,
   pB: B,
   pC: C,
@@ -161,13 +189,17 @@ export function useObservableGetState<
   pH: H,
   pI: I,
   pJ: J
-): TState[A][B][C][D][E][F][G][H][I][J] | undefined
-export function useObservableGetState<TState>(
+): TState[A][B][C][D][E][F][G][H][I][J]
+export function useObservableGetState<TState, TInit>(
   state$: Observable<TState>,
+  initialState: TInit | (() => TInit),
   ...path: any[]
 ) {
   const value = useObservableState(
-    useObservable(() => state$.pipe(map(state => path.reduce(getValue, state))))
+    useObservable(() =>
+      state$.pipe(map(state => path.reduce(getValue, state)))
+    ),
+    initialState
   )
   useDebugValue(value)
   return value
