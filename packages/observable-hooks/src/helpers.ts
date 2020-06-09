@@ -92,12 +92,6 @@ export function getEmptySubject<T>() {
 }
 
 /**
- * An empty tuple
- * @ignore
- */
-export const EMPTY_TUPLE: Readonly<[]> = []
-
-/**
  * One-time ref init.
  * @param init A function that returns a value. Will be called only once.
  * @returns A ref object with the returned value.
