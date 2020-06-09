@@ -28,7 +28,7 @@ These two worlds are just conceptual partition. The Observable World is where th
 
 ## Observable to Normal
 
-Almost every RxJS-React binding libraries provide ways to port observable values to React state.
+Almost every RxJS-React binding libraries provide ways to connect observable values to React state.
 
 ### Observable to State
 
@@ -67,7 +67,7 @@ In observable-hooks we have [`useObservableState`][useObservableState].
 
 ### Observable to Callbacks
 
-In addition to states, you can also call observer callbacks with [`useSubscription`][useSubscription]. See the API docs for why it is preferred comparing with manual `useEffect`.
+In addition to states, you can also call observer callbacks with [`useSubscription`][useSubscription]. See the API docs for why it is preferred comparing to manual `useEffect`.
 
 ```
 
@@ -99,7 +99,7 @@ In addition to states, you can also call observer callbacks with [`useSubscripti
 
 ## Normal to Observable to Normal
 
-Some libraries also provide ways to create observables from Normal World, subscribe to those observables, then port back to Normal World.
+Some libraries also provide ways to create observables from Normal World, subscribe to those observables, then connect emitted values back to Normal World.
 
 There are two ways to create observables from Normal World.
 
@@ -226,7 +226,7 @@ You can also use [`useObservableCallback`][useObservableCallback] to create obse
 
 ```
 
-The resulted observables can then be consumed by [Observable to Normal](observable-to-normal) with [`useObservableState`][useObservableState] or [`useSubscription`][useSubscription].
+The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useObservableState] or [`useSubscription`][useSubscription].
 
 ## Observable to Observable
 
@@ -265,7 +265,7 @@ Finally, you can also operate on multiple observables. This flexibility is power
 
 ```
 
-The resulted observables can then be consumed by [Observable to Normal](observable-to-normal) with [`useObservableState`][useObservableState] or [`useSubscription`][useSubscription].
+The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useObservableState] or [`useSubscription`][useSubscription].
 
 ## Helpers
 
