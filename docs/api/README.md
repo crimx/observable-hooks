@@ -114,6 +114,10 @@ If you want to return state value instead of Observable see [useObservableState]
 It is not safe to access other variables from closure directly in the `init` function. See [Gotchas](../guide/gotchas.md).
 :::
 
+::: tip
+In TypeScript if you want to invoke the callback with no argument, use `void` instead of `undefined` type.
+:::
+
 **Type parameters:**
 
 - `TOutput` Output value within Observable.
@@ -319,6 +323,10 @@ Due to the design of RxJS, once an error occurs in an observable, the observable
 - Prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
 - You can also make the observable as state and replace it on error. It will automatically switch to the new one.
 - From `v3.0.0`, Observable error can be caught by React error boudary where you have replace a new Observable.
+:::
+
+::: tip
+In TypeScript if you want to invoke the callback with no argument, use `void` instead of `undefined` type.
 :::
 
 ---
