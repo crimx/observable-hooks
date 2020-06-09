@@ -6,9 +6,10 @@ import { useState } from 'react'
 describe('useSubscription', () => {
   it('should always return the same Subscription after first rendering', () => {
     const num$ = of(1, 2, 3)
-    const { result, rerender } = renderHook(() =>
-      useSubscription(num$, () => {})
-    )
+    const { result, rerender } = renderHook(() => {
+      const subscriptionRef = useSubscription(num$, () => {})
+      return subscriptionRef.current
+    })
     expect(result.current).toBeUndefined()
     rerender()
     const firstSubscription = result.current

@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs'
-import { useRefFn, getEmptyObject, useForceUpdate } from './helpers'
+import { useForceUpdate } from './helpers'
 import { useEffect, useRef } from 'react'
 
 /**
@@ -42,16 +42,17 @@ export function useSubscription<TInput>(
   next?: ((value: TInput) => void) | null | undefined,
   error?: ((error: any) => void) | null | undefined,
   complete?: (() => void) | null | undefined
-): Subscription | undefined {
-  const cbRef = useRefFn<{
-    next?: typeof next
-    error?: typeof error
-    complete?: typeof complete
-  }>(getEmptyObject)
-
-  cbRef.current.next = next
-  cbRef.current.error = error
-  cbRef.current.complete = complete
+): React.MutableRefObject<Subscription | undefined>
+export function useSubscription<TInput>(
+  ...args: [
+    Observable<TInput>,
+    ((value: TInput) => void) | null | undefined,
+    ((error: any) => void) | null | undefined,
+    (() => void) | null | undefined
+  ]
+): React.MutableRefObject<Subscription | undefined> {
+  const argsRef = useRef(args)
+  argsRef.current = args
 
   const forceUpdate = useForceUpdate()
 
@@ -59,24 +60,40 @@ export function useSubscription<TInput>(
   const errorRef = useRef<Error | null>()
 
   useEffect(() => {
+    errorRef.current = null
+
+    // keep in closure for checking staleness
+    const input$ = argsRef.current[0]
+
     const subscription = input$.subscribe({
       next: value => {
-        errorRef.current = null
-        if (cbRef.current.next) {
-          return cbRef.current.next(value)
+        if (input$ !== argsRef.current[0]) {
+          // stale observable
+          return
+        }
+        if (argsRef.current[1]) {
+          return argsRef.current[1](value)
         }
       },
       error: error => {
-        if (cbRef.current.error) {
+        if (input$ !== argsRef.current[0]) {
+          // stale observable
+          return
+        }
+        if (argsRef.current[2]) {
           errorRef.current = null
-          return cbRef.current.error(error)
+          return argsRef.current[2](error)
         }
         errorRef.current = error
         forceUpdate()
       },
       complete: () => {
-        if (cbRef.current.complete) {
-          return cbRef.current.complete()
+        if (input$ !== argsRef.current[0]) {
+          // stale observable
+          return
+        }
+        if (argsRef.current[3]) {
+          return argsRef.current[3]()
         }
       }
     })
@@ -86,12 +103,12 @@ export function useSubscription<TInput>(
     return () => {
       subscription.unsubscribe()
     }
-  }, [input$])
+  }, [args[0]])
 
   if (errorRef.current) {
     // Let error boundary catch the error
     throw errorRef.current
   }
 
-  return subscriptionRef.current
+  return subscriptionRef
 }

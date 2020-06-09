@@ -27,6 +27,57 @@ describe('Concurrent Mode', () => {
     act = ReactTestRenderer.act
   })
 
+  describe('useSubscription', () => {
+    it('should ignore emissions when the observable is changed but new subscription is not yet established', () => {
+      function Subscription({
+        source$
+      }: {
+        source$: RxType.Observable<string>
+      }) {
+        ObservableHooks.useSubscription(source$, value => {
+          Scheduler.unstable_yieldValue(value)
+        })
+        Scheduler.unstable_yieldValue('render')
+        return null
+      }
+
+      const observableA = new Rx.BehaviorSubject('a-0')
+      const observableB = new Rx.BehaviorSubject('b-0')
+
+      let renderer: ReturnType<typeof ReactTestRenderer.create>
+      act(() => {
+        renderer = ReactTestRenderer.create(
+          <Subscription source$={observableA} />,
+          { unstable_isConcurrent: true } as any
+        )
+      })
+
+      expect(Scheduler).toHaveYielded(['render', 'a-0'])
+
+      act(() => {
+        renderer.update(<Subscription source$={observableB} />)
+
+        // Finish rendering but not enter commit phase
+        expect(Scheduler).toFlushAndYieldThrough(['render'])
+
+        observableA.next('a-1')
+
+        // observableA is ignored
+        expect(Scheduler).toFlushAndYield(['b-0'])
+
+        observableA.next('a-2')
+        observableB.next('b-2')
+
+        // observableA is still ignored
+        expect(Scheduler).toHaveYielded(['b-2'])
+
+        Scheduler.unstable_flushAllWithoutAsserting()
+      })
+
+      expect(Scheduler).toFlushWithoutYielding()
+    })
+  })
+
   describe('useObservableState', () => {
     it('should not tear if a mutation occurs during a concurrent update', () => {
       jest.useFakeTimers()
