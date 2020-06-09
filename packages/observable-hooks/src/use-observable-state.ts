@@ -20,8 +20,12 @@ import { useRefFn, getEmptySubject } from './helpers'
  *    )
  *    ```
  *
- * The `initialState` can be either the state or a function that returns the state,
- * just like `useState`.
+ * The optional `initialState` is internally passed to `useState(initialState)`.
+ * This means it can be either a state value or a function that returns the state
+ * which is for expensive initialization.
+ *
+ * The `initialState`(or its returned result) is also passed to the `init` function.
+ * This is useful if you want to implement reduer pattern which requires an initial state.
  *
  * ⚠ **Note:** These two ways use different hooks, choose either one each time
  * and do not change to the other one during Component's life cycle.
@@ -29,14 +33,13 @@ import { useRefFn, getEmptySubject } from './helpers'
  * ⚠ **Note:** `useObservableState` will call the epic-like `init` function only once
  * and always return the same Observable.
  * It is not safe to access closure directly inside `init`.
- * Use ref or [[useObservable]] with `withLatestFrom` instead.
+ * Use [[useObservable]] with `withLatestFrom` instead.
  *
  * ⚠ **Note:** To make it concurrent mode compatible, the subscription happens
  * in commit phase which means even the Observable emits synchronous values
  * they will arrive after the first rendering.
  *
  * @template TState Output state.
- * @template TSyncInit Does the Observable emit sync values?
  *
  * @param input$ An Observable.
  */
@@ -47,7 +50,8 @@ export function useObservableState<TState>(
  * @template TState Output state.
  *
  * @param input$ An Observable.
- * @param initialState Initial state.
+ * @param initialState Optional initial state.
+ * Can be the state value or a function that returns the state.
  */
 export function useObservableState<TState>(
   input$: Observable<TState>,
@@ -56,10 +60,9 @@ export function useObservableState<TState>(
 /**
  * @template TState Output state.
  * @template TInput Input values.
- * @template TSyncInit Does the Observable emit sync values?
  *
- * @param init A pure function that, when applied to an Observable,
- * returns an Observable.
+ * @param init A epic-like function that, when applied to an Observable
+ * and the initial state value, returns an Observable.
  */
 export function useObservableState<TState, TInput = TState>(
   init: (input$: Observable<TInput>) => Observable<TState>
@@ -70,9 +73,10 @@ export function useObservableState<TState, TInput = TState>(
  * @template TState Output state.
  * @template TInput Input values.
  *
- * @param init A pure function that, when applied to an Observable
- * and the initialState, returns an Observable.
- * @param initialState Initial state.
+ * @param init A epic-like function that, when applied to an Observable
+ * and the initial state value, returns an Observable.
+ * @param initialState Optional initial state.
+ * Can be the state value or a function that returns the state.
  */
 export function useObservableState<TState, TInput = TState>(
   init: (

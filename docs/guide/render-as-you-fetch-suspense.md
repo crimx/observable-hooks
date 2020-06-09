@@ -1,6 +1,6 @@
 # Render-as-You-Fetch (using Suspense)
 
-Observable-hooks offers first-class React Suspense support!
+Observable-hooks offers first-class React Suspense support! Concurrent mode safe!
 
 Also see the [suspense](/examples/suspense.html) example project.
 

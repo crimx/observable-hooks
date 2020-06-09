@@ -10,16 +10,16 @@ useObservable<TOutput, TInputs>(
 ): Observable<TOutput>
 ```
 
-React function components will be called many times during its life cycle. Create or transform Observables in init function so that the operations won't be repeatedly performed.
+React function components will be called many times during its life cycle. Create or transform Observables with `useObservable` so that the operations will not be repeatedly performed.
 
-Accepts a function that returns an Observable. Optionally accepts an array of dependencies which will be turned into Observable and be passed to the init function.
+Accepts a epic-like function that returns an Observable. Optionally accepts an array of dependencies which will be turned into Observable and be passed to the epic function.
 
-::: warning
-`useObservable` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. You should use [`ref`][use-ref] or pass them as dependencies through the second argument.
+::: warning Gotcha
+It is not safe to access other variables from closure directly in the `init` function. See [Gotchas](../guide/gotchas.md).
 :::
 
-::: danger CAUTION
-Due to [rules of hooks][rules-of-hooks] you can either offer or omit the dependencies array but do not change to one another during Component's life cycle. The length of the dependencies array must also be fixed.
+::: warning Restriction
+The dependencies array is internally passed to [`useEffect`][useEffect]. So same restriction is applied. The length of the dependencies array must be fixed.
 :::
 
 **Type parameters:**
@@ -56,7 +56,7 @@ const Comp: React.FC<CompProps> = props => {
 }
 ```
 
-Create Observable
+Create Observable:
 
 ```typescript
 const now$ = useObservable(
@@ -73,7 +73,7 @@ Transform Observables:
 const enhanced$ = useObservable(() => outers$.pipe(mapTo(false)))
 ```
 
-Mix them all together:
+You can even mix them all together:
 
 ```typescript
 const enhanced$ = useObservable(
@@ -87,7 +87,7 @@ const enhanced$ = useObservable(
 
 ## useLayoutObservable
 
-If no dependencies provided it is identical with [`useObservable`](#useobservable). Otherwise it uses [`useLayoutEffect`](https://reactjs.org/docs/hooks-reference.html#uselayouteffect) to listen props and state changes.
+If no dependencies provided it is identical with [`useObservable`](#useobservable). Otherwise it uses [`useLayoutEffect`][useLayoutEffect] to listen props and state changes.
 
 This is useful if you need values before next paint.
 
@@ -107,13 +107,11 @@ Whenever the callback is called, the Observable will emit the first argument of 
 <Badge text="v2.1.0"/> From <code>v2.1.0</code> optionally accepts a selector function which transforms an array of event arguments into a single value.
 
 ::: tip
-If you want value output instead of Observable see example on [useObservableState](#useobservablestate).
+If you want to return state value instead of Observable see [useObservableState](#useobservablestate).
 :::
 
-::: warning
-`useObservableCallback` will call `init` once and always return
-the same Observable. It is not safe to access closure (except other Observables)
-directly inside `init`. Use [`ref`][use-ref] or [`useObservable`](#useobservable) with `withLatestFrom` instead.
+::: warning Gotcha
+It is not safe to access other variables from closure directly in the `init` function. See [Gotchas](../guide/gotchas.md).
 :::
 
 **Type parameters:**
@@ -176,23 +174,47 @@ useSubscription<TInput>(
   next?: function | null | undefined,
   error?: function | null | undefined,
   complete?: function | null | undefined
-): Subscription
+): React.MutableRefObject<Subscription | undefined>
 ```
 
-Subscription will auto-unsubscribe when unmount, you can also unsubscribe manually.
+Concurrent mode safe Observable subscription. Accepts an Observable and optional `next`, `error`, `complete` functions. These functions must be in correct order. Use `undefined` or `null` for placeholder.
 
-<Badge text="v2.0.0"/> From <code>v2.0.0</code> you can reference closure variables directly inside callback. <code>useSubscription</code> will ensure the latest callback is called.
+Why use it instead of just `useEffect`?
 
-<Badge text="v2.3.4"/> From <code>v2.3.4</code> when the Observable changes `useSubscription` will automatically unsubscribe the old one and resubscribe to the new one.
+```js
+useEffect(
+  () => {
+    input$.subscribe({
+      next: ...,
+      error: ...,
+      complete: ...,
+    })
+  },
+  [input$]
+)
+```
 
-Accepts an Observable and optional `next`, `error`, `complete` functions. These functions must be in correct order. Use `undefined` or `null` for placeholder.
+1. The observer callbacks could suffer from stale closure problem. It is not easy to directly reference any local values in the callbacks.
+2. It is not concurrent mode safe. Tearing could occur during changing of Observables.
 
-::: warning
-Note that changes of callbacks will not trigger an emission. If you need that just create another Observable of the callback with [`useObservable`](#useobservable).
+<Badge text="v2.0.0"/> From <code>v2.0.0</code>. <code>useSubscription</code> will ensure the latest callback is called. You can safely reference any closure variable directly inside the callbacks.
+
+<Badge text="v2.3.4"/> From <code>v2.3.4</code>. When the Observable changes `useSubscription` will automatically unsubscribe the old one and resubscribe to the new one.
+
+<Badge text="v3.0.0"/> From <code>v3.0.0</code>. `useSubscription` is concurrent mode safe. It will prevent observer callbacks being called from stale Observable.
+
+To make it concurrent mode compatible, the subscription happens in commit phase. Even if the Observable emits synchronous values they still will arrive after the first rendering.
+
+::: tip
+Note that changes of the observer callbacks will not trigger an emission. If you need that just create another Observable of the callback with [`useObservable`](#useobservable).
 :::
 
-::: warning
-Due to the design of RxJS, once an error occurs in an observable, the observable is killed. You should prevent errors from reaching observables or [`catchError`][catchError] in sub-observables. You can also make the observable as state and replace it on error. `useSubscription` will automatically switch to the new one.
+::: tip Error Handling
+Due to the design of RxJS, once an error occurs in an observable, the observable is killed. You can:
+
+- Prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
+- You can also make the observable as state and replace it on error. It will automatically switch to the new one.
+- From `v3.0.0`, Observable error can be caught by React error boudary where you have replace a new Observable.
 :::
 
 **Type parameters:**
@@ -210,7 +232,7 @@ Name | Type | Description
 
 **Returns:**
 
-`Subscription` RxJS Subscription object.
+`React.MutableRefObject<Subscription | undefined>` A ref object with the RxJS Subscription. It is `undefined` on first rendering.
 
 **Examples:**
 
@@ -244,59 +266,73 @@ const subscription = useSubscription(events$, props.onEvent)
 ## useObservableState
 
 ```typescript
-useObservableState<TState, TSyncInit>(
+useObservableState<TState>(
   input$: Observable<TState>
-): TSyncInit extends false ? TState | undefined : TState
+): TState | undefined
 useObservableState<TState>(
   input$: Observable<TState>,
-  initState: TState
+  initialState: TState | (() => TState)
 ): TState
-useObservableState<TState, TInput, TSyncInit>(
-  init: function
-): [TSyncInit extends false ? TState | undefined : TState, function]
-useObservableState<TState, TInput>(
-  init: function,
-  initState: TState
-): [TState, function]
+useObservableState<TState, TInput = TState>(
+  init: (input$: Observable<TInput>) => Observable<TState>
+): [TState | undefined, (input: TInput) => void]
+useObservableState<TState, TInput = TState>(
+  init: (
+    input$: Observable<TInput>,
+    initialState: TState
+  ) => Observable<TState>,
+  initialState: TState | (() => TState)
+): [TState, (input: TInput) => void]
 ```
 
-A helper to get value from an Observable.
+A concurrent mode safe sugar to get values from Observables. Read [Core Concepts](../guide/core-concepts.md) to learn more about its design.
 
-Accept an optional `initState` which will be directly passed to the result. But if sync values are also emitted from the Observable `initState` will be ignored.
+Is can be used in two ways:
 
-You can also use the regular `useState` with [useSubscription](#usesubscription) directly which will trigger extra initial re-renders when sync values are emitted from the Observable (e.g. `of` or `startWith`).
+1. Offer an Observable and an optional initial state.
+   ```js
+   const output = useObservableState(input$, initialState)
+   ```
+2. Offer an epic-like function and an optional initial state.
+   ```js
+   const [output, onInput] = useObservableState(
+     (input$, initialState) => input$.pipe(...),
+     initialState
+   )
+   ```
 
-::: tip
-It it recommended to use `initState` for simple primitive value. For others, init with the Observable to save some (re)computations.
+These two ways use different hooks, choose either one each time and do not change to the other one during Component's life cycle.
+
+The optional `initialState` is internally passed to `useState(initialState)`. This means it can be either a state value or a function that returns the state which is for expensive initialization.
+
+The `initialState`(or its returned result) is also passed to the `init` function. This is useful if you want to implement reduer pattern which requires an initial state.
+
+To make it concurrent mode compatible, the subscription happens in commit phase. Even if the Observable emits synchronous values they still will arrive after the first rendering.
+
+::: warning Gotcha
+It is not safe to access other variables from closure directly in the `init` function. See [Gotchas](../guide/gotchas.md).
 :::
 
-::: danger CAUTION
-Due to [rules of hooks][rules-of-hooks] you can offer either a function or an Observable as the first argument but do not change to one another during Component's life cycle.
-:::
+::: tip Error Handling
+Due to the design of RxJS, once an error occurs in an observable, the observable is killed. You can:
 
-::: warning
-`useObservableState` will call `init` once and always return the same Observable. It is not safe to access closure (except other Observables) directly inside `init`. Use [`ref`][use-ref] or [`useObservable`](#useobservable) with `withLatestFrom` instead.
+- Prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
+- You can also make the observable as state and replace it on error. It will automatically switch to the new one.
+- From `v3.0.0`, Observable error can be caught by React error boudary where you have replace a new Observable.
 :::
-
-::: warning
-Unhandled errors from the observable will be caught and logged. In non-production mode the context of `useObservableState` itself will also be logged. But do note that due to the design of RxJS, once an error occurs in an observable, the observable is killed. You should prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
-:::
-
-<Badge text="v2.1.2"/> From <code>v2.1.2</code> you can pass <code>true</code> to <code>TSyncInit</code> generic to remove <code>undefined</code> from resulted type.
 
 ---
 
 **Type parameters:**
 
 - `TState` Output state.
-- `TSyncInit` Does the Observable emit sync values?
 
 **Parameters:**
 
 Name | Type | Description
 ------ | ------ | ------
 `input$` | `Observable<TState>` | An Observable.
-`initState` | `TState` | Optional initial state.
+`initialState` | `TState | (): TState` | Optional initial state. Can be the state value or a function that returns the state.
 
 **Returns:**
 
@@ -308,108 +344,100 @@ Name | Type | Description
 
 - `TState` Output state.
 - `TInput` Input values.
-- `TSyncInit` Does the Observable emit sync values?
 
 **Parameters:**
 
 Name | Type | Description
 ------ | ------ | ------
-`init` | `(input$: Observable<TInput>): Observable<TState>` | A pure function that, when applied to an Observable, returns an Observable.
-`initState` | `TState` | Optional initial state.
+`init` | `(input$: Observable<TInput>, initialState: TState): Observable<TState>` | A epic-like function that, when applied to an Observable and the initial state value, returns an Observable.
+`initialState` | `TState` | Optional initial state. Can be the state value or a function that returns the state.
 
 **Returns:**
 
-`[TState, (input: TInput) => void]` A tuple with state-setState pair.
+`[TState, (input: TInput): void]` A tuple with the state and input callback.
 
 ---
 
 **Examples:**
 
-Offer an Observable
+Consume an Observable:
 
 ```typescript
 const count$ = useObservable(() => interval(1000))
-const count = useObservableState(count$)
+const count = useObservableState(count$, 0)
 ```
 
-Offer an init function
+Or with an `init` function:
 
 ```typescript
 const [text, updateText] = useObservableState<string>(
-  text$ => text$.pipe(delay(1000))
-)
-```
-
-With different types
-
-```typescript
-const [isValid, updateText] = useObservableState<boolean, string>(text$ =>
-  text$.pipe(map(text => text.length > 1))
-)
-```
-
-With init value:
-
-```typescript
-const count$ = useObservable(() => interval(1000))
-const count = useObservableState(count$, -1)
-```
-
-Or function with init value:
-
-```typescript
-// Types now can be inferred
-const [text, updateText] = useObservableState(
   text$ => text$.pipe(delay(1000)),
-  'init text'
+  ''
 )
 ```
 
-Or use `startWith`. Pass `true` to `TSyncInit` generic to remove `undefined` from resulted type.
+Input and output state can be different types
 
 ```typescript
-// time is `string` now instead of `string | undefined`
-const [text, updateText] = useObservableState<string, string, true>(
-  text$ => text$.pipe(delay(1000), startWith('init text'))
+// input: string, output: boolean
+const [isValid, updateText] = useObservableState<boolean, string>(text$ =>
+  text$.pipe(map(text => text.length > 1)),
+  false
 )
 ```
 
-For Observables you can also use the non-null assertion operator `!`.
+Event listener pattern:
 
-```typescript
-// time is `string` now instead of `string | undefined`
-const time = useObservableState(
-  useObservable(() =>
-    interval(1000).pipe(
-      startWith(-1),
-      map(() => new Date().toLocaleString())
-    )
-  )
-)!
-```
-
-Event listener:
-
-```typescript
+```javascript
 import { pluckCurrentTargetValue, useObservableState } from 'observable-hooks'
 
-const [text, onChange] = useObservableState<
-  string,
-  React.ChangeEvent<HTMLInputElement>
->(pluckCurrentTargetValue, '')
+const [text, onChange] = useObservableState(pluckCurrentTargetValue, '')
+```
+
+Reducer pattern:
+
+```javascript
+const [state, dispatch] = useObservableState(
+  (action$, initialState) => action$.pipe(
+    scan((state, action) => {
+      switch (action.type) {
+        case 'INCREMENT':
+          return {
+            ...state,
+            count: state.count +
+              (isNaN(action.payload) ? 1 : action.payload)
+          }
+        case 'DECREMENT':
+          return {
+            ...state,
+            count: state.count -
+              (isNaN(action.payload) ? 1 : action.payload)
+          }
+        default:
+          return state
+      }
+    }, initialState)
+  ),
+  () => ({ count: 0 })
+)
+
+dispatch({ type: 'INCREMENT' })
+dispatch({ type: 'DECREMENT', payload: 2 })
 ```
 
 ## useObservableGetState
 
 ```typescript
 useObservableGetState<TState>(
-  state$: Observable<TState>
+  state$: Observable<TState>,
+  initialState: TState | (() => TState)
 ): TState | undefined
 useObservableGetState<
   TState,
   A extends keyof TState,
 >(
   state$: Observable<TState>,
+  initialState: TState | (() => TState),
   pA: A,
 ): TState[A] | undefined
 useObservableGetState<
@@ -418,13 +446,16 @@ useObservableGetState<
   B extends keyof TState[A],
 >(
   state$: Observable<TState>,
+  initialState: TState | (() => TState),
   pA: A,
   pB: B,
 ): TState[A][B] | undefined
 ...
 ```
 
-<Badge text="v2.3.0"/> From <code>v2.3.0</code>. Get value at path of state from an Observable.
+<Badge text="v2.3.0"/> Added since <code>v2.3.0</code>. Get value at path of state from an Observable. Inspired by lodash `get`.
+
+<Badge text="v3.0.0"/> From <code>v3.0.0</code>. An initial state must be provided.
 
 Only changes of the resulted value will trigger a rerendering.
 
@@ -441,6 +472,7 @@ Unreachable path will throw errors.
 Name | Type | Description
 ------ | ------ | ------
 `state$` | `Observable<TState>` | An Observable.
+`initialState` | `TState | (() => TState)` | Initial state. Can be the state value or a function that returns the state.
 `pA` | `keyof TState` | Key of `TState`.
 `pB` | `keyof TState[A]` | Key of `TState[A]`.
 `pC` | `keyof TState[A][B]` | Key of `TState[A][B]`.
@@ -453,10 +485,11 @@ Name | Type | Description
 **Examples:**
 
 ```typescript
-const state$ = of({ a: { b: { c: 'abc' } } })
+const state$ = of({ a: { b: { c: 'value' } } })
 
-// 'abc'
-const text = useObservableGetState(state$, 'a', 'b', 'c')!
+// 'default' on first rendering
+// 'value' on next rendering
+const text = useObservableGetState(state$, 'default', 'a', 'b', 'c')
 ```
 
 ## useObservablePickState
@@ -467,13 +500,18 @@ useObservablePickState<
   TKeys extends Array<keyof TState>
 >(
   state$: Observable<TState>,
+  initialState: TState | (() => TState),
   ...keys: TKeys
 ): { [K in TKeys[number]]: TState[K] } | undefined
 ```
 
-<Badge text="v2.3.2"/> From <code>v2.3.2</code>. Creates an object composed of the picked state properties.
+<Badge text="v2.3.2"/> Added since <code>v2.3.2</code>. Creates an object composed of the picked state properties. Inspired by lodash `pick`.
+
+<Badge text="v3.0.0"/> From <code>v3.0.0</code>. An initial state must be provided.
 
 Changes of any of these properties will trigger a rerendering.
+
+On first rendering it is always `undefined`.
 
 ::: warning
 Unreachable path will throw errors.
@@ -489,6 +527,7 @@ Unreachable path will throw errors.
 Name | Type | Description
 ------ | ------ | ------
 `state$` | `Observable<TState>` | An Observable.
+`initialState` | `TState | (() => TState)` | Initial state. Can be the state value or a function that returns the state.
 `...path` | `Array<keyof TState>` | Keys of `TState`.
 
 **Returns:**
@@ -500,10 +539,15 @@ Name | Type | Description
 ```typescript
 const state$ = of({ a: 'a', b: 'b', c: 'c', d: 'd' })
 
-// { a: 'a', b: 'b', c: 'c' }
-const picked = useObservablePickState(state$, 'a', 'b', 'c')!
+// { a: '', b: '', c: '' } on first rendering
+// { a: 'a', b: 'b', c: 'c' } on next rendering
+const picked = useObservablePickState(
+  state$,
+  () =>({ a: '', b: '', c: '' }),
+  'a', 'b', 'c'
+)
 ```
 
-[rules-of-hooks]: https://reactjs.org/docs/hooks-rules.html
-[use-ref]: https://reactjs.org/docs/hooks-reference.html#useref
 [catchError]: https://rxjs-dev.firebaseapp.com/api/operators/catchError
+[useEffect]: https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect
+[useLayoutEffect]: https://reactjs.org/docs/hooks-reference.html#uselayouteffect

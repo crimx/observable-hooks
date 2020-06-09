@@ -1,7 +1,6 @@
 # [observable-hooks](https://github.com/crimx/observable-hooks)
 
 [![npm-version](https://img.shields.io/npm/v/observable-hooks.svg)](https://www.npmjs.com/package/observable-hooks)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/observable-hooks)](https://bundlephobia.com/result?p=observable-hooks)
 [![Build Status](https://img.shields.io/travis/com/crimx/observable-hooks/master)](https://travis-ci.com/crimx/observable-hooks)
 [![Coverage Status](https://img.shields.io/coveralls/github/crimx/observable-hooks/master)](https://coveralls.io/github/crimx/observable-hooks?branch=master)
 

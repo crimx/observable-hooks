@@ -271,7 +271,7 @@ The resulted observables can then be consumed by [Observable to Normal](#observa
 
 There are also sugars like [`useObservableGetState`][useObservableGetState] and [`useObservablePickState`][useObservablePickState] which are inspired by lodash `get` and `pick`.
 
-More [helpers][helpers] for common transformations to reduce garbage collection burden.
+The epic-like signature makes the observable transformation logic highly reusable. In fact observable-hooks offers some [helpers][helpers] for common cases to reduce garbage collection burden.
 
 [useobservable]: ../api/README.md#useobservable
 [useLayoutObservable]: ../api/README.md#useLayoutObservable
