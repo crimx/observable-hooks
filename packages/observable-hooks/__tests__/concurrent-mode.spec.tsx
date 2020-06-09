@@ -74,6 +74,34 @@ describe('Concurrent Mode', () => {
         Scheduler.unstable_flushAllWithoutAsserting()
       })
 
+      act(() => {
+        renderer.update(<Subscription source$={observableA} />)
+
+        // Finish rendering but not enter commit phase
+        expect(Scheduler).toFlushAndYieldThrough(['render'])
+
+        observableB.next('b-3')
+        observableB.error(new Error('opps'))
+
+        // observableB is ignored
+        expect(Scheduler).toFlushAndYield(['a-2'])
+      })
+
+      const observableC = new Rx.BehaviorSubject('c-0')
+
+      act(() => {
+        renderer.update(<Subscription source$={observableC} />)
+
+        // Finish rendering but not enter commit phase
+        expect(Scheduler).toFlushAndYieldThrough(['render'])
+
+        observableA.next('a-3')
+        observableA.complete()
+
+        // observableA is ignored
+        expect(Scheduler).toFlushAndYield(['c-0'])
+      })
+
       expect(Scheduler).toFlushWithoutYielding()
     })
   })
