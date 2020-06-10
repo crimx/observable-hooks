@@ -57,7 +57,7 @@ describe('Concurrent Mode', () => {
       act(() => {
         renderer.update(<Subscription source$={observableB} />)
 
-        // Finish rendering but not enter commit phase
+        // Start React update, but don't finish
         expect(Scheduler).toFlushAndYieldThrough(['render'])
 
         observableA.next('a-1')
@@ -77,7 +77,7 @@ describe('Concurrent Mode', () => {
       act(() => {
         renderer.update(<Subscription source$={observableA} />)
 
-        // Finish rendering but not enter commit phase
+        // Start React update, but don't finish
         expect(Scheduler).toFlushAndYieldThrough(['render'])
 
         observableB.next('b-3')
@@ -92,7 +92,7 @@ describe('Concurrent Mode', () => {
       act(() => {
         renderer.update(<Subscription source$={observableC} />)
 
-        // Finish rendering but not enter commit phase
+        // Start React update, but don't finish
         expect(Scheduler).toFlushAndYieldThrough(['render'])
 
         observableA.next('a-3')
@@ -100,6 +100,85 @@ describe('Concurrent Mode', () => {
 
         // observableA is ignored
         expect(Scheduler).toFlushAndYield(['c-0'])
+      })
+
+      expect(Scheduler).toFlushWithoutYielding()
+    })
+  })
+
+  describe('useLayoutSubscription', () => {
+    it('should ignore emissions when the observable is changed but new subscription is not yet established', () => {
+      function Subscription({
+        source$
+      }: {
+        source$: RxType.Observable<string>
+      }) {
+        ObservableHooks.useLayoutSubscription(source$, value => {
+          Scheduler.unstable_yieldValue(value)
+        })
+        Scheduler.unstable_yieldValue('render')
+        return null
+      }
+
+      const observableA = new Rx.BehaviorSubject('a-0')
+      const observableB = new Rx.BehaviorSubject('b-0')
+
+      let renderer: ReturnType<typeof ReactTestRenderer.create>
+      act(() => {
+        renderer = ReactTestRenderer.create(
+          <Subscription source$={observableA} />,
+          { unstable_isConcurrent: true } as any
+        )
+
+        expect(Scheduler).toFlushAndYieldThrough(['render', 'a-0'])
+      })
+
+      act(() => {
+        renderer.update(<Subscription source$={observableB} />)
+
+        // useLayoutEffect runs synchronously
+        expect(Scheduler).toFlushAndYieldThrough(['render', 'b-0'])
+
+        observableA.next('a-1')
+
+        // observableA is ignored
+        expect(Scheduler).toFlushAndYield([])
+
+        observableA.next('a-2')
+        observableB.next('b-2')
+
+        // observableA is still ignored
+        expect(Scheduler).toHaveYielded(['b-2'])
+
+        Scheduler.unstable_flushAllWithoutAsserting()
+      })
+
+      act(() => {
+        renderer.update(<Subscription source$={observableA} />)
+
+        // useLayoutEffect runs synchronously
+        expect(Scheduler).toFlushAndYieldThrough(['render', 'a-2'])
+
+        observableB.next('b-3')
+        observableB.error(new Error('opps'))
+
+        // observableB is ignored
+        expect(Scheduler).toFlushAndYield([])
+      })
+
+      const observableC = new Rx.BehaviorSubject('c-0')
+
+      act(() => {
+        renderer.update(<Subscription source$={observableC} />)
+
+        // useLayoutEffect runs synchronously
+        expect(Scheduler).toFlushAndYieldThrough(['render', 'c-0'])
+
+        observableA.next('a-3')
+        observableA.complete()
+
+        // observableA is ignored
+        expect(Scheduler).toFlushAndYield([])
       })
 
       expect(Scheduler).toFlushWithoutYielding()
