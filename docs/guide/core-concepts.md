@@ -6,21 +6,21 @@ To understand the design behind observable-hooks you should have two worlds in m
 
 ```
 
-  +--------------------------------+
-  |                                |
-  |        Observable World        |
-  |                                |
-  +--------------------------------+
-
-         +------------------+
-         | observable-hooks |
-         +------------------+
-
-  +--------------------------------+
-  |                                |
-  |          Normal World          |
-  |                                |
-  +--------------------------------+
+  +--------------------------------+  
+  |                                |  
+  |        Observable World        |  
+  |                                |  
+  +--------------------------------+  
+                                      
+         +------------------+         
+         | observable-hooks |         
+         +------------------+         
+                                      
+  +--------------------------------+  
+  |                                |  
+  |          Normal World          |  
+  |                                |  
+  +--------------------------------+  
 
 ```
 
@@ -36,32 +36,32 @@ In observable-hooks we have [`useObservableState`][useObservableState].
 
 ```
 
-         +--------------------------------+
-         |        Observable World        |
-         +--------------------------------+
-         |                                |
-         |             input$             |
-         |                                |
-         +--------------------+-----------+
-                              |
-                              |
-                              |
-                  v-----------+
-         const output = useObservableState(
-                  |       input$,
-                  |       initialOutput
-                  |     )
-                  |
-                  |
-                  |
-                  |
-         +--------v-----------------------+
-         |          Normal World          |
-         +--------------------------------+
-         |                                |
-         |         <p>{output}</p>        |
-         |                                |
-         +--------------------------------+
+  +--------------------------------+  
+  |        Observable World        |  
+  +--------------------------------+  
+  |                                |  
+  |             input$             |  
+  |                                |  
+  +--------------------+-----------+  
+                       |              
+                       |              
+                       |              
+           v-----------+              
+  const output = useObservableState(  
+           |       input$,            
+           |       initialOutput      
+           |     )                    
+           |                          
+           |                          
+           |                          
+           |                          
+  +--------v-----------------------+  
+  |          Normal World          |  
+  +--------------------------------+  
+  |                                |  
+  |         <p>{output}</p>        |  
+  |                                |  
+  +--------------------------------+  
 
 ```
 
@@ -71,29 +71,29 @@ In addition to states, you can also call observer callbacks with [`useSubscripti
 
 ```
 
-         +--------------------------------+
-         |        Observable World        |
-         +--------------------------------+
-         |                                |
-         |             input$             |
-         |                                |
-         +-------------------+------------+
-                             |
-                             |
-                             |
-                             v
-           useSubscription(input$, onNext)
-                                     |
-                                     |
-                                     |
-                                     |
-         +---------------------------v----+
-         |          Normal World          |
-         +--------------------------------+
-         |                                |
-         |   const onNext = v => log(v)   |
-         |                                |
-         +--------------------------------+
+  +--------------------------------+  
+  |        Observable World        |  
+  +--------------------------------+  
+  |                                |  
+  |             input$             |  
+  |                                |  
+  +-------------------+------------+  
+                      |               
+                      |               
+                      |               
+                      v               
+    useSubscription(input$, onNext)   
+                              |       
+                              |       
+                              |       
+                              |       
+  +---------------------------v----+  
+  |          Normal World          |  
+  +--------------------------------+  
+  |                                |  
+  |   const onNext = v => log(v)   |  
+  |                                |  
+  +--------------------------------+  
 
 ```
 
@@ -112,34 +112,34 @@ In observable-hooks [`useObservableState`][useObservableState] can also be used 
 
 ```
 
-     +--------------------------------+
-     |        Observable World        |
-     +--------------------------------+
-     |                                |
-     |  const transform =             |
-     |    input$ => input$.pipe(...)  |
-     |                                |
-     +-------------^----------+-------+
-                   |          |
-                   |          |
-                   |          |
-          v-------------------+
- const [output, onInput] = useObservableState(
-          |        ^         transform,
-          |        |         initialOutput
-          |        |       )
-          |        |
-          |        |
-          |        |
-     +----v--------+------------------+
-     |          Normal World          |
-     +--------------------------------+
-     |                                |
-     |   <button onClick={onInput}>   |
-     |    {output}                    |
-     |   </button>                    |
-     |                                |
-     +--------------------------------+
+     +--------------------------------+        
+     |        Observable World        |        
+     +--------------------------------+        
+     |                                |        
+     |  const transform =             |        
+     |    input$ => input$.pipe(...)  |        
+     |                                |        
+     +-------------^----------+-------+        
+                   |          |                
+                   |          |                
+                   |          |                
+          v-------------------+                
+ const [output, onInput] = useObservableState( 
+          |        ^         transform,        
+          |        |         initialOutput     
+          |        |       )                   
+          |        |                           
+          |        |                           
+          |        |                           
+     +----v--------+------------------+        
+     |          Normal World          |        
+     +--------------------------------+        
+     |                                |        
+     |   <button onClick={onInput}>   |        
+     |    {output}                    |        
+     |   </button>                    |        
+     |                                |        
+     +--------------------------------+        
 
 ```
 
@@ -155,36 +155,36 @@ In observable-hooks you can use [`useObservable`][useObservable] or [`useLayoutO
 
 ```
 
-   +--------------------------------+
-   |        Observable World        |
-   +--------------------------------+
-   |                                |
-   | const transform =              |
-   |   inputs$ => inputs$.pipe(...) |
-   |                                |
-   |   output$                      |
-   +------^-------------------------+
-          |
-          |
-          |
-          +--------------+
- const output$ = useObservable(
-                   transform,
-                   [props.A, state, ctx]
-                 )       ^
-                         |
-                         |
-                         |
-   +---------------------+----------+
-   |          Normal World          |
-   +--------------------------------+
-   |                                |
-   | const App(props) {             |
-   |   const [state] = useState()   |
-   |   const ctx = useContext(Ctx)  |
-   | }                              |
-   |                                |
-   +--------------------------------+
+   +--------------------------------+    
+   |        Observable World        |    
+   +--------------------------------+    
+   |                                |    
+   | const transform =              |    
+   |   inputs$ => inputs$.pipe(...) |    
+   |                                |    
+   |   output$                      |    
+   +------^-------------------------+    
+          |                              
+          |                              
+          |                              
+          +--------------+               
+ const output$ = useObservable(          
+                   transform,            
+                   [props.A, state, ctx]   
+                 )       ^               
+                         |               
+                         |               
+                         |               
+   +---------------------+----------+    
+   |          Normal World          |    
+   +--------------------------------+    
+   |                                |    
+   | const App(props) {             |    
+   |   const [state] = useState()   |    
+   |   const ctx = useContext(Ctx)  |    
+   | }                              |    
+   |                                |    
+   +--------------------------------+    
 
 ```
 
@@ -194,35 +194,35 @@ You can also use [`useObservableCallback`][useObservableCallback] to create obse
 
 ```
 
-        +--------------------------------+
-        |        Observable World        |
-        +--------------------------------+
-        |                                |
-        |  const transform =             |
-        |    input$ => input$.pipe(...)  |
-        |                                |
-        |           output$              |
-        +--------------^-----------------+
-                       |
-            +-----+    |
-            |     v    +
- const [onInput, output$] = useObservableCallback(
-            ^                 transform
-            |               )
-            |
-            |
-            |
-            |
-        +---+----------------------------+
-        |          Normal World          |
-        +--------------------------------+
-        |                                |
-        | const App(props) {             |
-        |   const [state] = useState()   |
-        |   const ctx = useContext(Ctx)  |
-        | }                              |
-        |                                |
-        +--------------------------------+
+        +--------------------------------+         
+        |        Observable World        |         
+        +--------------------------------+         
+        |                                |         
+        |  const transform =             |         
+        |    input$ => input$.pipe(...)  |         
+        |                                |         
+        |           output$              |         
+        +--------------^-----------------+         
+                       |                           
+            +-----+    |                           
+            |     v    +                           
+ const [onInput, output$] = useObservableCallback( 
+            ^                 transform            
+            |               )                      
+            |                                      
+            |                                      
+            |                                      
+            |                                      
+        +---+----------------------------+         
+        |          Normal World          |         
+        +--------------------------------+         
+        |                                |         
+        | const App(props) {             |         
+        |   const [state] = useState()   |         
+        |   const ctx = useContext(Ctx)  |         
+        | }                              |         
+        |                                |         
+        +--------------------------------+         
 
 ```
 
@@ -234,34 +234,34 @@ Finally, you can also operate on multiple observables. This flexibility is power
 
 ```
 
-        +--------------------------------+
-        |        Observable World        |
-        +--------------------------------+
-        |                                |
-        |           fromProps$           |
-        |                                |
-        |           fromState$           |
-        |                                |
-        |           fromGlobal$          |
-        |                                |
-        | output$                        |
-        +---^---------------+------------+
-            |               |
-            |               |
-            +---------------v
-    const output$ = useObservable(
-                      () => combineLatest(
-                        fromProps$,
-                        fromState$,
-                        fromGlobal$
-                      )
-                    )
-
-        +--------------------------------+
-        |                                |
-        |          Normal World          |
-        |                                |
-        +--------------------------------+
+    +--------------------------------+    
+    |        Observable World        |    
+    +--------------------------------+    
+    |                                |    
+    |           fromProps$           |    
+    |                                |    
+    |           fromState$           |    
+    |                                |    
+    |           fromGlobal$          |    
+    |                                |    
+    |  output$                       |    
+    +-----^--------------+-----------+    
+          |              |               
+          |              |               
+          +--------------v               
+  const output$ = useObservable(          
+                    () => combineLatest(  
+                      fromProps$,         
+                      fromState$,         
+                      fromGlobal$         
+                    )                     
+                  )                       
+                                          
+    +--------------------------------+    
+    |                                |    
+    |          Normal World          |    
+    |                                |    
+    +--------------------------------+    
 
 ```
 
