@@ -10,7 +10,8 @@ import { useEffect, useRef } from 'react'
  * Subscription will unsubscribe when unmount, you can also
  * unsubscribe manually.
  *
- * ⚠ **Note:** To make it concurrent mode compatible, the subscription happens in commit phase
+ * ⚠ **Note:** To make it concurrent mode compatible, the subscription happens
+ * after the render is committed to the screen
  * which means even the Observable emits synchronous values
  * they will arrive after the first rendering.
  *

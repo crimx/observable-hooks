@@ -207,7 +207,7 @@ useEffect(
 
 <Badge text="v3.0.0"/> From <code>v3.0.0</code>. `useSubscription` is concurrent mode safe. It will prevent observer callbacks being called from stale Observable.
 
-To make it concurrent mode compatible, the subscription happens in commit phase. Even if the Observable emits synchronous values they still will arrive after the first rendering.
+To make it concurrent mode compatible, the subscription happens after the render is committed to the screen. Even if the Observable emits synchronous values they still will arrive after the first rendering.
 
 ::: tip
 Note that changes of the observer callbacks will not trigger an emission. If you need that just create another Observable of the callback with [`useObservable`](#useobservable).
@@ -267,6 +267,14 @@ Invoke props callback
 const subscription = useSubscription(events$, props.onEvent)
 ```
 
+## useLayoutSubscription
+
+Same as [useSubscription](#usesubscription) except the subscription is established under `useLayoutEffect`.
+
+Useful when values are needed before DOM paint.
+
+Use it scarcely as it runs synchronously before browser paint. Too many synchronous emissons from the observable could stretch the commit phase.
+
 ## useObservableState
 
 ```typescript
@@ -311,7 +319,7 @@ The optional `initialState` is internally passed to `useState(initialState)`. Th
 
 The `initialState`(or its returned result) is also passed to the `init` function. This is useful if you want to implement reduer pattern which requires an initial state.
 
-To make it concurrent mode compatible, the subscription happens in commit phase. Even if the Observable emits synchronous values they still will arrive after the first rendering.
+To make it concurrent mode compatible, the subscription happens after the render is committed to the screen. Even if the Observable emits synchronous values they still will arrive after the first rendering.
 
 ::: warning Gotcha
 It is not safe to access other variables from closure directly in the `init` function. See [Gotchas](../guide/gotchas.md).

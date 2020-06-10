@@ -36,7 +36,7 @@ import { useRefFn, getEmptySubject } from './helpers'
  * Use [[useObservable]] with `withLatestFrom` instead.
  *
  * ⚠ **Note:** To make it concurrent mode compatible, the subscription happens
- * in commit phase which means even the Observable emits synchronous values
+ * after the render is committed to the screen which means even the Observable emits synchronous values
  * they will arrive after the first rendering.
  *
  * @template TState Output state.
