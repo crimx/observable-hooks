@@ -75,11 +75,9 @@ export const Suggests: React.FC<SuggestsProps> = props => {
               )
             : // cancel handling response, reset default state
               of(<StateDefault />)
-        ),
-        // initial state
-        startWith(<StateDefault />)
+        )
       ),
     [props.text, props.fetchFunc] as const
   )
-  return useObservableState(status$)!
+  return useObservableState(status$, () => <StateDefault />)
 }
