@@ -19,7 +19,7 @@ module.exports = {
     locales: {
       '/': {
         nav: [
-          { text: 'Guide', link: '/guide/' },
+          { text: 'Guide', link: '/guide/core-concepts' },
           { text: 'API', link: '/api/' },
           { text: 'Examples', link: '/examples/' }
         ],
