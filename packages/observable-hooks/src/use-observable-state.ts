@@ -86,33 +86,23 @@ export function useObservableState<TState, TInput = TState>(
   initialState: TState | (() => TState)
 ): [TState, (input: TInput) => void]
 export function useObservableState<TState, TInput = TState>(
-  ...args:
-    | [Observable<TState>]
-    | [Observable<TState>, TState | (() => TState)]
-    | [
-        (
-          input$: Observable<TInput>,
-          initialState?: TState
-        ) => Observable<TState>
-      ]
-    | [
-        (
-          input$: Observable<TInput>,
-          initialState?: TState
-        ) => Observable<TState>,
-        TState | (() => TState)
-      ]
+  state$OrInit:
+    | Observable<TState>
+    | ((
+        input$: Observable<TInput>,
+        initialState?: TState
+      ) => Observable<TState>),
+  initialState?: TState | (() => TState)
 ): TState | undefined | [TState | undefined, (input: TInput) => void] {
-  const [state, setState] = useState<TState | undefined>(args[1])
+  const [state, setState] = useState<TState | undefined>(initialState)
 
   let callback: undefined | ((input: TInput) => void)
   let state$: Observable<TState>
 
-  if (isObservable(args[0])) {
-    state$ = args[0]
+  if (isObservable(state$OrInit)) {
+    state$ = state$OrInit
   } else {
-    // make ts infer call signatures from array item
-    const init = args[0]
+    const init = state$OrInit
     // Even though hooks are under conditional block
     // it is for a completely different use case
     // which unlikely coexists with the other one.
