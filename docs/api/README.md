@@ -190,11 +190,15 @@ Why use it instead of just `useEffect`?
 ```js
 useEffect(
   () => {
-    input$.subscribe({
+    const subscription = input$.subscribe({
       next: ...,
       error: ...,
       complete: ...,
     })
+    
+    return () => {
+      subscription.unsubscribe()
+    }
   },
   [input$]
 )
@@ -417,7 +421,13 @@ Event listener pattern:
 ```javascript
 import { pluckCurrentTargetValue, useObservableState } from 'observable-hooks'
 
-const [text, onChange] = useObservableState(pluckCurrentTargetValue, '')
+function App(props) {
+  const [text, onChange] = useObservableState(pluckCurrentTargetValue, '')
+  
+  return (
+    <input onChange={onChange} value={text} />
+  )
+}
 ```
 
 Reducer pattern:
