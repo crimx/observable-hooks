@@ -1,128 +1,132 @@
-import { Observable } from 'rxjs'
+import { Observable, isObservable, Subject } from 'rxjs'
+import { useState, useRef, useDebugValue } from 'react'
 import { useSubscription } from './use-subscription'
-import { useState, useRef, Dispatch, SetStateAction } from 'react'
-import { useObservableCallback } from './use-observable-callback'
+import { useRefFn, getEmptySubject } from './helpers'
 
 /**
- * A helper to get value from an Observable.
+ * A sugar hook for getting values from an Observable.
  *
- * You can also use the regular `useState` with [[useSubscription]] directly
- * which will trigger extra initial re-renders
- * when sync values are emitted from the Observable (e.g. `of` or `startWith`).
+ * Is can be used in two ways:
  *
- * ⚠ **Note:** `useObservableState` will call `init` once and always return
- * the same Observable. It is not safe to access closure (except other Observables)
- * directly inside `init`. Use ref or [[useObservable]] with `withLatestFrom` instead.
+ * 1. Offer an Observable and an optional initial state.
+ *    ```js
+ *    const output = useObservableState(input$, initialState)
+ *    ```
+ * 2. Offer an epic-like function and an optional initial state.
+ *    ```js
+ *    const [output, onInput] = useObservableState(
+ *      (input$, initialState) => input$.pipe(...),
+ *      initialState
+ *    )
+ *    ```
  *
- * ⚠ **Note:** Due to rules of hooks you can offer either a function or an Observable
- * as the first argument but do not change to one another during Component's life cycle.
+ * The optional `initialState` is internally passed to `useState(initialState)`.
+ * This means it can be either a state value or a function that returns the state
+ * which is for expensive initialization.
  *
- * ⚠ **Note:** Unhandled errors from the observable will be caught and logged.
- * In non-production mode the context of `useObservableState` itself will also be logged.
- * But do note that due to the design of RxJS, once an error occurs in an observable, the observable
- * is killed.
- * You should prevent errors from reaching observables or `catchError` in sub-observables.
+ * The `initialState`(or its returned result) is also passed to the `init` function.
+ * This is useful if you want to implement reduer pattern which requires an initial state.
  *
- * Subscription will auto-unsubscribe when unmount, you can also unsubscribe manually.
- * You can also use the optional `initState` which will be directly passed to the result.
- * But if sync values are also emitted from the Observable `initState` will be ignored.
+ * ⚠ **Note:** These two ways use different hooks, choose either one each time
+ * and do not change to the other one during Component's life cycle.
  *
- * It is recommended to use `initState` for simple primitive value.
- * For others, init with the Observable to save some (re)computations.
+ * ⚠ **Note:** `useObservableState` will call the epic-like `init` function only once
+ * and always return the same Observable.
+ * It is not safe to access closure directly inside `init`.
+ * Use [[useObservable]] with `withLatestFrom` instead.
+ *
+ * ⚠ **Note:** To make it concurrent mode compatible, the subscription happens
+ * after the render is committed to the screen which means even the Observable emits synchronous values
+ * they will arrive after the first rendering.
  *
  * @template TState Output state.
- * @template TSyncInit Does the Observable emit sync values?
  *
  * @param input$ An Observable.
  */
-export function useObservableState<TState, TSyncInit = false>(
+export function useObservableState<TState>(
   input$: Observable<TState>
-): TSyncInit extends false ? TState | undefined : TState
+): TState | undefined
 /**
  * @template TState Output state.
  *
  * @param input$ An Observable.
- * @param initState Initial state.
+ * @param initialState Optional initial state.
+ * Can be the state value or a function that returns the state.
  */
 export function useObservableState<TState>(
   input$: Observable<TState>,
-  initState: TState
+  initialState: TState | (() => TState)
 ): TState
 /**
  * @template TState Output state.
  * @template TInput Input values.
- * @template TSyncInit Does the Observable emit sync values?
  *
- * @param init A pure function that, when applied to an Observable,
- * returns an Observable.
+ * @param init A epic-like function that, when applied to an Observable
+ * and the initial state value, returns an Observable.
  */
-export function useObservableState<TState, TInput = TState, TSyncInit = false>(
+export function useObservableState<TState, TInput = TState>(
   init: (input$: Observable<TInput>) => Observable<TState>
-): [
-  TSyncInit extends false ? TState | undefined : TState,
-  (input: TInput) => void
-]
+): [TState | undefined, (input: TInput) => void]
 /**
  * Different input output types with initial state.
  *
  * @template TState Output state.
  * @template TInput Input values.
  *
- * @param init A pure function that, when applied to an Observable,
- * returns an Observable.
- * @param initState Initial state.
+ * @param init A epic-like function that, when applied to an Observable
+ * and the initial state value, returns an Observable.
+ * @param initialState Optional initial state.
+ * Can be the state value or a function that returns the state.
  */
 export function useObservableState<TState, TInput = TState>(
-  init: (input$: Observable<TInput>) => Observable<TState>,
-  initState: TState
+  init: (
+    input$: Observable<TInput>,
+    initialState: TState
+  ) => Observable<TState>,
+  initialState: TState | (() => TState)
 ): [TState, (input: TInput) => void]
 export function useObservableState<TState, TInput = TState>(
   ...args:
     | [Observable<TState>]
-    | [Observable<TState>, TState]
-    | [(input$: Observable<TInput>) => Observable<TState>]
-    | [(input$: Observable<TInput>) => Observable<TState>, TState]
+    | [Observable<TState>, TState | (() => TState)]
+    | [
+        (
+          input$: Observable<TInput>,
+          initialState?: TState
+        ) => Observable<TState>
+      ]
+    | [
+        (
+          input$: Observable<TInput>,
+          initialState?: TState
+        ) => Observable<TState>,
+        TState | (() => TState)
+      ]
 ): TState | undefined | [TState | undefined, (input: TInput) => void] {
-  const stateRef = useRef<TState | undefined>(args[1])
-  const setStateRef = useRef<Dispatch<SetStateAction<TState | undefined>>>()
-
-  // Record context where the observable subscribed used for easy debugging
-  let errorContext: Error | undefined
-  if (!errorContext && process.env.NODE_ENV !== 'production') {
-    errorContext = new Error('The above error is related to:')
-  }
+  const [state, setState] = useState<TState | undefined>(args[1])
 
   let callback: undefined | ((input: TInput) => void)
-  let states$: Observable<TState>
-  if (typeof args[0] === 'function') {
-    ;[callback, states$] = useObservableCallback(args[0])
+  let state$: Observable<TState>
+
+  if (isObservable(args[0])) {
+    state$ = args[0]
   } else {
-    states$ = args[0]
+    // make ts infer call signatures from array item
+    const init = args[0]
+    // Even though hooks are under conditional block
+    // it is for a completely different use case
+    // which unlikely coexists with the other one.
+    // A warning is also added to the docs.
+    const input$Ref = useRefFn<Subject<TInput>>(getEmptySubject)
+
+    state$ = useRefFn(() => init(input$Ref.current, state)).current
+    callback = useRef((state: TInput) => input$Ref.current.next(state)).current
   }
 
-  useSubscription(
-    states$,
-    state => {
-      if (stateRef.current !== state) {
-        // assign value before setState
-        stateRef.current = state
+  useSubscription(state$, setState)
 
-        if (setStateRef.current) {
-          setStateRef.current(state)
-        }
-      }
-    },
-    error => {
-      console.error(error)
-      if (errorContext) {
-        console.error(errorContext)
-      }
-    }
-  )
+  // Display state in React DevTools.
+  useDebugValue(state)
 
-  // Putting useState after subcription will skip re-rendering
-  // of all sync emitted values from the Observable.
-  setStateRef.current = useState(stateRef.current)[1]
-
-  return callback ? [stateRef.current, callback] : stateRef.current
+  return callback ? [state, callback] : state
 }

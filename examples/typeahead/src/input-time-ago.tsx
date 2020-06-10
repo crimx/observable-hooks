@@ -8,24 +8,25 @@ export interface InputTimeAgoProps {
 }
 
 export const InputTimeAgo: React.FC<InputTimeAgoProps> = props => {
-  const [text, diff] = useObservableState(
+  const secondsAgo = useObservableState(
     useObservable(
       inputs$ =>
         inputs$.pipe(
-          switchMap(([text]) =>
+          switchMap(() =>
             interval(1000).pipe(
               startWith(-1),
-              map(count => [text, fromNow(count + 1)] as [string, string])
+              map(count => fromNow(count + 1))
             )
           )
         ),
       [props.text]
-    )
-  )!
+    ),
+    () => fromNow(0)
+  )
 
   return (
     <div className="notification">
-      You typed {text ? `"${text}"` : 'nothing'} {diff}.
+      You typed {props.text ? `"${props.text}"` : 'nothing'} {secondsAgo}.
     </div>
   )
 }

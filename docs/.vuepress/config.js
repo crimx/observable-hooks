@@ -51,7 +51,7 @@ module.exports = {
               title: 'Guide', // required
               collapsable: false, // optional, defaults to true
               sidebarDepth: 2, // optional, defaults to 1
-              children: ['/guide/', '/guide/motivation', '/guide/core-concepts']
+              children: ['/guide/core-concepts', '/guide/motivation', '/guide/']
             },
             {
               title: 'Advanced', // required

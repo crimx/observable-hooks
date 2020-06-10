@@ -4,5 +4,5 @@
     "outDir": "dist",
     "noEmit": true
   },
-  "include": ["src", "__tests__"]
+  "include": ["../../typings", "src", "__tests__"]
 }

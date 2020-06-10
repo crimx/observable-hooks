@@ -1,7 +1,7 @@
 import { useObservableState, identity } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { of, Subject, throwError } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { map, scan } from 'rxjs/operators'
 
 describe('useObservableState', () => {
   describe('with init function', () => {
@@ -15,18 +15,17 @@ describe('useObservableState', () => {
       expect(timeSpy).toBeCalledTimes(1)
     })
 
-    it('should have the synced init value from Observable without rerendering', () => {
-      const { result } = renderHook(() => useObservableState(() => of(1, 2, 3)))
+    it('should start receiving values after first rendering', () => {
+      const spy = jest.fn()
+      const { result } = renderHook(() => {
+        const state = useObservableState(() => of(1, 2, 3))
+        spy(state[0])
+        return state
+      })
       expect(result.current[0]).toBe(3)
-    })
-
-    it('should not lose the init value from sync Observable when rerendering trigger from other props or states', () => {
-      const { result, rerender } = renderHook(() =>
-        useObservableState(() => of(1, 2, 3))
-      )
-      expect(result.current[0]).toBe(3)
-      rerender()
-      expect(result.current[0]).toBe(3)
+      expect(spy).toHaveBeenCalledTimes(2)
+      expect(spy).toHaveBeenNthCalledWith(1, undefined)
+      expect(spy).toHaveBeenNthCalledWith(2, 3)
     })
 
     it('should update value when the returned function is called', () => {
@@ -47,27 +46,6 @@ describe('useObservableState', () => {
       expect(result.current[0]).toBe('test2')
     })
 
-    it('should not trigger rerendering when value is not changed', () => {
-      const spy = jest.fn()
-      const { result } = renderHook(() => {
-        spy()
-        return useObservableState<string, number>(input$ =>
-          input$.pipe(map(input => 'test' + input))
-        )
-      })
-      const [state, updateState] = result.current
-      expect(state).toBeUndefined()
-      expect(spy).toHaveBeenCalledTimes(1)
-
-      act(() => updateState(1))
-      expect(result.current[0]).toBe('test1')
-      expect(spy).toHaveBeenCalledTimes(2)
-
-      act(() => updateState(1))
-      expect(result.current[0]).toBe('test1')
-      expect(spy).toHaveBeenCalledTimes(2)
-    })
-
     it('should get the init state if given', () => {
       const { result } = renderHook(() => useObservableState(identity, 1))
       expect(result.current[0]).toBe(1)
@@ -78,53 +56,86 @@ describe('useObservableState', () => {
       expect(result.current[0]).toBe(2)
     })
 
-    it('should log error and context when observable emits error', () => {
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
-
-      expect(spy).not.toHaveBeenCalled()
-
+    it('should throw error when observable emits error', () => {
       const { result } = renderHook(() =>
         useObservableState(() => throwError(new Error('opps')))
       )
-      expect(result.current[0]).toBeUndefined()
-
-      expect(spy).toHaveBeenCalledTimes(2)
-
-      spy.mockRestore()
+      expect(result.error).toBeInstanceOf(Error)
+      expect(result.error.message).toBe('opps')
     })
 
-    it('should not record context on production', () => {
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
-      const { NODE_ENV } = process.env
-      process.env.NODE_ENV = 'production'
+    it('should support reducer pattern', () => {
+      interface StoreState {
+        value1: string
+        value2: number
+      }
 
-      expect(spy).not.toHaveBeenCalled()
+      type StoreAction =
+        | {
+            type: 'UPDATE_VALUE1'
+            payload: string
+          }
+        | {
+            type: 'INCREMENT_VALUE2'
+          }
 
       const { result } = renderHook(() =>
-        useObservableState(() => throwError(new Error('opps')))
+        useObservableState<StoreState, StoreAction>(
+          (action$, initialState) =>
+            action$.pipe(
+              scan((state, action) => {
+                switch (action.type) {
+                  case 'UPDATE_VALUE1':
+                    return {
+                      ...state,
+                      value1: action.payload
+                    }
+                  case 'INCREMENT_VALUE2':
+                    return {
+                      ...state,
+                      value2: state.value2 + 1
+                    }
+                  default:
+                    return state
+                }
+              }, initialState)
+            ),
+          () => ({ value1: 'value1', value2: 2 })
+        )
       )
-      expect(result.current[0]).toBeUndefined()
 
-      expect(spy).toHaveBeenCalledTimes(1)
+      let [state, dispatch] = result.current
+      expect(state).toEqual({ value1: 'value1', value2: 2 })
 
-      process.env.NODE_ENV = NODE_ENV
-      spy.mockRestore()
+      act(() => {
+        dispatch({ type: 'UPDATE_VALUE1', payload: 'value2' })
+      })
+
+      state = result.current[0]
+      expect(state).toEqual({ value1: 'value2', value2: 2 })
+
+      act(() => {
+        dispatch({ type: 'INCREMENT_VALUE2' })
+      })
+
+      state = result.current[0]
+      expect(state).toEqual({ value1: 'value2', value2: 3 })
     })
   })
 
   describe('with init Observable', () => {
-    it('should have the synced init value from Observable without rerendering', () => {
+    it('should start receiving values after first rendering', () => {
+      const spy = jest.fn()
       const outer$ = of(1, 2, 3)
-      const { result } = renderHook(() => useObservableState(outer$))
+      const { result } = renderHook(() => {
+        const state = useObservableState(outer$)
+        spy(state)
+        return state
+      })
       expect(result.current).toBe(3)
-    })
-
-    it('should not lose the init value from sync Observable when rerendering trigger from other props or states', () => {
-      const outer$ = of(1, 2, 3)
-      const { result, rerender } = renderHook(() => useObservableState(outer$))
-      expect(result.current).toBe(3)
-      rerender()
-      expect(result.current).toBe(3)
+      expect(spy).toHaveBeenCalledTimes(2)
+      expect(spy).toHaveBeenNthCalledWith(1, undefined)
+      expect(spy).toHaveBeenNthCalledWith(2, 3)
     })
 
     it('should update value when the Observable emits value', () => {
@@ -153,35 +164,11 @@ describe('useObservableState', () => {
       expect(result.current).toBe(2)
     })
 
-    it('should log error and context when observable emits error', () => {
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
-
-      expect(spy).not.toHaveBeenCalled()
-
+    it('should throw error when observable emits error', () => {
       const outer$ = throwError(new Error('opps'))
       const { result } = renderHook(() => useObservableState(outer$, 3))
-      expect(result.current).toBe(3)
-
-      expect(spy).toHaveBeenCalledTimes(2)
-
-      spy.mockRestore()
-    })
-
-    it('should not record context on production', () => {
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {})
-      const { NODE_ENV } = process.env
-      process.env.NODE_ENV = 'production'
-
-      expect(spy).not.toHaveBeenCalled()
-
-      const outer$ = throwError(new Error('opps'))
-      const { result } = renderHook(() => useObservableState(outer$, 3))
-      expect(result.current).toBe(3)
-
-      expect(spy).toHaveBeenCalledTimes(1)
-
-      process.env.NODE_ENV = NODE_ENV
-      spy.mockRestore()
+      expect(result.error).toBeInstanceOf(Error)
+      expect(result.error.message).toBe('opps')
     })
   })
 })

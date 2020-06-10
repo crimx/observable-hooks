@@ -1,6 +1,6 @@
 # Suspense
 
-See [Render-as-You-Fetch (using Suspense)](../guide/render-as-you-fetch-suspense.md) for usage.
+A concurrent mode safe way to use RxJS with React Suspense. See [Render-as-You-Fetch (using Suspense)](../guide/render-as-you-fetch-suspense.md) for usage.
 
 ## ObservableResource
 

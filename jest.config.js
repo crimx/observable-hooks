@@ -1,4 +1,5 @@
 module.exports = {
+  setupFilesAfterEnv: [require.resolve('./scripts/jest-setup.js')],
   transform: {
     '^.+\\.ts(x?)$': 'ts-jest'
   },

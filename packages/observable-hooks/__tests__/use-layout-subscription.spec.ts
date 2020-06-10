@@ -1,13 +1,13 @@
-import { useSubscription } from '../src'
+import { useLayoutSubscription } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { of, BehaviorSubject, Subject, throwError } from 'rxjs'
 import { useState } from 'react'
 
-describe('useSubscription', () => {
+describe('useLayoutSubscription', () => {
   it('should always return the same Subscription after first rendering', () => {
     const num$ = of(1, 2, 3)
     const { result, rerender } = renderHook(() => {
-      const subscriptionRef = useSubscription(num$, () => {})
+      const subscriptionRef = useLayoutSubscription(num$, () => {})
       return subscriptionRef.current
     })
     expect(result.current).toBeUndefined()
@@ -20,7 +20,7 @@ describe('useSubscription', () => {
   it('should receive emitted values from Observable', () => {
     const num$ = of(1, 2, 3)
     const numSpy = jest.fn()
-    const { rerender } = renderHook(() => useSubscription(num$, numSpy))
+    const { rerender } = renderHook(() => useLayoutSubscription(num$, numSpy))
     expect(numSpy).toBeCalledTimes(3)
     expect(numSpy).lastCalledWith(3)
     expect(numSpy).toBeCalledWith(1)
@@ -37,7 +37,7 @@ describe('useSubscription', () => {
     const errorSpy = jest.fn()
     const completeSpy = jest.fn()
     const { rerender } = renderHook(() =>
-      useSubscription(error$, nextSpy, errorSpy, completeSpy)
+      useLayoutSubscription(error$, nextSpy, errorSpy, completeSpy)
     )
     expect(errorSpy).toBeCalledTimes(1)
     expect(errorSpy).lastCalledWith(error)
@@ -56,7 +56,7 @@ describe('useSubscription', () => {
     const completeSpy = jest.fn()
 
     const { rerender, result } = renderHook(() =>
-      useSubscription(error$, nextSpy, null, completeSpy)
+      useLayoutSubscription(error$, nextSpy, null, completeSpy)
     )
 
     expect(result.error).toBeInstanceOf(Error)
@@ -75,7 +75,7 @@ describe('useSubscription', () => {
     const num$ = of(1, 2, 3)
     const completeSpy = jest.fn()
     const { rerender } = renderHook(() =>
-      useSubscription(num$, null, null, completeSpy)
+      useLayoutSubscription(num$, null, null, completeSpy)
     )
     expect(completeSpy).toBeCalledTimes(1)
     expect(completeSpy).lastCalledWith()
@@ -89,7 +89,7 @@ describe('useSubscription', () => {
     const spy2 = jest.fn()
     const { rerender } = renderHook(
       props => {
-        useSubscription(num$$, props.cb)
+        useLayoutSubscription(num$$, props.cb)
       },
       {
         initialProps: {
@@ -118,7 +118,7 @@ describe('useSubscription', () => {
     const { rerender, result } = renderHook(
       props => {
         const [stateVal, setState] = useState('s1')
-        useSubscription(num$$, num => {
+        useLayoutSubscription(num$$, num => {
           numSpy(num, stateVal, props.propVal)
         })
         return { setState }
@@ -154,7 +154,7 @@ describe('useSubscription', () => {
     const spy2 = jest.fn()
     const { rerender } = renderHook(
       props => {
-        useSubscription(num$$, props.cb)
+        useLayoutSubscription(num$$, props.cb)
       },
       {
         initialProps: {
@@ -178,7 +178,7 @@ describe('useSubscription', () => {
   it('should unsubscribe when unmount', () => {
     const num$$ = new BehaviorSubject(1)
     const numSpy = jest.fn()
-    const { unmount } = renderHook(() => useSubscription(num$$, numSpy))
+    const { unmount } = renderHook(() => useLayoutSubscription(num$$, numSpy))
     expect(numSpy).toBeCalledTimes(1)
     expect(numSpy).lastCalledWith(1)
     num$$.next(2)
@@ -197,7 +197,7 @@ describe('useSubscription', () => {
 
     const { rerender } = renderHook(
       props => {
-        useSubscription(props.input$, numSpy)
+        useLayoutSubscription(props.input$, numSpy)
       },
       {
         initialProps: {

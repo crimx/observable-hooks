@@ -92,29 +92,15 @@ export function getEmptySubject<T>() {
 }
 
 /**
- * Return an empty object
- * @ignore
- */
-export function getEmptyObject() {
-  return {}
-}
-
-/**
- * An empty tuple
- * @ignore
- */
-export const EMPTY_TUPLE: Readonly<[]> = []
-
-/**
  * One-time ref init.
- * @param init A function that returns a non-nullable value. Will be called only once.
+ * @param init A function that returns a value. Will be called only once.
  * @returns A ref object with the returned value.
  */
-export function useRefFn<T extends object | number | string | boolean | symbol>(
-  init: () => T
-) {
+export function useRefFn<T>(init: () => T) {
+  const firstRef = useRef(true)
   const ref = useRef<T | null>(null)
-  if (ref.current === null) {
+  if (firstRef.current) {
+    firstRef.current = false
     ref.current = init()
   }
   return ref as MutableRefObject<T>
