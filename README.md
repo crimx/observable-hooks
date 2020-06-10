@@ -93,13 +93,14 @@ function transformTypingStatus(event$) {
 
 ## Usage
 
-Read the docs at <https://observable-hooks.js.org>.
+Read the docs at <https://observable-hooks.js.org> or [`./docs`](./docs/).
 
 Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/examples). Play on CodeSandbox:
 
 - [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/pomodoro-timer)
 - [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
 - [Render-as-You-Fetch using Suspense](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/suspense)
+- [React Context](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/context)
 
 Note that there are also some useful [utilities](https://observable-hooks.js.org/api/helpers.html) for common use cases to reduce garbage collection.
 

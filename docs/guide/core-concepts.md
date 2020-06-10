@@ -67,7 +67,7 @@ In observable-hooks we have [`useObservableState`][useObservableState].
 
 ### Observable to Callbacks
 
-In addition to states, you can also call observer callbacks with [`useSubscription`][useSubscription]. See the API docs for why it is preferred comparing to manual `useEffect`.
+In addition to states, you can also call observer callbacks with [`useSubscription`][useSubscription]. See the [API docs][useSubscription] for why it is preferred comparing to manual `useEffect`.
 
 ```
 
@@ -77,17 +77,17 @@ In addition to states, you can also call observer callbacks with [`useSubscripti
          |                                |
          |             input$             |
          |                                |
-         +---------------+----------------+
-                         |
-                         |
-                         |
-                         v
+         +-------------------+------------+
+                             |
+                             |
+                             |
+                             v
            useSubscription(input$, onNext)
-                         |
-                         |
-                         |
-                         |
-         +---------------v----------------+
+                                     |
+                                     |
+                                     |
+                                     |
+         +---------------------------v----+
          |          Normal World          |
          +--------------------------------+
          |                                |
@@ -97,7 +97,7 @@ In addition to states, you can also call observer callbacks with [`useSubscripti
 
 ```
 
-## Normal to Observable to Normal
+## Normal to Observable back to Normal
 
 Some libraries also provide ways to create observables from Normal World, subscribe to those observables, then connect emitted values back to Normal World.
 
@@ -277,6 +277,7 @@ The epic-like signature makes the observable transformation logic highly reusabl
 [useLayoutObservable]: ../api/README.md#useLayoutObservable
 [useObservableCallback]: ../api/README.md#useobservablecallback
 [useSubscription]: ../api/README.md#usesubscription
+[useLayoutSubscription]: ../api/README.md#uselayoutsubscription
 [useObservableState]: ../api/README.md#useobservablestate
 [useObservableGetState]: ../api/README.md#useobservableGetstate
 [useObservablePickState]: ../api/README.md#useobservablePickstate
