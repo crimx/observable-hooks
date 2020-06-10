@@ -28,10 +28,9 @@ export function App() {
           // show loading state immediately
           startWith(<LoadingUI />)
         )
-      ),
-      // initial state
-      startWith(<DefaultUI />)
-    )
+      )
+    ),
+    () =>  <DefaultUI /> // initial state
   )
 
   return (
@@ -91,7 +90,7 @@ App.propTypes = {
 
 ## Auto-cancelation (TypeScript)
 
-```typescript
+```tsx
 import React, { FC, useState } from 'react'
 import { timer, empty } from 'rxjs'
 import { switchMap, mapTo } from 'rxjs/operators'
