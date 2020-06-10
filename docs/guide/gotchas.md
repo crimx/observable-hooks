@@ -55,7 +55,7 @@ These should be rare case though. There should always be better ways to structur
 
 1. If the hot observable is from DOM events:
    1. For events that are triggered by user interaction like `click` and `keypress` it is safe to assume the subscription is established.
-   2. If you are not sure or are having issues, use [`useLayoutSubscription`][useLayoutSubscription] which establishes subscription synchronously after the render phase and before committing to DOM.
+   2. If you are not sure or are having issues, use [`useLayoutSubscription`][useLayoutSubscription] which establishes subscription synchronously after the render phase and before browser paints.
 2. If the observable is from other JavaScript module which you have no control of, it will be same issue even if subscription happens immediately on rendering. It is not safe to predict when the component will start rendering. In this case you should have a mechanism to cache the value, like `BehaviorSubject`.
 3. If you have control of the emission timing, delay it with `useEffect` plus one event loop. React may not follow the exact order when invoking `useEffect` callback, an extra event loop will make sure emission happens after subscription.
    ```js
@@ -77,6 +77,7 @@ These should be rare case though. There should always be better ways to structur
    )
    ```
    You may create a custom hook if this pattern is frequently used.
+4. If you have better idea please share it with us or submit a PR!
 
 
 [useLayoutSubscription]: ../api/README.md#uselayoutsubscription
