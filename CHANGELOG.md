@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-alpha.0](https://github.com/crimx/observable-hooks/compare/v2.3.5...v3.0.0-alpha.0) (2020-06-10)
+
+
+### Code Refactoring
+
+* **observable-hooks:** add initialState to get and pick state ([63ad94e](https://github.com/crimx/observable-hooks/commit/63ad94ed4d89fa69dffe5f256acb9a3fe4053ef0))
+* **observable-hooks:** concurrent mode safe useSubscription ([43f8a8c](https://github.com/crimx/observable-hooks/commit/43f8a8c43541bcfbb97728c1f48baf1be038b301))
+* **observable-hooks:** move subscription to commit phase ([10db7bd](https://github.com/crimx/observable-hooks/commit/10db7bd1eb430efc036b786fb99ee3ddff6714bd))
+* **observable-hooks:** remove deprecated useObservablePropsCallback ([a6395a8](https://github.com/crimx/observable-hooks/commit/a6395a8625080ffb137b0e4efca32e6556126f6f))
+* **observable-hooks:** useObservableState for concurrent mode ([fa6147e](https://github.com/crimx/observable-hooks/commit/fa6147ec34efa0b7826a9081d71b06d0514d6dd5))
+
+
+### Features
+
+* **observable-hooks:** add useLayoutSubscription ([ef18bca](https://github.com/crimx/observable-hooks/commit/ef18bca61b5b0330276594577c63c4d0e0cf7885))
+
+
+### BREAKING CHANGES
+
+* **observable-hooks:** useObservableGetState and useObservablePickState has incompatible signatures.
+* **observable-hooks:** useSubscription returns a ref object instead of the the RxJS Subscription
+* **observable-hooks:** Deprecated useObservablePropsCallback is removed
+* **observable-hooks:** 1. Sync values from observables will arrive after first rendering.
+2. If `initialState` is function it will be called.
+* **observable-hooks:** The subscription happens in commit phase.  This means even the Observable emits synchronous values they will arrive after the first rendering.
+
+
+
+
+
 ## [2.3.5](https://github.com/crimx/observable-hooks/compare/v2.3.4...v2.3.5) (2020-04-30)
 
 **Note:** Version bump only for package observable-hooks-mono
