@@ -104,7 +104,9 @@ Returns a callback function and an events Observable.
 
 Whenever the callback is called, the Observable will emit the first argument of the callback.
 
-<Badge text="v2.1.0"/> From <code>v2.1.0</code> optionally accepts a selector function which transforms an array of event arguments into a single value.
+<p>
+  <Badge text="v2.1.0"/> From <code>v2.1.0</code> optionally accepts a selector function which transforms an array of event arguments into a single value.
+</p>
 
 ::: tip
 If you want to return state value instead of Observable see [useObservableState](#useobservablestate).
@@ -198,14 +200,22 @@ useEffect(
 )
 ```
 
+Because:
+
 1. The observer callbacks could suffer from stale closure problem. It is not easy to directly reference any local values in the callbacks.
 2. It is not concurrent mode safe. Tearing could occur during changing of Observables.
 
-<Badge text="v2.0.0"/> From <code>v2.0.0</code>. <code>useSubscription</code> will ensure the latest callback is called. You can safely reference any closure variable directly inside the callbacks.
+<p>
+  <Badge text="v2.0.0"/> From <code>v2.0.0</code>. <code>useSubscription</code> will ensure the latest callback is called. You can safely reference any closure variable directly inside the callbacks.
+</p>
 
-<Badge text="v2.3.4"/> From <code>v2.3.4</code>. When the Observable changes `useSubscription` will automatically unsubscribe the old one and resubscribe to the new one.
+<p>
+  <Badge text="v2.3.4"/> From <code>v2.3.4</code>. When the Observable changes <code>useSubscription</code> will automatically unsubscribe the old one and resubscribe to the new one.
+</p>
 
-<Badge text="v3.0.0"/> From <code>v3.0.0</code>. `useSubscription` is concurrent mode safe. It will prevent observer callbacks being called from stale Observable.
+<p>
+  <Badge text="v3.0.0"/> From <code>v3.0.0</code>. <code>useSubscription</code> is concurrent mode safe. It will prevent observer callbacks being called from stale Observable.
+</p>
 
 To make it concurrent mode compatible, the subscription happens after the render is committed to the screen. Even if the Observable emits synchronous values they still will arrive after the first rendering.
 
@@ -236,7 +246,7 @@ Name | Type | Description
 
 **Returns:**
 
-`React.MutableRefObject<Subscription | undefined>` A ref object with the RxJS Subscription. It is `undefined` on first rendering.
+`React.MutableRefObject<Subscription | undefined>` A ref object with the RxJS Subscription. the ref `current` is `undefined` on first rendering.
 
 **Examples:**
 
@@ -447,31 +457,34 @@ dispatch({ type: 'DECREMENT', payload: 2 })
 useObservableGetState<TState>(
   state$: Observable<TState>,
   initialState: TState | (() => TState)
-): TState | undefined
+): TState
+useObservableGetState<TState, A extends keyof TState>(
+  state$: Observable<TState>,
+  initialState: TState[A] | (() => TState[A]),
+  pA: A
+): TState[A]
 useObservableGetState<
   TState,
   A extends keyof TState,
+  B extends keyof TState[A]
 >(
   state$: Observable<TState>,
-  initialState: TState | (() => TState),
+  initialState: TState[A][B] | (() => TState[A][B]),
   pA: A,
-): TState[A] | undefined
-useObservableGetState<
-  TState,
-  A extends keyof TState,
-  B extends keyof TState[A],
->(
-  state$: Observable<TState>,
-  initialState: TState | (() => TState),
-  pA: A,
-  pB: B,
-): TState[A][B] | undefined
+  pB: B
+): TState[A][B]
 ...
 ```
 
-<Badge text="v2.3.0"/> Added since <code>v2.3.0</code>. Get value at path of state from an Observable. Inspired by lodash `get`.
+Inspired by lodash `get`.
 
-<Badge text="v3.0.0"/> From <code>v3.0.0</code>. An initial state must be provided.
+<p>
+  <Badge text="v2.3.0"/> Added since <code>v2.3.0</code>. Get value at path of state from an Observable.
+</p>
+
+<p>
+  <Badge text="v3.0.0"/> From <code>v3.0.0</code>. An initial state must be provided.
+</p>
 
 Only changes of the resulted value will trigger a rerendering.
 
@@ -488,7 +501,7 @@ Unreachable path will throw errors.
 Name | Type | Description
 ------ | ------ | ------
 `state$` | `Observable<TState>` | An Observable.
-`initialState` | `TState | (() => TState)` | Initial state. Can be the state value or a function that returns the state.
+`initialState` | `TState[...] | (() => TState[...])` | Initial value. Can be the value or a function that returns the value.
 `pA` | `keyof TState` | Key of `TState`.
 `pB` | `keyof TState[A]` | Key of `TState[A]`.
 `pC` | `keyof TState[A][B]` | Key of `TState[A][B]`.
@@ -496,7 +509,7 @@ Name | Type | Description
 
 **Returns:**
 
-`TState[A][B]... | undefined` Value at path of `TState`.
+`TState[...]` Initial value or the value at path of `TState`.
 
 **Examples:**
 
@@ -511,19 +524,24 @@ const text = useObservableGetState(state$, 'default', 'a', 'b', 'c')
 ## useObservablePickState
 
 ```typescript
-useObservablePickState<
-  TState,
-  TKeys extends Array<keyof TState>
->(
+useObservablePickState<TState, TKeys extends keyof TState>(
   state$: Observable<TState>,
-  initialState: TState | (() => TState),
-  ...keys: TKeys
-): { [K in TKeys[number]]: TState[K] } | undefined
+  initialState:
+    | { [K in TKeys]: TState[K] }
+    | (() => { [K in TKeys]: TState[K] }),
+  ...keys: TKeys[]
+): { [K in TKeys]: TState[K] }
 ```
 
-<Badge text="v2.3.2"/> Added since <code>v2.3.2</code>. Creates an object composed of the picked state properties. Inspired by lodash `pick`.
+Inspired by lodash `pick`.
 
-<Badge text="v3.0.0"/> From <code>v3.0.0</code>. An initial state must be provided.
+<p>
+  <Badge text="v2.3.2"/> Added since <code>v2.3.2</code>. Creates an object composed of the picked state properties.
+</p>
+
+<p>
+  <Badge text="v3.0.0"/> From <code>v3.0.0</code>. An initial state must be provided.
+</p>
 
 Changes of any of these properties will trigger a rerendering.
 
@@ -543,12 +561,12 @@ Unreachable path will throw errors.
 Name | Type | Description
 ------ | ------ | ------
 `state$` | `Observable<TState>` | An Observable.
-`initialState` | `TState | (() => TState)` | Initial state. Can be the state value or a function that returns the state.
+`initialState` | `{ [K in TKeys]: TState[K] } | (() => { [K in TKeys]: TState[K] })` | Initial value. Can be the value or a function that returns the value.
 `...path` | `Array<keyof TState>` | Keys of `TState`.
 
 **Returns:**
 
-`{ [K in TKeys[number]]: TState[K] } | undefined` Partial `TState`.
+`{ [K in TKeys]: TState[K] }` Initial value or partial `TState`.
 
 **Examples:**
 
