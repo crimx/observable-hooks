@@ -1,3 +1,5 @@
+# Gotchas
+
 ## Epic Closure
 
 React Function Components can be called many times untill they are unmounted.

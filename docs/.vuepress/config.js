@@ -62,6 +62,14 @@ module.exports = {
                 '/guide/render-as-you-fetch-suspense',
                 '/guide/react-independent-epics'
               ]
+            },
+            {
+              title: 'Miscellaneous',
+              collapsable: false,
+              children: [
+                '/guide/gotchas',
+                '/guide/migration'
+              ]
             }
           ]
         },
