@@ -14,10 +14,10 @@
 Concurrent mode safe React hooks for RxJS Observables. Simple, flexible, testable and performant.
 
 - Seamless integration of React and RxJS.
-  - Props and states to Observables.
+  - **Concurrent mode safe**.
+  - Props, state and context to Observables.
   - Observables to states and props events.
   - Conditional rendering with stream of React Components.
-  - **Concurrent mode safe**.
   - Render-as-You-Fetch with React Suspense.
   - No `tap` hack needed. With Epic-like signature Observable operation is pure and testable.
 - Full-powered RxJS. Do whatever you want with Observables. No limitation nor compromise.
