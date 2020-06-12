@@ -51,9 +51,9 @@ function App(props) {
 
 ## Subscription Timing
 
-To make observable-hooks compatible with React concurrent mode, the Observable subscription, which is side-effect for react, is established after the render is committed to the screen. It is unpredictable when the component will finish rendering, so there is a time gap. All the hooks in observable-hooks will keep you safe from tearing, but if the not-yet-subscribe observable is hot and emit values during this period, these values are lost.
+To make observable-hooks compatible with React concurrent mode, the Observable subscription, which is side-effect for react, is established after the render is committed to the screen. It is unpredictable when will the component finish rendering, so there is a time gap. The observable-hooks will keep you safe from tearing, but if the not-yet-subscribed observable is hot and emits values during the time gap, those values will be lost.
 
-These should be rare case though. There should always be better ways to structure the code for this type of scenario.
+This should be rare case though. There should always be better ways to structure the code for this type of scenario.
 
 1. If the hot observable is from DOM events:
    1. For events that are triggered by user interaction like `click` and `keypress` it is safe to assume the subscription is established.
