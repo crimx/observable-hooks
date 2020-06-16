@@ -511,7 +511,7 @@ Unreachable path will throw errors.
 Name | Type | Description
 ------ | ------ | ------
 `state$` | `Observable<TState>` | An Observable.
-`initialState` | `TState[...] | (() => TState[...])` | Initial value. Can be the value or a function that returns the value.
+`initialState` | `undefined | null | TState[...] | (() => TState[...])` | Initial value. Can be the value or a function that returns the value.
 `pA` | `keyof TState` | Key of `TState`.
 `pB` | `keyof TState[A]` | Key of `TState[A]`.
 `pC` | `keyof TState[A][B]` | Key of `TState[A][B]`.
@@ -534,6 +534,15 @@ const text = useObservableGetState(state$, 'default', 'a', 'b', 'c')
 ## useObservablePickState
 
 ```typescript
+useObservablePickState<
+  TState,
+  TKeys extends keyof TState,
+  TInitial extends null | undefined | void
+>(
+  state$: Observable<TState>,
+  initialState: TInitial,
+  ...keys: TKeys[]
+): { [K in TKeys]: TState[K] } | TInitial
 useObservablePickState<TState, TKeys extends keyof TState>(
   state$: Observable<TState>,
   initialState:
@@ -571,7 +580,7 @@ Unreachable path will throw errors.
 Name | Type | Description
 ------ | ------ | ------
 `state$` | `Observable<TState>` | An Observable.
-`initialState` | `{ [K in TKeys]: TState[K] } | (() => { [K in TKeys]: TState[K] })` | Initial value. Can be the value or a function that returns the value.
+`initialState` | `undefined | null | { [K in TKeys]: TState[K] } | (() => { [K in TKeys]: TState[K] })` | Initial value. Can be the value or a function that returns the value.
 `...path` | `Array<keyof TState>` | Keys of `TState`.
 
 **Returns:**

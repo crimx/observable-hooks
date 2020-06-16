@@ -12,13 +12,22 @@ import { useObservable } from './use-observable'
  * @param state$ Output state.
  * @param keys keys of state
  */
+export function useObservablePickState<
+  TState,
+  TKeys extends keyof TState,
+  TInitial extends null | undefined | void
+>(
+  state$: Observable<TState>,
+  initialState: TInitial,
+  ...keys: TKeys[]
+): { [K in TKeys]: TState[K] } | TInitial
 export function useObservablePickState<TState, TKeys extends keyof TState>(
   state$: Observable<TState>,
   initialState:
-    | (TKeys extends never ? TState : { [K in TKeys]: TState[K] })
-    | (() => TKeys extends never ? TState : { [K in TKeys]: TState[K] }),
+    | { [K in TKeys]: TState[K] }
+    | (() => { [K in TKeys]: TState[K] }),
   ...keys: TKeys[]
-): TKeys extends never ? TState : { [K in TKeys]: TState[K] }
+): { [K in TKeys]: TState[K] }
 export function useObservablePickState<TState, TKeys extends keyof TState>(
   state$: Observable<TState>,
   initialState:

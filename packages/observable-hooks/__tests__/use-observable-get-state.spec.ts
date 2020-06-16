@@ -48,4 +48,18 @@ describe('useObservableGetState', () => {
     act(() => outer$$.next({ a: { b: { c: 'b' } } }))
     expect(result.current).toBe('b')
   })
+
+  it('should allow undefined as initial value', () => {
+    const spy = jest.fn()
+    const outer$ = of({ a: { b: 1 } }, { a: { b: 2 } }, { a: { b: 3 } })
+    const { result } = renderHook(() => {
+      const state = useObservableGetState(outer$, undefined, 'a', 'b')
+      spy(state)
+      return state
+    })
+    expect(result.current).toEqual(3)
+    expect(spy).toHaveBeenCalledTimes(2)
+    expect(spy).toHaveBeenNthCalledWith(1, undefined)
+    expect(spy).toHaveBeenNthCalledWith(2, 3)
+  })
 })
