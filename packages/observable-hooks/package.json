@@ -1,6 +1,6 @@
 {
   "name": "observable-hooks",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.1",
   "description": "React hooks for RxJS Observables. Simple, flexible, testable and performant.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-alpha.1](https://github.com/crimx/observable-hooks/compare/v3.0.0-alpha.0...v3.0.0-alpha.1) (2020-06-16)
+
+
+### Performance Improvements
+
+* **observable-hooks:** remove rest parameters ([6a1c28f](https://github.com/crimx/observable-hooks/commit/6a1c28f0e7f09bcc9ed9fdc2377745f43898a92b))
+
+
+
+
+
 # [3.0.0-alpha.0](https://github.com/crimx/observable-hooks/compare/v2.3.5...v3.0.0-alpha.0) (2020-06-10)
 
 
