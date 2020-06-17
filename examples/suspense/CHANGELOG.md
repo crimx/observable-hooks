@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/crimx/observable-hooks/compare/v3.0.0-alpha.1...v3.0.0) (2020-06-17)
+
+**Note:** Version bump only for package suspense
+
+
+
+
+
 # [3.0.0-alpha.1](https://github.com/crimx/observable-hooks/compare/v3.0.0-alpha.0...v3.0.0-alpha.1) (2020-06-16)
 
 **Note:** Version bump only for package suspense
