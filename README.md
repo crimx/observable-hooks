@@ -26,18 +26,16 @@ Concurrent mode safe React hooks for RxJS Observables. Simple, flexible, testabl
 
 ## Installation
 
-The concurrent mode safe version is in alpha. [Docs][docs] is also up-to-date. Looking forward to your feedback!
-
 yarn
 
 ```bash
-yarn add observable-hooks@alpha
+yarn add observable-hooks
 ```
 
 npm
 
 ```bash
-npm install --save observable-hooks@alpha
+npm install --save observable-hooks
 ```
 
 ## Why?

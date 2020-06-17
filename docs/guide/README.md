@@ -2,18 +2,16 @@
 
 `observable-hooks` is meant to work with `rxjs` and `react`.
 
-A concurrent mode safe version is in alpha. Docs is also up-to-date. Looking forward to your feedback!
-
 yarn
 
 ```bash
-yarn add observable-hooks@alpha
+yarn add observable-hooks
 ```
 
 npm
 
 ```bash
-npm install --save observable-hooks@alpha
+npm install --save observable-hooks
 ```
 
 ## Usage
