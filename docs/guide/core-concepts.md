@@ -28,7 +28,7 @@ These two worlds are just conceptual partition. The Observable World is where th
 
 ## Observable to Normal
 
-Almost every RxJS-React binding libraries provide ways to connect observable values to React state.
+Almost every RxJS-React binding library provides ways to connect observable values to React state.
 
 ### Observable to State
 
@@ -145,7 +145,7 @@ In observable-hooks [`useObservableState`][useObservableState] can also be used 
 
 ### Hook dependencies
 
-This is a little different in observable-hooks which does not offer a "Normal-Observable-Normal" way with hook dependencies. If you read back on what we have just discussed, you should notice that we always end up in the Normal World. But observable-hooks truly shines with its ability to end in the Observable World. Keep reading and I will show you what it means.
+This is a little different in observable-hooks which does not provide a "Normal-Observable-Normal" way with hook dependencies. If you read back on what we have just discussed, you should notice that we always end up in the Normal World. But observable-hooks truly shines with its ability to end in the Observable World. Keep reading and I will show you what it means.
 
 ## Normal to Observable
 
