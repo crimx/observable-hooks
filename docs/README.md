@@ -4,7 +4,7 @@ heroImage: /logo.png
 heroText:
 tagline: React hooks for RxJS Observables.
 actionText: Get Started →
-actionLink: /guide/core-concepts.html
+actionLink: /guide/
 features:
 - title: 💫Seamless Integration
   details: Concurrent mode safe. Props, state, context and Observables can be nicely converted to each other with pure function. No `tap` hack needed. Supports Render-as-You-Fetch pattern with React Suspense.

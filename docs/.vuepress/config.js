@@ -19,7 +19,7 @@ module.exports = {
     locales: {
       '/': {
         nav: [
-          { text: 'Guide', link: '/guide/core-concepts' },
+          { text: 'Guide', link: '/guide/' },
           { text: 'API', link: '/api/' },
           { text: 'Examples', link: '/examples/' }
         ],
@@ -51,7 +51,7 @@ module.exports = {
               title: 'Guide', // required
               collapsable: false, // optional, defaults to true
               sidebarDepth: 2, // optional, defaults to 1
-              children: ['/guide/core-concepts', '/guide/motivation', '/guide/']
+              children: ['/guide/', '/guide/core-concepts', '/guide/motivation']
             },
             {
               title: 'Advanced', // required
