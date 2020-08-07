@@ -32,7 +32,7 @@ Almost every RxJS-React binding library provides ways to connect observable valu
 
 ### Observable to State
 
-In observable-hooks we have [`useObservableState`][useObservableState].
+In observable-hooks we have [`useObservableState`][useObservableState] and [`useObservableEagerState`][useObservableEagerState].
 
 ```
 
@@ -274,12 +274,13 @@ There are also sugars like [`useObservableGetState`][useObservableGetState] and 
 The epic-like signature makes the observable transformation logic highly reusable. In fact observable-hooks offers some [helpers][helpers] for common cases to reduce garbage collection burden.
 
 [useobservable]: ../api/README.md#useobservable
-[useLayoutObservable]: ../api/README.md#useLayoutObservable
+[useLayoutObservable]: ../api/README.md#uselayoutobservable
 [useObservableCallback]: ../api/README.md#useobservablecallback
 [useSubscription]: ../api/README.md#usesubscription
 [useLayoutSubscription]: ../api/README.md#uselayoutsubscription
 [useObservableState]: ../api/README.md#useobservablestate
-[useObservableGetState]: ../api/README.md#useobservableGetstate
-[useObservablePickState]: ../api/README.md#useobservablePickstate
+[useObservableEagerState]: ../api/README.md#useobservableeagerstate
+[useObservableGetState]: ../api/README.md#useobservablegetstate
+[useObservablePickState]: ../api/README.md#useobservablepickstate
 
 [helpers]: ../api/helpers.md

@@ -8,7 +8,9 @@ A concurrent mode safe way to use RxJS with React Suspense. See [Render-as-You-F
 Class ObservableResource<TInput, TOutput>
 ```
 
-<Badge text="v2.2.0"/> Rewires Observable to Relay-like Suspense resource.
+Rewires Observable to Relay-like Suspense resource.
+
+<Badge text="v2.2.0"/> Added since v2.2.0.
 
 **Type parameters:**
 
@@ -53,7 +55,9 @@ useObservableSuspense<TInput, TOutput>(
 ): TOutput
 ```
 
-<Badge text="v2.2.0"/> Consume the Observable resource.
+Consume the Observable resource.
+
+<Badge text="v2.2.0"/> Added since v2.2.0.
 
 Unlike Promise, Observable implements multiple push protocol.
 This hook triggers necessary re-rendering when Suspense should restart.

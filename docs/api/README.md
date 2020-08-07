@@ -461,6 +461,47 @@ dispatch({ type: 'INCREMENT' })
 dispatch({ type: 'DECREMENT', payload: 2 })
 ```
 
+## useObservableEagerState
+
+```typescript
+useObservableEagerState<TState>(
+  state$: Observable<TState>
+): TState
+```
+
+Optimized for getting values from observables which emit synchronous values on subscription (e.g. `BehaviorSubject`).
+
+<Badge text="v3.1.0"/> Added since v3.1.0.
+
+This hook will subscribe to the observable at least twice. The first time is for getting synchronous value to prevent extra initial re-rendering. In concurrent this may happen more than one time.
+
+::: warning
+If the observable is cold and with side effects they will be performed at least twice! It is only safe if the observable is hot or pure.
+:::
+
+**Type parameters:**
+
+- `TState` Output state.
+
+**Parameters:**
+
+Name | Type | Description
+------ | ------ | ------
+`state$` | `Observable<TState>` | An Observable.
+
+**Returns:**
+
+`TState` state value.
+
+**Examples:**
+
+```typescript
+const state$ = BehaviorSubject('A')
+
+// 'A'
+const text = useObservableEagerState(state$)
+```
+
 ## useObservableGetState
 
 ```typescript
