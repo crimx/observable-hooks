@@ -348,6 +348,10 @@ Due to the design of RxJS, once an error occurs in an observable, the observable
 :::
 
 ::: tip
+Want to skip initial re-rendering if the observable emits synchronous values? Check out [`useObservableEagerState`](#useobservableeagerstate).
+:::
+
+::: tip
 In TypeScript if you want to invoke the callback with no argument, use `void` instead of `undefined` type.
 :::
 
