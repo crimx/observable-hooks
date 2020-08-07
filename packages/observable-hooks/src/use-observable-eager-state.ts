@@ -3,8 +3,8 @@ import { Observable } from 'rxjs'
 import { useForceUpdate } from './helpers'
 
 /**
- * Optimized for getting values from observables which
- * emit synchronous values on subscription.
+ * Optimized for safely getting synchronous values from hot or pure observables
+ * without triggering extra initial re-rendering.
  *
  * ⚠ If the observable is cold and with side effects
  * they will be performed at least twice!

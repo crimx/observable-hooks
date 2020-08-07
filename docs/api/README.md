@@ -469,7 +469,7 @@ useObservableEagerState<TState>(
 ): TState
 ```
 
-Optimized for getting values from observables which emit synchronous values on subscription (e.g. `BehaviorSubject`).
+Optimized for safely getting synchronous values from hot or pure observables (e.g. `BehaviorSubject`) without triggering extra initial re-rendering.
 
 <Badge text="v3.1.0"/> Added since v3.1.0.
 
