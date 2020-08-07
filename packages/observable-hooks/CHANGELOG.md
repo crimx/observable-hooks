@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.1.0](https://github.com/crimx/observable-hooks/compare/v3.0.0...v3.1.0) (2020-08-07)
+
+
+### Features
+
+* add useObservableEagerState ([5152a15](https://github.com/crimx/observable-hooks/commit/5152a1546c0bba18f4ec2df30266f1cf037a0b8a))
+
+
+
+
+
 # [3.0.0](https://github.com/crimx/observable-hooks/compare/v3.0.0-alpha.1...v3.0.0) (2020-06-17)
 
 **Note:** Version bump only for package observable-hooks
