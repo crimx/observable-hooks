@@ -1,5 +1,5 @@
 import React, { FC, useContext, useState, useEffect } from 'react'
-import { useObservable, useObservableState } from 'observable-hooks'
+import { useObservable, useObservableEagerState } from 'observable-hooks'
 import { scan, take } from 'rxjs/operators'
 import { NormalValueContext } from './contexts'
 
@@ -21,7 +21,7 @@ export const NormalValueExample: FC = ({ children }) => {
 }
 
 export const NormalValueDescendant = () => {
-  const numList = useObservableState(
+  const numList = useObservableEagerState(
     useObservable(
       inputs$ =>
         inputs$.pipe(
@@ -29,8 +29,7 @@ export const NormalValueDescendant = () => {
           take(10)
         ),
       [useContext(NormalValueContext)]
-    ),
-    []
+    )
   )
 
   return (
