@@ -232,7 +232,7 @@ Due to the design of RxJS, once an error occurs in an observable, the observable
 
 - Prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
 - You can also make the observable as state and replace it on error. It will automatically switch to the new one.
-- From `v3.0.0`, Observable error can be caught by React error boudary where you have replace a new Observable.
+- From `v3.0.0`, Observable error can be caught by React error boudary in which you can perform actions to replace the dead Observable.
 :::
 
 **Type parameters:**
@@ -344,7 +344,7 @@ Due to the design of RxJS, once an error occurs in an observable, the observable
 
 - Prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
 - You can also make the observable as state and replace it on error. It will automatically switch to the new one.
-- From `v3.0.0`, Observable error can be caught by React error boudary where you have replace a new Observable.
+- From `v3.0.0`, Observable error can be caught by React error boudary in which you can perform actions to replace the dead Observable.
 :::
 
 ::: tip
