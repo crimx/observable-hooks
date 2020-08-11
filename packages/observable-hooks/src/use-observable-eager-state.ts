@@ -11,7 +11,7 @@ import { useForceUpdate } from './helpers'
  *
  * By default this hook will subscribe to the observable at least twice.
  * The first time is for getting synchronous value to prevent extra initial re-rendering.
- * In concurrent this may happen more than one time.
+ * In concurrent mode this may happen more than one time.
  *
  * @template TState State.
  *

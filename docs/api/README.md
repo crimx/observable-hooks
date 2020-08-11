@@ -477,7 +477,7 @@ Optimized for safely getting synchronous values from hot or pure observables (e.
 
 <Badge text="v3.1.0"/> Added since v3.1.0.
 
-This hook will subscribe to the observable at least twice. The first time is for getting synchronous value to prevent extra initial re-rendering. In concurrent this may happen more than one time.
+This hook will subscribe to the observable at least twice. The first time is for getting synchronous value to prevent extra initial re-rendering. In concurrent mode this may happen more than one time.
 
 ::: warning
 If the observable is cold and with side effects they will be performed at least twice! It is only safe if the observable is hot or pure.
@@ -500,10 +500,13 @@ Name | Type | Description
 **Examples:**
 
 ```typescript
-const state$ = BehaviorSubject('A')
-
+const text1$ = new BehaviorSubject('A')
 // 'A'
-const text = useObservableEagerState(state$)
+const text1 = useObservableEagerState(text1$)
+
+const text2$ = of('A', 'B', 'C')
+// 'C'
+const text2 = useObservableEagerState(text2$)
 ```
 
 ## useObservableGetState
