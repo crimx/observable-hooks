@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs'
-import { useObservableInternal } from './use-observable-internal'
+import { useObservableInternal } from './internal/use-observable-internal'
 import { useEffect } from 'react'
 
 /**

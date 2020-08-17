@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs'
-import { useForceUpdate } from './helpers'
+import { useForceUpdate } from '../helpers'
 import { useEffect, useRef } from 'react'
 
 /**

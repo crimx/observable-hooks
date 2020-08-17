@@ -1,5 +1,5 @@
 import { Observable, BehaviorSubject } from 'rxjs'
-import { useRefFn } from './helpers'
+import { useRefFn } from '../helpers'
 import { useEffect, useRef } from 'react'
 
 /**

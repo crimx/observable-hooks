@@ -1,6 +1,6 @@
 import { Observable, Subscription } from 'rxjs'
 import { useEffect } from 'react'
-import { useSubscriptionInternal } from './use-subscription-internal'
+import { useSubscriptionInternal } from './internal/use-subscription-internal'
 
 /**
  * Accepts an Observable and optional `next`, `error`, `complete` functions.

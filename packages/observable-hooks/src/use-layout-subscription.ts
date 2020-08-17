@@ -1,6 +1,6 @@
 import { Observable, Subscription } from 'rxjs'
 import { useIsomorphicLayoutEffect } from './helpers'
-import { useSubscriptionInternal } from './use-subscription-internal'
+import { useSubscriptionInternal } from './internal/use-subscription-internal'
 
 // I know this is copy-paste from './useSubscription.ts'.
 // Instead of leaving the performance penalty to users,

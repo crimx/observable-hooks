@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs'
 import { useIsomorphicLayoutEffect } from './helpers'
-import { useObservableInternal } from './use-observable-internal'
+import { useObservableInternal } from './internal/use-observable-internal'
 
 /**
  * Same as [[useObservable]] excepts using `useLayoutEffect`.
