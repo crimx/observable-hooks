@@ -1,6 +1,6 @@
 import { Observable, Subscription } from 'rxjs'
-import { useForceUpdate } from './helpers'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
+import { useSubscriptionInternal } from './use-subscription-internal'
 
 /**
  * Accepts an Observable and optional `next`, `error`, `complete` functions.
@@ -52,64 +52,5 @@ export function useSubscription<TInput>(
     (() => void) | null | undefined
   ]
 ): React.MutableRefObject<Subscription | undefined> {
-  const argsRef = useRef(args)
-  argsRef.current = args
-
-  const forceUpdate = useForceUpdate()
-
-  const subscriptionRef = useRef<Subscription>()
-  const errorRef = useRef<Error | null>()
-
-  useEffect(() => {
-    errorRef.current = null
-
-    // keep in closure for checking staleness
-    const input$ = argsRef.current[0]
-
-    const subscription = input$.subscribe({
-      next: value => {
-        if (input$ !== argsRef.current[0]) {
-          // stale observable
-          return
-        }
-        if (argsRef.current[1]) {
-          return argsRef.current[1](value)
-        }
-      },
-      error: error => {
-        if (input$ !== argsRef.current[0]) {
-          // stale observable
-          return
-        }
-        if (argsRef.current[2]) {
-          errorRef.current = null
-          return argsRef.current[2](error)
-        }
-        errorRef.current = error
-        forceUpdate()
-      },
-      complete: () => {
-        if (input$ !== argsRef.current[0]) {
-          // stale observable
-          return
-        }
-        if (argsRef.current[3]) {
-          return argsRef.current[3]()
-        }
-      }
-    })
-
-    subscriptionRef.current = subscription
-
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [args[0]])
-
-  if (errorRef.current) {
-    // Let error boundary catch the error
-    throw errorRef.current
-  }
-
-  return subscriptionRef
+  return useSubscriptionInternal(useEffect, args)
 }
