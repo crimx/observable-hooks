@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react'
-import { Observable, BehaviorSubject } from 'rxjs'
-import { useRefFn } from './helpers'
+import { Observable } from 'rxjs'
+import { useObservableInternal } from './use-observable-internal'
+import { useEffect } from 'react'
 
 /**
  * Accepts a function that returns an Observable.
@@ -48,21 +48,5 @@ export function useObservable<TOutupt, TInputs extends Readonly<any[]>>(
     | ((inputs$: Observable<TInputs>) => Observable<TOutupt>),
   inputs?: TInputs
 ): Observable<TOutupt> {
-  if (!inputs) {
-    return useRefFn(init as () => Observable<TOutupt>).current
-  }
-
-  const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))
-  const source$Ref = useRefFn(() => init(inputs$Ref.current))
-  const firstRef = useRef(true)
-  useEffect(() => {
-    if (firstRef.current) {
-      // skip first round
-      firstRef.current = false
-      return
-    }
-    inputs$Ref.current.next(inputs)
-  }, inputs)
-
-  return source$Ref.current
+  return useObservableInternal(useEffect, init, inputs)
 }

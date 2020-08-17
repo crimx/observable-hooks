@@ -1,6 +1,6 @@
-import { useRef } from 'react'
-import { Observable, BehaviorSubject } from 'rxjs'
-import { useRefFn, useIsomorphicLayoutEffect } from './helpers'
+import { Observable } from 'rxjs'
+import { useIsomorphicLayoutEffect } from './helpers'
+import { useObservableInternal } from './use-observable-internal'
 
 /**
  * Same as [[useObservable]] excepts using `useLayoutEffect`.
@@ -50,21 +50,5 @@ export function useLayoutObservable<TOutupt, TInputs extends Readonly<any[]>>(
     | ((inputs$: Observable<TInputs>) => Observable<TOutupt>),
   inputs?: TInputs
 ): Observable<TOutupt> {
-  if (!inputs) {
-    return useRefFn(init as () => Observable<TOutupt>).current
-  }
-
-  const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))
-  const source$Ref = useRefFn(() => init(inputs$Ref.current))
-  const firstRef = useRef(true)
-  useIsomorphicLayoutEffect(() => {
-    if (firstRef.current) {
-      // skip first round
-      firstRef.current = false
-      return
-    }
-    inputs$Ref.current.next(inputs)
-  }, inputs)
-
-  return source$Ref.current
+  return useObservableInternal(useIsomorphicLayoutEffect, init, inputs)
 }
