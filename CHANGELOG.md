@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/crimx/observable-hooks/compare/v3.1.0...v3.1.1) (2020-08-22)
+
+
+### Bug Fixes
+
+* truly fix [#17](https://github.com/crimx/observable-hooks/issues/17) ([56a83c5](https://github.com/crimx/observable-hooks/commit/56a83c5d26ad7e459b8ac2f90ff76424b5785659))
+
+
+
+
+
 # [3.1.0](https://github.com/crimx/observable-hooks/compare/v3.0.0...v3.1.0) (2020-08-07)
 
 
