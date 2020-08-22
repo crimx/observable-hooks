@@ -1,4 +1,4 @@
-import { useDebugValue, useState, useRef } from 'react'
+import { useDebugValue, useState } from 'react'
 import { useSubscription } from './use-subscription'
 import { useForceUpdate } from './helpers'
 import { ObservableResource } from './observable-resource'
@@ -16,10 +16,7 @@ export function useObservableSuspense<TInput, TOutput extends TInput = TInput>(
 ): TOutput {
   const resourceValue = resource.read()
   const forceUpdate = useForceUpdate()
-  const [state, _setState] = useState<TOutput>(resourceValue)
-  // Compatible with a React DevTool bug
-  // always use the initial setState
-  const setState = useRef(_setState).current
+  const [state, setState] = useState<TOutput>(resourceValue)
 
   useSubscription(resource.shouldUpdate$$, valueRef => {
     // ObservableResource supports Stale-While-Revalidate pattern.

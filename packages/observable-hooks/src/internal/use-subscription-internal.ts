@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs'
-import { useForceUpdate } from '../helpers'
+import { useForceUpdate, useIsomorphicLayoutEffect } from '../helpers'
 import { useEffect, useRef } from 'react'
 
 /**
@@ -19,12 +19,16 @@ export function useSubscriptionInternal<TInput>(
   ]
 ): React.MutableRefObject<Subscription | undefined> {
   const argsRef = useRef(args)
-  argsRef.current = args
 
   const forceUpdate = useForceUpdate()
 
   const subscriptionRef = useRef<Subscription>()
   const errorRef = useRef<Error | null>()
+
+  // Update ref synchronously after render being committed
+  useIsomorphicLayoutEffect(() => {
+    argsRef.current = args
+  })
 
   useCustomEffect(() => {
     errorRef.current = null
