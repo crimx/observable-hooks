@@ -18,14 +18,14 @@ export function useSubscriptionInternal<TInput>(
     (() => void) | null | undefined // complete
   ]
 ): React.MutableRefObject<Subscription | undefined> {
-  const argsRef = useRef(args)
-
   const forceUpdate = useForceUpdate()
 
-  const subscriptionRef = useRef<Subscription>()
+  const argsRef = useRef(args)
   const errorRef = useRef<Error | null>()
+  const subscriptionRef = useRef<Subscription>()
 
-  // Update ref synchronously after render being committed
+  // Update the latest observable and callbacks
+  // synchronously after render being committed
   useIsomorphicLayoutEffect(() => {
     argsRef.current = args
   })
