@@ -1,6 +1,6 @@
 import { useState, useDebugValue, useEffect, useRef } from 'react'
 import { Observable } from 'rxjs'
-import { useForceUpdate } from './helpers'
+import { useForceUpdate, useIsomorphicLayoutEffect } from './helpers'
 
 /**
  * Optimized for safely getting synchronous values from hot or pure observables
@@ -22,12 +22,9 @@ export function useObservableEagerState<TState>(
 ): TState {
   const forceUpdate = useForceUpdate()
 
-  const errorRef = useRef<Error | null>()
-
-  const isAsyncEmissionRef = useRef(false)
-
   const state$Ref = useRef(state$)
-  state$Ref.current = state$
+  const errorRef = useRef<Error | null>()
+  const isAsyncEmissionRef = useRef(false)
 
   const [state, setState] = useState<TState>(() => {
     let state: TState
@@ -42,6 +39,12 @@ export function useObservableEagerState<TState>(
       })
       .unsubscribe()
     return state!
+  })
+
+  // update the latest observable
+  // synchronously after render being committed
+  useIsomorphicLayoutEffect(() => {
+    state$Ref.current = state$
   })
 
   useEffect(() => {
