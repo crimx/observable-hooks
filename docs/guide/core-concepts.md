@@ -217,10 +217,9 @@ You can also use [`useObservableCallback`][useObservableCallback] to create obse
         |          Normal World          |         
         +--------------------------------+         
         |                                |         
-        | const App(props) {             |         
-        |   const [state] = useState()   |         
-        |   const ctx = useContext(Ctx)  |         
-        | }                              |         
+        |   <button onClick={onInput}>   |         
+        |    Click                       |         
+        |   </button>                    |         
         |                                |         
         +--------------------------------+         
 
