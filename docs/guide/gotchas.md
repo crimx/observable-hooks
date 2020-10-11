@@ -4,7 +4,7 @@
 
 React Function Components can be called many times untill they are unmounted.
 
-In observable-hooks, many hooks like [`useObservable`](#useobservable), [`useObservableCallback`](#useobservablecallback) or [`useObservableState`](#useobservablestate) accept an epic-like function which will be called only once and always returns the same observable, until the component unmounts.
+In observable-hooks, many hooks like [`useObservable`](#useobservable), [`useObservableCallback`](#useobservablecallback) or [`useObservableState`](#useobservablestate) accept an epic-like function which will be called only once(could be more in concurrent mode) and always returns the same observable, until the component unmounts.
 
 Since the function is called only once it is not safe to directly reference other variables in closure.
 
@@ -59,7 +59,7 @@ This should be rare case though. There should always be better ways to structure
    1. For events that are triggered by user interaction like `click` and `keypress` it is safe to assume the subscription is established.
    2. If you are not sure or are having issues, use [`useLayoutSubscription`][useLayoutSubscription] which establishes subscription synchronously after the render phase and before browser paints.
 2. If the observable is from other JavaScript module which you have no control of, it will be same issue even if subscription happens immediately on rendering. It is not safe to predict when the component will start rendering. In this case you should have a mechanism to cache the value, like `BehaviorSubject`. (Also see [`useObservableEagerState`][useObservableEagerState] which is optimized for observables with synchronous values.)
-3. If you have control of the emission timing, delay it with `useEffect` plus one event loop. React may not follow the exact order when invoking `useEffect` callback, an extra event loop will make sure emission happens after subscription.
+3. If you have control of the emission timing, delay it with `useEffect` plus one event loop. React may not follow the exact order when invoking `useEffect` callbacks. An extra event loop will make sure the emission happens after subscription.
    ```js
    useEffect(
      () => {
