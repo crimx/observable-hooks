@@ -26,9 +26,10 @@ describe('useObservableEagerState', () => {
       spy(state)
       return state
     })
-    expect(result.current).toBe(undefined)
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(undefined)
+    expect(result.error).toBeInstanceOf(Error)
+    expect(result.error.message).toBe(
+      'Observable did not synchronously emit a value.'
+    )
   })
 
   it('should update value when the Observable emits value', () => {
