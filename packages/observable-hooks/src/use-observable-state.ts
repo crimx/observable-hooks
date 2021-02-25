@@ -6,7 +6,7 @@ import { useRefFn, getEmptySubject } from './helpers'
 /**
  * A sugar hook for getting values from an Observable.
  *
- * Is can be used in two ways:
+ * It can be used in two ways:
  *
  * 1. Offer an Observable and an optional initial state.
  *    ```js
