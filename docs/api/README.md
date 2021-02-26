@@ -225,6 +225,10 @@ Because:
   <Badge text="v3.0.0"/> From <code>v3.0.0</code>. <code>useSubscription</code> is concurrent mode safe. It will prevent observer callbacks being called from stale Observable.
 </p>
 
+<p>
+  <Badge text="v3.2.0"/> From <code>v3.2.0</code>. <code>useSubscription</code> accepts an observer object. Huge thanks to <a href="https://github.com/crimx/observable-hooks/pull/38">OliverJAsh</a>!
+</p>
+
 To make it concurrent mode compatible, the subscription happens after the render is committed to the screen. Even if the Observable emits synchronous values they still will arrive after the first rendering. Check out [`useObservableEagerState`](#useobservableeagerstate) for skipping initial re-rendering with hot or pure observable that emits synchronous values.
 
 ::: tip
