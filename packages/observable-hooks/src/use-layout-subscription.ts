@@ -19,14 +19,20 @@ import { useSubscriptionInternal } from './internal/use-subscription-internal'
  * @template TInput Input value within Observable.
  *
  * @param input$ Input Observable.
- * @param next Notify when a new value is emitted.
- * @param error Notify when a new error is thrown.
- * @param complete Notify when the Observable is complete.
+ * @param observer Observer
  */
 export function useLayoutSubscription<TInput>(
   input$: Observable<TInput>,
   observer?: PartialObserver<TInput>
 ): React.MutableRefObject<Subscription | undefined>
+/**
+ * @template TInput Input value within Observable.
+ *
+ * @param input$ Input Observable.
+ * @param next Notify when a new value is emitted.
+ * @param error Notify when a new error is thrown.
+ * @param complete Notify when the Observable is complete.
+ */
 export function useLayoutSubscription<TInput>(
   input$: Observable<TInput>,
   next?: ((value: TInput) => void) | null | undefined,
