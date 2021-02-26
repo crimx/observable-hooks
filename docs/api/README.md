@@ -177,6 +177,10 @@ onResize(100, 500)
 ```typescript
 useSubscription<TInput>(
   input$: Observable<TInput>,
+  observer?: PartialObserver<TInput>
+): React.MutableRefObject<Subscription | undefined>
+useSubscription<TInput>(
+  input$: Observable<TInput>,
   next?: function | null | undefined,
   error?: function | null | undefined,
   complete?: function | null | undefined
@@ -249,6 +253,23 @@ Name | Type | Description
 `next` | `(value: TInput): void | null | undefined` | Notify when a new value is emitted.
 `error` | `(error: any): void | null | undefined` | Notify when a new error is thrown.
 `complete` | `(): void | null | undefined` | Notify when the Observable is complete.
+
+**Returns:**
+
+`React.MutableRefObject<Subscription | undefined>` A ref object with the RxJS Subscription. the ref `current` is `undefined` on first rendering.
+
+---
+
+**Type parameters:**
+
+- `TInput` Input value within Observable.
+
+**Parameters:**
+
+Name | Type | Description
+------ | ------ | ------
+`input$` | `Observable<TInput> | null | undefined` | Input Observable.
+`observer` | `PartialObserver<TInput>` | Observer
 
 **Returns:**
 
