@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.2.0](https://github.com/crimx/observable-hooks/compare/v3.1.2...v3.2.0) (2021-02-26)
+
+
+### Bug Fixes
+
+* typo in observable-state jsdoc ([#35](https://github.com/crimx/observable-hooks/issues/35)) ([312161a](https://github.com/crimx/observable-hooks/commit/312161ac3eb1f42c5a0ec2fefcfef86b993786ca))
+
+
+### Features
+
+* allow `PartialObserver` ([#38](https://github.com/crimx/observable-hooks/issues/38)) ([6c657ca](https://github.com/crimx/observable-hooks/commit/6c657ca704d86f4741bb8790184be31222fda3c6))
+
+
+
+
+
 ## [3.1.2](https://github.com/crimx/observable-hooks/compare/v3.1.1...v3.1.2) (2020-08-22)
 
 
