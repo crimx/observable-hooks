@@ -26,11 +26,14 @@ export function useObservableEagerState<TState>(
   const errorRef = useRef<Error | null>()
   const isAsyncEmissionRef = useRef(false)
 
+  const didSyncEmit = useRef(false)
+
   const [state, setState] = useState<TState>(() => {
     let state: TState
     state$
       .subscribe({
         next: value => {
+          didSyncEmit.current = true
           state = value
         },
         error: error => {
@@ -87,7 +90,11 @@ export function useObservableEagerState<TState>(
     throw errorRef.current
   }
 
-  useDebugValue(state)
+  if (didSyncEmit.current) {
+    useDebugValue(state)
 
-  return state
+    return state
+  } else {
+    throw new Error('Observable did not synchronously emit a value.')
+  }
 }

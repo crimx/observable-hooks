@@ -1,7 +1,8 @@
 import { useObservableEagerState } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
-import { of, BehaviorSubject, throwError } from 'rxjs'
+import { of, BehaviorSubject, throwError, scheduled } from 'rxjs'
 import { tap } from 'rxjs/operators'
+import { async } from 'rxjs/internal/scheduler/async'
 
 describe('useObservableEagerState', () => {
   it('should start receiving values after first rendering', () => {
@@ -15,6 +16,20 @@ describe('useObservableEagerState', () => {
     expect(result.current).toBe(3)
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(3)
+  })
+
+  it('should start receiving values after first rendering 2', () => {
+    const spy = jest.fn()
+    const outer$ = scheduled(of(1, 2, 3), async)
+    const { result } = renderHook(() => {
+      const state = useObservableEagerState(outer$)
+      spy(state)
+      return state
+    })
+    expect(result.error).toBeInstanceOf(Error)
+    expect(result.error.message).toBe(
+      'Observable did not synchronously emit a value.'
+    )
   })
 
   it('should update value when the Observable emits value', () => {
