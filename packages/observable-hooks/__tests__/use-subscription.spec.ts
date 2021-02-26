@@ -30,6 +30,21 @@ describe('useSubscription', () => {
     expect(numSpy).lastCalledWith(3)
   })
 
+  it('should receive emitted values from Observable when using observer', () => {
+    const num$ = of(1, 2, 3)
+    const numSpy = jest.fn()
+    const { rerender } = renderHook(() =>
+      useSubscription(num$, { next: numSpy })
+    )
+    expect(numSpy).toBeCalledTimes(3)
+    expect(numSpy).lastCalledWith(3)
+    expect(numSpy).toBeCalledWith(1)
+    expect(numSpy).toBeCalledWith(2)
+    rerender()
+    expect(numSpy).toBeCalledTimes(3)
+    expect(numSpy).lastCalledWith(3)
+  })
+
   it('should receive error', () => {
     const error = new Error('oops')
     const error$ = throwError(error)

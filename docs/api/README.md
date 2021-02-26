@@ -177,6 +177,10 @@ onResize(100, 500)
 ```typescript
 useSubscription<TInput>(
   input$: Observable<TInput>,
+  observer?: PartialObserver<TInput>
+): React.MutableRefObject<Subscription | undefined>
+useSubscription<TInput>(
+  input$: Observable<TInput>,
   next?: function | null | undefined,
   error?: function | null | undefined,
   complete?: function | null | undefined
@@ -235,6 +239,8 @@ Due to the design of RxJS, once an error occurs in an observable, the observable
 - From `v3.0.0`, Observable error can be caught by React error boudary in which you can perform actions to replace the dead Observable.
 :::
 
+---
+
 **Type parameters:**
 
 - `TInput` Input value within Observable.
@@ -251,6 +257,25 @@ Name | Type | Description
 **Returns:**
 
 `React.MutableRefObject<Subscription | undefined>` A ref object with the RxJS Subscription. the ref `current` is `undefined` on first rendering.
+
+---
+
+**Type parameters:**
+
+- `TInput` Input value within Observable.
+
+**Parameters:**
+
+Name | Type | Description
+------ | ------ | ------
+`input$` | `Observable<TInput> | null | undefined` | Input Observable.
+`observer` | `PartialObserver<TInput>` | Observer
+
+**Returns:**
+
+`React.MutableRefObject<Subscription | undefined>` A ref object with the RxJS Subscription. the ref `current` is `undefined` on first rendering.
+
+---
 
 **Examples:**
 

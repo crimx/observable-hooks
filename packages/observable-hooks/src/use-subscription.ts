@@ -1,4 +1,4 @@
-import { Observable, Subscription } from 'rxjs'
+import { Observable, PartialObserver, Subscription } from 'rxjs'
 import { useEffect } from 'react'
 import { useSubscriptionInternal } from './internal/use-subscription-internal'
 
@@ -34,6 +34,16 @@ import { useSubscriptionInternal } from './internal/use-subscription-internal'
  * @template TInput Input value within Observable.
  *
  * @param input$ Input Observable.
+ * @param observer Observer
+ */
+export function useSubscription<TInput>(
+  input$: Observable<TInput>,
+  observer?: PartialObserver<TInput>
+): React.MutableRefObject<Subscription | undefined>
+/**
+ * @template TInput Input value within Observable.
+ *
+ * @param input$ Input Observable.
  * @param next Notify when a new value is emitted.
  * @param error Notify when a new error is thrown.
  * @param complete Notify when the Observable is complete.
@@ -45,12 +55,19 @@ export function useSubscription<TInput>(
   complete?: (() => void) | null | undefined
 ): React.MutableRefObject<Subscription | undefined>
 export function useSubscription<TInput>(
-  ...args: [
-    Observable<TInput>,
-    ((value: TInput) => void) | null | undefined,
-    ((error: any) => void) | null | undefined,
-    (() => void) | null | undefined
-  ]
+  input$: Observable<TInput>,
+  observerOrNext$?:
+    | PartialObserver<TInput>
+    | ((value: TInput) => void)
+    | null
+    | undefined,
+  error?: ((error: any) => void) | null | undefined,
+  complete?: (() => void) | null | undefined
 ): React.MutableRefObject<Subscription | undefined> {
-  return useSubscriptionInternal(useEffect, args)
+  return useSubscriptionInternal(useEffect, [
+    input$,
+    observerOrNext$,
+    error,
+    complete
+  ])
 }

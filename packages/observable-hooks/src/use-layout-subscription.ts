@@ -1,4 +1,4 @@
-import { Observable, Subscription } from 'rxjs'
+import { Observable, PartialObserver, Subscription } from 'rxjs'
 import { useIsomorphicLayoutEffect } from './helpers'
 import { useSubscriptionInternal } from './internal/use-subscription-internal'
 
@@ -19,6 +19,16 @@ import { useSubscriptionInternal } from './internal/use-subscription-internal'
  * @template TInput Input value within Observable.
  *
  * @param input$ Input Observable.
+ * @param observer Observer
+ */
+export function useLayoutSubscription<TInput>(
+  input$: Observable<TInput>,
+  observer?: PartialObserver<TInput>
+): React.MutableRefObject<Subscription | undefined>
+/**
+ * @template TInput Input value within Observable.
+ *
+ * @param input$ Input Observable.
  * @param next Notify when a new value is emitted.
  * @param error Notify when a new error is thrown.
  * @param complete Notify when the Observable is complete.
@@ -30,12 +40,19 @@ export function useLayoutSubscription<TInput>(
   complete?: (() => void) | null | undefined
 ): React.MutableRefObject<Subscription | undefined>
 export function useLayoutSubscription<TInput>(
-  ...args: [
-    Observable<TInput>,
-    ((value: TInput) => void) | null | undefined,
-    ((error: any) => void) | null | undefined,
-    (() => void) | null | undefined
-  ]
+  input$: Observable<TInput>,
+  observerOrNext$?:
+    | PartialObserver<TInput>
+    | ((value: TInput) => void)
+    | null
+    | undefined,
+  error?: ((error: any) => void) | null | undefined,
+  complete?: (() => void) | null | undefined
 ): React.MutableRefObject<Subscription | undefined> {
-  return useSubscriptionInternal(useIsomorphicLayoutEffect, args)
+  return useSubscriptionInternal(useIsomorphicLayoutEffect, [
+    input$,
+    observerOrNext$,
+    error,
+    complete
+  ])
 }

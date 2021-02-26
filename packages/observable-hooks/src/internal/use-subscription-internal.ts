@@ -1,6 +1,22 @@
-import { Observable, Subscription } from 'rxjs'
+import { Observable, PartialObserver, Subscription } from 'rxjs'
 import { useForceUpdate, useIsomorphicLayoutEffect } from '../helpers'
 import { useEffect, useRef } from 'react'
+
+type Args<TInput> = [
+  Observable<TInput>, // inputs$
+  PartialObserver<TInput> | ((value: TInput) => void) | null | undefined,
+  ((error: any) => void) | null | undefined,
+  (() => void) | null | undefined
+];
+
+const getObserver = <TInput>(args: Args<TInput>) =>
+  typeof args[1] === 'function' || args[1] === null || args[1] === undefined
+    ? {
+        next: args[1],
+        error: args[2],
+        complete: args[3]
+      }
+    : args[1];
 
 /**
  *
@@ -11,12 +27,7 @@ import { useEffect, useRef } from 'react'
  */
 export function useSubscriptionInternal<TInput>(
   useCustomEffect: typeof useEffect,
-  args: [
-    Observable<TInput>, // inputs$
-    ((value: TInput) => void) | null | undefined, // next
-    ((error: any) => void) | null | undefined, // error
-    (() => void) | null | undefined // complete
-  ]
+  args: Args<TInput>
 ): React.MutableRefObject<Subscription | undefined> {
   const forceUpdate = useForceUpdate()
 
@@ -42,8 +53,9 @@ export function useSubscriptionInternal<TInput>(
           // stale observable
           return
         }
-        if (argsRef.current[1]) {
-          return argsRef.current[1](value)
+        const observer = getObserver(argsRef.current)
+        if (observer.next) {
+          return observer.next(value)
         }
       },
       error: error => {
@@ -51,9 +63,10 @@ export function useSubscriptionInternal<TInput>(
           // stale observable
           return
         }
-        if (argsRef.current[2]) {
+        const observer = getObserver(argsRef.current)
+        if (observer.error) {
           errorRef.current = null
-          return argsRef.current[2](error)
+          return observer.error(error)
         }
         errorRef.current = error
         forceUpdate()
@@ -63,8 +76,9 @@ export function useSubscriptionInternal<TInput>(
           // stale observable
           return
         }
-        if (argsRef.current[3]) {
-          return argsRef.current[3]()
+        const observer = getObserver(argsRef.current)
+        if (observer.complete) {
+          return observer.complete()
         }
       }
     })
