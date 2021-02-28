@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.0.1](https://github.com/crimx/observable-hooks/compare/v4.0.0...v4.0.1) (2021-02-28)
+
+**Note:** Version bump only for package suspense
+
+
+
+
+
 # [3.2.0](https://github.com/crimx/observable-hooks/compare/v3.1.2...v3.2.0) (2021-02-26)
 
 **Note:** Version bump only for package suspense
