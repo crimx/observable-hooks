@@ -39,14 +39,14 @@ export function useObservable<TOutupt>(
  * changes the Observable in `init` will emit an array of all the dependencies.
  */
 export function useObservable<TOutupt, TInputs extends Readonly<any[]>>(
-  init: (inputs$: Observable<[...TInputs]>) => Observable<TOutupt>,
-  inputs: [...TInputs]
+  init: (inputs$: Observable<Readonly<[...TInputs]>>) => Observable<TOutupt>,
+  inputs: Readonly<[...TInputs]>
 ): Observable<TOutupt>
 export function useObservable<TOutupt, TInputs extends Readonly<any[]>>(
   init:
     | (() => Observable<TOutupt>)
-    | ((inputs$: Observable<[...TInputs]>) => Observable<TOutupt>),
-  inputs?: [...TInputs]
+    | ((inputs$: Observable<Readonly<[...TInputs]>>) => Observable<TOutupt>),
+  inputs?: Readonly<[...TInputs]>
 ): Observable<TOutupt> {
   return useObservableInternal(useEffect, init, inputs)
 }

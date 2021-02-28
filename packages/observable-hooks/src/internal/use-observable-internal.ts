@@ -16,8 +16,8 @@ export function useObservableInternal<TOutupt, TInputs extends Readonly<any[]>>(
   useCustomEffect: typeof useEffect,
   init:
     | (() => Observable<TOutupt>)
-    | ((inputs$: Observable<TInputs>) => Observable<TOutupt>),
-  inputs?: TInputs
+    | ((inputs$: Observable<Readonly<[...TInputs]>>) => Observable<TOutupt>),
+  inputs?: Readonly<[...TInputs]>
 ): Observable<TOutupt> {
   if (!inputs) {
     return useRefFn(init as () => Observable<TOutupt>).current
