@@ -5,42 +5,44 @@ import styles from './Digit.module.css'
 /**
  * A timer digit with animation.
  */
-export const Digit = React.memo(({ digit }) => (
-  <div className={styles.digit}>
-    <div
-      className={`${styles.stick} ${styles.one}`}
-      style={getRotation(digit, 0)}
-    >
+export const Digit = React.memo(function Digit({ digit }) {
+  return (
+    <div className={styles.digit}>
       <div
-        className={`${styles.stick} ${styles.three}`}
-        style={getRotation(digit, 2)}
+        className={`${styles.stick} ${styles.one}`}
+        style={getRotation(digit, 0)}
       >
         <div
-          className={`${styles.stick} ${styles.seven}`}
-          style={getRotation(digit, 6)}
-        />
+          className={`${styles.stick} ${styles.three}`}
+          style={getRotation(digit, 2)}
+        >
+          <div
+            className={`${styles.stick} ${styles.seven}`}
+            style={getRotation(digit, 6)}
+          />
+        </div>
       </div>
-    </div>
-    <div
-      className={`${styles.stick} ${styles.two}`}
-      style={getRotation(digit, 1)}
-    >
       <div
-        className={`${styles.stick} ${styles.four}`}
-        style={getRotation(digit, 3)}
+        className={`${styles.stick} ${styles.two}`}
+        style={getRotation(digit, 1)}
       >
         <div
-          className={`${styles.stick} ${styles.five}`}
-          style={getRotation(digit, 4)}
-        />
+          className={`${styles.stick} ${styles.four}`}
+          style={getRotation(digit, 3)}
+        >
+          <div
+            className={`${styles.stick} ${styles.five}`}
+            style={getRotation(digit, 4)}
+          />
+        </div>
       </div>
+      <div
+        className={`${styles.stick} ${styles.six}`}
+        style={getRotation(digit, 5)}
+      />
     </div>
-    <div
-      className={`${styles.stick} ${styles.six}`}
-      style={getRotation(digit, 5)}
-    />
-  </div>
-))
+  )
+})
 
 Digit.propTypes = {
   digit: PropTypes.number.isRequired
