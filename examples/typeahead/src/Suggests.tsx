@@ -77,7 +77,7 @@ export const Suggests: React.FC<SuggestsProps> = props => {
               of(<StateDefault />)
         )
       ),
-    [props.text, props.fetchFunc] as const
+    [props.text, props.fetchFunc]
   )
   return useObservableState(status$, () => <StateDefault />)
 }
