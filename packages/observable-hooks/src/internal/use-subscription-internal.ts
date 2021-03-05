@@ -1,13 +1,13 @@
 import { Observable, PartialObserver, Subscription } from 'rxjs'
 import { useForceUpdate, useIsomorphicLayoutEffect } from '../helpers'
-import { useEffect, useRef } from 'react'
+import { MutableRefObject, useEffect, useRef } from 'react'
 
 type Args<TInput> = [
   Observable<TInput>, // inputs$
   PartialObserver<TInput> | ((value: TInput) => void) | null | undefined,
   ((error: any) => void) | null | undefined,
   (() => void) | null | undefined
-];
+]
 
 const getObserver = <TInput>(args: Args<TInput>) =>
   typeof args[1] === 'function' || args[1] === null || args[1] === undefined
@@ -16,7 +16,7 @@ const getObserver = <TInput>(args: Args<TInput>) =>
         error: args[2],
         complete: args[3]
       }
-    : args[1];
+    : args[1]
 
 /**
  *
@@ -28,7 +28,7 @@ const getObserver = <TInput>(args: Args<TInput>) =>
 export function useSubscriptionInternal<TInput>(
   useCustomEffect: typeof useEffect,
   args: Args<TInput>
-): React.MutableRefObject<Subscription | undefined> {
+): MutableRefObject<Subscription | undefined> {
   const forceUpdate = useForceUpdate()
 
   const argsRef = useRef(args)

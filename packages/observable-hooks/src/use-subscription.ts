@@ -1,5 +1,5 @@
 import { Observable, PartialObserver, Subscription } from 'rxjs'
-import { useEffect } from 'react'
+import { MutableRefObject, useEffect } from 'react'
 import { useSubscriptionInternal } from './internal/use-subscription-internal'
 
 /**
@@ -39,7 +39,7 @@ import { useSubscriptionInternal } from './internal/use-subscription-internal'
 export function useSubscription<TInput>(
   input$: Observable<TInput>,
   observer?: PartialObserver<TInput>
-): React.MutableRefObject<Subscription | undefined>
+): MutableRefObject<Subscription | undefined>
 /**
  * @template TInput Input value within Observable.
  *
@@ -53,7 +53,7 @@ export function useSubscription<TInput>(
   next?: ((value: TInput) => void) | null | undefined,
   error?: ((error: any) => void) | null | undefined,
   complete?: (() => void) | null | undefined
-): React.MutableRefObject<Subscription | undefined>
+): MutableRefObject<Subscription | undefined>
 export function useSubscription<TInput>(
   input$: Observable<TInput>,
   observerOrNext$?:
@@ -63,7 +63,7 @@ export function useSubscription<TInput>(
     | undefined,
   error?: ((error: any) => void) | null | undefined,
   complete?: (() => void) | null | undefined
-): React.MutableRefObject<Subscription | undefined> {
+): MutableRefObject<Subscription | undefined> {
   return useSubscriptionInternal(useEffect, [
     input$,
     observerOrNext$,
