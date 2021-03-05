@@ -41,14 +41,14 @@ export function useLayoutObservable<TOutupt>(
  * changes the Observable in `init` will emit an array of all the dependencies.
  */
 export function useLayoutObservable<TOutupt, TInputs extends Readonly<any[]>>(
-  init: (inputs$: Observable<Readonly<[...TInputs]>>) => Observable<TOutupt>,
-  inputs: Readonly<[...TInputs]>
+  init: (inputs$: Observable<[...TInputs]>) => Observable<TOutupt>,
+  inputs: [...TInputs]
 ): Observable<TOutupt>
 export function useLayoutObservable<TOutupt, TInputs extends Readonly<any[]>>(
   init:
     | (() => Observable<TOutupt>)
-    | ((inputs$: Observable<Readonly<[...TInputs]>>) => Observable<TOutupt>),
-  inputs?: Readonly<[...TInputs]>
+    | ((inputs$: Observable<[...TInputs]>) => Observable<TOutupt>),
+  inputs?: [...TInputs]
 ): Observable<TOutupt> {
   return useObservableInternal(useIsomorphicLayoutEffect, init, inputs)
 }
