@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs'
 import { useRef } from 'react'
-import { useRefFn, getEmptySubject, identity } from './helpers'
+import { useRefFn, getEmptySubject } from './helpers'
 
 /**
  * Returns a callback function and an events Observable.
