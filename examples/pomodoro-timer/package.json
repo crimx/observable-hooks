@@ -1,6 +1,6 @@
 {
   "name": "pomodoro-timer",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
@@ -8,7 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bulma": "^0.7.5",
     "cross-env": "^5.2.0",
-    "observable-hooks": "^4.0.1",
+    "observable-hooks": "^4.0.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "^4.0.3",
