@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs'
 import { useRef } from 'react'
-import { useRefFn, getEmptySubject, identity } from './helpers'
+import { useRefFn, getEmptySubject } from './helpers'
 
 /**
  * Returns a callback function and an events Observable.
@@ -27,6 +27,17 @@ import { useRefFn, getEmptySubject, identity } from './helpers'
  * @param selector A function that transforms an array of event arguments
  * into a single value.
  */
+export function useObservableCallback<TOutput, TInput = TOutput>(
+  init: (events$: Observable<TInput>) => Observable<TOutput>
+): [(args: TInput) => void, Observable<TOutput>]
+export function useObservableCallback<
+  TOutput,
+  TInput = TOutput,
+  TParams extends Readonly<any[]> = [TInput]
+>(
+  init: (events$: Observable<TInput>) => Observable<TOutput>,
+  selector: (args: TParams) => TInput
+): [(...args: TParams) => void, Observable<TOutput>]
 export function useObservableCallback<
   TOutput,
   TInput = TOutput,
