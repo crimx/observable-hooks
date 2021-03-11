@@ -253,7 +253,7 @@ Due to the design of RxJS, once an error occurs in an observable, the observable
 
 Name | Type | Description
 ------ | ------ | ------
-`input$` | `Observable<TInput> | null | undefined` | Input Observable.
+`input$` | `Observable<TInput>` | Input Observable.
 `next` | `(value: TInput): void | null | undefined` | Notify when a new value is emitted.
 `error` | `(error: any): void | null | undefined` | Notify when a new error is thrown.
 `complete` | `(): void | null | undefined` | Notify when the Observable is complete.
