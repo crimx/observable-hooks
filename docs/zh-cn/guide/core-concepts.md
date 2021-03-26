@@ -1,15 +1,16 @@
-# Core Concepts
+# 核心概念
 
-## Two Worlds
+## 两个世界
 
-To understand the design behind observable-hooks you should have two worlds in mind: the Observable World and the Normal World.
+要理解 observable-hooks 的设计你需要有两个“世界”的概念：响应式世界与普通世界。
+
 
 ```
 
   +--------------------------------+  
-  |                                |  
-  |        Observable World        |  
-  |                                |  
+  |            　　　　　            |  
+  |            响应式世界            |  
+  |            　　　　　            |  
   +--------------------------------+  
                                       
          +------------------+         
@@ -17,27 +18,27 @@ To understand the design behind observable-hooks you should have two worlds in m
          +------------------+         
                                       
   +--------------------------------+  
-  |                                |  
-  |          Normal World          |  
-  |                                |  
+  |             　　　　            |  
+  |             普通世界            |  
+  |             　　　　            |  
   +--------------------------------+  
 
 ```
 
-These two worlds are just conceptual partition. The Observable World is where the observable pipelines are placed. It could be inside or outside of the React components. The Normal World is anyplace that does not belong to the Observable World.
+这两个世界仅是概念上的区分。响应式世界是指Observable 存放的地方。这可以是在 React 组件里面，但也可以在外部。普通世界是指非响应式世界的地方。
 
-## Observable to Normal
+## 响应式世界到普通世界
 
-Almost every RxJS-React binding library provides ways to connect observable values to React state.
+几乎所有实现 RxJS 与 React 转接的库都会提供相应接口来连接 Observable 值与 React 状态（state）。
 
-### Observable to State
+### Observable 到 React 状态
 
-In observable-hooks we have [`useObservableState`][useObservableState] and [`useObservableEagerState`][useObservableEagerState].
+在 observable-hooks 中我们可以用 [`useObservableState`][useObservableState] 或 [`useObservableEagerState`][useObservableEagerState]。
 
 ```
 
   +--------------------------------+  
-  |        Observable World        |  
+  |            响应式世界            |  
   +--------------------------------+  
   |                                |  
   |             input$             |  
@@ -56,7 +57,7 @@ In observable-hooks we have [`useObservableState`][useObservableState] and [`use
            |                          
            |                          
   +--------v-----------------------+  
-  |          Normal World          |  
+  |             普通世界            |  
   +--------------------------------+  
   |                                |  
   |         <p>{output}</p>        |  
@@ -65,14 +66,14 @@ In observable-hooks we have [`useObservableState`][useObservableState] and [`use
 
 ```
 
-### Observable to Callbacks
+### Observable 到订阅回调
 
-In addition to states, you can also call observer callbacks with [`useSubscription`][useSubscription]. See the [API docs][useSubscription] for why it is preferred comparing to manual `useEffect`.
+除了转换到状态，我们还可以提供订阅回调函数通过 [`useSubscription`][useSubscription] 订阅 Observables。见 [API 文档][useSubscription] 了解为什么推荐用它而不是手动 `useEffect`。
 
 ```
 
   +--------------------------------+  
-  |        Observable World        |  
+  |             响应式世界           |  
   +--------------------------------+  
   |                                |  
   |             input$             |  
@@ -88,7 +89,7 @@ In addition to states, you can also call observer callbacks with [`useSubscripti
                               |       
                               |       
   +---------------------------v----+  
-  |          Normal World          |  
+  |             普通世界            |  
   +--------------------------------+  
   |                                |  
   |   const onNext = v => log(v)   |  
@@ -97,25 +98,25 @@ In addition to states, you can also call observer callbacks with [`useSubscripti
 
 ```
 
-## Normal to Observable back to Normal
+## 普通世界到响应式世界到普通世界
 
-Some libraries also provide ways to create observables from Normal World, subscribe to those observables, then connect emitted values back to Normal World.
+有些库还提供了方法从普通世界中创建 Observables，然后再订阅这些 Observables，将值导回普通世界。
 
-We can create observables somewhere outside of React component and somehow pass them in, but most likely we would like to crate observables inside React components.
+我们可以在 React 组件以外的某个地方创建 Observables 然后通过各种方式传进组件使用。但更多情况是我们希望可以在 React 组件里面创建 Observables。
 
-There are two ways to achieve that:
+有两种方式可以做到：
 
-1. Event function callbacks. Every time the callback is called, a value is emitted from a Subject.
-2. Hook dependencies. Changes of props, states or context will trigger component re-rendering. Hooks like `useEffect` can be used to collect changes.
+1. 事件回调函数。每当函数被调用，新的值从 Subject 中弹出。
+2. Hook 依赖。React 的 props、states 和 context 的变化都会触发组件渲染。如 `useEffect` 之类的 hooks 可以收集到这些变化。
 
-### Function Callbacks
+### 事件回调函数
 
-In observable-hooks [`useObservableState`][useObservableState] can also be used for function callbacks.
+在 observable-hooks 中 [`useObservableState`][useObservableState] 还支持接收事件回调函数。
 
 ```
 
      +--------------------------------+        
-     |        Observable World        |        
+     |             响应式世界           |        
      +--------------------------------+        
      |                                |        
      |  const transform =             |        
@@ -134,7 +135,7 @@ In observable-hooks [`useObservableState`][useObservableState] can also be used 
           |        |                           
           |        |                           
      +----v--------+------------------+        
-     |          Normal World          |        
+     |             普通世界            |        
      +--------------------------------+        
      |                                |        
      |   <button onClick={onInput}>   |        
@@ -145,22 +146,22 @@ In observable-hooks [`useObservableState`][useObservableState] can also be used 
 
 ```
 
-### Hook dependencies
+### Hook 依赖
 
-This is a little different in observable-hooks which does not provide a "Normal-Observable-Normal" way with hook dependencies.
+在 observable-hooks 中 Hook 依赖的处理与其它库有点不太一样，我们并没有针对 hook 依赖提供“普通世界-响应式世界-普通世界”的方式。
 
-If you read back on what we have just discussed, you should notice that we always end up in the Normal World. But observable-hooks truly shines with its ability to end in the Observable World. Keep reading and I will show you what it means.
+如果你重新看回我们刚讨论过的接口，也许能注意到我们最终都是以普通世界结束。但 observable-hooks 真正发光的地方在于它能够让我们结束在响应式世界。具体什么意思请容我细说。
 
-## Normal to Observable
+## 普通世界到响应式世界
 
-### Hook dependencies
+### Hook 依赖
 
-In observable-hooks you can use [`useObservable`][useObservable] or [`useLayoutObservable`][useLayoutObservable] to create observables with hook dependencies.
+在 observable-hooks 中你可以通过 [`useObservable`][useObservable] 或 [`useLayoutObservable`][useLayoutObservable] 利用 hook 依赖创建 Observable。
 
 ```
 
    +--------------------------------+    
-   |        Observable World        |    
+   |            响应式世界            |    
    +--------------------------------+    
    |                                |    
    | const transform =              |    
@@ -180,7 +181,7 @@ In observable-hooks you can use [`useObservable`][useObservable] or [`useLayoutO
                          |               
                          |               
    +---------------------+----------+    
-   |          Normal World          |    
+   |             普通世界            |    
    +--------------------------------+    
    |                                |    
    | const App(props) {             |    
@@ -192,14 +193,14 @@ In observable-hooks you can use [`useObservable`][useObservable] or [`useLayoutO
 
 ```
 
-### Function Callbacks
+### 事件回调函数
 
-You can also use [`useObservableCallback`][useObservableCallback] to create observables from function callbacks.
+你还可以通过 [`useObservableCallback`][useObservableCallback] 利用事件回调函数来创建 Observable。
 
 ```
 
         +--------------------------------+         
-        |        Observable World        |         
+        |            响应式世界            |         
         +--------------------------------+         
         |                                |         
         |  const transform =             |         
@@ -218,7 +219,7 @@ You can also use [`useObservableCallback`][useObservableCallback] to create obse
             |                                      
             |                                      
         +---+----------------------------+         
-        |          Normal World          |         
+        |             普通世界            |         
         +--------------------------------+         
         |                                |         
         |   <button onClick={onInput}>   |         
@@ -229,16 +230,16 @@ You can also use [`useObservableCallback`][useObservableCallback] to create obse
 
 ```
 
-The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useObservableState] or [`useSubscription`][useSubscription].
+得到的 Observable 可以借助 [响应式世界到普通世界](#observable-to-normal) 模式，通过 [`useObservableState`][useObservableState] 或 [`useSubscription`][useSubscription] 接收。
 
-## Observable to Observable
+## 响应式世界到响应式世界
 
-Finally, you can also operate on multiple observables. This flexibility is powerful and can greatly simplify the observable flow design.
+最后，我们还可以操作任意多条 Observable。这提供了巨大的灵活性，可以简化许多流的设计。
 
 ```
 
     +--------------------------------+    
-    |        Observable World        |    
+    |            响应式世界            |    
     +--------------------------------+    
     |                                |    
     |           fromProps$           |    
@@ -261,20 +262,18 @@ Finally, you can also operate on multiple observables. This flexibility is power
                   )                       
                                           
     +--------------------------------+    
-    |                                |    
-    |          Normal World          |    
-    |                                |    
+    |             　　　　            |    
+    |             普通世界            |    
+    |             　　　　            |    
     +--------------------------------+    
 
 ```
 
-The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useObservableState] or [`useSubscription`][useSubscription].
+得到的 Observable 可以借助 [响应式世界到普通世界](#observable-to-normal) 模式，通过 [`useObservableState`][useObservableState] 或 [`useSubscription`][useSubscription] 接收。
 
-## Helpers
+## 辅助方法
 
-There are also sugars like [`useObservableGetState`][useObservableGetState] and [`useObservablePickState`][useObservablePickState] which are inspired by lodash `get` and `pick`.
-
-The [Epic](https://redux-observable.js.org/docs/basics/Epics.html)-like signature makes the observable transformation logic highly reusable. In fact observable-hooks offers some [helpers][helpers] for common cases to reduce garbage collection burden.
+Osbservable-hooks 中类 [Epic](https://redux-observable.js.org/docs/basics/Epics.html) 的设计可以让 Observable 的转换逻辑高度可复用。事实上 observable-hooks 已经提供了一些常用 [辅助方法][helpers] 来减少垃圾回收压力。
 
 [useobservable]: ../api/README.md#useobservable
 [useLayoutObservable]: ../api/README.md#uselayoutobservable
