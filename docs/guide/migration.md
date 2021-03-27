@@ -12,4 +12,4 @@ v3 is React concurrent mode safe. There will be no synchronous subscription.
 
 v4 is not compatible with TypeScript 3.
 
-1. remove all the readonly deps of `useObservable` and `useLayoutObservable`.
+1. remove the readonly modifier of `useObservable` and `useLayoutObservable` dependency list.
