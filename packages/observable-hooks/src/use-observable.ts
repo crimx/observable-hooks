@@ -21,16 +21,16 @@ import { useEffect } from 'react'
  * dependencies array but do not change to one another during Component's life cycle.
  * The length of the dependencies array must also be fixed.
  *
- * @template TOutput Output value in Observable
+ * @template TOutupt Output value in Observable
  *
  * @param init A pure function that, when applied to an Observable,
  * returns an Observable.
  */
-export function useObservable<TOutput>(
-  init: () => Observable<TOutput>
-): Observable<TOutput>
+export function useObservable<TOutupt>(
+  init: () => Observable<TOutupt>
+): Observable<TOutupt>
 /**
- * @template TOutput Output value within Observable.
+ * @template TOutupt Output value within Observable.
  * @template TInputs An readonly tuple of all dependencies.
  *
  * @param init A pure function that, when applied to an Observable,
@@ -38,15 +38,15 @@ export function useObservable<TOutput>(
  * @param inputs An dependency array with fixed length. When one of the dependencies
  * changes the Observable in `init` will emit an array of all the dependencies.
  */
-export function useObservable<TOutput, TInputs extends Readonly<any[]>>(
-  init: (inputs$: Observable<[...TInputs]>) => Observable<TOutput>,
+export function useObservable<TOutupt, TInputs extends Readonly<any[]>>(
+  init: (inputs$: Observable<[...TInputs]>) => Observable<TOutupt>,
   inputs: [...TInputs]
-): Observable<TOutput>
-export function useObservable<TOutput, TInputs extends Readonly<any[]>>(
+): Observable<TOutupt>
+export function useObservable<TOutupt, TInputs extends Readonly<any[]>>(
   init:
-    | (() => Observable<TOutput>)
-    | ((inputs$: Observable<[...TInputs]>) => Observable<TOutput>),
+    | (() => Observable<TOutupt>)
+    | ((inputs$: Observable<[...TInputs]>) => Observable<TOutupt>),
   inputs?: [...TInputs]
-): Observable<TOutput> {
+): Observable<TOutupt> {
   return useObservableInternal(useEffect, init, inputs)
 }

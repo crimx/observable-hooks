@@ -3,7 +3,7 @@ import { useRefFn } from '../helpers'
 import { useEffect, useRef } from 'react'
 
 /**
- * @template TOutput Output value within Observable.
+ * @template TOutupt Output value within Observable.
  * @template TInputs An readonly tuple of all dependencies.
  *
  * @param useCustomEffect useEffect or useLayoutEffect
@@ -12,15 +12,15 @@ import { useEffect, useRef } from 'react'
  * @param inputs An dependency array with fixed length. When one of the dependencies
  * changes the Observable in `init` will emit an array of all the dependencies.
  */
-export function useObservableInternal<TOutput, TInputs extends Readonly<any[]>>(
+export function useObservableInternal<TOutupt, TInputs extends Readonly<any[]>>(
   useCustomEffect: typeof useEffect,
   init:
-    | (() => Observable<TOutput>)
-    | ((inputs$: Observable<[...TInputs]>) => Observable<TOutput>),
+    | (() => Observable<TOutupt>)
+    | ((inputs$: Observable<[...TInputs]>) => Observable<TOutupt>),
   inputs?: [...TInputs]
-): Observable<TOutput> {
+): Observable<TOutupt> {
   if (!inputs) {
-    return useRefFn(init as () => Observable<TOutput>).current
+    return useRefFn(init as () => Observable<TOutupt>).current
   }
 
   const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))
