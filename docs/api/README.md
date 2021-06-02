@@ -360,7 +360,7 @@ These two ways use different hooks, choose either one each time and do not chang
 
 The optional `initialState` is internally passed to `useState(initialState)`. This means it can be either a state value or a function that returns the state which is for expensive initialization.
 
-The `initialState`(or its returned result) is also passed to the `init` function. This is useful if you want to implement reduer pattern which requires an initial state.
+The `initialState`(or its returned result) is also passed to the `init` function. This is useful if you want to implement reducer pattern which requires an initial state.
 
 To make it concurrent mode compatible, the subscription happens after the render is committed to the screen. Even if the Observable emits synchronous values they still will arrive after the first rendering.
 
