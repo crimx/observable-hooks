@@ -316,7 +316,7 @@ Same as [useSubscription](#usesubscription) except the subscription is establish
 
 Useful when values are needed before DOM paint.
 
-Use it scarcely as it runs synchronously before browser paint. Too many synchronous emissons from the observable could stretch the commit phase.
+Use it scarcely as it runs synchronously before browser paint. Too many synchronous emissions from the observable could stretch the commit phase.
 
 ## useObservableState
 
@@ -412,7 +412,7 @@ Name | Type | Description
 
 Name | Type | Description
 ------ | ------ | ------
-`init` | `(input$: Observable<TInput>, initialState: TState): Observable<TState>` | A epic-like function that, when applied to an Observable and the initial state value, returns an Observable.
+`init` | `(input$: Observable<TInput>, initialState: TState): Observable<TState>` | An epic-like function that, when applied to an Observable and the initial state value, returns an Observable.
 `initialState` | `TState` | Optional initial state. Can be the state value or a function that returns the state.
 
 **Returns:**
@@ -640,8 +640,6 @@ Inspired by lodash `pick`.
 </p>
 
 Changes of any of these properties will trigger a rerendering.
-
-On first rendering it is always `undefined`.
 
 ::: warning
 Unreachable path will throw errors.

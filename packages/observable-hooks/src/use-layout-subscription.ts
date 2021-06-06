@@ -3,10 +3,6 @@ import { Observable, PartialObserver, Subscription } from 'rxjs'
 import { useIsomorphicLayoutEffect } from './helpers'
 import { useSubscriptionInternal } from './internal/use-subscription-internal'
 
-// I know this is copy-paste from './useSubscription.ts'.
-// Instead of leaving the performance penalty to users,
-// I'll keep it this way until it gets too hard to maintain.
-
 /**
  * Same as [[useSubscription]] except the subscription is established
  * under `useLayoutEffect`.
@@ -14,7 +10,7 @@ import { useSubscriptionInternal } from './internal/use-subscription-internal'
  * Useful when values are needed before DOM paint.
  *
  * Use it scarcely as it runs synchronously before browser paint.
- * Too many synchronous emissons from the observable could
+ * Too many synchronous emissions from the observable could
  * stretch the commit phase.
  *
  * @template TInput Input value within Observable.
