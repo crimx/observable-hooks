@@ -60,7 +60,7 @@ describe('useObservableEagerState', () => {
   })
 
   it('should throw error when observable emits error', () => {
-    const outer$ = throwError(new Error('opps'))
+    const outer$ = throwError(() => new Error('opps'))
     const { result } = renderHook(() => useObservableEagerState(outer$))
     expect(result.error).toBeInstanceOf(Error)
     expect(result.error.message).toBe('opps')

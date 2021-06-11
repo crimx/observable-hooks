@@ -32,7 +32,7 @@ describe('useLayoutSubscription', () => {
 
   it('should receive error', () => {
     const error = new Error('oops')
-    const error$ = throwError(error)
+    const error$ = throwError(() => error)
     const nextSpy = jest.fn()
     const errorSpy = jest.fn()
     const completeSpy = jest.fn()
@@ -51,7 +51,7 @@ describe('useLayoutSubscription', () => {
 
   it('should throw the error when error callback is not provided', async () => {
     const error = new Error('oops')
-    const error$ = throwError(error)
+    const error$ = throwError(() => error)
     const nextSpy = jest.fn()
     const completeSpy = jest.fn()
 
