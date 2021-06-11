@@ -24,6 +24,7 @@ Concurrent mode safe React hooks for RxJS Observables. Simple, flexible, testabl
 - Full-powered RxJS. Do whatever you want with Observables. No limitation nor compromise.
 - Fully tested. We believe in stability first. This project will always maintain a 100% coverage.
 - Tiny and fast. A lot of efforts had been put into improving integration. This library should have zero visible impact on performance.
+- Works with RxJS 6 & 7.
 
 ## Installation
 
