@@ -230,7 +230,7 @@
 
 ```
 
-得到的 Observable 可以借助 [响应式世界到普通世界](#observable-to-normal) 模式，通过 [`useObservableState`][useObservableState] 或 [`useSubscription`][useSubscription] 接收。
+得到的 Observable 可以借助 [响应式世界到普通世界](#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%96%E7%95%8C%E5%88%B0%E6%99%AE%E9%80%9A%E4%B8%96%E7%95%8C) 模式，通过 [`useObservableState`][useObservableState] 或 [`useSubscription`][useSubscription] 接收。
 
 ## 响应式世界到响应式世界
 
@@ -269,7 +269,7 @@
 
 ```
 
-得到的 Observable 可以借助 [响应式世界到普通世界](#observable-to-normal) 模式，通过 [`useObservableState`][useObservableState] 或 [`useSubscription`][useSubscription] 接收。
+得到的 Observable 可以借助 [响应式世界到普通世界](#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%96%E7%95%8C%E5%88%B0%E6%99%AE%E9%80%9A%E4%B8%96%E7%95%8C) 模式，通过 [`useObservableState`][useObservableState] 或 [`useSubscription`][useSubscription] 接收。
 
 ## 辅助方法
 
