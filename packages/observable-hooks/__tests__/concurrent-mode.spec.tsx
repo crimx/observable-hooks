@@ -81,7 +81,7 @@ describe('Concurrent Mode', () => {
         expect(Scheduler).toFlushAndYieldThrough(['render'])
 
         observableB.next('b-3')
-        observableB.error(new Error('opps'))
+        observableB.error(new Error('oops'))
 
         // observableB is ignored
         expect(Scheduler).toFlushAndYield(['a-2'])
@@ -160,7 +160,7 @@ describe('Concurrent Mode', () => {
         expect(Scheduler).toFlushAndYieldThrough(['render', 'a-2'])
 
         observableB.next('b-3')
-        observableB.error(new Error('opps'))
+        observableB.error(new Error('oops'))
 
         // observableB is ignored
         expect(Scheduler).toFlushAndYield([])
@@ -333,7 +333,7 @@ describe('Concurrent Mode', () => {
         expect(Scheduler).toFlushAndYieldThrough(['render:b-2'])
 
         observableB.next('b-3')
-        observableB.error(new Error('opps'))
+        observableB.error(new Error('oops'))
 
         // observableB is ignored
         expect(Scheduler).toFlushAndYield(['render:a-2'])
