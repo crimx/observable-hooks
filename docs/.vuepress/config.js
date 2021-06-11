@@ -5,6 +5,11 @@ module.exports = {
       title: 'Observable Hooks',
       description:
         'React hooks for RxJS Observables. Simple, flexible, testable and performant.'
+    },
+    '/zh-cn/': {
+      lang: 'zh-CN',
+      title: 'Observable Hooks',
+      description: 'React hooks for RxJS Observables. 简洁、灵活、可测试且注重性能。'
     }
   },
   themeConfig: {
@@ -73,6 +78,7 @@ module.exports = {
             }
           ]
         },
+        selectText: 'Languages',
         // label for this locale in the language dropdown
         label: 'English',
         // Aria Label for locale in the dropdown
@@ -84,6 +90,77 @@ module.exports = {
           updatePopup: {
             message: 'New content is available.',
             buttonText: 'Refresh'
+          }
+        }
+      },
+      '/zh-cn/': {
+        nav: [
+          { text: '指南', link: '/zh-cn/guide/' },
+          { text: 'API', link: '/zh-cn/api/' },
+          { text: '样例', link: '/zh-cn/examples/' }
+        ],
+        sidebar: {
+          '/zh-cn/examples/': [
+            ['/zh-cn/examples/', '简单例子'],
+            {
+              title: '样例项目', // required
+              collapsable: false, // optional, defaults to true
+              sidebarDepth: 2, // optional, defaults to 1
+              children: [
+                ['/examples/typeahead', 'Typeahead'],
+                ['/examples/pomodoro-timer', 'Pomodoro Timer'],
+                ['/examples/context', 'React Context'],
+                ['/examples/suspense', 'Render-as-You-Fetch (using Suspense)']
+              ]
+            }
+          ],
+          '/zh-cn/api/': [
+            {
+              title: 'API 参考', // required
+              collapsable: false, // optional, defaults to true
+              sidebarDepth: 2, // optional, defaults to 1
+              children: ['/zh-cn/api/', '/zh-cn/api/suspense', '/zh-cn/api/helpers']
+            }
+          ],
+          '/zh-cn/guide/': [
+            {
+              title: '开发指南', // required
+              collapsable: false, // optional, defaults to true
+              sidebarDepth: 2, // optional, defaults to 1
+              children: ['/zh-cn/guide/', '/zh-cn/guide/core-concepts', '/zh-cn/guide/motivation']
+            },
+            {
+              title: '高阶使用', // required
+              collapsable: false, // optional, defaults to true
+              sidebarDepth: 2, // optional, defaults to 1
+              children: [
+                '/zh-cn/guide/context',
+                '/zh-cn/guide/render-as-you-fetch-suspense',
+                '/zh-cn/guide/react-independent-epics'
+              ]
+            },
+            {
+              title: '杂项',
+              collapsable: false,
+              children: [
+                '/zh-cn/guide/gotchas',
+                '/zh-cn/guide/migration'
+              ]
+            }
+          ]
+        },
+        selectText: '选择语言',
+        // label for this locale in the language dropdown
+        label: '简体中文',
+        // Aria Label for locale in the dropdown
+        ariaLabel: '简体中文',
+        // text for the edit-on-github link
+        editLinkText: '在 GitHub 上编辑此页',
+        // config for Service Worker
+        serviceWorker: {
+          updatePopup: {
+            message: '发现新内容可用。',
+            buttonText: '刷新'
           }
         }
       }

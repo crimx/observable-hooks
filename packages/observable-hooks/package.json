@@ -8,6 +8,7 @@
   "typings": "dist/cjs/index.d.ts",
   "sideEffects": false,
   "files": [
+    "src/**/*",
     "dist/**/*",
     "README.md",
     "LICENSE"

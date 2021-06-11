@@ -15,9 +15,9 @@ Rewires Observable to Relay-like Suspense resource.
 **Type parameters:**
 
 - `TInput` Value type of the input Observable.
-- `TOutput` Resulted resouce value. Default TInput.
+- `TOutput` Resulted resource value. Default TInput.
 
-**Constructors**
+**Constructors:**
 
 ```typescript
 new ObservableResource(
@@ -65,7 +65,7 @@ This hook triggers necessary re-rendering when Suspense should restart.
 **Type parameters:**
 
 - `TInput` Value type of the input Observable.
-- `TOutput` Resulted resouce value. Default TInput.
+- `TOutput` Resulted resource value. Default TInput.
 
 **Parameters:**
 
@@ -75,4 +75,4 @@ Name | Type | Description
 
 **Returns:**
 
-`TOutput` resouce value.
+`TOutput` resource value.

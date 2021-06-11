@@ -1,8 +1,8 @@
-# React Independent Epics
+# 独立于 React 的 Epics
 
-Sometimes one may want the observable transformations to be independent of React so that they can be further reused by other tools or projects. This guide shows some of the patterns on how to write observable transformations in a React independent way.
+有的时侯我们可能希望让 Observable 的操作逻辑与 React 解耦，从而进一步在其它工具中复用。本文列举了一些方式以独立于 React 的方式编写 Observable 操作。
 
-Normally we use `useObservable` like this:
+通常我们这么使用 `useObservable`：
 
 ```js
 const enhanced$ = useObservable(
@@ -13,7 +13,7 @@ const enhanced$ = useObservable(
 )
 ```
 
-This is great as the epic-like function `inputs$ => inputs$.pipe(...)` is completely independent of React and Observable Hooks. It can be reused like this:
+这非常好因为类 epic 的方法 `inputs$ => inputs$.pipe(...)` 与 React 以及 Observable Hooks 完全无关。我们可以这么复用：
 
 ```js
 // path/to/logic/text.js
@@ -31,7 +31,7 @@ const enhanced$ = useObservable(
 )
 ```
 
-But sometimes there may be more observables created in a component:
+但有时候组件中可能创建了多个 Observables：
 
 ```js
 const [onChange, textChange$] = useObservableCallback(event$ => event$.pipe(...))
@@ -45,13 +45,13 @@ const enhanced$ = useObservable(
 )
 ```
 
-This starts to prevent logic from being reused as there are local dependencies.
+这样开始不好复用了，因为存在本地依赖。
 
-But hey, if they are dependencies why not just declare them as "dependencies"!
+但是嘿，既然它们是依赖，那为何我们不直接把它们定义成“依赖”呢！
 
-## Direct Dependencies
+## 直接依赖
 
-In this pattern other observables are passed as inner observables.
+这个模式中 Observable 作为子流被传进去。
 
 ```js
 const [onChange, textChange$] = useObservableCallback(event$ => event$.pipe(...))
@@ -71,11 +71,11 @@ const enhanced$ = useObservable(
 )
 ```
 
-It could be cumbersome to handle more observables this way.
+但当 Observable 较多的时侯这么定义可能有些费劲。
 
-## Higher-order Dependencies
+## 高阶依赖
 
-Another pattern is to divide normal dependencies from observable dependencies. This is like declaring higher-order dependencies.
+另一种模式是区分普通依赖与响应式依赖，类似在定义高阶依赖。
 
 ```js
 const [onChange, textChange$] = useObservableCallback(event$ => event$.pipe(...))
@@ -93,4 +93,5 @@ const enhanced$ = useObservable(
 )
 ```
 
-This is a much cleaner approach especially if there are more observables.
+这种方式在 Observable 较多的情况下会更简洁。
+

@@ -13,12 +13,14 @@ Conventionally we pass normal values down the Context. React offers a [`useConte
 This can be easily captured by the [`useObservable`](./README/md#useobservable) hooks.
 
 ```javascript
+const normalValue = useContext(NormalValueContext)
+
 const normalValueList$ = useObservable(
   inputs$ => inputs$.pipe(
     scan((acc, inputs) => [...acc, ...inputs], []),
     take(10)
   ),
-  [useContext(NormalValueContext)]
+  [normalValue]
 )
 ```
 
@@ -58,18 +60,5 @@ const numList$ = useObservable(
     )
   ),
   [num$]
-)
-```
-
-You may skip this if you are sure that the Observable will not change.
-
-```javascript
-const num$ = useContext(ObservableValueContext)
-const numList$ = useObservable(() =>
-  // Will be called only once
-  num$.pipe(
-    scan((acc, inputs) => [...acc, inputs], []),
-    take(20)
-  )
 )
 ```
