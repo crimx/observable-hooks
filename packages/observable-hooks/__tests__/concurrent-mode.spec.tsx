@@ -194,7 +194,7 @@ describe('Concurrent Mode', () => {
       const Subscriber = ({ id }: { id: string }) => {
         const value = ObservableHooks.useObservableState(input$, 'A')
         Scheduler.unstable_yieldValue(`render:${id}:${value}`)
-        return (value as unknown) as React.ReactElement
+        return <>{value}</>
       }
 
       act(() => {
@@ -244,7 +244,7 @@ describe('Concurrent Mode', () => {
       const Subscriber = ({ id }: { id: string }) => {
         const value = ObservableHooks.useObservableEagerState(input$)
         Scheduler.unstable_yieldValue(`render:${id}:${value}`)
-        return (value as unknown) as React.ReactElement
+        return <>{value}</>
       }
 
       act(() => {
@@ -351,7 +351,7 @@ describe('Concurrent Mode', () => {
       const Subscriber = ({ id }: { id: string }) => {
         const value = ObservableHooks.useObservableSuspense(resource)
         Scheduler.unstable_yieldValue(`render:${id}:${value}`)
-        return (value as unknown) as React.ReactElement
+        return <>{value}</>
       }
 
       act(() => {

@@ -6,11 +6,11 @@ describe('useRefFn', () => {
     const { result, rerender } = renderHook(() =>
       useRefFn(() => ({ date: Date.now() }))
     )
-    const firestResult = result.current.current
-    const firstDate = firestResult.date
+    const firstResult = result.current.current
+    const firstDate = firstResult.date
     expect(typeof firstDate).toBe('number')
     rerender()
-    expect(result.current.current).toBe(firestResult)
+    expect(result.current.current).toBe(firstResult)
     expect(result.current.current.date).toBe(firstDate)
   })
 })

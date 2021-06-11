@@ -6,20 +6,20 @@ import { ObservableResource } from '../src'
  */
 
 describe('ObservableResource', () => {
-  it('should unscribe Observable when destroy during initial success state', () => {
+  it('should unsubscribe Observable when destroy during initial success state', () => {
     const input$ = new BehaviorSubject<number>(1)
     const resource = new ObservableResource(input$)
     expect(resource.read()).toBe(1)
-    expect(resource.shouldUpdate$$.isStopped).toBe(false)
+    expect(resource.isDestroyed).toBe(false)
 
     resource.destroy()
 
     input$.next(2)
     expect(resource.read()).toBe(1)
-    expect(resource.shouldUpdate$$.isStopped).toBe(true)
+    expect(resource.isDestroyed).toBe(true)
   })
 
-  it('should unscribe Observable when destroy during success state', () => {
+  it('should unsubscribe Observable when destroy during success state', () => {
     const input$ = new Subject<number>()
     const resource = new ObservableResource(input$)
     expect(() => resource.read()).toThrow(Promise)
