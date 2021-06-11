@@ -13,7 +13,13 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
    * Unlike Promise, Observable is a multiple push mechanism.
    * Only force update when Suspense needs to restart.
    */
-  readonly shouldUpdate$$ = new Subject<{ current: TOutput } | undefined>()
+  readonly shouldUpdate$$ = new Subject<
+    { current: TOutput } | undefined | void
+  >()
+
+  get isDestroyed(): boolean {
+    return this._isDestroyed
+  }
 
   private handler: Handler | null = this.getHandler()
 
@@ -26,6 +32,8 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
   private subscription: Subscription
 
   private isSuccess = (value: TInput): value is TOutput => true
+
+  private _isDestroyed = false
 
   /**
    * @param input$ An Observable.
@@ -45,11 +53,11 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
     this.input$ = input$
 
-    this.subscription = input$.subscribe(
-      this.handleNext,
-      this.handleError,
-      this.handleComplete
-    )
+    this.subscription = input$.subscribe({
+      next: this.handleNext,
+      error: this.handleError,
+      complete: this.handleComplete
+    })
   }
 
   read(): TOutput {
@@ -63,7 +71,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
   }
 
   reload(newInput$?: Observable<TInput>): void {
-    if (this.shouldUpdate$$.isStopped) {
+    if (this._isDestroyed) {
       throw new Error('Cannot reload a destroyed Observable Resource')
     }
 
@@ -80,14 +88,15 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       this.handler = this.getHandler()
     }
 
-    this.subscription = this.input$.subscribe(
-      this.handleNext,
-      this.handleError,
-      this.handleComplete
-    )
+    this.subscription = this.input$.subscribe({
+      next: this.handleNext,
+      error: this.handleError,
+      complete: this.handleComplete
+    })
   }
 
   destroy(): void {
+    this._isDestroyed = true
     this.subscription.unsubscribe()
     this.shouldUpdate$$.complete()
     if (this.handler) {
