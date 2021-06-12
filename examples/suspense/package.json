@@ -1,6 +1,6 @@
 {
   "name": "suspense",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "private": true,
   "dependencies": {
     "@types/jest": "^26.0.23",
@@ -9,7 +9,7 @@
     "@types/react-dom": "^17.0.7",
     "bulma": "^0.7.5",
     "cross-env": "^5.2.0",
-    "observable-hooks": "^4.0.4",
+    "observable-hooks": "^4.0.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
