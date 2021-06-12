@@ -1,0 +1,70 @@
+.digit {
+  position: relative;
+  width: var(--len);
+  margin: calc(var(--len) * 1.5) calc(var(--len) / 2) calc(var(--len) * 1.7);
+}
+
+.stick {
+  --half-width: calc(var(--width) / 2);
+  --origin-left: calc(0vmin - var(--half-width));
+  --origin-right: calc(var(--len) + var(--half-width));
+  position: absolute;
+  width: var(--len);
+  height: var(--width);
+  background: var(--color);
+  border-radius: 11% / 15%;
+  transition: transform 0.4s;
+}
+
+.stick::before,
+.stick::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  border: var(--half-width) solid transparent;
+}
+
+.stick::before {
+  right: 98%;
+  border-right: var(--half-width) solid var(--color);
+}
+
+.stick::after {
+  left: 98%;
+  border-left: var(--half-width) solid var(--color);
+}
+
+.stick.one {
+  transform-origin: var(--origin-right) 50%;
+  transform: rotate(90deg);
+}
+
+.stick.two {
+  transform-origin: var(--origin-right) 50%;
+  transform: rotate(270deg);
+}
+
+.stick.three {
+  transform-origin: var(--origin-left) 50%;
+  transform: rotate(90deg);
+}
+
+.stick.four {
+  transform-origin: var(--origin-left) 50%;
+  transform: rotate(270deg);
+}
+
+.stick.five {
+  transform-origin: var(--origin-right) 50%;
+  transform: rotate(270deg);
+}
+
+.stick.six {
+  transform-origin: var(--origin-right) 50%;
+  transform: rotate(0deg);
+}
+
+.stick.seven {
+  transform-origin: var(--origin-right) 50%;
+  transform: rotate(90deg);
+}
