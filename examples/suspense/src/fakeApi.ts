@@ -46,7 +46,7 @@ export const postsResource = new ObservableResource(postResource$$)
 
 export const userListResource = new ObservableResource(
   // Wait till both of the first user and posts requests finish.
-  combineLatest(userResource$$, postResource$$).pipe(
+  combineLatest([userResource$$, postResource$$]).pipe(
     timeout(10000),
     catchError(() => of()),
     take(1),

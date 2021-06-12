@@ -58,7 +58,7 @@ describe('useObservableState', () => {
 
     it('should throw error when observable emits error', () => {
       const { result } = renderHook(() =>
-        useObservableState(() => throwError(() => new Error('oops')))
+        useObservableState(() => throwError(new Error('oops')))
       )
       expect(result.error).toBeInstanceOf(Error)
       expect(result.error.message).toBe('oops')
@@ -165,7 +165,7 @@ describe('useObservableState', () => {
     })
 
     it('should throw error when observable emits error', () => {
-      const outer$ = throwError(() => new Error('oops'))
+      const outer$ = throwError(new Error('oops'))
       const { result } = renderHook(() => useObservableState(outer$, 3))
       expect(result.error).toBeInstanceOf(Error)
       expect(result.error.message).toBe('oops')

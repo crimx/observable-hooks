@@ -25,7 +25,8 @@
     "lint": "eslint packages/**",
     "test:CI": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "release": "lerna version --conventional-commits",
-    "ship": "lerna run build && lerna publish from-package"
+    "publish": "lerna publish from-package",
+    "ship": "lerna run build && yarn run publish"
   },
   "husky": {
     "hooks": {
@@ -71,11 +72,11 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-test-renderer": "^16.13.1",
-    "rxjs": "^7.1.0",
+    "rxjs": "^6.6.7",
     "shx": "^0.3.2",
     "standard-version": "^8.0.1",
     "ts-jest": "^27.0.3",
-    "typescript": "^4.3.2",
+    "typescript": "~4.1.2",
     "use-subscription": "^1.4.1",
     "vuepress": "^1.2.0",
     "vuepress-plugin-container": "^2.1.2"

@@ -254,11 +254,11 @@
           |              |               
           +--------------v               
   const output$ = useObservable(          
-                    () => combineLatest(  
+                    () => combineLatest([ 
                       fromProps$,         
                       fromState$,         
                       fromGlobal$         
-                    )                     
+                    ])                    
                   )                       
                                           
     +--------------------------------+    

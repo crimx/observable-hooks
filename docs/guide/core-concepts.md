@@ -253,11 +253,11 @@ Finally, you can also operate on multiple observables. This flexibility is power
           |              |               
           +--------------v               
   const output$ = useObservable(          
-                    () => combineLatest(  
+                    () => combineLatest([ 
                       fromProps$,         
                       fromState$,         
                       fromGlobal$         
-                    )                     
+                    ])                    
                   )                       
                                           
     +--------------------------------+    
