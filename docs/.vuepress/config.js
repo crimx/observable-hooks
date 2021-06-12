@@ -41,6 +41,17 @@ module.exports = {
                 ['/examples/context', 'React Context'],
                 ['/examples/suspense', 'Render-as-You-Fetch (using Suspense)']
               ]
+            },
+            {
+              title: 'Example Projects with RxJS7', // required
+              collapsable: false, // optional, defaults to true
+              sidebarDepth: 2, // optional, defaults to 1
+              children: [
+                ['/examples/typeahead-rxjs7', 'Typeahead'],
+                ['/examples/pomodoro-timer-rxjs7', 'Pomodoro Timer'],
+                ['/examples/context-rxjs7', 'React Context'],
+                ['/examples/suspense-rxjs7', 'Render-as-You-Fetch (using Suspense)']
+              ],
             }
           ],
           '/api/': [
@@ -112,6 +123,17 @@ module.exports = {
                 ['/examples/context', 'React Context'],
                 ['/examples/suspense', 'Render-as-You-Fetch (using Suspense)']
               ]
+            },
+            {
+              title: '样例项目使用 RxJS7', // required
+              collapsable: false, // optional, defaults to true
+              sidebarDepth: 2, // optional, defaults to 1
+              children: [
+                ['/examples/typeahead-rxjs7', 'Typeahead'],
+                ['/examples/pomodoro-timer-rxjs7', 'Pomodoro Timer'],
+                ['/examples/context-rxjs7', 'React Context'],
+                ['/examples/suspense-rxjs7', 'Render-as-You-Fetch (using Suspense)']
+              ],
             }
           ],
           '/zh-cn/api/': [
