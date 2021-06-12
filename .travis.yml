@@ -3,6 +3,8 @@ sudo: false
 node_js:
   - 'stable'
 script:
+  - node ./scripts/setup-rxjs7
+  - yarn lerna bootstrap
   - yarn test
   - yarn build
   - yarn docs:build

@@ -1,8 +1,6 @@
-module.exports = {
-  testEnvironment: 'jsdom',
-  setupFilesAfterEnv: [require.resolve('./scripts/jest-setup.js')],
-  collectCoverageFrom: ['packages/*/src/**/*.{ts,tsx}'],
-  clearMocks: true,
-  testRegex: '.*\\.(test|spec)\\.(ts|tsx|js)$',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node']
-}
+const base = require('./jest.config.base')
+
+module.exports = Object.assign({}, base, {
+  projects: ['<rootDir>/packages/*'],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}']
+})
