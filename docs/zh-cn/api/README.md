@@ -236,7 +236,7 @@ useEffect(
 :::
 
 ::: tip 异常处理
-因为 RxJS 的设计，Observable 一旦产生了异常就会被销魂。你可以：
+因为 RxJS 的设计，Observable 一旦产生了异常就会被销毁。你可以：
 
 - 通过在子流中放置 [`catchError`][catchError] 避免异常传达主流。
 - 也可以将 Observable 作为 state，发生异常时换掉新的。<code>useSubscription</code> 会自动切换。
@@ -369,7 +369,7 @@ useObservableState<TState, TInput = TState>(
 :::
 
 ::: tip 异常处理
-因为 RxJS 的设计，Observable 一旦产生了异常就会被销魂。你可以：
+因为 RxJS 的设计，Observable 一旦产生了异常就会被销毁。你可以：
 
 - 通过在子流中放置 [`catchError`][catchError] 避免异常传达主流。
 - 也可以将 Observable 作为 state，发生异常时换掉新的。<code>useSubscription</code> 会自动切换。
