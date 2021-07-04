@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>旧版本迁移 | Observable Hooks</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="description" content="React hooks for RxJS Observables. 简洁、灵活、可测试且注重性能。">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#9B59B6">
+    <link rel="preload" href="/assets/css/0.styles.5e1f57d9.css" as="style"><link rel="preload" href="/assets/js/app.f622acff.js" as="script"><link rel="preload" href="/assets/js/3.20101007.js" as="script"><link rel="preload" href="/assets/js/29.3f009e4f.js" as="script"><link rel="preload" href="/assets/js/4.f2192f58.js" as="script"><link rel="prefetch" href="/assets/js/10.9a2a9ecc.js"><link rel="prefetch" href="/assets/js/11.79bacc76.js"><link rel="prefetch" href="/assets/js/12.ac785721.js"><link rel="prefetch" href="/assets/js/13.a74a1ede.js"><link rel="prefetch" href="/assets/js/14.6f82bfda.js"><link rel="prefetch" href="/assets/js/15.9c78793b.js"><link rel="prefetch" href="/assets/js/16.5b20ea49.js"><link rel="prefetch" href="/assets/js/17.6caf1345.js"><link rel="prefetch" href="/assets/js/18.7dcf8f69.js"><link rel="prefetch" href="/assets/js/19.7a22ef11.js"><link rel="prefetch" href="/assets/js/20.56c9ed39.js"><link rel="prefetch" href="/assets/js/21.807f489d.js"><link rel="prefetch" href="/assets/js/22.b0ab3dd5.js"><link rel="prefetch" href="/assets/js/23.c11efe09.js"><link rel="prefetch" href="/assets/js/24.baf0a7a9.js"><link rel="prefetch" href="/assets/js/25.554c3a72.js"><link rel="prefetch" href="/assets/js/26.ad49b897.js"><link rel="prefetch" href="/assets/js/27.5ce383fa.js"><link rel="prefetch" href="/assets/js/28.a41b2b94.js"><link rel="prefetch" href="/assets/js/30.8b1b6c9f.js"><link rel="prefetch" href="/assets/js/31.3f251ee2.js"><link rel="prefetch" href="/assets/js/32.03261fb6.js"><link rel="prefetch" href="/assets/js/33.cc5d241c.js"><link rel="prefetch" href="/assets/js/34.9f40a0d4.js"><link rel="prefetch" href="/assets/js/35.e29a88fe.js"><link rel="prefetch" href="/assets/js/36.256f6589.js"><link rel="prefetch" href="/assets/js/37.f23acb65.js"><link rel="prefetch" href="/assets/js/38.b00f183c.js"><link rel="prefetch" href="/assets/js/39.01feda9b.js"><link rel="prefetch" href="/assets/js/40.5dfebc81.js"><link rel="prefetch" href="/assets/js/41.6828984e.js"><link rel="prefetch" href="/assets/js/42.a1adf8a6.js"><link rel="prefetch" href="/assets/js/5.1d4d528e.js"><link rel="prefetch" href="/assets/js/6.46a713d7.js"><link rel="prefetch" href="/assets/js/7.6dd24a86.js"><link rel="prefetch" href="/assets/js/8.6fcb3c35.js"><link rel="prefetch" href="/assets/js/9.cd2df33f.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.e9a84dcc.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.5e1f57d9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/zh-cn/" class="home-link router-link-active"><!----> <span class="site-name">Observable Hooks</span></a> <div class="links"><form id="search-form" role="search" class="algolia-search-wrapper search-box"><input id="algolia-search-input" class="search-query"></form> <nav class="nav-links can-hide"><div class="nav-item"><a href="/zh-cn/guide/" class="nav-link router-link-active">
+  指南
+</a></div><div class="nav-item"><a href="/zh-cn/api/" class="nav-link">
+  API
+</a></div><div class="nav-item"><a href="/zh-cn/examples/" class="nav-link">
+  样例
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="简体中文" class="dropdown-title"><span class="title">选择语言</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/guide/migration.html" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh-cn/guide/migration.html" class="nav-link router-link-exact-active router-link-active">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/crimx/observable-hooks" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/zh-cn/guide/" class="nav-link router-link-active">
+  指南
+</a></div><div class="nav-item"><a href="/zh-cn/api/" class="nav-link">
+  API
+</a></div><div class="nav-item"><a href="/zh-cn/examples/" class="nav-link">
+  样例
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="简体中文" class="dropdown-title"><span class="title">选择语言</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/guide/migration.html" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh-cn/guide/migration.html" class="nav-link router-link-exact-active router-link-active">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/crimx/observable-hooks" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>开发指南</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/zh-cn/guide/" class="sidebar-link">安装</a></li><li><a href="/zh-cn/guide/core-concepts.html" class="sidebar-link">核心概念</a></li><li><a href="/zh-cn/guide/motivation.html" class="sidebar-link">项目动机</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>高阶使用</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/zh-cn/guide/context.html" class="sidebar-link">结合 React Context 使用</a></li><li><a href="/zh-cn/guide/render-as-you-fetch-suspense.html" class="sidebar-link">Render-as-You-Fetch (结合 Suspense)</a></li><li><a href="/zh-cn/guide/react-independent-epics.html" class="sidebar-link">独立于 React 的 Epics</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>杂项</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/zh-cn/guide/gotchas.html" class="sidebar-link">注意事项</a></li><li><a href="/zh-cn/guide/migration.html" class="active sidebar-link">旧版本迁移</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/zh-cn/guide/migration.html#v2-到-v3" class="sidebar-link">v2 到 v3</a></li><li class="sidebar-sub-header"><a href="/zh-cn/guide/migration.html#v3-到-v4" class="sidebar-link">v3 到 v4</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="旧版本迁移"><a href="#旧版本迁移" class="header-anchor">#</a> 旧版本迁移</h1> <h2 id="v2-到-v3"><a href="#v2-到-v3" class="header-anchor">#</a> v2 到 v3</h2> <p>v3 支持了 React 同步模式，故去掉了同步订阅 Observable。</p> <ol><li>如果 Observable 同步产生的值被用作初始状态值，请将初始化逻辑移到 <code>useObservableState</code>、<code>useObservablePickState</code> 或 <code>useObservableGetState</code> 的 <code>initialState</code> 参数中。</li> <li><code>useGetObservableState</code> 与 <code>usePickObservableState</code> 新增了必选参数 <code>initialState</code>。</li> <li>与 <code>useState</code> 一样，如果 <code>initialState</code> 是个函数它会在初始化时被调用。如果你希望使用函数作为状态，请多包一层函数。</li></ol> <h2 id="v3-到-v4"><a href="#v3-到-v4" class="header-anchor">#</a> v3 到 v4</h2> <p>v4 不再兼容 TypeScript 3.</p> <ol><li>移除 <code>useObservable</code> 和 <code>useLayoutObservable</code> 依赖列表的 <code>readonly</code> 属性。</li></ol></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/crimx/observable-hooks/edit/master/docs/zh-cn/guide/migration.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/zh-cn/guide/gotchas.html" class="prev">
+        注意事项
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.f622acff.js" defer></script><script src="/assets/js/3.20101007.js" defer></script><script src="/assets/js/29.3f009e4f.js" defer></script><script src="/assets/js/4.f2192f58.js" defer></script>
+  </body>
+</html>

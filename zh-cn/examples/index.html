@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>简单例子 | Observable Hooks</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="description" content="React hooks for RxJS Observables. 简洁、灵活、可测试且注重性能。">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#9B59B6">
+    <link rel="preload" href="/assets/css/0.styles.5e1f57d9.css" as="style"><link rel="preload" href="/assets/js/app.f622acff.js" as="script"><link rel="preload" href="/assets/js/3.20101007.js" as="script"><link rel="preload" href="/assets/js/24.baf0a7a9.js" as="script"><link rel="preload" href="/assets/js/4.f2192f58.js" as="script"><link rel="prefetch" href="/assets/js/10.9a2a9ecc.js"><link rel="prefetch" href="/assets/js/11.79bacc76.js"><link rel="prefetch" href="/assets/js/12.ac785721.js"><link rel="prefetch" href="/assets/js/13.a74a1ede.js"><link rel="prefetch" href="/assets/js/14.6f82bfda.js"><link rel="prefetch" href="/assets/js/15.9c78793b.js"><link rel="prefetch" href="/assets/js/16.5b20ea49.js"><link rel="prefetch" href="/assets/js/17.6caf1345.js"><link rel="prefetch" href="/assets/js/18.7dcf8f69.js"><link rel="prefetch" href="/assets/js/19.7a22ef11.js"><link rel="prefetch" href="/assets/js/20.56c9ed39.js"><link rel="prefetch" href="/assets/js/21.807f489d.js"><link rel="prefetch" href="/assets/js/22.b0ab3dd5.js"><link rel="prefetch" href="/assets/js/23.c11efe09.js"><link rel="prefetch" href="/assets/js/25.554c3a72.js"><link rel="prefetch" href="/assets/js/26.ad49b897.js"><link rel="prefetch" href="/assets/js/27.5ce383fa.js"><link rel="prefetch" href="/assets/js/28.a41b2b94.js"><link rel="prefetch" href="/assets/js/29.3f009e4f.js"><link rel="prefetch" href="/assets/js/30.8b1b6c9f.js"><link rel="prefetch" href="/assets/js/31.3f251ee2.js"><link rel="prefetch" href="/assets/js/32.03261fb6.js"><link rel="prefetch" href="/assets/js/33.cc5d241c.js"><link rel="prefetch" href="/assets/js/34.9f40a0d4.js"><link rel="prefetch" href="/assets/js/35.e29a88fe.js"><link rel="prefetch" href="/assets/js/36.256f6589.js"><link rel="prefetch" href="/assets/js/37.f23acb65.js"><link rel="prefetch" href="/assets/js/38.b00f183c.js"><link rel="prefetch" href="/assets/js/39.01feda9b.js"><link rel="prefetch" href="/assets/js/40.5dfebc81.js"><link rel="prefetch" href="/assets/js/41.6828984e.js"><link rel="prefetch" href="/assets/js/42.a1adf8a6.js"><link rel="prefetch" href="/assets/js/5.1d4d528e.js"><link rel="prefetch" href="/assets/js/6.46a713d7.js"><link rel="prefetch" href="/assets/js/7.6dd24a86.js"><link rel="prefetch" href="/assets/js/8.6fcb3c35.js"><link rel="prefetch" href="/assets/js/9.cd2df33f.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.e9a84dcc.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.5e1f57d9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/zh-cn/" class="home-link router-link-active"><!----> <span class="site-name">Observable Hooks</span></a> <div class="links"><form id="search-form" role="search" class="algolia-search-wrapper search-box"><input id="algolia-search-input" class="search-query"></form> <nav class="nav-links can-hide"><div class="nav-item"><a href="/zh-cn/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/zh-cn/api/" class="nav-link">
+  API
+</a></div><div class="nav-item"><a href="/zh-cn/examples/" class="nav-link router-link-exact-active router-link-active">
+  样例
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="简体中文" class="dropdown-title"><span class="title">选择语言</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/examples/" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh-cn/examples/" class="nav-link router-link-exact-active router-link-active">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/crimx/observable-hooks" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/zh-cn/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/zh-cn/api/" class="nav-link">
+  API
+</a></div><div class="nav-item"><a href="/zh-cn/examples/" class="nav-link router-link-exact-active router-link-active">
+  样例
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="简体中文" class="dropdown-title"><span class="title">选择语言</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/examples/" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh-cn/examples/" class="nav-link router-link-exact-active router-link-active">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/crimx/observable-hooks" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/zh-cn/examples/" class="active sidebar-link">简单例子</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/zh-cn/examples/#条件渲染（原生-javascript-例子）" class="sidebar-link">条件渲染（原生 JavaScript 例子）</a></li><li class="sidebar-sub-header"><a href="/zh-cn/examples/#防抖输入校验（原生-javascript-例子）" class="sidebar-link">防抖输入校验（原生 JavaScript 例子）</a></li><li class="sidebar-sub-header"><a href="/zh-cn/examples/#自动取消（typescript-例子）" class="sidebar-link">自动取消（TypeScript 例子）</a></li></ul></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>样例项目</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/examples/typeahead.html" class="sidebar-link">Typeahead</a></li><li><a href="/examples/pomodoro-timer.html" class="sidebar-link">Pomodoro Timer</a></li><li><a href="/examples/context.html" class="sidebar-link">React Context</a></li><li><a href="/examples/suspense.html" class="sidebar-link">Render-as-You-Fetch (using Suspense)</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>样例项目使用 RxJS7</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/examples/typeahead-rxjs7.html" class="sidebar-link">Typeahead</a></li><li><a href="/examples/pomodoro-timer-rxjs7.html" class="sidebar-link">Pomodoro Timer</a></li><li><a href="/examples/context-rxjs7.html" class="sidebar-link">React Context</a></li><li><a href="/examples/suspense-rxjs7.html" class="sidebar-link">Render-as-You-Fetch (using Suspense)</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="简单例子"><a href="#简单例子" class="header-anchor">#</a> 简单例子</h1> <h2 id="条件渲染（原生-javascript-例子）"><a href="#条件渲染（原生-javascript-例子）" class="header-anchor">#</a> 条件渲染（原生 JavaScript 例子）</h2> <p>使用 observable-hooks 你甚至可以得到 React 元素流。如果想用 Suspense 可以看看 <a href="/zh-cn/guide/render-as-you-fetch-suspense.html">Render-as-You-Fetch (using Suspense)</a>。</p> <p>这会影响到虚拟 DOM 么？不会的，React 元素都是普通对象。 实际上重新渲染时这会比使用 Suspense 或错误边界要快，因为：</p> <ol><li>它不需要 <code>throw</code> 并依赖 <code>try</code> 和 <code>catch</code>。但当然后者这么做可以支持类似 Context 的使用。</li> <li>React 重新渲染父组件的时侯不需要对没有用到的分支也重新计算一遍。甚至如果没有新的值产生子组件都不会被重新渲染。它就像一层天然的缓存。</li></ol> <div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> from<span class="token punctuation">,</span> <span class="token keyword">of</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> map<span class="token punctuation">,</span> switchMap<span class="token punctuation">,</span> startWith<span class="token punctuation">,</span> catchError <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> useObservableState <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'observable-hooks'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> fetchData <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./api'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> DefaultUI<span class="token punctuation">,</span> SuccessUI<span class="token punctuation">,</span> LoadingUI<span class="token punctuation">,</span> FailedUI <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./components'</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>status<span class="token punctuation">,</span> onFetchData<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useObservableState</span><span class="token punctuation">(</span>
+    <span class="token parameter">event$</span> <span class="token operator">=&gt;</span> event$<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+      <span class="token comment">// OMG I don't have to deal with race condition</span>
+      <span class="token function">switchMap</span><span class="token punctuation">(</span><span class="token parameter">event</span> <span class="token operator">=&gt;</span>
+        <span class="token function">from</span><span class="token punctuation">(</span><span class="token function">fetchData</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+          <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">value</span> <span class="token operator">=&gt;</span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">SuccessUI</span></span> <span class="token attr-name">value</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>value<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token comment">// handle errors on sub-stream so that main stream stays alive</span>
+          <span class="token function">catchError</span><span class="token punctuation">(</span><span class="token parameter">error</span> <span class="token operator">=&gt;</span> <span class="token keyword">of</span><span class="token punctuation">(</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">FailedUI</span></span> <span class="token attr-name">error</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>error<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+          <span class="token comment">// show loading state immediately</span>
+          <span class="token function">startWith</span><span class="token punctuation">(</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">LoadingUI</span></span> <span class="token punctuation">/&gt;</span></span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+      <span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span>  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">DefaultUI</span></span> <span class="token punctuation">/&gt;</span></span> <span class="token comment">// initial state</span>
+  <span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>data1<span class="token punctuation">&quot;</span></span> <span class="token attr-name">onClick</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>onFetchData<span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">fetch</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token punctuation">{</span>status<span class="token punctuation">}</span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="防抖输入校验（原生-javascript-例子）"><a href="#防抖输入校验（原生-javascript-例子）" class="header-anchor">#</a> 防抖输入校验（原生 JavaScript 例子）</h2> <div class="language-jsx extra-class"><pre class="language-jsx"><code><span class="token keyword">import</span> React <span class="token keyword">from</span> <span class="token string">'react'</span>
+<span class="token keyword">import</span> PropTypes <span class="token keyword">from</span> <span class="token string">'prop-types'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> withLatestFrom<span class="token punctuation">,</span> switchMap<span class="token punctuation">,</span> debounceTime<span class="token punctuation">,</span> pluck <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> useObservable<span class="token punctuation">,</span> useObservableState<span class="token punctuation">,</span> pluckFirst <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'observable-hooks'</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">checkText</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">text<span class="token punctuation">,</span> uuid</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+  <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">https://api/</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>text<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">?uuid=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>uuid<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">response</span> <span class="token operator">=&gt;</span> response<span class="token punctuation">.</span>ok<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token boolean">false</span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">App</span> <span class="token operator">=</span> <span class="token parameter">props</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// `pluckFirst` 是一个简单的辅助方法</span>
+  <span class="token comment">// 相当于 `inputs$ =&gt; inputs$.pipe(map(inputs =&gt; inputs[0]))`</span>
+  <span class="token keyword">const</span> uuid$ <span class="token operator">=</span> <span class="token function">useObservable</span><span class="token punctuation">(</span>pluckFirst<span class="token punctuation">,</span> <span class="token punctuation">[</span>props<span class="token punctuation">.</span>uuid<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>isValid<span class="token punctuation">,</span> onChange<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useObservableState</span><span class="token punctuation">(</span>
+    <span class="token parameter">event$</span> <span class="token operator">=&gt;</span>
+      event$<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+        <span class="token comment">// React 合成事件对象会被自动回收</span>
+        <span class="token comment">// 先把值取出来</span>
+        <span class="token function">pluck</span><span class="token punctuation">(</span><span class="token string">'currentTarget'</span><span class="token punctuation">,</span> <span class="token string">'value'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token function">debounceTime</span><span class="token punctuation">(</span><span class="token number">400</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token function">withLatestFrom</span><span class="token punctuation">(</span>uuid$<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token function">switchMap</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">[</span>text<span class="token punctuation">,</span> uuid<span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">checkText</span><span class="token punctuation">(</span>text<span class="token punctuation">,</span> uuid<span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token boolean">false</span>
+  <span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>onChange<span class="token punctuation">}</span></span> <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>submit<span class="token punctuation">&quot;</span></span> <span class="token attr-name">disabled</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token operator">!</span>isValid<span class="token punctuation">}</span></span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+        Submit
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+App<span class="token punctuation">.</span>propTypes <span class="token operator">=</span> <span class="token punctuation">{</span>
+  uuid<span class="token operator">:</span> PropTypes<span class="token punctuation">.</span>string
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="自动取消（typescript-例子）"><a href="#自动取消（typescript-例子）" class="header-anchor">#</a> 自动取消（TypeScript 例子）</h2> <div class="language-tsx extra-class"><pre class="language-tsx"><code><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token constant">FC</span><span class="token punctuation">,</span> useState <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'react'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> timer<span class="token punctuation">,</span> empty <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'rxjs'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> switchMap<span class="token punctuation">,</span> mapTo <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'rxjs/operators'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> useObservable<span class="token punctuation">,</span> useSubscription <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'observable-hooks'</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">sendBeacon</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">beacon<span class="token operator">:</span> string</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token function">fetch</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">https://api?beacon=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>beacon<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">interface</span> <span class="token class-name">AppProps</span> <span class="token punctuation">{</span>
+  beacon<span class="token operator">:</span> <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> App<span class="token operator">:</span> <span class="token constant">FC</span><span class="token operator">&lt;</span>AppProps<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token parameter">props</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">[</span>shouldSendBeacon<span class="token punctuation">,</span> setShouldSendBeacon<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">useState</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> beacon$ <span class="token operator">=</span> <span class="token function">useObservable</span><span class="token punctuation">(</span>
+    <span class="token parameter">inputs$</span> <span class="token operator">=&gt;</span>
+      inputs$<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>
+        <span class="token comment">// auto-cancelation</span>
+        <span class="token function">switchMap</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">[</span>shouldSendBeacon<span class="token punctuation">,</span> beacon<span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+          shouldSendBeacon <span class="token operator">?</span> <span class="token function">timer</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">mapTo</span><span class="token punctuation">(</span>beacon<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">)</span>
+      <span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span>shouldSendBeacon<span class="token punctuation">,</span> props<span class="token punctuation">.</span>beacon<span class="token punctuation">]</span>
+  <span class="token punctuation">)</span>
+
+  <span class="token function">useSubscription</span><span class="token punctuation">(</span>beacon$<span class="token punctuation">,</span> sendBeacon<span class="token punctuation">)</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>label</span><span class="token punctuation">&gt;</span></span><span class="token plain-text">
+      </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span>
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>checkbox<span class="token punctuation">&quot;</span></span>
+        <span class="token attr-name">checked</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span>shouldSendBeacon<span class="token punctuation">}</span></span>
+        <span class="token attr-name">onChange</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token parameter">e</span> <span class="token operator">=&gt;</span> <span class="token function">setShouldSendBeacon</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>currentTarget<span class="token punctuation">.</span>checked<span class="token punctuation">)</span><span class="token punctuation">}</span></span>
+      <span class="token punctuation">/&gt;</span></span><span class="token plain-text">
+      Should Send Beacon
+    </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>label</span><span class="token punctuation">&gt;</span></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/crimx/observable-hooks/edit/master/docs/zh-cn/examples/README.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <!----></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/examples/typeahead.html">
+        Typeahead
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.f622acff.js" defer></script><script src="/assets/js/3.20101007.js" defer></script><script src="/assets/js/24.baf0a7a9.js" defer></script><script src="/assets/js/4.f2192f58.js" defer></script>
+  </body>
+</html>
