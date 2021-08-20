@@ -101,7 +101,7 @@ In addition to states, you can also call observer callbacks with [`useSubscripti
 
 Some libraries also provide ways to create observables from Normal World, subscribe to those observables, then connect emitted values back to Normal World.
 
-We can create observables somewhere outside of React component and somehow pass them in, but most likely we would like to crate observables inside React components.
+We can create observables somewhere outside of React components and somehow pass them in, but most likely we would like to create observables inside React components.
 
 There are two ways to achieve that:
 
