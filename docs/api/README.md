@@ -91,6 +91,8 @@ If no dependencies provided it is identical with [`useObservable`](#useobservabl
 
 This is useful if you need values before next paint.
 
+Use it scarcely as it runs synchronously before browser paint. Too many synchronous emissions from the observable could stretch the commit phase.
+
 ## useObservableCallback
 
 ```typescript
@@ -537,6 +539,16 @@ const text2$ = of('A', 'B', 'C')
 // 'C'
 const text2 = useObservableEagerState(text2$)
 ```
+
+## useLayoutObservableState
+
+Same as [`useObservableState`](#useobservablestate) except the subscription is established under `useLayoutEffect`.
+
+Unlike [`useObservableEagerState`][#useobservableeagerstate] which gets state value synchronously before the first React rendering,  `useLayoutObservableState` gets state value synchronously after React rendering，while `useObservableState` gets state value asynchronously after React rendering and browser paint.
+
+Useful when values are needed before DOM paint.
+
+Use it scarcely as it runs synchronously before browser paint. Too many synchronous emissions from the observable could stretch the commit phase.
 
 ## useObservableGetState
 

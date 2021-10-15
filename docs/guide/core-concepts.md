@@ -32,7 +32,7 @@ Almost every RxJS-React binding library provides ways to connect observable valu
 
 ### Observable to State
 
-In observable-hooks we have [`useObservableState`][useObservableState] and [`useObservableEagerState`][useObservableEagerState].
+In observable-hooks we have [`useObservableState`][useObservableState], [`useObservableEagerState`][useObservableEagerState] and [`useLayoutObservableState`][useLayoutObservableState].
 
 ```
 
@@ -283,6 +283,7 @@ The [Epic](https://redux-observable.js.org/docs/basics/Epics.html)-like signatur
 [useLayoutSubscription]: ../api/README.md#uselayoutsubscription
 [useObservableState]: ../api/README.md#useobservablestate
 [useObservableEagerState]: ../api/README.md#useobservableeagerstate
+[useLayoutObservableState]: ../api/README.md#uselayoutobservablestate
 [useObservableGetState]: ../api/README.md#useobservablegetstate
 [useObservablePickState]: ../api/README.md#useobservablepickstate
 

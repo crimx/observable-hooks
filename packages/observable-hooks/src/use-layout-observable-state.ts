@@ -1,19 +1,22 @@
 import { BehaviorSubject, Observable } from 'rxjs'
-import { useSubscription } from './use-subscription'
+import { useLayoutSubscription } from './use-layout-subscription'
 import { useObservableStateInternal } from './internal/use-observable-state-internal'
 
 /**
+ * Same as [[useObservableState]] except the subscription is established
+ * under `useLayoutEffect`.
+ *
  * A sugar hook for getting values from an Observable.
  *
  * It can be used in two ways:
  *
  * 1. Offer an Observable and an optional initial state.
  *    ```js
- *    const output = useObservableState(input$, initialState)
+ *    const output = useLayoutObservableState(input$, initialState)
  *    ```
  * 2. Offer an epic-like function and an optional initial state.
  *    ```js
- *    const [output, onInput] = useObservableState(
+ *    const [output, onInput] = useLayoutObservableState(
  *      (input$, initialState) => input$.pipe(...),
  *      initialState
  *    )
@@ -29,7 +32,7 @@ import { useObservableStateInternal } from './internal/use-observable-state-inte
  * ⚠ **Note:** These two ways use different hooks, choose either one each time
  * and do not change to the other one during Component's life cycle.
  *
- * ⚠ **Note:** `useObservableState` will call the epic-like `init` function only once
+ * ⚠ **Note:** `useLayoutObservableState` will call the epic-like `init` function only once
  * and always return the same Observable.
  * It is not safe to access closure directly inside `init`.
  * Use [[useObservable]] with `withLatestFrom` instead.
@@ -42,7 +45,7 @@ import { useObservableStateInternal } from './internal/use-observable-state-inte
  *
  * @param input$ A BehaviorSubject.
  */
-export function useObservableState<TState>(
+export function useLayoutObservableState<TState>(
   input$: BehaviorSubject<TState>
 ): TState
 /**
@@ -50,7 +53,7 @@ export function useObservableState<TState>(
  *
  * @param input$ An Observable.
  */
-export function useObservableState<TState>(
+export function useLayoutObservableState<TState>(
   input$: Observable<TState>
 ): TState | undefined
 /**
@@ -60,7 +63,7 @@ export function useObservableState<TState>(
  * @param initialState Optional initial state.
  * Can be the state value or a function that returns the state.
  */
-export function useObservableState<TState>(
+export function useLayoutObservableState<TState>(
   input$: Observable<TState>,
   initialState: TState | (() => TState)
 ): TState
@@ -71,7 +74,7 @@ export function useObservableState<TState>(
  * @param init A epic-like function that, when applied to an Observable
  * and the initial state value, returns an Observable.
  */
-export function useObservableState<TState, TInput = TState>(
+export function useLayoutObservableState<TState, TInput = TState>(
   init: (input$: Observable<TInput>) => Observable<TState>
 ): [TState | undefined, (input: TInput) => void]
 /**
@@ -85,14 +88,14 @@ export function useObservableState<TState, TInput = TState>(
  * @param initialState Optional initial state.
  * Can be the state value or a function that returns the state.
  */
-export function useObservableState<TState, TInput = TState>(
+export function useLayoutObservableState<TState, TInput = TState>(
   init: (
     input$: Observable<TInput>,
     initialState: TState
   ) => Observable<TState>,
   initialState: TState | (() => TState)
 ): [TState, (input: TInput) => void]
-export function useObservableState<TState, TInput = TState>(
+export function useLayoutObservableState<TState, TInput = TState>(
   state$OrInit:
     | Observable<TState>
     | ((
@@ -101,5 +104,9 @@ export function useObservableState<TState, TInput = TState>(
       ) => Observable<TState>),
   initialState?: TState | (() => TState)
 ): TState | undefined | [TState | undefined, (input: TInput) => void] {
-  return useObservableStateInternal(useSubscription, state$OrInit, initialState)
+  return useObservableStateInternal(
+    useLayoutSubscription,
+    state$OrInit,
+    initialState
+  )
 }
