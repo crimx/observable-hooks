@@ -546,7 +546,7 @@ const text2 = useObservableEagerState(text2$)
 
 与 [`useObservableState`](#useobservablestate) 基本一样，不同的是底下使用 [`useLayoutEffect`][useLayoutEffect] 监听改变。
 
-与 [`useObservableEagerState`][#useobservableeagerstate] 不一样，[`useObservableEagerState`][#useobservableeagerstate] 会在第一次 React 渲染前同步获取值，而 `useLayoutObservableState` 是在 React 渲染之后同步获取值，`useObservableState` 则是在 React 渲染并绘制完成之后异步获取值。
+与 [`useObservableEagerState`](#useobservableeagerstate) 不一样，[`useObservableEagerState`](#useobservableeagerstate) 会在第一次 React 渲染前同步获取值，而 `useLayoutObservableState` 是在 React 渲染之后同步获取值，`useObservableState` 则是在 React 渲染并绘制完成之后异步获取值。
 
 如果需要在下次浏览器绘制前拿到值可以用它。
 

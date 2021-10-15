@@ -548,7 +548,7 @@ const text2 = useObservableEagerState(text2$)
 
 Same as [`useObservableState`](#useobservablestate) except the subscription is established under `useLayoutEffect`.
 
-Unlike [`useObservableEagerState`][#useobservableeagerstate] which gets state value synchronously before the first React rendering,  `useLayoutObservableState` gets state value synchronously after React rendering，while `useObservableState` gets state value asynchronously after React rendering and browser paint.
+Unlike [`useObservableEagerState`](#useobservableeagerstate) which gets state value synchronously before the first React rendering,  `useLayoutObservableState` gets state value synchronously after React rendering，while `useObservableState` gets state value asynchronously after React rendering and browser paint.
 
 Useful when values are needed before DOM paint.
 
