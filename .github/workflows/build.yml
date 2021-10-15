@@ -1,0 +1,41 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js ⚙️
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Install and Build 🔧
+        run: |
+          node ./scripts/setup-rxjs7
+          yarn install
+          yarn lerna bootstrap
+          yarn run lint
+          yarn run test
+          yarn run build
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docs 📖
+        run: |
+          yarn run docs:build
+          touch 'docs/.vuepress/dist/.nojekyll'
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: docs/.vuepress/dist
