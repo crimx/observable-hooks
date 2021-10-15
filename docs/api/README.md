@@ -542,6 +542,10 @@ const text2 = useObservableEagerState(text2$)
 
 ## useLayoutObservableState
 
+<p>
+  <Badge text="v4.1.0"/> Added since <code>v4.1.0</code>.
+</p>
+
 Same as [`useObservableState`](#useobservablestate) except the subscription is established under `useLayoutEffect`.
 
 Unlike [`useObservableEagerState`][#useobservableeagerstate] which gets state value synchronously before the first React rendering,  `useLayoutObservableState` gets state value synchronously after React rendering，while `useObservableState` gets state value asynchronously after React rendering and browser paint.
