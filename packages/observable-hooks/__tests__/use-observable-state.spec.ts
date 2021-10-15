@@ -1,6 +1,6 @@
 import { useObservableState, identity } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
-import { of, Subject, throwError } from 'rxjs'
+import { BehaviorSubject, of, Subject, throwError } from 'rxjs'
 import { map, scan } from 'rxjs/operators'
 
 describe('useObservableState', () => {
@@ -49,6 +49,20 @@ describe('useObservableState', () => {
     it('should get the init state if given', () => {
       const { result } = renderHook(() => useObservableState(identity, 1))
       expect(result.current[0]).toBe(1)
+    })
+
+    it('should get the init state of BehaviorSubject without initialState', () => {
+      const value$ = new BehaviorSubject('22')
+      const { result } = renderHook(() => useObservableState(value$))
+      expect(result.current).toBe('22')
+    })
+
+    it('should ignore the manual initialState for BehaviorSubject', () => {
+      const value$ = new BehaviorSubject('22')
+      const { result } = renderHook(() =>
+        useObservableState(value$, 'initialState')
+      )
+      expect(result.current).toBe('22')
     })
 
     it('should ignore the given init state when Observable also emits sync values', () => {

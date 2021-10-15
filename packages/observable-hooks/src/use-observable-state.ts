@@ -41,22 +41,19 @@ import { useRefFn, getEmptySubject } from './helpers'
  *
  * @template TState Output state.
  *
+ * @param input$ A BehaviorSubject.
+ */
+export function useObservableState<TState>(
+  input$: BehaviorSubject<TState>
+): TState
+/**
+ * @template TState Output state.
+ *
  * @param input$ An Observable.
  */
 export function useObservableState<TState>(
   input$: Observable<TState>
 ): TState | undefined
-/**
- * @template TState Output state.
- *
- * @param input$ A BehaviorSubject.
- * @param initialState Optional initial state (defaults to the BehaviorSubject's value).
- * Can be the state value or a function that returns the state.
- */
-export function useObservableState<TState>(
-  input$: BehaviorSubject<TState>,
-  initialState?: TState | (() => TState)
-): TState
 /**
  * @template TState Output state.
  *
@@ -105,11 +102,7 @@ export function useObservableState<TState, TInput = TState>(
       ) => Observable<TState>),
   initialState?: TState | (() => TState)
 ): TState | undefined | [TState | undefined, (input: TInput) => void] {
-  const [state, setState] = useState<TState | undefined>(
-    state$OrInit instanceof BehaviorSubject 
-      ? state$OrInit.value 
-      : initialState
-  )
+  const [state, setState] = useState<TState | undefined>(initialState)
 
   let callback: undefined | ((input: TInput) => void)
   let state$: Observable<TState>
