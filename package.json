@@ -23,7 +23,6 @@
     "docs:build": "vuepress build docs",
     "commit": "git-cz",
     "lint": "eslint packages/**",
-    "test:CI": "jest --coverage --coverageReporters=text-lcov | coveralls",
     "release": "lerna version --conventional-commits",
     "publish": "lerna publish from-package",
     "ship": "lerna run build && yarn run publish"
