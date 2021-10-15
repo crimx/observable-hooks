@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.1.0](https://github.com/crimx/observable-hooks/compare/v4.0.5...v4.1.0) (2021-10-15)
+
+
+### Features
+
+* **observable-hooks:** add useLayoutObservableState ([73439e9](https://github.com/crimx/observable-hooks/commit/73439e9b8a6fb49eb486bef1482fab43c4830454))
+* **observable-hooks:** better type infer for BehaviorSubject ([25f8eec](https://github.com/crimx/observable-hooks/commit/25f8eec4484f5ffdf85fb45cf65d5fa7d96fcf57))
+
+
+
+
+
 ## [4.0.5](https://github.com/crimx/observable-hooks/compare/v4.0.4...v4.0.5) (2021-06-12)
 
 **Note:** Version bump only for package observable-hooks-mono
