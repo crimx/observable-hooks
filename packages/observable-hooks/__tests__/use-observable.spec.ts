@@ -72,7 +72,7 @@ describe('useObservable', () => {
     expect(spy).toBeCalledWith(2)
   })
 
-  it('should be able to be shared with multipule observers', () => {
+  it('should be able to be shared with multiple observers', () => {
     const { result } = renderHook(() => {
       const [state, setState] = useState(1)
       const stream$ = useObservable(pluckFirst, [state])
