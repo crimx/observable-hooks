@@ -17,8 +17,8 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
-          node ./scripts/setup-rxjs7
           yarn install
+          node ./scripts/setup-rxjs7
           yarn lerna bootstrap
           yarn run lint
           yarn run test
