@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 
 /**
  * @template TOutput Output value within Observable.
- * @template TInputs An readonly tuple of all dependencies.
+ * @template TInputs A readonly tuple of all dependencies.
  *
  * @param useCustomEffect useEffect or useLayoutEffect
  * @param init A pure function that, when applied to an Observable,

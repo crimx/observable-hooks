@@ -10,7 +10,7 @@ import { useObservableInternal } from './internal/use-observable-internal'
  * will be turned into Observable and be passed to the
  * `init` function.
  *
- * React function components will be called many times during its life cycle.
+ * React functional components are called many times during their lifecycle.
  * Create or transform Observables in `init` function so that the operations
  * won't be repeatedly performed.
  *
@@ -33,7 +33,7 @@ export function useLayoutObservable<TOutput>(
 ): Observable<TOutput>
 /**
  * @template TOutput Output value within Observable.
- * @template TInputs An readonly tuple of all dependencies.
+ * @template TInputs A readonly tuple of all dependencies.
  *
  * @param init A pure function that, when applied to an Observable,
  * returns an Observable.

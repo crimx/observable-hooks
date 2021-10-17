@@ -10,9 +10,10 @@ useObservable<TOutput, TInputs>(
 ): Observable<TOutput>
 ```
 
-React function components will be called many times during its life cycle. Create or transform Observables with `useObservable` so that the operations will not be repeatedly performed.
+React functional components are called many times during their lifecycle. Create or transform Observables with `useObservable` so that the operations will not be repeatedly performed.
 
-Accepts a epic-like function that returns an Observable. Optionally accepts an array of dependencies which will be turned into Observable and be passed to the epic function.
+Accepts an epic-like function that returns an Observable. Optionally accepts 
+an array of dependencies which will be turned into Observable and be passed to the epic function.
 
 ::: warning Gotcha
 It is not safe to access other variables from closure directly in the `init` function. See [Gotchas](../guide/gotchas.md).
@@ -25,7 +26,7 @@ The dependencies array is internally passed to [`useEffect`][useEffect]. So same
 **Type parameters:**
 
 - `TOutput` Output value within Observable.
-- `TInputs` An readonly tuple of all dependencies.
+- `TInputs` A readonly tuple of all dependencies.
 
 **Parameters:**
 
