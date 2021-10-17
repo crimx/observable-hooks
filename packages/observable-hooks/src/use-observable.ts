@@ -31,7 +31,7 @@ export function useObservable<TOutput>(
 ): Observable<TOutput>
 /**
  * @template TOutput Output value within Observable.
- * @template TInputs An readonly tuple of all dependencies.
+ * @template TInputs A readonly tuple of all dependencies.
  *
  * @param init A pure function that, when applied to an Observable,
  * returns an Observable.

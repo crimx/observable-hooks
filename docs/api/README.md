@@ -25,7 +25,7 @@ The dependencies array is internally passed to [`useEffect`][useEffect]. So same
 **Type parameters:**
 
 - `TOutput` Output value within Observable.
-- `TInputs` An readonly tuple of all dependencies.
+- `TInputs` A readonly tuple of all dependencies.
 
 **Parameters:**
 
