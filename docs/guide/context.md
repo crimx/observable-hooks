@@ -8,7 +8,7 @@ Also see the [context](/examples/context.html) example project.
 
 ## With Normal Value
 
-Conventionally we pass normal values down the Context. React offers a [`useContext`](https://reactjs.org/docs/hooks-reference.html#usecontext) hook to cosume the value.
+Conventionally we pass normal values down the Context. React offers a [`useContext`](https://reactjs.org/docs/hooks-reference.html#usecontext) hook to consume the value.
 
 This can be easily captured by the [`useObservable`](./README/md#useobservable) hooks.
 
