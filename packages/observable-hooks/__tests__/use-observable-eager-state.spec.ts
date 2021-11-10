@@ -51,7 +51,7 @@ describe('useObservableEagerState', () => {
     expect(result.current).toBe(3)
   })
 
-  it('should subscribe the twice by dafult', () => {
+  it('should subscribe the twice by default', () => {
     const spy = jest.fn()
     const outer$$ = of(1).pipe(tap(spy))
     const { result } = renderHook(() => useObservableEagerState(outer$$))

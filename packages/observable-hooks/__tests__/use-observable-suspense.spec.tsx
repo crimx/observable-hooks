@@ -19,13 +19,13 @@ async function actSuspense(action: () => any = timer) {
 type SuspenseState = 'pending' | 'success' | 'error' | ''
 
 describe('useObservableSuspense', () => {
-  let container: HTMLDivElement = (null as unknown) as HTMLDivElement
+  let container: HTMLDivElement = null as unknown as HTMLDivElement
 
-  function renderHook<TInput, TOuput extends TInput>(
-    resource: ObservableResource<TInput, TOuput>
+  function renderHook<TInput, TOutput extends TInput>(
+    resource: ObservableResource<TInput, TOutput>
   ) {
     const result: {
-      value?: TOuput | Error
+      value?: TOutput | Error
       renderCount: number
       getStatus: () => SuspenseState
       clearError: () => void
@@ -85,7 +85,7 @@ describe('useObservableSuspense', () => {
   afterEach(() => {
     unmountComponentAtNode(container)
     container.remove()
-    container = (null as unknown) as HTMLDivElement
+    container = null as unknown as HTMLDivElement
   })
 
   it('should trigger Suspense on init when no sync value is emitted', async () => {
@@ -272,7 +272,7 @@ describe('useObservableSuspense', () => {
       expect(topLevelErrors.length).toBe(1)
     })
 
-    it('should throw error when the Obdervable emits errors during pending state', async () => {
+    it('should throw error when the Observable emits errors during pending state', async () => {
       const input$ = new Subject<number>()
       const inputResource = new ObservableResource(input$)
       const result = renderHook(inputResource)
@@ -293,7 +293,7 @@ describe('useObservableSuspense', () => {
       expect(topLevelErrors.length).toBe(1)
     })
 
-    it('should throw error when the Obdervable emits errors during success state', async () => {
+    it('should throw error when the Observable emits errors during success state', async () => {
       const input$ = new BehaviorSubject<number>(1)
       const inputResource = new ObservableResource(input$)
       const result = renderHook(inputResource)
@@ -453,7 +453,7 @@ describe('useObservableSuspense', () => {
       try {
         inputResource.reload()
       } catch (e) {
-        error = e
+        error = e as Error
       }
 
       expect(error).toBeInstanceOf(Error)
