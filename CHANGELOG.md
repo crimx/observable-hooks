@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.2](https://github.com/crimx/observable-hooks/compare/v4.1.1...v4.1.2) (2021-11-10)
+
+
+### Bug Fixes
+
+* **observable-hooks:** get initial value from BehaviorSubject ([7603979](https://github.com/crimx/observable-hooks/commit/76039799a674cdfc6aeb81ad3bcc7973bc8a06ef)), closes [#88](https://github.com/crimx/observable-hooks/issues/88)
+
+
+
+
+
 ## [4.1.1](https://github.com/crimx/observable-hooks/compare/v4.1.0...v4.1.1) (2021-11-10)
 
 
