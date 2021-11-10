@@ -1,4 +1,4 @@
-import { Observable, isObservable, Subject } from 'rxjs'
+import { Observable, isObservable, Subject, BehaviorSubject } from 'rxjs'
 import { useState, useRef, useDebugValue } from 'react'
 import type { useSubscription as useSubscriptionType } from '../use-subscription'
 import { useRefFn, getEmptySubject } from '../helpers'
@@ -13,29 +13,45 @@ export function useObservableStateInternal<TState, TInput = TState>(
       ) => Observable<TState>),
   initialState?: TState | (() => TState)
 ): TState | undefined | [TState | undefined, (input: TInput) => void] {
-  const [state, setState] = useState<TState | undefined>(initialState)
-
-  let callback: undefined | ((input: TInput) => void)
-  let state$: Observable<TState>
-
+  // Even though hooks are under conditional block
+  // it is for a completely different use case
+  // which unlikely coexists with the other one.
+  // A warning is also added to the docs.
   if (isObservable(state$OrInit)) {
-    state$ = state$OrInit
+    const state$ = state$OrInit
+    const [state, setState] = useState<TState | undefined>(() => {
+      if (
+        state$ instanceof BehaviorSubject ||
+        (state$ as BehaviorSubject<TState>).value !== undefined
+      ) {
+        return (state$ as BehaviorSubject<TState>).value
+      }
+      if (typeof initialState === 'function') {
+        return (initialState as () => TState)()
+      }
+      return initialState
+    })
+
+    useSubscription(state$, setState)
+
+    useDebugValue(state)
+
+    return state
   } else {
     const init = state$OrInit
-    // Even though hooks are under conditional block
-    // it is for a completely different use case
-    // which unlikely coexists with the other one.
-    // A warning is also added to the docs.
+    const [state, setState] = useState<TState | undefined>(initialState)
+
     const input$Ref = useRefFn<Subject<TInput>>(getEmptySubject)
 
-    state$ = useRefFn(() => init(input$Ref.current, state)).current
-    callback = useRef((state: TInput) => input$Ref.current.next(state)).current
+    const state$ = useRefFn(() => init(input$Ref.current, state)).current
+    const callback = useRef((state: TInput) =>
+      input$Ref.current.next(state)
+    ).current
+
+    useSubscription(state$, setState)
+
+    useDebugValue(state)
+
+    return [state, callback]
   }
-
-  useSubscription(state$, setState)
-
-  // Display state in React DevTools.
-  useDebugValue(state)
-
-  return callback ? [state, callback] : state
 }

@@ -53,16 +53,37 @@ describe('useLayoutObservableState', () => {
 
     it('should get the init state of BehaviorSubject without initialState', () => {
       const value$ = new BehaviorSubject('22')
-      const { result } = renderHook(() => useLayoutObservableState(value$))
+      const renderTimes = jest.fn()
+      const { result } = renderHook(() => {
+        const result = useLayoutObservableState(value$)
+        renderTimes(result)
+        return result
+      })
       expect(result.current).toBe('22')
+      expect(renderTimes).toHaveBeenCalledTimes(1)
+      expect(renderTimes).toHaveBeenLastCalledWith('22')
     })
 
     it('should ignore the manual initialState for BehaviorSubject', () => {
       const value$ = new BehaviorSubject('22')
-      const { result } = renderHook(() =>
-        useLayoutObservableState(value$, 'initialState')
-      )
+      const renderTimes = jest.fn()
+      const { result } = renderHook(() => {
+        const result = useLayoutObservableState(value$, 'initialState')
+        renderTimes(result)
+        return result
+      })
       expect(result.current).toBe('22')
+      expect(renderTimes).toBeCalledTimes(1)
+      expect(renderTimes).toHaveBeenLastCalledWith('22')
+
+      act(() => value$.next('22'))
+      expect(result.current).toBe('22')
+      expect(renderTimes).toBeCalledTimes(1)
+
+      act(() => value$.next('33'))
+      expect(result.current).toBe('33')
+      expect(renderTimes).toBeCalledTimes(2)
+      expect(renderTimes).toHaveBeenLastCalledWith('33')
     })
 
     it('should ignore the given init state when Observable also emits sync values', () => {
