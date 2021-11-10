@@ -56,6 +56,8 @@ export function useObservableEagerState<TState>(
     // keep in closure for checking staleness
     const input$ = state$Ref.current
 
+    let secondInitialValue = state
+
     const subscription = input$.subscribe({
       next: value => {
         if (input$ !== state$Ref.current) {
@@ -66,6 +68,8 @@ export function useObservableEagerState<TState>(
           // ignore synchronous value
           // prevent initial re-rendering
           setState(value)
+        } else {
+          secondInitialValue = value
         }
       },
       error: error => {
@@ -77,6 +81,13 @@ export function useObservableEagerState<TState>(
         forceUpdate()
       }
     })
+
+    if (!isAsyncEmissionRef.current) {
+      // fix #86 where sync emission may happen before useEffect
+      if (secondInitialValue !== state) {
+        setState(secondInitialValue)
+      }
+    }
 
     isAsyncEmissionRef.current = true
 
