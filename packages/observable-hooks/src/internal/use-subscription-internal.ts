@@ -9,15 +9,6 @@ type Args<TInput> = [
   (() => void) | null | undefined
 ]
 
-const getObserver = <TInput>(args: Args<TInput>) =>
-  typeof args[1] === 'function' || args[1] === null || args[1] === undefined
-    ? {
-        next: args[1],
-        error: args[2],
-        complete: args[3]
-      }
-    : args[1]
-
 /**
  *
  * @template TInput Input value within Observable.
@@ -53,9 +44,11 @@ export function useSubscriptionInternal<TInput>(
           // stale observable
           return
         }
-        const observer = getObserver(argsRef.current)
-        if (observer.next) {
-          return observer.next(value)
+        const nextObserver =
+          (argsRef.current[1] as PartialObserver<TInput>)?.next ||
+          (argsRef.current[1] as ((value: TInput) => void) | null | undefined)
+        if (nextObserver) {
+          return nextObserver(value)
         }
       },
       error: error => {
@@ -63,10 +56,12 @@ export function useSubscriptionInternal<TInput>(
           // stale observable
           return
         }
-        const observer = getObserver(argsRef.current)
-        if (observer.error) {
+        const errorObserver =
+          (argsRef.current[1] as PartialObserver<TInput>)?.error ||
+          argsRef.current[2]
+        if (errorObserver) {
           errorRef.current = null
-          return observer.error(error)
+          return errorObserver(error)
         }
         errorRef.current = error
         forceUpdate()
@@ -76,9 +71,11 @@ export function useSubscriptionInternal<TInput>(
           // stale observable
           return
         }
-        const observer = getObserver(argsRef.current)
-        if (observer.complete) {
-          return observer.complete()
+        const completeObserver =
+          (argsRef.current[1] as PartialObserver<TInput>)?.complete ||
+          argsRef.current[3]
+        if (completeObserver) {
+          return completeObserver()
         }
       }
     })
