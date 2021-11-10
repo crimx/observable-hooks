@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [4.1.1](https://github.com/crimx/observable-hooks/compare/v4.1.0...v4.1.1) (2021-11-10)
+
+
+### Bug Fixes
+
+* **observable-hooks:** check sync emissions on useObservableEgarState ([7df8b71](https://github.com/crimx/observable-hooks/commit/7df8b71e1af92b1553bfc2a6d12f5fcd6ee8e141)), closes [#86](https://github.com/crimx/observable-hooks/issues/86)
+
+
+
+
+
 # [4.1.0](https://github.com/crimx/observable-hooks/compare/v4.0.5...v4.1.0) (2021-10-15)
 
 
