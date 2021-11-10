@@ -19,6 +19,10 @@ export function useObservableInternal<TOutput, TInputs extends Readonly<any[]>>(
     | ((inputs$: Observable<[...TInputs]>) => Observable<TOutput>),
   inputs?: [...TInputs]
 ): Observable<TOutput> {
+  // Even though hooks are under conditional block
+  // it is for a completely different use case
+  // which unlikely coexists with the other one.
+  // A warning is also added to the docs.
   if (!inputs) {
     return useRefFn(init as () => Observable<TOutput>).current
   }
