@@ -1,5 +1,5 @@
 import { Observable, PartialObserver, Subscription } from 'rxjs'
-import { useForceUpdate, useIsomorphicLayoutEffect } from '../helpers'
+import { useIsomorphicLayoutEffect } from '../helpers'
 import { MutableRefObject, useEffect, useRef } from 'react'
 
 type Args<TInput> = [
@@ -20,10 +20,7 @@ export function useSubscriptionInternal<TInput>(
   useCustomEffect: typeof useEffect,
   args: Args<TInput>
 ): MutableRefObject<Subscription | undefined> {
-  const forceUpdate = useForceUpdate()
-
   const argsRef = useRef(args)
-  const errorRef = useRef<Error | null>()
   const subscriptionRef = useRef<Subscription>()
 
   // Update the latest observable and callbacks
@@ -33,8 +30,6 @@ export function useSubscriptionInternal<TInput>(
   })
 
   useCustomEffect(() => {
-    errorRef.current = null
-
     // keep in closure for checking staleness
     const input$ = argsRef.current[0]
 
@@ -60,11 +55,9 @@ export function useSubscriptionInternal<TInput>(
           (argsRef.current[1] as PartialObserver<TInput>)?.error ||
           argsRef.current[2]
         if (errorObserver) {
-          errorRef.current = null
           return errorObserver(error)
         }
-        errorRef.current = error
-        forceUpdate()
+        console.error(error)
       },
       complete: () => {
         if (input$ !== argsRef.current[0]) {
@@ -86,11 +79,6 @@ export function useSubscriptionInternal<TInput>(
       subscription.unsubscribe()
     }
   }, [args[0]])
-
-  if (errorRef.current) {
-    // Let error boundary catch the error
-    throw errorRef.current
-  }
 
   return subscriptionRef
 }
