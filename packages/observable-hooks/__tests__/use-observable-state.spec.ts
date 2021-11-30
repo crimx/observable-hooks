@@ -2,6 +2,7 @@ import { useObservableState, identity } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { BehaviorSubject, of, Subject, throwError } from 'rxjs'
 import { map, scan } from 'rxjs/operators'
+import { mockConsoleError } from './utils'
 
 describe('useObservableState', () => {
   describe('with init function', () => {
@@ -91,12 +92,15 @@ describe('useObservableState', () => {
       expect(result.current[0]).toBe(2)
     })
 
-    it('should throw error when observable emits error', () => {
-      const { result } = renderHook(() =>
-        useObservableState(() => throwError(new Error('oops')))
-      )
-      expect(result.error).toBeInstanceOf(Error)
-      expect(result.error.message).toBe('oops')
+    it('should log error when observable emits error', () => {
+      return mockConsoleError(consoleError => {
+        const { result } = renderHook(() =>
+          useObservableState(() => throwError(new Error('oops')))
+        )
+        expect(result.error).toBeUndefined()
+        expect(consoleError).toBeCalledTimes(1)
+        expect(consoleError.mock.calls[0][0].message).toBe('oops')
+      })
     })
 
     it('should support reducer pattern', () => {
@@ -199,11 +203,14 @@ describe('useObservableState', () => {
       expect(result.current).toBe(2)
     })
 
-    it('should throw error when observable emits error', () => {
-      const outer$ = throwError(new Error('oops'))
-      const { result } = renderHook(() => useObservableState(outer$, 3))
-      expect(result.error).toBeInstanceOf(Error)
-      expect(result.error.message).toBe('oops')
+    it('should log error when observable emits error', () => {
+      return mockConsoleError(consoleError => {
+        const outer$ = throwError(new Error('oops'))
+        const { result } = renderHook(() => useObservableState(outer$, 3))
+        expect(result.error).toBeUndefined()
+        expect(consoleError).toBeCalledTimes(1)
+        expect(consoleError.mock.calls[0][0].message).toBe('oops')
+      })
     })
   })
 })

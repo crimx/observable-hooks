@@ -45,3 +45,13 @@ export type Scheduler = typeof import('scheduler') & {
   unstable_wrapCallback: (callback: any) => (...args: any[]) => any
   unstable_yieldValue: (value: any) => void
 }
+
+export async function mockConsoleError(
+  callback: (
+    consoleError: jest.MockInstance<void, Parameters<typeof console.error>>
+  ) => any
+): Promise<void> {
+  const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {})
+  await callback(consoleError)
+  consoleError.mockRestore()
+}

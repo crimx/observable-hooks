@@ -2,6 +2,7 @@ import { useLayoutSubscription } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { of, BehaviorSubject, Subject, throwError } from 'rxjs'
 import { useState } from 'react'
+import { mockConsoleError } from './utils'
 
 describe('useLayoutSubscription', () => {
   it('should always return the same Subscription after first rendering', () => {
@@ -49,26 +50,34 @@ describe('useLayoutSubscription', () => {
     expect(completeSpy).toBeCalledTimes(0)
   })
 
-  it('should throw the error when error callback is not provided', async () => {
-    const error = new Error('oops')
-    const error$ = throwError(error)
-    const nextSpy = jest.fn()
-    const completeSpy = jest.fn()
+  it('should log the error when error callback is not provided', async () => {
+    return mockConsoleError(consoleError => {
+      const error = new Error('oops')
+      const error$ = throwError(error)
+      const nextSpy = jest.fn()
+      const completeSpy = jest.fn()
 
-    const { rerender, result } = renderHook(() =>
-      useLayoutSubscription(error$, nextSpy, null, completeSpy)
-    )
+      const { rerender, result } = renderHook(() =>
+        useLayoutSubscription(error$, nextSpy, null, completeSpy)
+      )
 
-    expect(result.error).toBeInstanceOf(Error)
-    expect(result.error.message).toBe('oops')
-    expect(nextSpy).toBeCalledTimes(0)
-    expect(completeSpy).toBeCalledTimes(0)
+      expect(result.error).toBeUndefined()
+      expect(consoleError).toBeCalledTimes(1)
+      expect(
+        consoleError.mock.calls[consoleError.mock.calls.length - 1][0].message
+      ).toBe('oops')
+      expect(nextSpy).toBeCalledTimes(0)
+      expect(completeSpy).toBeCalledTimes(0)
 
-    rerender()
-    expect(result.error).toBeInstanceOf(Error)
-    expect(result.error.message).toBe('oops')
-    expect(nextSpy).toBeCalledTimes(0)
-    expect(completeSpy).toBeCalledTimes(0)
+      rerender()
+      expect(result.error).toBeUndefined()
+      expect(consoleError).toBeCalledTimes(1)
+      expect(
+        consoleError.mock.calls[consoleError.mock.calls.length - 1][0].message
+      ).toBe('oops')
+      expect(nextSpy).toBeCalledTimes(0)
+      expect(completeSpy).toBeCalledTimes(0)
+    })
   })
 
   it('should receive complete', () => {

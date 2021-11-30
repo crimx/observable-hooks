@@ -64,28 +64,6 @@ describe('useSubscription', () => {
     expect(completeSpy).toBeCalledTimes(0)
   })
 
-  it('should throw the error when error callback is not provided', async () => {
-    const error = new Error('oops')
-    const error$ = throwError(error)
-    const nextSpy = jest.fn()
-    const completeSpy = jest.fn()
-
-    const { rerender, result } = renderHook(() =>
-      useSubscription(error$, nextSpy, null, completeSpy)
-    )
-
-    expect(result.error).toBeInstanceOf(Error)
-    expect(result.error.message).toBe('oops')
-    expect(nextSpy).toBeCalledTimes(0)
-    expect(completeSpy).toBeCalledTimes(0)
-
-    rerender()
-    expect(result.error).toBeInstanceOf(Error)
-    expect(result.error.message).toBe('oops')
-    expect(nextSpy).toBeCalledTimes(0)
-    expect(completeSpy).toBeCalledTimes(0)
-  })
-
   it('should receive complete', () => {
     const num$ = of(1, 2, 3)
     const completeSpy = jest.fn()
