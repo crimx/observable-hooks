@@ -1,4 +1,4 @@
-import { Observable, Subject, Subscription } from 'rxjs'
+import { Observable, BehaviourSubject, Subscription } from 'rxjs'
 
 interface Handler<T = any> {
   suspender: Promise<T>
@@ -13,7 +13,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
    * Unlike Promise, Observable is a multiple push mechanism.
    * Only force update when Suspense needs to restart.
    */
-  readonly shouldUpdate$$ = new Subject<
+  readonly shouldUpdate$$ = new BehaviourSubject<
     { current: TOutput } | undefined | void
   >()
 
