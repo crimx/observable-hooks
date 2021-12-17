@@ -14,7 +14,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
    * Only force update when Suspense needs to restart.
    */
   readonly shouldUpdate$$ = new BehaviorSubject<
-    { current: TOutput } | undefined | void
+    { current: TOutput } | undefined | void | false
   >(undefined)
 
   get isDestroyed(): boolean {
@@ -125,7 +125,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
     } else if (!this.handler) {
       // start a new Suspense
       this.handler = this.getHandler()
-      this.shouldUpdate$$.next()
+      this.shouldUpdate$$.next(false)
     }
   }
 
@@ -138,7 +138,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       // Here we resolve the suspender and let this.read throw the error.
       resolve()
     } else {
-      this.shouldUpdate$$.next()
+      this.shouldUpdate$$.next(false)
     }
   }
 
