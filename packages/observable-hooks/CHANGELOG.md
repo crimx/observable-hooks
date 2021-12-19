@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [4.2.0](https://github.com/crimx/observable-hooks/compare/v4.1.2...v4.2.0) (2021-12-19)
+
+
+### Bug Fixes
+
+* render when first value changed before mount ([#91](https://github.com/crimx/observable-hooks/issues/91)) ([9b8845c](https://github.com/crimx/observable-hooks/commit/9b8845c19272bfbac0c552d4e9a29418887f9348))
+
+
+### Features
+
+* add useRenderThrow ([#90](https://github.com/crimx/observable-hooks/issues/90)) ([eb50f2f](https://github.com/crimx/observable-hooks/commit/eb50f2fe04537172c76e27e6a0dd2c44dbd4543a))
+
+
+### Performance Improvements
+
+* prevent observable suspense initial re-rendering ([d974012](https://github.com/crimx/observable-hooks/commit/d97401262215ffd9295a2f4df2bdad19018f9e80))
+
+
+### BREAKING CHANGES
+
+* close #89
+
+* refactor(observable-hooks): remove render error throw
+
+* feat(observable-hooks): add useRenderThrow
+
+
+
+
+
 ## [4.1.2](https://github.com/crimx/observable-hooks/compare/v4.1.1...v4.1.2) (2021-11-10)
 
 
