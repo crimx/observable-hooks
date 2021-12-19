@@ -13,3 +13,7 @@ v3 is React concurrent mode safe. There will be no synchronous subscription.
 v4 is not compatible with TypeScript 3.
 
 1. remove the readonly modifier of `useObservable` and `useLayoutObservable` dependency list.
+
+### v3.0.0 to v4.2.0
+
+1. Errors in Observable will not be automatically re-thrown to Error Boundary. Use `useRenderThrow` explicitly.

@@ -243,7 +243,7 @@ Due to the design of RxJS, once an error occurs in an observable, the observable
 
 - Prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
 - You can also make the observable as state and replace it on error. It will automatically switch to the new one.
-- From `v3.0.0`, Observable error can be caught by React error boudary in which you can perform actions to replace the dead Observable.
+- [`useRenderThrow`](#userenderthrow) From `v4.2.0`, Observable error can be caught by React error boundary in which you can perform actions to replace the dead Observable.
 :::
 
 ---
@@ -376,7 +376,7 @@ Due to the design of RxJS, once an error occurs in an observable, the observable
 
 - Prevent errors from reaching observables or [`catchError`][catchError] in sub-observables.
 - You can also make the observable as state and replace it on error. It will automatically switch to the new one.
-- From `v3.0.0`, Observable error can be caught by React error boudary in which you can perform actions to replace the dead Observable.
+- [`useRenderThrow`](#userenderthrow) From `v4.2.0`, Observable error can be caught by React error boundary in which you can perform actions to replace the dead Observable.
 :::
 
 ::: tip
@@ -691,6 +691,39 @@ const picked = useObservablePickState(
   () =>({ a: '', b: '', c: '' }),
   'a', 'b', 'c'
 )
+```
+
+## useRenderThrow
+
+```typescript
+useRenderThrow<TInput>(input$: Observable<TInput>): Observable<TInput> 
+```
+
+Captures Observable errors and re-throw them as React render errors so that they can be caught by ErrorBoundary.
+
+<p>
+  <Badge text="v4.2.0"/> Added since <code>v4.2.0</code>.
+</p>
+
+**Type parameters:**
+
+- `TInput` Input Observable
+
+**Parameters:**
+
+Name | Type | Description
+------ | ------ | ------
+`input$` | `Observable<TInput>` | An Observable.
+
+**Returns:**
+
+`Observable<TInput>` An Observable.
+
+**Examples:**
+
+```typescript
+const state$ = useObservable(() => of(({ a: 'a', b: 'b', c: 'c', d: 'd' })))
+const enhanced$ = useRenderThrow(state$)
 ```
 
 [catchError]: https://rxjs-dev.firebaseapp.com/api/operators/catchError

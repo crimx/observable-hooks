@@ -240,7 +240,7 @@ useEffect(
 
 - 通过在子流中放置 [`catchError`][catchError] 避免异常传达主流。
 - 也可以将 Observable 作为 state，发生异常时换掉新的。<code>useSubscription</code> 会自动切换。
-- 自 `v3.0.0` Observable 异常可以被 React 错误边界获取到。你可以在那里做处理并更换被销毁的 Observable。
+- 自 `v4.2.0` 配合 [`useRenderThrow`](#userenderthrow) 可以让 Observable 异常被 React 错误边界获取到。你可以在那里做处理并更换被销毁的 Observable。
 :::
 
 ---
@@ -373,7 +373,7 @@ useObservableState<TState, TInput = TState>(
 
 - 通过在子流中放置 [`catchError`][catchError] 避免异常传达主流。
 - 也可以将 Observable 作为 state，发生异常时换掉新的。<code>useSubscription</code> 会自动切换。
-- 自 `v3.0.0` Observable 异常可以被 React 错误边界获取到。你可以在那里做处理并更换被销毁的 Observable。
+- 自 `v4.2.0` 配合 [`useRenderThrow`](#userenderthrow) 可以让 Observable 异常被 React 错误边界获取到。你可以在那里做处理并更换被销毁的 Observable。
 :::
 
 ::: tip
@@ -688,6 +688,39 @@ const picked = useObservablePickState(
   () =>({ a: '', b: '', c: '' }),
   'a', 'b', 'c'
 )
+```
+
+## useRenderThrow
+
+```typescript
+useRenderThrow<TInput>(input$: Observable<TInput>): Observable<TInput> 
+```
+
+捕获 Observable 异常并重新以 React 渲染异常抛出，从而被上层错误边界（Error Boundary）捕获处理。
+
+<p>
+  <Badge text="v4.2.0"/> 添加自 <code>v4.2.0</code>.
+</p>
+
+**类型参数:**
+
+- `TInput` Input Observable
+
+**参数:**
+
+参数名 | 类型 | 描述
+------ | ------ | ------
+`input$` | `Observable<TInput>` | An Observable.
+
+**返回值:**
+
+`Observable<TInput>` An Observable.
+
+**例子:**
+
+```typescript
+const state$ = useObservable(() => of(({ a: 'a', b: 'b', c: 'c', d: 'd' })))
+const enhanced$ = useRenderThrow(state$)
 ```
 
 [catchError]: https://rxjs-dev.firebaseapp.com/api/operators/catchError

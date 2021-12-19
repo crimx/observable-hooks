@@ -13,3 +13,7 @@ v3 支持了 React 同步模式，故去掉了同步订阅 Observable。
 v4 不再兼容 TypeScript 3.
 
 1. 移除 `useObservable` 和 `useLayoutObservable` 依赖列表的 `readonly` 属性。
+
+### v3.0.0 到 v4.2.0
+
+1. Observable 中的异常不再自动抛给 Error Boundary，需要显式使用 `useRenderThrow`。
