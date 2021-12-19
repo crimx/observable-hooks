@@ -22,7 +22,8 @@ describe('useObservableSuspense', () => {
   let container: HTMLDivElement = null as unknown as HTMLDivElement
 
   function renderHook<TInput, TOutput extends TInput>(
-    resource: ObservableResource<TInput, TOutput>
+    resource: ObservableResource<TInput, TOutput>,
+    onAfterRenderSync?: () => void
   ) {
     const result: {
       value?: TOutput | Error
@@ -72,6 +73,9 @@ describe('useObservableSuspense', () => {
 
     act(() => {
       render(<Wrapper />, container)
+      if (onAfterRenderSync) {
+        onAfterRenderSync()
+      }
     })
 
     return result
@@ -202,6 +206,15 @@ describe('useObservableSuspense', () => {
 
     expect(result.renderCount).toBe(2)
     expect(result.value).toBe(3)
+    expect(result.getStatus()).toBe('success')
+  })
+
+  it('should re-render with the latest value emitted before Component mount', async () => {
+    const input$ = new BehaviorSubject<number>(1)
+    const inputResource = new ObservableResource(input$)
+    const result = renderHook(inputResource, () => input$.next(2))
+    expect(result.renderCount).toBe(2)
+    expect(result.value).toBe(2)
     expect(result.getStatus()).toBe('success')
   })
 

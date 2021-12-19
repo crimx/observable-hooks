@@ -27,7 +27,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private error: any = null
 
-  private input$: Observable<TInput>
+  public input$: Observable<TInput>
 
   private subscription: Subscription
 
