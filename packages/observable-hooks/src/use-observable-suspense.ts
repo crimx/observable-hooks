@@ -19,6 +19,8 @@ export function useObservableSuspense<TInput, TOutput extends TInput = TInput>(
   const [state, setState] = useState<TOutput>(resourceValue)
 
   useSubscription(resource.valueRef$$, valueRef => {
+    /* Guard code. Value should always be ready when reaching this far. */
+    /* istanbul ignore else */
     if (valueRef) {
       setState(valueRef.current)
     }
