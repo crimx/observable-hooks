@@ -18,15 +18,13 @@ export function useObservableSuspense<TInput, TOutput extends TInput = TInput>(
   const forceUpdate = useForceUpdate()
   const [state, setState] = useState<TOutput>(resourceValue)
 
-  useSubscription(resource.shouldUpdate$$, valueRef => {
-    // ObservableResource supports Stale-While-Revalidate pattern.
-    // Schedule states to prevent tearing.
+  useSubscription(resource.valueRef$$, valueRef => {
     if (valueRef) {
       setState(valueRef.current)
-    } else if (valueRef === false) {
-      forceUpdate()
     }
   })
+
+  useSubscription(resource.shouldUpdate$$, forceUpdate)
 
   useDebugValue(state)
   return state

@@ -1,4 +1,4 @@
-import { Observable, BehaviorSubject, Subscription } from 'rxjs'
+import { Observable, BehaviorSubject, Subject, Subscription } from 'rxjs'
 
 interface Handler<T = any> {
   suspender: Promise<T>
@@ -13,9 +13,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
    * Unlike Promise, Observable is a multiple push mechanism.
    * Only force update when Suspense needs to restart.
    */
-  readonly shouldUpdate$$ = new BehaviorSubject<
-    { current: TOutput } | undefined | void | false
-  >(undefined)
+  readonly shouldUpdate$$ = new Subject<true>()
 
   get isDestroyed(): boolean {
     return this._isDestroyed
@@ -23,7 +21,9 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
 
   private handler: Handler | null = this.getHandler()
 
-  private value: TOutput | undefined
+  public valueRef$$ = new BehaviorSubject<{ current: TOutput } | undefined>(
+    undefined
+  )
 
   private error: any = null
 
@@ -34,6 +34,8 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
   private isSuccess = (value: TInput): value is TOutput => true
 
   private _isDestroyed = false
+
+  private _updateCount = 0
 
   /**
    * @param input$ An Observable.
@@ -67,7 +69,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
     if (this.handler) {
       throw this.handler.suspender
     }
-    return this.value!
+    return this.valueRef$$.value?.current!
   }
 
   reload(newInput$?: Observable<TInput>): void {
@@ -110,8 +112,9 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
   private handleNext = (value: TInput): void => {
     this.error = null
     if (this.isSuccess(value)) {
-      const isDiff = this.value !== value
-      this.value = value
+      if (this.valueRef$$.value?.current !== value) {
+        this.valueRef$$.next({ current: value })
+      }
       if (this.handler) {
         // This will also remove the initial
         // suspender if sync values are emitted.
@@ -119,13 +122,10 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
         this.handler = null
         resolve()
       }
-      if (isDiff) {
-        this.shouldUpdate$$.next({ current: value })
-      }
     } else if (!this.handler) {
       // start a new Suspense
       this.handler = this.getHandler()
-      this.shouldUpdate$$.next(false)
+      this.shouldUpdate$$.next(true)
     }
   }
 
@@ -138,7 +138,7 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       // Here we resolve the suspender and let this.read throw the error.
       resolve()
     } else {
-      this.shouldUpdate$$.next(false)
+      this.shouldUpdate$$.next(true)
     }
   }
 
