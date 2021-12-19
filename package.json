@@ -16,7 +16,7 @@
   "author": "CRIMX<straybugs@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna bootstrap && yarn build",
     "build": "lerna run --scope 'observable-*' build && lerna bootstrap",
     "test": "jest --coverage",
     "docs:dev": "vuepress dev docs",

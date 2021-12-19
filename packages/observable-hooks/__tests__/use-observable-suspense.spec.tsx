@@ -366,7 +366,7 @@ describe('useObservableSuspense', () => {
 
       /** 1. inputResource.reload */
       /** 2. clearError */
-      expect(result.renderCount).toBe(2)
+      expect(result.renderCount).toBe(3)
       expect(result.value).toBe(3)
       expect(result.getStatus()).toBe('success')
     })
@@ -408,7 +408,7 @@ describe('useObservableSuspense', () => {
 
       /** 1. inputResource.reload */
       /** 2. clearError */
-      expect(result.renderCount).toBe(2)
+      expect(result.renderCount).toBe(3)
       expect(result.value).toBe(3)
       expect(result.getStatus()).toBe('success')
     })
