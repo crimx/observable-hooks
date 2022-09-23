@@ -1,7 +1,7 @@
 import { useObservable, pluckFirst } from '../src'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { useState } from 'react'
-import { of, merge, Observable } from 'rxjs'
+import { of, merge, Observable, BehaviorSubject } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 describe('useObservable', () => {
@@ -125,5 +125,20 @@ describe('useObservable', () => {
     rerender({ text: 'world' })
     expect(spy).toBeCalledTimes(2)
     expect(spy).lastCalledWith('world')
+  })
+
+  it('should support generic type', () => {
+    const { result } = renderHook(() =>
+      useObservable(() => new BehaviorSubject(0))
+    )
+
+    const spy = jest.fn()
+    result.current.subscribe(spy)
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).lastCalledWith(0)
+
+    result.current.next(1)
+    expect(spy).toBeCalledTimes(2)
+    expect(spy).lastCalledWith(1)
   })
 })

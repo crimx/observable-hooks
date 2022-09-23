@@ -26,9 +26,10 @@ import { useEffect } from 'react'
  * @param init A pure function that, when applied to an Observable,
  * returns an Observable.
  */
-export function useObservable<TOutput>(
-  init: () => Observable<TOutput>
-): Observable<TOutput>
+export function useObservable<
+  TOutput,
+  TObservable extends Observable<TOutput> = Observable<TOutput>
+>(init: () => TObservable): TObservable
 /**
  * @template TOutput Output value within Observable.
  * @template TInputs A readonly tuple of all dependencies.
@@ -38,10 +39,14 @@ export function useObservable<TOutput>(
  * @param inputs An dependency array with fixed length. When one of the dependencies
  * changes the Observable in `init` will emit an array of all the dependencies.
  */
-export function useObservable<TOutput, TInputs extends Readonly<any[]>>(
-  init: (inputs$: Observable<[...TInputs]>) => Observable<TOutput>,
+export function useObservable<
+  TOutput,
+  TInputs extends Readonly<any[]>,
+  TObservable extends Observable<TOutput> = Observable<TOutput>
+>(
+  init: (inputs$: Observable<[...TInputs]>) => TObservable,
   inputs: [...TInputs]
-): Observable<TOutput>
+): TObservable
 export function useObservable<TOutput, TInputs extends Readonly<any[]>>(
   init:
     | (() => Observable<TOutput>)
