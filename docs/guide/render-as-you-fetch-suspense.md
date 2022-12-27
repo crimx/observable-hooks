@@ -59,7 +59,7 @@ export function fetchPosts(id) {
 
 ### Observable Suspense Hook
 
-You can read the resouce with `resource.read()` but since Observable is multiple push we may need to re-trigger Suspense at some point. `ObservableResource` instance exposes a `shouldUpdate$$` Subject which emits values when Suspense should restart.
+You can read the resource with `resource.read()` but since Observable is multiple push we may need to re-trigger Suspense at some point. `ObservableResource` instance exposes a `shouldUpdate$$` Subject which emits values when Suspense should restart.
 
 But you don't need to worry about that. Observable-hooks offers a lightweight hook `useObservableSuspense` to properly consume Observable Resources.
 
@@ -128,7 +128,7 @@ type State = Success | Pending
 
 const input$$ = new Subject<State>()
 
-const resouce = new ObservableResource(
+const resource = new ObservableResource(
   input$$,
   (value: State): value is Success => value.status !== 'pending'
 )
