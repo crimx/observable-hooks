@@ -129,7 +129,7 @@ type State = Success | Pending
 
 const input$$ = new Subject<State>()
 
-const resouce = new ObservableResource(
+const resource = new ObservableResource(
   input$$,
   (value: State): value is Success => value.status !== 'pending'
 )
