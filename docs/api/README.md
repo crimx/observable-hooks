@@ -170,9 +170,65 @@ const [onResize, height$] = useObservableCallback<
   [number, number]
 >(identity, args => args[1])
 
-// onResize is called with width and hegiht
+// onResize is called with width and height
 // height$ gets height values
 onResize(100, 500)
+```
+
+## useObservableRef
+
+```typescript
+useObservableRef<TValue>(
+  initialValue: TValue
+): [MutableRefObject<TValue>, BehaviorSubject<TValue>]
+useObservableRef<TValue>(
+  initialValue: TValue | null
+): [RefObject<TValue>, BehaviorSubject<TValue>]
+useObservableRef<TValue = undefined>(
+  initialValue?: TValue
+): [MutableRefObject<TValue | undefined>, BehaviorSubject<TValue | undefined>]
+```
+
+Returns a mutable ref object and a BehaviorSubject.
+
+Whenever ref.current is changed, the BehaviorSubject will emit the new value.
+
+<Badge text="v4.2.3"/> Added since v4.2.3.
+
+**Type parameters:**
+
+- `TValue` Ref value type.
+
+**Parameters:**
+
+Name | Type | Description
+------ | ------ | ------
+`initialValue` | `TValue` | An optional initial value.
+
+**Returns:**
+
+`[MutableRefObject<TValue>, BehaviorSubject<TValue>]` A tuple of a ref and a BehaviorSubject.
+
+**Examples:**
+
+```tsx
+const Comp = () => {
+  const [elRef, el$] = useObservableRef(null)
+
+  useSubscription(el$, console.log)
+
+  return <div ref={elRef}>Content</div>
+}
+```
+
+```tsx
+const Comp = () => {
+  const [ref, value$] = useObservableRef(0)
+
+  useSubscription(value$, console.log)
+
+  return <button onClick={() => ref.current++}>Click</button>
+}
 ```
 
 ## useSubscription

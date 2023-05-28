@@ -6,21 +6,21 @@ To understand the design behind observable-hooks you should have two worlds in m
 
 ```
 
-  +--------------------------------+  
-  |                                |  
-  |        Observable World        |  
-  |                                |  
-  +--------------------------------+  
-                                      
-         +------------------+         
-         | observable-hooks |         
-         +------------------+         
-                                      
-  +--------------------------------+  
-  |                                |  
-  |          Normal World          |  
-  |                                |  
-  +--------------------------------+  
+  +--------------------------------+
+  |                                |
+  |        Observable World        |
+  |                                |
+  +--------------------------------+
+
+         +------------------+
+         | observable-hooks |
+         +------------------+
+
+  +--------------------------------+
+  |                                |
+  |          Normal World          |
+  |                                |
+  +--------------------------------+
 
 ```
 
@@ -32,68 +32,68 @@ Almost every RxJS-React binding library provides ways to connect observable valu
 
 ### Observable to State
 
-In observable-hooks we have [`useObservableState`][useObservableState], [`useObservableEagerState`][useObservableEagerState] and [`useLayoutObservableState`][useLayoutObservableState].
+In observable-hooks we have [`useObservableState`][useobservablestate], [`useObservableEagerState`][useobservableeagerstate] and [`useLayoutObservableState`][uselayoutobservablestate].
 
 ```
 
-  +--------------------------------+  
-  |        Observable World        |  
-  +--------------------------------+  
-  |                                |  
-  |             input$             |  
-  |                                |  
-  +--------------------+-----------+  
-                       |              
-                       |              
-                       |              
-           v-----------+              
-  const output = useObservableState(  
-           |       input$,            
-           |       initialOutput      
-           |     )                    
-           |                          
-           |                          
-           |                          
-           |                          
-  +--------v-----------------------+  
-  |          Normal World          |  
-  +--------------------------------+  
-  |                                |  
-  |         <p>{output}</p>        |  
-  |                                |  
-  +--------------------------------+  
+  +--------------------------------+
+  |        Observable World        |
+  +--------------------------------+
+  |                                |
+  |             input$             |
+  |                                |
+  +--------------------+-----------+
+                       |
+                       |
+                       |
+           v-----------+
+  const output = useObservableState(
+           |       input$,
+           |       initialOutput
+           |     )
+           |
+           |
+           |
+           |
+  +--------v-----------------------+
+  |          Normal World          |
+  +--------------------------------+
+  |                                |
+  |         <p>{output}</p>        |
+  |                                |
+  +--------------------------------+
 
 ```
 
 ### Observable to Callbacks
 
-In addition to states, you can also call observer callbacks with [`useSubscription`][useSubscription]. See the [API docs][useSubscription] for why it is preferred comparing to manual `useEffect`.
+In addition to states, you can also call observer callbacks with [`useSubscription`][usesubscription]. See the [API docs][usesubscription] for why it is preferred comparing to manual `useEffect`.
 
 ```
 
-  +--------------------------------+  
-  |        Observable World        |  
-  +--------------------------------+  
-  |                                |  
-  |             input$             |  
-  |                                |  
-  +-------------------+------------+  
-                      |               
-                      |               
-                      |               
-                      v               
-    useSubscription(input$, onNext)   
-                              |       
-                              |       
-                              |       
-                              |       
-  +---------------------------v----+  
-  |          Normal World          |  
-  +--------------------------------+  
-  |                                |  
-  |   const onNext = v => log(v)   |  
-  |                                |  
-  +--------------------------------+  
+  +--------------------------------+
+  |        Observable World        |
+  +--------------------------------+
+  |                                |
+  |             input$             |
+  |                                |
+  +-------------------+------------+
+                      |
+                      |
+                      |
+                      v
+    useSubscription(input$, onNext)
+                              |
+                              |
+                              |
+                              |
+  +---------------------------v----+
+  |          Normal World          |
+  +--------------------------------+
+  |                                |
+  |   const onNext = v => log(v)   |
+  |                                |
+  +--------------------------------+
 
 ```
 
@@ -110,38 +110,38 @@ There are two ways to achieve that:
 
 ### Function Callbacks
 
-In observable-hooks [`useObservableState`][useObservableState] can also be used for function callbacks.
+In observable-hooks [`useObservableState`][useobservablestate] can also be used for function callbacks.
 
 ```
 
-     +--------------------------------+        
-     |        Observable World        |        
-     +--------------------------------+        
-     |                                |        
-     |  const transform =             |        
-     |    input$ => input$.pipe(...)  |        
-     |                                |        
-     +-------------^----------+-------+        
-                   |          |                
-                   |          |                
-                   |          |                
-          v-------------------+                
- const [output, onInput] = useObservableState( 
-          |        ^         transform,        
-          |        |         initialOutput     
-          |        |       )                   
-          |        |                           
-          |        |                           
-          |        |                           
-     +----v--------+------------------+        
-     |          Normal World          |        
-     +--------------------------------+        
-     |                                |        
-     |   <button onClick={onInput}>   |        
-     |    {output}                    |        
-     |   </button>                    |        
-     |                                |        
-     +--------------------------------+        
+     +--------------------------------+
+     |        Observable World        |
+     +--------------------------------+
+     |                                |
+     |  const transform =             |
+     |    input$ => input$.pipe(...)  |
+     |                                |
+     +-------------^----------+-------+
+                   |          |
+                   |          |
+                   |          |
+          v-------------------+
+ const [output, onInput] = useObservableState(
+          |        ^         transform,
+          |        |         initialOutput
+          |        |       )
+          |        |
+          |        |
+          |        |
+     +----v--------+------------------+
+     |          Normal World          |
+     +--------------------------------+
+     |                                |
+     |   <button onClick={onInput}>   |
+     |    {output}                    |
+     |   </button>                    |
+     |                                |
+     +--------------------------------+
 
 ```
 
@@ -155,81 +155,119 @@ If you read back on what we have just discussed, you should notice that we alway
 
 ### Hook dependencies
 
-In observable-hooks you can use [`useObservable`][useObservable] or [`useLayoutObservable`][useLayoutObservable] to create observables with hook dependencies.
+In observable-hooks you can use [`useObservable`][useobservable] or [`useLayoutObservable`][uselayoutobservable] to create observables with hook dependencies.
 
 ```
 
-   +--------------------------------+    
-   |        Observable World        |    
-   +--------------------------------+    
-   |                                |    
-   | const transform =              |    
-   |   inputs$ => inputs$.pipe(...) |    
-   |                                |    
-   |   output$                      |    
-   +------^-------------------------+    
-          |                              
-          |                              
-          |                              
-          +--------------+               
- const output$ = useObservable(          
-                   transform,            
-                   [props.A, state, ctx]   
-                 )       ^               
-                         |               
-                         |               
-                         |               
-   +---------------------+----------+    
-   |          Normal World          |    
-   +--------------------------------+    
-   |                                |    
-   | const App(props) {             |    
-   |   const [state] = useState()   |    
-   |   const ctx = useContext(Ctx)  |    
-   | }                              |    
-   |                                |    
-   +--------------------------------+    
+   +--------------------------------+
+   |        Observable World        |
+   +--------------------------------+
+   |                                |
+   | const transform =              |
+   |   inputs$ => inputs$.pipe(...) |
+   |                                |
+   |   output$                      |
+   +------^-------------------------+
+          |
+          |
+          |
+          +--------------+
+ const output$ = useObservable(
+                   transform,
+                   [props.A, state, ctx]
+                 )       ^
+                         |
+                         |
+                         |
+   +---------------------+----------+
+   |          Normal World          |
+   +--------------------------------+
+   |                                |
+   | const App(props) {             |
+   |   const [state] = useState()   |
+   |   const ctx = useContext(Ctx)  |
+   | }                              |
+   |                                |
+   +--------------------------------+
 
 ```
 
 ### Function Callbacks
 
-You can also use [`useObservableCallback`][useObservableCallback] to create observables from function callbacks.
+You can also use [`useObservableCallback`][useobservablecallback] to create observables from function callbacks.
 
 ```
 
-        +--------------------------------+         
-        |        Observable World        |         
-        +--------------------------------+         
-        |                                |         
-        |  const transform =             |         
-        |    input$ => input$.pipe(...)  |         
-        |                                |         
-        |           output$              |         
-        +--------------^-----------------+         
-                       |                           
-            +-----+    |                           
-            |     v    +                           
- const [onInput, output$] = useObservableCallback( 
-            ^                 transform            
-            |               )                      
-            |                                      
-            |                                      
-            |                                      
-            |                                      
-        +---+----------------------------+         
-        |          Normal World          |         
-        +--------------------------------+         
-        |                                |         
-        |   <button onClick={onInput}>   |         
-        |    Click                       |         
-        |   </button>                    |         
-        |                                |         
-        +--------------------------------+         
+        +--------------------------------+
+        |        Observable World        |
+        +--------------------------------+
+        |                                |
+        |  const transform =             |
+        |    input$ => input$.pipe(...)  |
+        |                                |
+        |           output$              |
+        +--------------^-----------------+
+                       |
+            +-----+    |
+            |     v    +
+ const [onInput, output$] = useObservableCallback(
+            ^                 transform
+            |               )
+            |
+            |
+            |
+            |
+        +---+----------------------------+
+        |          Normal World          |
+        +--------------------------------+
+        |                                |
+        |   <button onClick={onInput}>   |
+        |    Click                       |
+        |   </button>                    |
+        |                                |
+        +--------------------------------+
 
 ```
 
-The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useObservableState] or [`useSubscription`][useSubscription].
+The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useobservablestate] or [`useSubscription`][usesubscription].
+
+## Ref to Observable
+
+You can also use [`useObservableRef`][useobservableref] to create observables from ref value.
+
+```
+
+        +--------------------------------+
+        |        Observable World        |
+        +--------------------------------+
+        |                                |
+        |           value$              |
+        +--------------^-----------------+
+                       |
+            +-----+    |
+            |     v    +
+ const [ref, value$] = useObservableRef(
+            ^            initialValue
+            |          )
+            |
+            |
+            |
+            |
+        +---+----------------------------+
+        |          Normal World          |
+        +--------------------------------+
+        |                                |
+        |   <button ref={ref}>           |
+        |    Click                       |
+        |   </button>                    |
+        |                                |
+        |   // or                        |
+        |   ref.current = xxx            |
+        +--------------------------------+
+
+```
+
+The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useobservablestate] or [`useSubscription`][usesubscription].
 
 ## Observable to Observable
 
@@ -237,54 +275,54 @@ Finally, you can also operate on multiple observables. This flexibility is power
 
 ```
 
-    +--------------------------------+    
-    |        Observable World        |    
-    +--------------------------------+    
-    |                                |    
-    |           fromProps$           |    
-    |                                |    
-    |           fromState$           |    
-    |                                |    
-    |           fromGlobal$          |    
-    |                                |    
-    |  output$                       |    
-    +-----^--------------+-----------+    
-          |              |               
-          |              |               
-          +--------------v               
-  const output$ = useObservable(          
-                    () => combineLatest([ 
-                      fromProps$,         
-                      fromState$,         
-                      fromGlobal$         
-                    ])                    
-                  )                       
-                                          
-    +--------------------------------+    
-    |                                |    
-    |          Normal World          |    
-    |                                |    
-    +--------------------------------+    
+    +--------------------------------+
+    |        Observable World        |
+    +--------------------------------+
+    |                                |
+    |           fromProps$           |
+    |                                |
+    |           fromState$           |
+    |                                |
+    |           fromGlobal$          |
+    |                                |
+    |  output$                       |
+    +-----^--------------+-----------+
+          |              |
+          |              |
+          +--------------v
+  const output$ = useObservable(
+                    () => combineLatest([
+                      fromProps$,
+                      fromState$,
+                      fromGlobal$
+                    ])
+                  )
+
+    +--------------------------------+
+    |                                |
+    |          Normal World          |
+    |                                |
+    +--------------------------------+
 
 ```
 
-The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useObservableState] or [`useSubscription`][useSubscription].
+The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useobservablestate] or [`useSubscription`][usesubscription].
 
 ## Helpers
 
-There are also sugars like [`useObservableGetState`][useObservableGetState] and [`useObservablePickState`][useObservablePickState] which are inspired by lodash `get` and `pick`.
+There are also sugars like [`useObservableGetState`][useobservablegetstate] and [`useObservablePickState`][useobservablepickstate] which are inspired by lodash `get` and `pick`.
 
 The [Epic](https://redux-observable.js.org/docs/basics/Epics.html)-like signature makes the observable transformation logic highly reusable. In fact observable-hooks offers some [helpers][helpers] for common cases to reduce garbage collection burden.
 
 [useobservable]: ../api/README.md#useobservable
-[useLayoutObservable]: ../api/README.md#uselayoutobservable
-[useObservableCallback]: ../api/README.md#useobservablecallback
-[useSubscription]: ../api/README.md#usesubscription
-[useLayoutSubscription]: ../api/README.md#uselayoutsubscription
-[useObservableState]: ../api/README.md#useobservablestate
-[useObservableEagerState]: ../api/README.md#useobservableeagerstate
-[useLayoutObservableState]: ../api/README.md#uselayoutobservablestate
-[useObservableGetState]: ../api/README.md#useobservablegetstate
-[useObservablePickState]: ../api/README.md#useobservablepickstate
-
+[uselayoutobservable]: ../api/README.md#uselayoutobservable
+[useobservablecallback]: ../api/README.md#useobservablecallback
+[useobservableref]: ../api/README.md#useobservableref
+[usesubscription]: ../api/README.md#usesubscription
+[uselayoutsubscription]: ../api/README.md#uselayoutsubscription
+[useobservablestate]: ../api/README.md#useobservablestate
+[useobservableeagerstate]: ../api/README.md#useobservableeagerstate
+[uselayoutobservablestate]: ../api/README.md#uselayoutobservablestate
+[useobservablegetstate]: ../api/README.md#useobservablegetstate
+[useobservablepickstate]: ../api/README.md#useobservablepickstate
 [helpers]: ../api/helpers.md

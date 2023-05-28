@@ -10,6 +10,7 @@ export { useObservableEagerState } from './use-observable-eager-state'
 export { useObservableGetState } from './use-observable-get-state'
 export { useObservablePickState } from './use-observable-pick-state'
 export { useObservableSuspense } from './use-observable-suspense'
+export { useObservableRef } from './use-observable-ref'
 export { ObservableResource } from './observable-resource'
 export {
   useRefFn,
