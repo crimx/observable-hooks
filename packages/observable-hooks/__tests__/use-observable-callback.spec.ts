@@ -54,4 +54,18 @@ describe('useObservableCallback', () => {
     expect(spy).toBeCalledTimes(2)
     expect(spy).lastCalledWith('world')
   })
+
+  it('should get a observable of events if no argument', () => {
+    const { result } = renderHook(() => useObservableCallback<string>())
+    const [onChange, event$] = result.current
+    const spy = jest.fn()
+    event$.subscribe(spy)
+    expect(spy).toBeCalledTimes(0)
+    onChange('hello')
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).lastCalledWith('hello')
+    onChange('world')
+    expect(spy).toBeCalledTimes(2)
+    expect(spy).lastCalledWith('world')
+  })
 })

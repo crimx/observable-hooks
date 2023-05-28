@@ -98,7 +98,7 @@ Use it scarcely as it runs synchronously before browser paint. Too many synchron
 
 ```typescript
 useObservableCallback<TOutput, TInput, TParams>(
-  init: function,
+  init?: function,
   selector?: undefined | function
 ): [function, Observable<TOutput>]
 ```
