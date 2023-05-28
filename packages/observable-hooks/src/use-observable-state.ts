@@ -24,7 +24,7 @@ import { useObservableStateInternal } from './internal/use-observable-state-inte
  * which is for expensive initialization.
  *
  * The `initialState`(or its returned result) is also passed to the `init` function.
- * This is useful if you want to implement reduer pattern which requires an initial state.
+ * This is useful if you want to implement reducer pattern which requires an initial state.
  *
  * ⚠ **Note:** These two ways use different hooks, choose either one each time
  * and do not change to the other one during Component's life cycle.

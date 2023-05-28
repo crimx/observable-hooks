@@ -1,7 +1,7 @@
 import { Observable, isObservable, Subject, BehaviorSubject } from 'rxjs'
 import { useState, useRef, useDebugValue } from 'react'
 import type { useSubscription as useSubscriptionType } from '../use-subscription'
-import { useRefFn, getEmptySubject } from '../helpers'
+import { getEmptySubject } from '../helpers'
 
 export function useObservableStateInternal<TState, TInput = TState>(
   useSubscription: typeof useSubscriptionType,
@@ -41,12 +41,10 @@ export function useObservableStateInternal<TState, TInput = TState>(
     const init = state$OrInit
     const [state, setState] = useState<TState | undefined>(initialState)
 
-    const input$Ref = useRefFn<Subject<TInput>>(getEmptySubject)
+    const [input$] = useState<Subject<TInput>>(getEmptySubject)
 
-    const state$ = useRefFn(() => init(input$Ref.current, state)).current
-    const callback = useRef((state: TInput) =>
-      input$Ref.current.next(state)
-    ).current
+    const [state$] = useState(() => init(input$, state))
+    const callback = useRef((state: TInput) => input$.next(state)).current
 
     useSubscription(state$, setState)
 

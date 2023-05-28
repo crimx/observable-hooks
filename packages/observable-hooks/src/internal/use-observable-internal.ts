@@ -1,6 +1,5 @@
 import { Observable, BehaviorSubject } from 'rxjs'
-import { useRefFn } from '../helpers'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * @template TOutput Output value within Observable.
@@ -24,11 +23,11 @@ export function useObservableInternal<TOutput, TInputs extends Readonly<any[]>>(
   // which unlikely coexists with the other one.
   // A warning is also added to the docs.
   if (!inputs) {
-    return useRefFn(init as () => Observable<TOutput>).current
+    return useState(init as () => Observable<TOutput>)[0]
   }
 
-  const inputs$Ref = useRefFn(() => new BehaviorSubject(inputs))
-  const source$Ref = useRefFn(() => init(inputs$Ref.current))
+  const [inputs$] = useState(() => new BehaviorSubject(inputs))
+  const [source$] = useState(() => init(inputs$))
 
   const firstEffectRef = useRef(true)
   useCustomEffect(() => {
@@ -36,8 +35,8 @@ export function useObservableInternal<TOutput, TInputs extends Readonly<any[]>>(
       firstEffectRef.current = false
       return
     }
-    inputs$Ref.current.next(inputs)
+    inputs$.next(inputs)
   }, inputs)
 
-  return source$Ref.current
+  return source$
 }

@@ -119,14 +119,6 @@ Name | Type | Description
 
 `T` The first argument.
 
-## useRefFn
-
-One-time ref init.
-
-```typescript
-useRefFn<T>(init: function): MutableRefObject<T>
-```
-
 **Type parameters:**
 
 - `T` any.

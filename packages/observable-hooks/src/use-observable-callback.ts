@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs'
-import { useRef } from 'react'
-import { useRefFn, getEmptySubject, identity } from './helpers'
+import { useRef, useState } from 'react'
+import { getEmptySubject, identity } from './helpers'
 
 /**
  * Returns a callback function and an events Observable.
@@ -71,10 +71,10 @@ export function useObservableCallback<
   init = identity as (events$: Observable<TInput>) => Observable<TOutput>,
   selector?: (args: TParams) => TInput
 ): [(...args: TParams) => void, Observable<TOutput>] {
-  const events$Ref = useRefFn<Subject<TInput>>(getEmptySubject)
-  const outputs$Ref = useRefFn(() => init(events$Ref.current))
-  const callbackRef = useRef((...args: TParams) => {
-    events$Ref.current.next(selector ? selector(args) : args[0])
-  })
-  return [callbackRef.current, outputs$Ref.current]
+  const [events$] = useState<Subject<TInput>>(getEmptySubject)
+  const [outputs$] = useState(() => init(events$))
+  const callback = useRef((...args: TParams) => {
+    events$.next(selector ? selector(args) : args[0])
+  }).current
+  return [callback, outputs$]
 }

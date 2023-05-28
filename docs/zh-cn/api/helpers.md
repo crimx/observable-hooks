@@ -119,14 +119,6 @@ identity<T>(value: T): T
 
 `T` The first argument.
 
-## useRefFn
-
-带初始化方法的 Ref。
-
-```typescript
-useRefFn<T>(init: function): MutableRefObject<T>
-```
-
 **类型参数:**
 
 - `T` any.

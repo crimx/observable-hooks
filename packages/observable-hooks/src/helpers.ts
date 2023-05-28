@@ -28,7 +28,7 @@ export function identity<T>(value: T): T {
  * const text$ = useObservable(pluckFirst, [props.text])
  * ```
  *
- * @param inputs$ An Observable of arraylike.
+ * @param inputs$ An Observable of array-like.
  *
  */
 export function pluckFirst<TArr extends ArrayLike<any>>(
