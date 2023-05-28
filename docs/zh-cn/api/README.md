@@ -95,7 +95,7 @@ const enhanced$ = useObservable(
 
 ```typescript
 useObservableCallback<TOutput, TInput, TParams>(
-  init: function,
+  init?: function,
   selector?: undefined | function
 ): [function, Observable<TOutput>]
 ```
@@ -133,7 +133,7 @@ useObservableCallback<TOutput, TInput, TParams>(
 
 **返回值:**
 
-`[(...args: TParams): void, Observable<TOutput>]` 一个元组，包含一个回调和一个 Observable，两者值均不会发生变化。
+`[(...args: TParams): void, Observable<TOutput>]` 一个元组，包含一个回调和一个 Observable。
 
 **例子:**
 
@@ -168,6 +168,60 @@ const [onResize, height$] = useObservableCallback<
 // onResize 接收到 width 和 hegiht
 // height$ 得到 height 的值
 onResize(100, 500)
+```
+
+## useObservableRef
+
+```typescript
+useObservableRef<TValue>(
+  initialValue: TValue
+): [MutableRefObject<TValue>, BehaviorSubject<TValue>]
+useObservableRef<TValue>(
+  initialValue: TValue | null
+): [RefObject<TValue>, BehaviorSubject<TValue>]
+useObservableRef<TValue = undefined>(
+  initialValue?: TValue
+): [MutableRefObject<TValue | undefined>, BehaviorSubject<TValue | undefined>]
+```
+
+返回一个 ref 对象和一个 BehaviorSubject。每当 ref.current 改变，BehaviorSubject 会发出新的值。
+
+<Badge text="v4.2.3"/> 添加自 v4.2.3.
+
+**类型参数:**
+
+- `TValue` Ref 值类型.
+
+**参数:**
+
+参数名 | 类型 | 描述
+------ | ------ | ------
+`initialValue` | `TValue` | 可选的初始值。
+
+**返回值:**
+
+`[MutableRefObject<TValue>, BehaviorSubject<TValue>]` 一个元组，包含一个 ref 对象和一个 BehaviorSubject。
+
+**例子:**
+
+```tsx
+const Comp = () => {
+  const [elRef, el$] = useObservableRef(null)
+
+  useSubscription(el$, console.log)
+
+  return <div ref={elRef}>Content</div>
+}
+```
+
+```tsx
+const Comp = () => {
+  const [ref, value$] = useObservableRef(0)
+
+  useSubscription(value$, console.log)
+
+  return <button onClick={() => ref.current++}>Click</button>
+}
 ```
 
 ## useSubscription

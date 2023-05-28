@@ -4,28 +4,27 @@
 
 要理解 observable-hooks 的设计你需要有两个“世界”的概念：响应式世界与普通世界。
 
+```
+
+  +--------------------------------+
+  |            　　　　　            |
+  |            响应式世界            |
+  |            　　　　　            |
+  +--------------------------------+
+
+         +------------------+
+         | observable-hooks |
+         +------------------+
+
+  +--------------------------------+
+  |             　　　　            |
+  |             普通世界            |
+  |             　　　　            |
+  +--------------------------------+
 
 ```
 
-  +--------------------------------+  
-  |            　　　　　            |  
-  |            响应式世界            |  
-  |            　　　　　            |  
-  +--------------------------------+  
-                                      
-         +------------------+         
-         | observable-hooks |         
-         +------------------+         
-                                      
-  +--------------------------------+  
-  |             　　　　            |  
-  |             普通世界            |  
-  |             　　　　            |  
-  +--------------------------------+  
-
-```
-
-这两个世界仅是概念上的区分。响应式世界是指Observable 存放的地方。这可以是在 React 组件里面，但也可以在外部。普通世界是指非响应式世界的地方。
+这两个世界仅是概念上的区分。响应式世界是指 Observable 存放的地方。这可以是在 React 组件里面，但也可以在外部。普通世界是指非响应式世界的地方。
 
 ## 响应式世界到普通世界
 
@@ -33,68 +32,68 @@
 
 ### Observable 到 React 状态
 
-在 observable-hooks 中我们可以用 [`useObservableState`][useObservableState] 或 [`useObservableEagerState`][useObservableEagerState]。
+在 observable-hooks 中我们可以用 [`useObservableState`][useobservablestate] 或 [`useObservableEagerState`][useobservableeagerstate]。
 
 ```
 
-  +--------------------------------+  
-  |            响应式世界            |  
-  +--------------------------------+  
-  |                                |  
-  |             input$             |  
-  |                                |  
-  +--------------------+-----------+  
-                       |              
-                       |              
-                       |              
-           v-----------+              
-  const output = useObservableState(  
-           |       input$,            
-           |       initialOutput      
-           |     )                    
-           |                          
-           |                          
-           |                          
-           |                          
-  +--------v-----------------------+  
-  |             普通世界            |  
-  +--------------------------------+  
-  |                                |  
-  |         <p>{output}</p>        |  
-  |                                |  
-  +--------------------------------+  
+  +--------------------------------+
+  |            响应式世界            |
+  +--------------------------------+
+  |                                |
+  |             input$             |
+  |                                |
+  +--------------------+-----------+
+                       |
+                       |
+                       |
+           v-----------+
+  const output = useObservableState(
+           |       input$,
+           |       initialOutput
+           |     )
+           |
+           |
+           |
+           |
+  +--------v-----------------------+
+  |             普通世界            |
+  +--------------------------------+
+  |                                |
+  |         <p>{output}</p>        |
+  |                                |
+  +--------------------------------+
 
 ```
 
 ### Observable 到订阅回调
 
-除了转换到状态，我们还可以提供订阅回调函数通过 [`useSubscription`][useSubscription] 订阅 Observables。见 [API 文档][useSubscription] 了解为什么推荐用它而不是手动 `useEffect`。
+除了转换到状态，我们还可以提供订阅回调函数通过 [`useSubscription`][usesubscription] 订阅 Observables。见 [API 文档][usesubscription] 了解为什么推荐用它而不是手动 `useEffect`。
 
 ```
 
-  +--------------------------------+  
-  |             响应式世界           |  
-  +--------------------------------+  
-  |                                |  
-  |             input$             |  
-  |                                |  
-  +-------------------+------------+  
-                      |               
-                      |               
-                      |               
-                      v               
-    useSubscription(input$, onNext)   
-                              |       
-                              |       
-                              |       
-                              |       
-  +---------------------------v----+  
-  |             普通世界            |  
-  +--------------------------------+  
-  |                                |  
-  |   const onNext = v => log(v)   |  
-  |                                |  
-  +--------------------------------+  
+  +--------------------------------+
+  |             响应式世界           |
+  +--------------------------------+
+  |                                |
+  |             input$             |
+  |                                |
+  +-------------------+------------+
+                      |
+                      |
+                      |
+                      v
+    useSubscription(input$, onNext)
+                              |
+                              |
+                              |
+                              |
+  +---------------------------v----+
+  |             普通世界            |
+  +--------------------------------+
+  |                                |
+  |   const onNext = v => log(v)   |
+  |                                |
+  +--------------------------------+
 
 ```
 
@@ -111,38 +110,38 @@
 
 ### 事件回调函数
 
-在 observable-hooks 中 [`useObservableState`][useObservableState] 还支持接收事件回调函数。
+在 observable-hooks 中 [`useObservableState`][useobservablestate] 还支持接收事件回调函数。
 
 ```
 
-     +--------------------------------+        
-     |             响应式世界           |        
-     +--------------------------------+        
-     |                                |        
-     |  const transform =             |        
-     |    input$ => input$.pipe(...)  |        
-     |                                |        
-     +-------------^----------+-------+        
-                   |          |                
-                   |          |                
-                   |          |                
-          v-------------------+                
- const [output, onInput] = useObservableState( 
-          |        ^         transform,        
-          |        |         initialOutput     
-          |        |       )                   
-          |        |                           
-          |        |                           
-          |        |                           
-     +----v--------+------------------+        
-     |             普通世界            |        
-     +--------------------------------+        
-     |                                |        
-     |   <button onClick={onInput}>   |        
-     |    {output}                    |        
-     |   </button>                    |        
-     |                                |        
-     +--------------------------------+        
+     +--------------------------------+
+     |             响应式世界           |
+     +--------------------------------+
+     |                                |
+     |  const transform =             |
+     |    input$ => input$.pipe(...)  |
+     |                                |
+     +-------------^----------+-------+
+                   |          |
+                   |          |
+                   |          |
+          v-------------------+
+ const [output, onInput] = useObservableState(
+          |        ^         transform,
+          |        |         initialOutput
+          |        |       )
+          |        |
+          |        |
+          |        |
+     +----v--------+------------------+
+     |             普通世界            |
+     +--------------------------------+
+     |                                |
+     |   <button onClick={onInput}>   |
+     |    {output}                    |
+     |   </button>                    |
+     |                                |
+     +--------------------------------+
 
 ```
 
@@ -156,81 +155,119 @@
 
 ### Hook 依赖
 
-在 observable-hooks 中你可以通过 [`useObservable`][useObservable] 或 [`useLayoutObservable`][useLayoutObservable] 利用 hook 依赖创建 Observable。
+在 observable-hooks 中你可以通过 [`useObservable`][useobservable] 或 [`useLayoutObservable`][uselayoutobservable] 利用 hook 依赖创建 Observable。
 
 ```
 
-   +--------------------------------+    
-   |            响应式世界            |    
-   +--------------------------------+    
-   |                                |    
-   | const transform =              |    
-   |   inputs$ => inputs$.pipe(...) |    
-   |                                |    
-   |   output$                      |    
-   +------^-------------------------+    
-          |                              
-          |                              
-          |                              
-          +--------------+               
- const output$ = useObservable(          
-                   transform,            
-                   [props.A, state, ctx]   
-                 )       ^               
-                         |               
-                         |               
-                         |               
-   +---------------------+----------+    
-   |             普通世界            |    
-   +--------------------------------+    
-   |                                |    
-   | const App(props) {             |    
-   |   const [state] = useState()   |    
-   |   const ctx = useContext(Ctx)  |    
-   | }                              |    
-   |                                |    
-   +--------------------------------+    
+   +--------------------------------+
+   |            响应式世界            |
+   +--------------------------------+
+   |                                |
+   | const transform =              |
+   |   inputs$ => inputs$.pipe(...) |
+   |                                |
+   |   output$                      |
+   +------^-------------------------+
+          |
+          |
+          |
+          +--------------+
+ const output$ = useObservable(
+                   transform,
+                   [props.A, state, ctx]
+                 )       ^
+                         |
+                         |
+                         |
+   +---------------------+----------+
+   |             普通世界            |
+   +--------------------------------+
+   |                                |
+   | const App(props) {             |
+   |   const [state] = useState()   |
+   |   const ctx = useContext(Ctx)  |
+   | }                              |
+   |                                |
+   +--------------------------------+
 
 ```
 
 ### 事件回调函数
 
-你还可以通过 [`useObservableCallback`][useObservableCallback] 利用事件回调函数来创建 Observable。
+你还可以通过 [`useObservableCallback`][useobservablecallback] 利用事件回调函数来创建 Observable。
 
 ```
 
-        +--------------------------------+         
-        |            响应式世界            |         
-        +--------------------------------+         
-        |                                |         
-        |  const transform =             |         
-        |    input$ => input$.pipe(...)  |         
-        |                                |         
-        |           output$              |         
-        +--------------^-----------------+         
-                       |                           
-            +-----+    |                           
-            |     v    +                           
- const [onInput, output$] = useObservableCallback( 
-            ^                 transform            
-            |               )                      
-            |                                      
-            |                                      
-            |                                      
-            |                                      
-        +---+----------------------------+         
-        |             普通世界            |         
-        +--------------------------------+         
-        |                                |         
-        |   <button onClick={onInput}>   |         
-        |    Click                       |         
-        |   </button>                    |         
-        |                                |         
-        +--------------------------------+         
+        +--------------------------------+
+        |            响应式世界            |
+        +--------------------------------+
+        |                                |
+        |  const transform =             |
+        |    input$ => input$.pipe(...)  |
+        |                                |
+        |           output$              |
+        +--------------^-----------------+
+                       |
+            +-----+    |
+            |     v    +
+ const [onInput, output$] = useObservableCallback(
+            ^                 transform
+            |               )
+            |
+            |
+            |
+            |
+        +---+----------------------------+
+        |             普通世界            |
+        +--------------------------------+
+        |                                |
+        |   <button onClick={onInput}>   |
+        |    Click                       |
+        |   </button>                    |
+        |                                |
+        +--------------------------------+
 
 ```
 
-得到的 Observable 可以借助 [响应式世界到普通世界](#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%96%E7%95%8C%E5%88%B0%E6%99%AE%E9%80%9A%E4%B8%96%E7%95%8C) 模式，通过 [`useObservableState`][useObservableState] 或 [`useSubscription`][useSubscription] 接收。
+得到的 Observable 可以借助 [响应式世界到普通世界](#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%96%E7%95%8C%E5%88%B0%E6%99%AE%E9%80%9A%E4%B8%96%E7%95%8C) 模式，通过 [`useObservableState`][useobservablestate] 或 [`useSubscription`][usesubscription] 接收。
+
+## Ref 生成 Observable
+
+你还可以通过 [`useObservableRef`][useobservableref] 利用 React ref.current 的改变产生值。
+
+```
+
+        +--------------------------------+
+        |            响应式世界            |
+        +--------------------------------+
+        |                                |
+        |            value$              |
+        +--------------^-----------------+
+                       |
+            +-----+    |
+            |     v    +
+ const [ref, value$] = useObservableRef(
+            ^            initialValue
+            |          )
+            |
+            |
+            |
+            |
+        +---+----------------------------+
+        |             普通世界            |
+        +--------------------------------+
+        |                                |
+        |   <button ref={ref}>           |
+        |    Click                       |
+        |   </button>                    |
+        |                                |
+        |   // or                        |
+        |   ref.current = xxx            |
+        +--------------------------------+
+
+```
+
+得到的 Observable 可以借助 [响应式世界到普通世界](#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%96%E7%95%8C%E5%88%B0%E6%99%AE%E9%80%9A%E4%B8%96%E7%95%8C) 模式，通过 [`useObservableState`][useobservablestate] 或 [`useSubscription`][usesubscription] 接收。
 
 ## 响应式世界到响应式世界
 
@@ -238,51 +275,51 @@
 
 ```
 
-    +--------------------------------+    
-    |            响应式世界            |    
-    +--------------------------------+    
-    |                                |    
-    |           fromProps$           |    
-    |                                |    
-    |           fromState$           |    
-    |                                |    
-    |           fromGlobal$          |    
-    |                                |    
-    |  output$                       |    
-    +-----^--------------+-----------+    
-          |              |               
-          |              |               
-          +--------------v               
-  const output$ = useObservable(          
-                    () => combineLatest([ 
-                      fromProps$,         
-                      fromState$,         
-                      fromGlobal$         
-                    ])                    
-                  )                       
-                                          
-    +--------------------------------+    
-    |             　　　　            |    
-    |             普通世界            |    
-    |             　　　　            |    
-    +--------------------------------+    
+    +--------------------------------+
+    |            响应式世界            |
+    +--------------------------------+
+    |                                |
+    |           fromProps$           |
+    |                                |
+    |           fromState$           |
+    |                                |
+    |           fromGlobal$          |
+    |                                |
+    |  output$                       |
+    +-----^--------------+-----------+
+          |              |
+          |              |
+          +--------------v
+  const output$ = useObservable(
+                    () => combineLatest([
+                      fromProps$,
+                      fromState$,
+                      fromGlobal$
+                    ])
+                  )
+
+    +--------------------------------+
+    |             　　　　            |
+    |             普通世界            |
+    |             　　　　            |
+    +--------------------------------+
 
 ```
 
-得到的 Observable 可以借助 [响应式世界到普通世界](#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%96%E7%95%8C%E5%88%B0%E6%99%AE%E9%80%9A%E4%B8%96%E7%95%8C) 模式，通过 [`useObservableState`][useObservableState] 或 [`useSubscription`][useSubscription] 接收。
+得到的 Observable 可以借助 [响应式世界到普通世界](#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%96%E7%95%8C%E5%88%B0%E6%99%AE%E9%80%9A%E4%B8%96%E7%95%8C) 模式，通过 [`useObservableState`][useobservablestate] 或 [`useSubscription`][usesubscription] 接收。
 
 ## 辅助方法
 
 Osbservable-hooks 中类 [Epic](https://redux-observable.js.org/docs/basics/Epics.html) 的设计可以让 Observable 的转换逻辑高度可复用。事实上 observable-hooks 已经提供了一些常用 [辅助方法][helpers] 来减少垃圾回收压力。
 
 [useobservable]: ../api/README.md#useobservable
-[useLayoutObservable]: ../api/README.md#uselayoutobservable
-[useObservableCallback]: ../api/README.md#useobservablecallback
-[useSubscription]: ../api/README.md#usesubscription
-[useLayoutSubscription]: ../api/README.md#uselayoutsubscription
-[useObservableState]: ../api/README.md#useobservablestate
-[useObservableEagerState]: ../api/README.md#useobservableeagerstate
-[useObservableGetState]: ../api/README.md#useobservablegetstate
-[useObservablePickState]: ../api/README.md#useobservablepickstate
-
+[uselayoutobservable]: ../api/README.md#uselayoutobservable
+[useobservablecallback]: ../api/README.md#useobservablecallback
+[useobservableref]: ../api/README.md#useobservableref
+[usesubscription]: ../api/README.md#usesubscription
+[uselayoutsubscription]: ../api/README.md#uselayoutsubscription
+[useobservablestate]: ../api/README.md#useobservablestate
+[useobservableeagerstate]: ../api/README.md#useobservableeagerstate
+[useobservablegetstate]: ../api/README.md#useobservablegetstate
+[useobservablepickstate]: ../api/README.md#useobservablepickstate
 [helpers]: ../api/helpers.md

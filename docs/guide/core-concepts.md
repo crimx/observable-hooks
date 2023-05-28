@@ -241,7 +241,7 @@ You can also use [`useObservableRef`][useobservableref] to create observables fr
         |        Observable World        |
         +--------------------------------+
         |                                |
-        |           value$              |
+        |            value$              |
         +--------------^-----------------+
                        |
             +-----+    |
