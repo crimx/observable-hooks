@@ -193,7 +193,7 @@ Returns a mutable ref object and a BehaviorSubject.
 
 Whenever ref.current is changed, the BehaviorSubject will emit the new value.
 
-<Badge text="v4.2.3"/> Added since v4.2.3.
+<Badge text="v4.2.2"/> Added since v4.2.2.
 
 **Type parameters:**
 

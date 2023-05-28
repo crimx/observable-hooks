@@ -186,7 +186,7 @@ useObservableRef<TValue = undefined>(
 
 返回一个 ref 对象和一个 BehaviorSubject。每当 ref.current 改变，BehaviorSubject 会发出新的值。
 
-<Badge text="v4.2.3"/> 添加自 v4.2.3.
+<Badge text="v4.2.2"/> 添加自 v4.2.2.
 
 **类型参数:**
 
