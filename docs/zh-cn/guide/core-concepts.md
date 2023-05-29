@@ -231,7 +231,7 @@
 
 得到的 Observable 可以借助 [响应式世界到普通世界](#%E5%93%8D%E5%BA%94%E5%BC%8F%E4%B8%96%E7%95%8C%E5%88%B0%E6%99%AE%E9%80%9A%E4%B8%96%E7%95%8C) 模式，通过 [`useObservableState`][useobservablestate] 或 [`useSubscription`][usesubscription] 接收。
 
-## Ref 生成 Observable
+### Ref 生成 Observable
 
 你还可以通过 [`useObservableRef`][useobservableref] 利用 React ref.current 的改变产生值。
 
@@ -241,14 +241,14 @@
         |            响应式世界            |
         +--------------------------------+
         |                                |
-        |            value$              |
-        +--------------^-----------------+
-                       |
-            +-----+    |
-            |     v    +
- const [ref, value$] = useObservableRef(
-            ^            initialValue
-            |          )
+        |         value$                 |
+        +-----------^--------------------+
+                    |
+            +----+  |
+            |    v  +
+    const [ref, value$] = useObservableRef(
+            ^               initialValue
+            |             )
             |
             |
             |

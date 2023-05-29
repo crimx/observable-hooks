@@ -231,7 +231,7 @@ You can also use [`useObservableCallback`][useobservablecallback] to create obse
 
 The resulted observables can then be consumed by [Observable to Normal](#observable-to-normal) with [`useObservableState`][useobservablestate] or [`useSubscription`][usesubscription].
 
-## Ref to Observable
+### Ref to Observable
 
 You can also use [`useObservableRef`][useobservableref] to create observables from ref value.
 
@@ -241,14 +241,14 @@ You can also use [`useObservableRef`][useobservableref] to create observables fr
         |        Observable World        |
         +--------------------------------+
         |                                |
-        |            value$              |
-        +--------------^-----------------+
-                       |
-            +-----+    |
-            |     v    +
- const [ref, value$] = useObservableRef(
-            ^            initialValue
-            |          )
+        |         value$                 |
+        +-----------^--------------------+
+                    |
+            +----+  |
+            |    v  +
+    const [ref, value$] = useObservableRef(
+            ^               initialValue
+            |             )
             |
             |
             |
