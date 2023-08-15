@@ -59,9 +59,17 @@ describe("useObservableEagerState", () => {
     expect(spy).toHaveBeenCalledTimes(2);
   });
 
-  it("should throw error when observable emits error", () => {
+  it("should throw error when observable emits error synchronously", () => {
     const outer$ = throwError(() => new Error("oops"));
     const { result } = renderHook(() => useObservableEagerState(outer$));
+    expect(result.error).toBeInstanceOf(Error);
+    expect(result.error?.message).toBe("oops");
+  });
+
+  it("should throw error when observable emits error asynchronously", () => {
+    const outer$ = new BehaviorSubject("b");
+    const { result } = renderHook(() => useObservableEagerState(outer$));
+    act(() => outer$.error(new Error("oops")));
     expect(result.error).toBeInstanceOf(Error);
     expect(result.error?.message).toBe("oops");
   });
