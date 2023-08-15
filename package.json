@@ -2,10 +2,6 @@
   "name": "observable-hooks-mono",
   "description": "React hooks for RxJS Observables. Simple, flexible, testable and performant.",
   "private": true,
-  "workspaces": [
-    "packages/*",
-    "examples/*"
-  ],
   "keywords": [
     "react",
     "hooks",
@@ -16,7 +12,7 @@
   "author": "CRIMX<straybugs@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "pnpm -r build",
+    "build": "pnpm -F observable-hooks build && pnpm -F example-* build",
     "test": "pnpm -F observable-hooks test",
     "docs:dev": "NODE_OPTIONS=--openssl-legacy-provider vuepress dev docs",
     "docs:build": "NODE_OPTIONS=--openssl-legacy-provider vuepress build docs",

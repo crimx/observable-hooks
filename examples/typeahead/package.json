@@ -1,5 +1,5 @@
 {
-  "name": "typeahead",
+  "name": "example-typeahead",
   "version": "4.2.2",
   "private": true,
   "dependencies": {

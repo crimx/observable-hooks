@@ -1,21 +1,16 @@
 # [observable-hooks](https://github.com/crimx/observable-hooks)
 
+[![Docs](https://img.shields.io/badge/Docs-read-%23fdf9f5)](https://observable-hooks.js.org)
 [![npm-version](https://img.shields.io/npm/v/observable-hooks.svg)](https://www.npmjs.com/package/observable-hooks)
-![TypeScript>=4](https://img.shields.io/badge/TypeScript-%E2%89%A54-%233178c6)
 [![Build Status](https://github.com/crimx/observable-hooks/actions/workflows/build.yml/badge.svg)](https://github.com/crimx/observable-hooks/actions/workflows/build.yml)
-[![Coverage Status](https://img.shields.io/coveralls/github/crimx/observable-hooks/master)](https://coveralls.io/github/crimx/observable-hooks?branch=master)
-
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?maxAge=2592000)](http://commitizen.github.io/cz-cli/)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-brightgreen.svg?maxAge=2592000)](https://conventionalcommits.org)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Coverage Status](https://img.shields.io/codeclimate/coverage/crimx/observable-hooks)](https://codeclimate.com/github/crimx/observable-hooks)
 
 ![logo](https://github.com/crimx/observable-hooks/blob/master/logo.jpg?raw=true)
 
-Concurrent mode safe React hooks for RxJS Observables. Simple, flexible, testable and performant.
+Concurrent mode compatible React hooks for RxJS Observables. Simple, flexible, testable and performant.
 
 - Seamless integration of React and RxJS.
-  - **Concurrent mode safe**.
+  - Concurrent mode compatible.
   - Props, state and context to Observables.
   - Observables to states and props events.
   - Conditional rendering with stream of React Components.

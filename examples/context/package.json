@@ -1,5 +1,5 @@
 {
-  "name": "context",
+  "name": "example-context",
   "version": "4.2.2",
   "private": true,
   "dependencies": {

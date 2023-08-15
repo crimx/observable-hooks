@@ -1,5 +1,5 @@
 {
-  "name": "pomodoro-timer",
+  "name": "example-pomodoro-timer",
   "version": "4.2.2",
   "private": true,
   "dependencies": {

@@ -1,5 +1,5 @@
 {
-  "name": "suspense",
+  "name": "example-suspense",
   "version": "4.2.2",
   "private": true,
   "dependencies": {
