@@ -17,8 +17,7 @@
     "docs:dev": "NODE_OPTIONS=--openssl-legacy-provider vuepress dev docs",
     "docs:build": "NODE_OPTIONS=--openssl-legacy-provider vuepress build docs",
     "lint": "eslint --ext .ts,.tsx,.js,.mjs . && prettier --check .",
-    "lint:fix": "eslint --ext .ts,.tsx,.js,.mjs . --fix && prettier -w .",
-    "release": "standard-version"
+    "lint:fix": "eslint --ext .ts,.tsx,.js,.mjs . --fix && prettier -w ."
   },
   "devDependencies": {
     "@types/node": "^20.1.7",

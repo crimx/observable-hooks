@@ -39,7 +39,8 @@
   "scripts": {
     "build": "tsup",
     "build:min": "MINIFY=true tsup && node scripts/gzip.mjs",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "release": "standard-version"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
