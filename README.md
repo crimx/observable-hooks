@@ -5,7 +5,7 @@
 [![Build Status](https://github.com/crimx/observable-hooks/actions/workflows/build.yml/badge.svg)](https://github.com/crimx/observable-hooks/actions/workflows/build.yml)
 [![Coverage Status](https://img.shields.io/codeclimate/coverage/crimx/observable-hooks)](https://codeclimate.com/github/crimx/observable-hooks)
 
-![logo](https://github.com/crimx/observable-hooks/blob/master/logo.jpg?raw=true)
+![logo](https://github.com/crimx/observable-hooks/blob/main/logo.jpg?raw=true)
 
 Concurrent mode compatible React hooks for RxJS Observables. Simple, flexible, testable and performant.
 
@@ -85,12 +85,12 @@ function transformTypingStatus(event$) {
 
 Read the docs at <https://observable-hooks.js.org> or [`./docs`](./docs/).
 
-Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/examples). Play on CodeSandbox:
+Examples are in [here](https://github.com/crimx/observable-hooks/tree/main/examples). Play on CodeSandbox:
 
-- [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/pomodoro-timer)
-- [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
-- [Render-as-You-Fetch using Suspense](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/suspense)
-- [React Context](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/context)
+- [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/main/examples/pomodoro-timer)
+- [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/main/examples/typeahead)
+- [Render-as-You-Fetch using Suspense](https://codesandbox.io/s/github/crimx/observable-hooks/tree/main/examples/suspense)
+- [React Context](https://codesandbox.io/s/github/crimx/observable-hooks/tree/main/examples/context)
 
 Note that there are also some useful [utilities](https://observable-hooks.js.org/api/helpers.html) for common use cases to reduce garbage collection.
 

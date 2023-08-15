@@ -2,15 +2,15 @@
 
 [![npm-version](https://img.shields.io/npm/v/observable-hooks.svg)](https://www.npmjs.com/package/observable-hooks)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/observable-hooks)](https://bundlephobia.com/result?p=observable-hooks)
-[![Build Status](https://img.shields.io/travis/com/crimx/observable-hooks/master)](https://travis-ci.com/crimx/observable-hooks)
-[![Coverage Status](https://img.shields.io/coveralls/github/crimx/observable-hooks/master)](https://coveralls.io/github/crimx/observable-hooks?branch=master)
+[![Build Status](https://img.shields.io/travis/com/crimx/observable-hooks/main)](https://travis-ci.com/crimx/observable-hooks)
+[![Coverage Status](https://img.shields.io/coveralls/github/crimx/observable-hooks/main)](https://coveralls.io/github/crimx/observable-hooks?branch=main)
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?maxAge=2592000)](http://commitizen.github.io/cz-cli/)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-brightgreen.svg?maxAge=2592000)](https://conventionalcommits.org)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-![logo](https://github.com/crimx/observable-hooks/blob/master/logo.jpg?raw=true)
+![logo](https://github.com/crimx/observable-hooks/blob/main/logo.jpg?raw=true)
 
 React hooks for RxJS Observables. Simple, flexible, testable and performant.
 
@@ -91,11 +91,11 @@ Read the docs at <https://observable-hooks.js.org>.
 
 Here is how I designed the API. Might give you a perspective on when use what.
 
-![mindmap](https://github.com/crimx/observable-hooks/blob/master/observable-hooks.png?raw=true)
+![mindmap](https://github.com/crimx/observable-hooks/blob/main/observable-hooks.png?raw=true)
 
-Examples are in [here](https://github.com/crimx/observable-hooks/tree/master/examples). Play on CodeSandbox:
+Examples are in [here](https://github.com/crimx/observable-hooks/tree/main/examples). Play on CodeSandbox:
 
-- [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/pomodoro-timer)
-- [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/master/examples/typeahead)
+- [Pomodoro Timer Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/main/examples/pomodoro-timer)
+- [Typeahead Example](https://codesandbox.io/s/github/crimx/observable-hooks/tree/main/examples/typeahead)
 
 Note that there are also some useful [utilities](https://observable-hooks.js.org/modules/_helpers_.html) for common use cases to reduce garbage collection.
