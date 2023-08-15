@@ -1,7 +1,7 @@
-import { useLayoutSubscription } from "../src";
-import { renderHook, act } from "@testing-library/react-hooks";
-import { of, BehaviorSubject, Subject, throwError } from "rxjs";
+import { act, renderHook } from "@testing-library/react-hooks";
 import { useState } from "react";
+import { BehaviorSubject, Subject, of, throwError } from "rxjs";
+import { useLayoutSubscription } from "../src";
 import { mockConsoleError } from "./utils";
 
 describe("useLayoutSubscription", () => {
@@ -222,5 +222,26 @@ describe("useLayoutSubscription", () => {
 
     expect(numSpy).toBeCalledTimes(2);
     expect(numSpy).lastCalledWith(2);
+  });
+
+  it("should subscribe with Subject", () => {
+    const num1$ = of(1);
+    const num2$ = new Subject();
+    const numSpy = jest.fn();
+
+    renderHook(
+      props => {
+        useLayoutSubscription(props.subject$, numSpy);
+        useLayoutSubscription(props.input$, props.subject$);
+      },
+      {
+        initialProps: {
+          input$: num1$,
+          subject$: num2$,
+        },
+      }
+    );
+
+    expect(numSpy).toBeCalledTimes(1);
   });
 });

@@ -114,4 +114,5 @@ export const useForceUpdate = (): (() => void) => {
  * Prevent React warning when using useLayoutEffect on server.
  */
 export const useIsomorphicLayoutEffect = /* @__PURE__ */ (() =>
+  /* istanbul ignore next */
   typeof window === "undefined" ? useEffect : useLayoutEffect)();
