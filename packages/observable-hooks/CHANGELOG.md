@@ -1,7 +1,14 @@
-# Change Log
+# Changelog
 
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [4.2.3](https://github.com/crimx/observable-hooks/compare/v4.2.2...v4.2.3) (2023-08-15)
+
+
+### Bug Fixes
+
+* **examples:** add missing deps ([bbebed1](https://github.com/crimx/observable-hooks/commit/bbebed14947c0d9b8741835271d5e6e1bf1b8c66))
+* **subscription:** preserve observer this context ([b76d11e](https://github.com/crimx/observable-hooks/commit/b76d11e6930b7be36392068f43f7c73bcc1cb676)), closes [#122](https://github.com/crimx/observable-hooks/issues/122)
 
 ## [4.2.2](https://github.com/crimx/observable-hooks/compare/v4.2.1...v4.2.2) (2023-05-28)
 

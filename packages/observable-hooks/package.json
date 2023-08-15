@@ -1,6 +1,6 @@
 {
   "name": "observable-hooks",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "React hooks for RxJS Observables. Simple, flexible, testable and performant.",
   "main": "dist/index.js",
   "exports": {
