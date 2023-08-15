@@ -37,6 +37,7 @@
   "author": "CRIMX<straybugs@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "prepublishOnly": "pnpm run build",
     "build": "tsup",
     "build:min": "MINIFY=true tsup && node scripts/gzip.mjs",
     "test": "jest --coverage",

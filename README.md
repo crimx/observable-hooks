@@ -23,16 +23,8 @@ Concurrent mode compatible React hooks for RxJS Observables. Simple, flexible, t
 
 ## Installation
 
-yarn
-
 ```bash
-yarn add observable-hooks
-```
-
-npm
-
-```bash
-npm install --save observable-hooks
+pnpm add observable-hooks
 ```
 
 ## Why?
