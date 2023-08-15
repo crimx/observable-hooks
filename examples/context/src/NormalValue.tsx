@@ -1,24 +1,24 @@
-import React, { FC, useContext, useState, useEffect } from 'react'
-import { useObservable, useObservableEagerState } from 'observable-hooks'
-import { scan, take } from 'rxjs/operators'
-import { NormalValueContext } from './contexts'
+import { FC, useContext, useState, useEffect, PropsWithChildren } from "react";
+import { useObservable, useObservableEagerState } from "observable-hooks";
+import { scan, take } from "rxjs/operators";
+import { NormalValueContext } from "./contexts";
 
-export const NormalValueExample: FC = ({ children }) => {
-  const [num, setNum] = useState(1)
+export const NormalValueExample: FC<PropsWithChildren> = ({ children }) => {
+  const [num, setNum] = useState(1);
 
   useEffect(() => {
     const ticket = setInterval(() => {
-      setNum(num => (num + 1) % 1000000)
-    }, 1000)
-    return () => clearInterval(ticket)
-  }, [])
+      setNum(num => (num + 1) % 1000000);
+    }, 1000);
+    return () => clearInterval(ticket);
+  }, []);
 
   return (
     <NormalValueContext.Provider value={num}>
       {children}
     </NormalValueContext.Provider>
-  )
-}
+  );
+};
 
 export const NormalValueDescendant = () => {
   const numList = useObservableEagerState(
@@ -30,7 +30,7 @@ export const NormalValueDescendant = () => {
         ),
       [useContext(NormalValueContext)]
     )
-  )
+  );
 
   return (
     <div className="panel">
@@ -41,5 +41,5 @@ export const NormalValueDescendant = () => {
         </span>
       ))}
     </div>
-  )
-}
+  );
+};

@@ -1,32 +1,32 @@
-import { useForceUpdate } from '../src'
-import { renderHook, act } from '@testing-library/react-hooks'
+import { act, renderHook } from "@testing-library/react-hooks";
+import { useForceUpdate } from "../src";
 
-describe('useForceUpdate', () => {
-  it('should trigger rerender', () => {
-    let count = 0
+describe("useForceUpdate", () => {
+  it("should trigger rerender", () => {
+    let count = 0;
     const {
-      result: { current: forceUpdate }
+      result: { current: forceUpdate },
     } = renderHook(() => {
-      count++
-      return useForceUpdate()
-    })
-    expect(count).toBe(1)
-    act(() => forceUpdate())
-    expect(count).toBe(2)
-    act(() => forceUpdate())
-    expect(count).toBe(3)
-  })
+      count++;
+      return useForceUpdate();
+    });
+    expect(count).toBe(1);
+    act(() => forceUpdate());
+    expect(count).toBe(2);
+    act(() => forceUpdate());
+    expect(count).toBe(3);
+  });
 
-  it('should always return same function', () => {
-    const forceUpdates = new Set<Function>()
-    const { rerender, result } = renderHook(() => useForceUpdate())
-    forceUpdates.add(result.current)
-    rerender()
-    forceUpdates.add(result.current)
-    rerender()
-    forceUpdates.add(result.current)
-    rerender()
-    forceUpdates.add(result.current)
-    expect(forceUpdates.size).toBe(1)
-  })
-})
+  it("should always return same function", () => {
+    const forceUpdates = new Set<(...args: any[]) => any>();
+    const { rerender, result } = renderHook(() => useForceUpdate());
+    forceUpdates.add(result.current);
+    rerender();
+    forceUpdates.add(result.current);
+    rerender();
+    forceUpdates.add(result.current);
+    rerender();
+    forceUpdates.add(result.current);
+    expect(forceUpdates.size).toBe(1);
+  });
+});

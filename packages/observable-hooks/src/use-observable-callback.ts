@@ -1,6 +1,6 @@
-import { Observable, Subject } from 'rxjs'
-import { useRef, useState } from 'react'
-import { getEmptySubject, identity } from './helpers'
+import { Observable, Subject } from "rxjs";
+import { useRef, useState } from "react";
+import { getEmptySubject, identity } from "./helpers";
 
 /**
  * Returns a callback function and an events Observable.
@@ -13,7 +13,7 @@ import { getEmptySubject, identity } from './helpers'
 export function useObservableCallback<TEvent = void>(): [
   (event: TEvent) => void,
   Observable<TEvent>
-]
+];
 /**
  * Returns a callback function and an events Observable.
  *
@@ -32,7 +32,7 @@ export function useObservableCallback<TEvent = void>(): [
  */
 export function useObservableCallback<TOutput, TInput = TOutput>(
   init: (events$: Observable<TInput>) => Observable<TOutput>
-): [(event: TInput) => void, Observable<TOutput>]
+): [(event: TInput) => void, Observable<TOutput>];
 /**
  * Returns a callback function and an events Observable.
  *
@@ -62,7 +62,7 @@ export function useObservableCallback<
 >(
   init: (events$: Observable<TInput>) => Observable<TOutput>,
   selector: (args: TParams) => TInput
-): [(...args: TParams) => void, Observable<TOutput>]
+): [(...args: TParams) => void, Observable<TOutput>];
 export function useObservableCallback<
   TOutput,
   TInput = TOutput,
@@ -71,10 +71,10 @@ export function useObservableCallback<
   init = identity as (events$: Observable<TInput>) => Observable<TOutput>,
   selector?: (args: TParams) => TInput
 ): [(...args: TParams) => void, Observable<TOutput>] {
-  const [events$] = useState<Subject<TInput>>(getEmptySubject)
-  const [outputs$] = useState(() => init(events$))
+  const [events$] = useState<Subject<TInput>>(getEmptySubject);
+  const [outputs$] = useState(() => init(events$));
   const callback = useRef((...args: TParams) => {
-    events$.next(selector ? selector(args) : args[0])
-  }).current
-  return [callback, outputs$]
+    events$.next(selector ? selector(args) : args[0]);
+  }).current;
+  return [callback, outputs$];
 }

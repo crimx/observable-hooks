@@ -1,6 +1,6 @@
-import { BehaviorSubject, Observable } from 'rxjs'
-import { useLayoutSubscription } from './use-layout-subscription'
-import { useObservableStateInternal } from './internal/use-observable-state-internal'
+import { BehaviorSubject, Observable } from "rxjs";
+import { useLayoutSubscription } from "./use-layout-subscription";
+import { useObservableStateInternal } from "./internal/use-observable-state-internal";
 
 /**
  * Same as [[useObservableState]] except the subscription is established
@@ -47,7 +47,7 @@ import { useObservableStateInternal } from './internal/use-observable-state-inte
  */
 export function useLayoutObservableState<TState>(
   input$: BehaviorSubject<TState>
-): TState
+): TState;
 /**
  * @template TState Output state.
  *
@@ -55,7 +55,7 @@ export function useLayoutObservableState<TState>(
  */
 export function useLayoutObservableState<TState>(
   input$: Observable<TState>
-): TState | undefined
+): TState | undefined;
 /**
  * @template TState Output state.
  *
@@ -66,7 +66,7 @@ export function useLayoutObservableState<TState>(
 export function useLayoutObservableState<TState>(
   input$: Observable<TState>,
   initialState: TState | (() => TState)
-): TState
+): TState;
 /**
  * @template TState Output state.
  * @template TInput Input values.
@@ -76,7 +76,7 @@ export function useLayoutObservableState<TState>(
  */
 export function useLayoutObservableState<TState, TInput = TState>(
   init: (input$: Observable<TInput>) => Observable<TState>
-): [TState | undefined, (input: TInput) => void]
+): [TState | undefined, (input: TInput) => void];
 /**
  * Different input output types with initial state.
  *
@@ -94,7 +94,7 @@ export function useLayoutObservableState<TState, TInput = TState>(
     initialState: TState
   ) => Observable<TState>,
   initialState: TState | (() => TState)
-): [TState, (input: TInput) => void]
+): [TState, (input: TInput) => void];
 export function useLayoutObservableState<TState, TInput = TState>(
   state$OrInit:
     | Observable<TState>
@@ -108,5 +108,5 @@ export function useLayoutObservableState<TState, TInput = TState>(
     useLayoutSubscription,
     state$OrInit,
     initialState
-  )
+  );
 }

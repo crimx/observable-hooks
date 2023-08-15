@@ -1,25 +1,25 @@
-import React, { FC, useContext } from 'react'
+import { FC, PropsWithChildren, useContext } from "react";
 import {
   useObservable,
   useObservableState,
-  useSubscription
-} from 'observable-hooks'
-import { scan, take, switchMap } from 'rxjs/operators'
-import { ObservableValueContext } from './contexts'
-import { interval } from 'rxjs'
+  useSubscription,
+} from "observable-hooks";
+import { scan, take, switchMap } from "rxjs/operators";
+import { ObservableValueContext } from "./contexts";
+import { interval } from "rxjs";
 
-export const ObservableValueExample: FC = ({ children }) => {
-  const num$ = useObservable(() => interval(1000))
+export const ObservableValueExample: FC<PropsWithChildren> = ({ children }) => {
+  const num$ = useObservable(() => interval(1000));
 
   return (
     <ObservableValueContext.Provider value={num$}>
       {children}
     </ObservableValueContext.Provider>
-  )
-}
+  );
+};
 
 export const ObservableValueDescendant = () => {
-  const num$ = useContext(ObservableValueContext)
+  const num$ = useContext(ObservableValueContext);
 
   // If you need to transform(pipe) the Observable
   // you should list it as dependency since it may change over time.
@@ -39,18 +39,18 @@ export const ObservableValueDescendant = () => {
       [num$]
     ),
     []
-  )
+  );
 
   // If you don't need to pipe the Observable just useSubscription
   // Which will auto switch to the new Observable
   useSubscription(num$, value => {
-    console.log('useSubscription', value)
-  })
+    console.log("useSubscription", value);
+  });
 
   // Same as useObservableState and other state hooks
   // that use useSubscription under the hood.
-  const num = useObservableState(num$)
-  console.log('useObservableState', num)
+  const num = useObservableState(num$);
+  console.log("useObservableState", num);
 
   return (
     <div className="panel">
@@ -61,5 +61,5 @@ export const ObservableValueDescendant = () => {
         </span>
       ))}
     </div>
-  )
-}
+  );
+};

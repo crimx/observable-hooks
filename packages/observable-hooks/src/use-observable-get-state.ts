@@ -1,8 +1,8 @@
-import { useDebugValue } from 'react'
-import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators'
-import { useObservableState } from './use-observable-state'
-import { useObservable } from './use-observable'
+import { useDebugValue } from "react";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { useObservableState } from "./use-observable-state";
+import { useObservable } from "./use-observable";
 
 /**
  * Gets the value at path of state. Similar to lodash `get`.
@@ -14,16 +14,16 @@ import { useObservable } from './use-observable'
 export function useObservableGetState<TState>(
   state$: Observable<TState>,
   initialState: TState | (() => TState)
-): TState
+): TState;
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void
->(state$: Observable<TState>, initialState: TInitial): TState | TInitial
+>(state$: Observable<TState>, initialState: TInitial): TState | TInitial;
 export function useObservableGetState<TState, A extends keyof TState>(
   state$: Observable<TState>,
   initialState: TState[A] | (() => TState[A]),
   pA: A
-): TState[A]
+): TState[A];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -32,7 +32,7 @@ export function useObservableGetState<
   state$: Observable<TState>,
   initialState: TInitial,
   pA: A
-): TState[A] | TInitial
+): TState[A] | TInitial;
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -42,7 +42,7 @@ export function useObservableGetState<
   initialState: TState[A][B] | (() => TState[A][B]),
   pA: A,
   pB: B
-): TState[A][B]
+): TState[A][B];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -53,7 +53,7 @@ export function useObservableGetState<
   initialState: TInitial,
   pA: A,
   pB: B
-): TState[A][B] | TInitial
+): TState[A][B] | TInitial;
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -65,7 +65,7 @@ export function useObservableGetState<
   pA: A,
   pB: B,
   pC: C
-): TState[A][B][C]
+): TState[A][B][C];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -78,7 +78,7 @@ export function useObservableGetState<
   pA: A,
   pB: B,
   pC: C
-): TState[A][B][C] | TInitial
+): TState[A][B][C] | TInitial;
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -92,7 +92,7 @@ export function useObservableGetState<
   pB: B,
   pC: C,
   pD: D
-): TState[A][B][C][D]
+): TState[A][B][C][D];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -107,7 +107,7 @@ export function useObservableGetState<
   pB: B,
   pC: C,
   pD: D
-): TState[A][B][C][D] | TInitial
+): TState[A][B][C][D] | TInitial;
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -123,7 +123,7 @@ export function useObservableGetState<
   pC: C,
   pD: D,
   pE: E
-): TState[A][B][C][D][E]
+): TState[A][B][C][D][E];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -140,7 +140,7 @@ export function useObservableGetState<
   pC: C,
   pD: D,
   pE: E
-): TState[A][B][C][D][E] | TInitial
+): TState[A][B][C][D][E] | TInitial;
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -158,7 +158,7 @@ export function useObservableGetState<
   pD: D,
   pE: E,
   pF: F
-): TState[A][B][C][D][E][F]
+): TState[A][B][C][D][E][F];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -177,7 +177,7 @@ export function useObservableGetState<
   pD: D,
   pE: E,
   pF: F
-): TState[A][B][C][D][E][F] | TInitial
+): TState[A][B][C][D][E][F] | TInitial;
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -199,7 +199,7 @@ export function useObservableGetState<
   pE: E,
   pF: F,
   pG: G
-): TState[A][B][C][D][E][F][G]
+): TState[A][B][C][D][E][F][G];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -220,7 +220,7 @@ export function useObservableGetState<
   pE: E,
   pF: F,
   pG: G
-): TState[A][B][C][D][E][F][G] | TInitial
+): TState[A][B][C][D][E][F][G] | TInitial;
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -244,7 +244,7 @@ export function useObservableGetState<
   pF: F,
   pG: G,
   pH: H
-): TState[A][B][C][D][E][F][G][H]
+): TState[A][B][C][D][E][F][G][H];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -267,7 +267,7 @@ export function useObservableGetState<
   pF: F,
   pG: G,
   pH: H
-): TState[A][B][C][D][E][F][G][H] | TInitial
+): TState[A][B][C][D][E][F][G][H] | TInitial;
 export function useObservableGetState<
   TState,
   A extends keyof TState,
@@ -293,7 +293,7 @@ export function useObservableGetState<
   pG: G,
   pH: H,
   pI: I
-): TState[A][B][C][D][E][F][G][H][I]
+): TState[A][B][C][D][E][F][G][H][I];
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -318,7 +318,7 @@ export function useObservableGetState<
   pG: G,
   pH: H,
   pI: I
-): TState[A][B][C][D][E][F][G][H][I] | TInitial
+): TState[A][B][C][D][E][F][G][H][I] | TInitial;
 export function useObservableGetState<
   TState,
   TInitial extends null | undefined | void,
@@ -345,7 +345,7 @@ export function useObservableGetState<
   pH: H,
   pI: I,
   pJ: J
-): TState[A][B][C][D][E][F][G][H][I][J] | TInitial
+): TState[A][B][C][D][E][F][G][H][I][J] | TInitial;
 export function useObservableGetState<TState, TInit>(
   state$: Observable<TState>,
   initialState: TInit | (() => TInit),
@@ -356,11 +356,11 @@ export function useObservableGetState<TState, TInit>(
       state$.pipe(map(state => path.reduce(getValue, state)))
     ),
     initialState
-  )
-  useDebugValue(value)
-  return value
+  );
+  useDebugValue(value);
+  return value;
 }
 
 function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
-  return obj[key]
+  return obj[key];
 }

@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "vivaxy.vscode-conventional-commits",
+    "EditorConfig.EditorConfig",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}

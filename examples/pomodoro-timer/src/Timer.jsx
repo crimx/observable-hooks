@@ -1,7 +1,11 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import { useObservable, pluckFirst, useObservableState } from 'observable-hooks'
-import { Clock } from './Clock'
+import * as React from "react";
+import PropTypes from "prop-types";
+import {
+  useObservable,
+  pluckFirst,
+  useObservableState,
+} from "observable-hooks";
+import { Clock } from "./Clock";
 import {
   map,
   filter,
@@ -10,17 +14,17 @@ import {
   repeat,
   withLatestFrom,
   scan,
-  take
-} from 'rxjs/operators'
-import { of, animationFrameScheduler } from 'rxjs'
+  take,
+} from "rxjs/operators";
+import { of, animationFrameScheduler } from "rxjs";
 
-const pomodoroSeconds = 25 * 60
+const pomodoroSeconds = 25 * 60;
 
 export const Timer = ({ state }) => {
-  const timerState$ = useObservable(pluckFirst, [state])
+  const timerState$ = useObservable(pluckFirst, [state]);
   const countDown$ = useObservable(() =>
     timerState$.pipe(
-      map(state => state === 'reset'),
+      map(state => state === "reset"),
       distinctUntilChanged(),
       switchMap(isReset =>
         isReset
@@ -34,7 +38,7 @@ export const Timer = ({ state }) => {
               distinctUntilChanged(),
               // pause implementation
               withLatestFrom(timerState$),
-              filter(([, state]) => state === 'started'),
+              filter(([, state]) => state === "started"),
               // time's up!
               take(pomodoroSeconds),
               // count how many second left
@@ -42,11 +46,11 @@ export const Timer = ({ state }) => {
             )
       )
     )
-  )
-  const seconds = useObservableState(countDown$, pomodoroSeconds)
-  return <Clock seconds={seconds} />
-}
+  );
+  const seconds = useObservableState(countDown$, pomodoroSeconds);
+  return <Clock seconds={seconds} />;
+};
 
 Timer.propTypes = {
-  state: PropTypes.oneOf(['started', 'paused', 'reset'])
-}
+  state: PropTypes.oneOf(["started", "paused", "reset"]),
+};

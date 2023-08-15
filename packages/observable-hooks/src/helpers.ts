@@ -2,20 +2,20 @@
  * Useful utilities
  */
 import {
-  useRef,
   MutableRefObject,
-  useState,
+  useEffect,
   useLayoutEffect,
-  useEffect
-} from 'react'
-import { Subject, Observable } from 'rxjs'
-import { pluck } from 'rxjs/operators'
+  useRef,
+  useState,
+} from "react";
+import { Observable, Subject } from "rxjs";
+import { map } from "rxjs/operators";
 
 /**
  * Returns the first argument it receives.
  */
 export function identity<T>(value: T): T {
-  return value
+  return value;
 }
 
 /**
@@ -34,7 +34,7 @@ export function identity<T>(value: T): T {
 export function pluckFirst<TArr extends ArrayLike<any>>(
   inputs$: Observable<TArr>
 ): Observable<TArr[0]> {
-  return pluck<TArr, 0>(0)(inputs$)
+  return map<TArr, 0>(input => input[0])(inputs$);
 }
 
 /**
@@ -53,11 +53,10 @@ export function pluckFirst<TArr extends ArrayLike<any>>(
  */
 export function pluckCurrentTargetValue<
   TEvent extends { currentTarget: { value: any } }
->(event$: Observable<TEvent>): Observable<TEvent['currentTarget']['value']> {
-  return pluck<TEvent, 'currentTarget', 'value'>(
-    'currentTarget',
-    'value'
-  )(event$)
+>(event$: Observable<TEvent>): Observable<TEvent["currentTarget"]["value"]> {
+  return map<TEvent, TEvent["currentTarget"]["value"]>(
+    event => event.currentTarget.value
+  )(event$);
 }
 
 /**
@@ -76,11 +75,10 @@ export function pluckCurrentTargetValue<
  */
 export function pluckCurrentTargetChecked<
   TEvent extends { currentTarget: { checked: any } }
->(event$: Observable<TEvent>): Observable<TEvent['currentTarget']['checked']> {
-  return pluck<TEvent, 'currentTarget', 'checked'>(
-    'currentTarget',
-    'checked'
-  )(event$)
+>(event$: Observable<TEvent>): Observable<TEvent["currentTarget"]["checked"]> {
+  return map<TEvent, TEvent["currentTarget"]["checked"]>(
+    event => event.currentTarget.checked
+  )(event$);
 }
 
 /**
@@ -88,7 +86,7 @@ export function pluckCurrentTargetChecked<
  * @ignore
  */
 export function getEmptySubject<T>() {
-  return new Subject<T>()
+  return new Subject<T>();
 }
 
 /**
@@ -97,34 +95,34 @@ export function getEmptySubject<T>() {
  * @returns A ref object with the returned value.
  */
 export function useRefFn<T>(init: () => T) {
-  const firstRef = useRef(true)
-  const ref = useRef<T | null>(null)
+  const firstRef = useRef(true);
+  const ref = useRef<T | null>(null);
   if (firstRef.current) {
-    firstRef.current = false
-    ref.current = init()
+    firstRef.current = false;
+    ref.current = init();
   }
-  return ref as MutableRefObject<T>
+  return ref as MutableRefObject<T>;
 }
 
 /**
  * Force re-renders Component.
  */
 export function useForceUpdate(): () => void {
-  const updateState = useState(0)[1]
-  return useRef(() => updateState(increment)).current
+  const updateState = useState(0)[1];
+  return useRef(() => updateState(increment)).current;
 }
 
 function increment(n: number): number {
-  return (n + 1) % 1000000
+  return (n + 1) % 1000000;
 }
 
 /**
  * Prevent React warning when using useLayoutEffect on server.
  */
 export const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' &&
-  typeof window.document !== 'undefined' &&
-  typeof window.document.createElement !== 'undefined'
+  typeof window !== "undefined" &&
+  typeof window.document !== "undefined" &&
+  typeof window.document.createElement !== "undefined"
     ? useLayoutEffect
     : /* istanbul ignore next: both are not called on server */
-      useEffect
+      useEffect;

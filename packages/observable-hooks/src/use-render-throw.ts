@@ -1,8 +1,8 @@
-import { useRef } from 'react'
-import { Observable, NEVER } from 'rxjs'
-import { catchError, switchMap } from 'rxjs/operators'
-import { useForceUpdate } from './helpers'
-import { useObservable } from './use-observable'
+import { useRef } from "react";
+import { Observable, NEVER } from "rxjs";
+import { catchError, switchMap } from "rxjs/operators";
+import { useForceUpdate } from "./helpers";
+import { useObservable } from "./use-observable";
 
 /**
  * Enhance an Observable by making errors catch-able to ErrorBoundary.
@@ -17,30 +17,30 @@ import { useObservable } from './use-observable'
 export function useRenderThrow<TInput>(
   input$: Observable<TInput>
 ): Observable<TInput> {
-  const forceUpdate = useForceUpdate()
-  const errorRef = useRef<Error | null>()
+  const forceUpdate = useForceUpdate();
+  const errorRef = useRef<Error | null>();
 
   const output$ = useObservable(
     inputs$ =>
       inputs$.pipe(
         switchMap(([input$]) => {
-          errorRef.current = null
+          errorRef.current = null;
           return input$.pipe(
             catchError(error => {
-              errorRef.current = error
-              forceUpdate()
-              return NEVER
+              errorRef.current = error;
+              forceUpdate();
+              return NEVER;
             })
-          )
+          );
         })
       ),
     [input$]
-  )
+  );
 
   if (errorRef.current) {
     // Let error boundary catch the error
-    throw errorRef.current
+    throw errorRef.current;
   }
 
-  return output$
+  return output$;
 }

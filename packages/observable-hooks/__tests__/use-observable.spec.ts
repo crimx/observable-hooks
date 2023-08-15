@@ -1,144 +1,144 @@
-import { useObservable, pluckFirst } from '../src'
-import { renderHook, act } from '@testing-library/react-hooks'
-import { useState } from 'react'
-import { of, merge, Observable, BehaviorSubject } from 'rxjs'
-import { map } from 'rxjs/operators'
+import { useObservable, pluckFirst } from "../src";
+import { renderHook, act } from "@testing-library/react-hooks";
+import { useState } from "react";
+import { of, merge, Observable, BehaviorSubject } from "rxjs";
+import { map } from "rxjs/operators";
 
-describe('useObservable', () => {
-  it('should call the init function once', () => {
-    const timeSpy = jest.fn(() => of(Date.now()))
-    const { rerender } = renderHook(() => useObservable(timeSpy))
-    expect(timeSpy).toBeCalledTimes(1)
-    rerender()
-    expect(timeSpy).toBeCalledTimes(1)
-    rerender()
-    expect(timeSpy).toBeCalledTimes(1)
-  })
+describe("useObservable", () => {
+  it("should call the init function once", () => {
+    const timeSpy = jest.fn(() => of(Date.now()));
+    const { rerender } = renderHook(() => useObservable(timeSpy));
+    expect(timeSpy).toBeCalledTimes(1);
+    rerender();
+    expect(timeSpy).toBeCalledTimes(1);
+    rerender();
+    expect(timeSpy).toBeCalledTimes(1);
+  });
 
-  it('should call the init function once with inputs', () => {
+  it("should call the init function once with inputs", () => {
     const timeSpy = jest.fn((inputs$: Observable<[number]>) =>
       inputs$.pipe(map(inputs => inputs[0]))
-    )
+    );
     const { rerender } = renderHook(
       props => useObservable(timeSpy, [props.value]),
       {
         initialProps: {
-          value: 1
-        }
+          value: 1,
+        },
       }
-    )
-    expect(timeSpy).toBeCalledTimes(1)
-    rerender({ value: 2 })
-    expect(timeSpy).toBeCalledTimes(1)
-    rerender({ value: 3 })
-    expect(timeSpy).toBeCalledTimes(1)
-  })
+    );
+    expect(timeSpy).toBeCalledTimes(1);
+    rerender({ value: 2 });
+    expect(timeSpy).toBeCalledTimes(1);
+    rerender({ value: 3 });
+    expect(timeSpy).toBeCalledTimes(1);
+  });
 
-  it('should always return the same Observable', () => {
-    const outer$ = of({ value: 1 })
+  it("should always return the same Observable", () => {
+    const outer$ = of({ value: 1 });
     const { result, rerender } = renderHook(() =>
       useObservable(() => merge(outer$, of({ value: 2 })))
-    )
-    const enhanced$ = result.current
-    const spy = jest.fn()
-    enhanced$.subscribe(spy)
-    expect(spy).toBeCalledTimes(2)
-    expect(spy).toBeCalledWith({ value: 1 })
-    expect(spy).lastCalledWith({ value: 2 })
-    rerender()
-    expect(result.current).toBe(enhanced$)
-    spy.mockClear()
-    expect(spy).toBeCalledTimes(0)
-  })
+    );
+    const enhanced$ = result.current;
+    const spy = jest.fn();
+    enhanced$.subscribe(spy);
+    expect(spy).toBeCalledTimes(2);
+    expect(spy).toBeCalledWith({ value: 1 });
+    expect(spy).lastCalledWith({ value: 2 });
+    rerender();
+    expect(result.current).toBe(enhanced$);
+    spy.mockClear();
+    expect(spy).toBeCalledTimes(0);
+  });
 
-  it('should always return the same Observable with inputs', () => {
+  it("should always return the same Observable with inputs", () => {
     const { result, rerender } = renderHook(
       props => useObservable(pluckFirst, [props.value]),
       {
         initialProps: {
-          value: 1
-        }
+          value: 1,
+        },
       }
-    )
-    const enhanced$ = result.current
-    const spy = jest.fn()
-    enhanced$.subscribe(spy)
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(1)
-    spy.mockClear()
-    rerender({ value: 2 })
-    expect(result.current).toBe(enhanced$)
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(2)
-  })
+    );
+    const enhanced$ = result.current;
+    const spy = jest.fn();
+    enhanced$.subscribe(spy);
+    expect(spy).toBeCalledTimes(1);
+    expect(spy).toBeCalledWith(1);
+    spy.mockClear();
+    rerender({ value: 2 });
+    expect(result.current).toBe(enhanced$);
+    expect(spy).toBeCalledTimes(1);
+    expect(spy).toBeCalledWith(2);
+  });
 
-  it('should be able to be shared with multiple observers', () => {
+  it("should be able to be shared with multiple observers", () => {
     const { result } = renderHook(() => {
-      const [state, setState] = useState(1)
-      const stream$ = useObservable(pluckFirst, [state])
-      return { setState, stream$ }
-    })
+      const [state, setState] = useState(1);
+      const stream$ = useObservable(pluckFirst, [state]);
+      return { setState, stream$ };
+    });
 
-    const { setState, stream$ } = result.current
+    const { setState, stream$ } = result.current;
 
-    const spies = Array.from(Array(10)).map(() => jest.fn())
-    spies.forEach(spy => stream$.subscribe(spy))
+    const spies = Array.from(Array(10)).map(() => jest.fn());
+    spies.forEach(spy => stream$.subscribe(spy));
 
     spies.forEach(spy => {
-      expect(spy).toBeCalledTimes(1)
-      expect(spy).toBeCalledWith(1)
-    })
+      expect(spy).toBeCalledTimes(1);
+      expect(spy).toBeCalledWith(1);
+    });
 
-    act(() => setState(2))
+    act(() => setState(2));
     spies.forEach(spy => {
-      expect(spy).toBeCalledTimes(2)
-      expect(spy).toBeCalledWith(2)
-    })
+      expect(spy).toBeCalledTimes(2);
+      expect(spy).toBeCalledWith(2);
+    });
 
-    act(() => setState(2))
+    act(() => setState(2));
     spies.forEach(spy => {
-      expect(spy).toBeCalledTimes(2)
-      expect(spy).toBeCalledWith(2)
-    })
+      expect(spy).toBeCalledTimes(2);
+      expect(spy).toBeCalledWith(2);
+    });
 
-    act(() => setState(3))
+    act(() => setState(3));
     spies.forEach(spy => {
-      expect(spy).toBeCalledTimes(3)
-      expect(spy).toBeCalledWith(3)
-    })
-  })
+      expect(spy).toBeCalledTimes(3);
+      expect(spy).toBeCalledWith(3);
+    });
+  });
 
-  it('should emit value when one of the deps changes', () => {
+  it("should emit value when one of the deps changes", () => {
     const { result, rerender } = renderHook(
       props => useObservable(pluckFirst, [props.text]),
       {
         initialProps: {
-          text: 'hello'
-        }
+          text: "hello",
+        },
       }
-    )
+    );
 
-    const spy = jest.fn()
-    result.current.subscribe(spy)
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).lastCalledWith('hello')
-    rerender({ text: 'world' })
-    expect(spy).toBeCalledTimes(2)
-    expect(spy).lastCalledWith('world')
-  })
+    const spy = jest.fn();
+    result.current.subscribe(spy);
+    expect(spy).toBeCalledTimes(1);
+    expect(spy).lastCalledWith("hello");
+    rerender({ text: "world" });
+    expect(spy).toBeCalledTimes(2);
+    expect(spy).lastCalledWith("world");
+  });
 
-  it('should support generic type', () => {
+  it("should support generic type", () => {
     const { result } = renderHook(() =>
       useObservable(() => new BehaviorSubject(0))
-    )
+    );
 
-    const spy = jest.fn()
-    result.current.subscribe(spy)
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).lastCalledWith(0)
+    const spy = jest.fn();
+    result.current.subscribe(spy);
+    expect(spy).toBeCalledTimes(1);
+    expect(spy).lastCalledWith(0);
 
-    result.current.next(1)
-    expect(spy).toBeCalledTimes(2)
-    expect(spy).lastCalledWith(1)
-  })
-})
+    result.current.next(1);
+    expect(spy).toBeCalledTimes(2);
+    expect(spy).lastCalledWith(1);
+  });
+});

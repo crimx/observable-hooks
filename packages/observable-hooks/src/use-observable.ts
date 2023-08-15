@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs'
-import { useObservableInternal } from './internal/use-observable-internal'
-import { useEffect } from 'react'
+import { Observable } from "rxjs";
+import { useObservableInternal } from "./internal/use-observable-internal";
+import { useEffect } from "react";
 
 /**
  * Accepts a function that returns an Observable.
@@ -29,7 +29,7 @@ import { useEffect } from 'react'
 export function useObservable<
   TOutput,
   TObservable extends Observable<TOutput> = Observable<TOutput>
->(init: () => TObservable): TObservable
+>(init: () => TObservable): TObservable;
 /**
  * @template TOutput Output value within Observable.
  * @template TInputs A readonly tuple of all dependencies.
@@ -46,12 +46,12 @@ export function useObservable<
 >(
   init: (inputs$: Observable<[...TInputs]>) => TObservable,
   inputs: [...TInputs]
-): TObservable
+): TObservable;
 export function useObservable<TOutput, TInputs extends Readonly<any[]>>(
   init:
     | (() => Observable<TOutput>)
     | ((inputs$: Observable<[...TInputs]>) => Observable<TOutput>),
   inputs?: [...TInputs]
 ): Observable<TOutput> {
-  return useObservableInternal(useEffect, init, inputs)
+  return useObservableInternal(useEffect, init, inputs);
 }

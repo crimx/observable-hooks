@@ -2,36 +2,55 @@ name: build
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: production
     steps:
-      - name: Use Node.js ⚙️
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v3
 
-      - name: Install and Build 🔧
-        run: |
-          yarn install
-          node ./scripts/setup-rxjs7
-          yarn lerna bootstrap
-          yarn run lint
-          yarn run test
-          yarn run build
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build 🔧
+        run: |
+          pnpm run lint
+          pnpm run build
+          pnpm run test
+
+      - name: Upload Coverage
+        uses: paambaati/codeclimate-action@v4.0.0
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageLocations: ${{github.workspace}}/coverage/clover.xml:clover
 
       - name: Build Docs 📖
         run: |
-          yarn run docs:build
+          pnpm run docs:build
           touch 'docs/.vuepress/dist/.nojekyll'
 
       - name: Deploy 🚀

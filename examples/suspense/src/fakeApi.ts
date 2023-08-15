@@ -1,48 +1,48 @@
-import { Subject, of, combineLatest, from } from 'rxjs'
+import { Subject, of, combineLatest, from } from "rxjs";
 import {
   switchMap,
   timeout,
   catchError,
   take,
   share,
-  startWith
-} from 'rxjs/operators'
-import { ObservableResource } from 'observable-hooks'
+  startWith,
+} from "rxjs/operators";
+import { ObservableResource } from "observable-hooks";
 
 export type User = {
-  name: string
-  description: string
-}
+  name: string;
+  description: string;
+};
 
 export type UserList = Array<{
-  id: string
-  name: string
-}>
+  id: string;
+  name: string;
+}>;
 
 export type Posts = Array<{
-  id: number
-  text: string
-}>
+  id: number;
+  text: string;
+}>;
 
-const fetchUser$$ = new Subject<string>()
+const fetchUser$$ = new Subject<string>();
 const userResource$$ = fetchUser$$.pipe(
   // No more race condition
   switchMap(id => from(fakeUserXHR(id)).pipe(startWith(null))),
   share()
-)
+);
 export const userResource = new ObservableResource(
   userResource$$,
   // Show loading state on subsequent update
   (value: User | null): value is User => !!value
-)
+);
 
-const fetchPosts$$ = new Subject<string>()
+const fetchPosts$$ = new Subject<string>();
 const postResource$$ = fetchPosts$$.pipe(
   switchMap(id => fakePostsXHR(id)),
   share()
-)
+);
 // Hide loading state on subsequent update
-export const postsResource = new ObservableResource(postResource$$)
+export const postsResource = new ObservableResource(postResource$$);
 
 export const userListResource = new ObservableResource(
   // Wait till both of the first user and posts requests finish.
@@ -52,89 +52,89 @@ export const userListResource = new ObservableResource(
     take(1),
     switchMap(() => fakeUserListXHR())
   )
-)
+);
 
 export function fetchUser(id: string) {
-  fetchUser$$.next(id)
+  fetchUser$$.next(id);
 }
 
 export function fetchPosts(id: string) {
-  fetchPosts$$.next(id)
+  fetchPosts$$.next(id);
 }
 
 export function fetchProfileData(id: string) {
-  fetchUser(id)
-  fetchPosts(id)
+  fetchUser(id);
+  fetchPosts(id);
 }
 
 async function fakeUserXHR(id: string): Promise<User> {
-  console.log(`fetch user ${id} ...`)
-  await timer(2000 * Math.random())
-  console.log(`fetched user ${id}`)
+  console.log(`fetch user ${id} ...`);
+  await timer(2000 * Math.random());
+  console.log(`fetched user ${id}`);
   switch (id) {
-    case 'crimx':
+    case "crimx":
       return {
-        name: 'CRIMX',
-        description: 'Love React and RxJS.'
-      }
-    case 'tom':
+        name: "CRIMX",
+        description: "Love React and RxJS.",
+      };
+    case "tom":
       return {
-        name: 'Tom',
-        description: 'Love React and RxJS just like CRIMX.'
-      }
+        name: "Tom",
+        description: "Love React and RxJS just like CRIMX.",
+      };
     default:
-      throw new Error('No result')
+      throw new Error("No result");
   }
 }
 
 async function fakePostsXHR(id: string): Promise<Posts> {
-  console.log('fetch post...')
-  await timer(3000 * Math.random())
-  console.log('fetched post')
+  console.log("fetch post...");
+  await timer(3000 * Math.random());
+  console.log("fetched post");
   switch (id) {
-    case 'crimx':
+    case "crimx":
       return [
         {
           id: 0,
-          text: 'Observable = N * Promise'
+          text: "Observable = N * Promise",
         },
         {
           id: 1,
-          text: 'Observable + Suspense = Magic'
-        }
-      ]
-    case 'tom':
+          text: "Observable + Suspense = Magic",
+        },
+      ];
+    case "tom":
       return [
         {
           id: 0,
-          text: 'I use observable-hooks to create complex animations.'
+          text: "I use observable-hooks to create complex animations.",
         },
         {
           id: 1,
-          text: 'observable-hooks is so lightweight and fast.'
-        }
-      ]
+          text: "observable-hooks is so lightweight and fast.",
+        },
+      ];
     default:
-      throw new Error('No result')
+      throw new Error("No result");
   }
 }
 
 async function fakeUserListXHR(): Promise<UserList> {
-  console.log('fetch user list...')
-  await timer(2000 * Math.random())
-  console.log('fetched user list')
+  console.log("fetch user list...");
+  await timer(2000 * Math.random());
+  console.log("fetched user list");
   return [
     {
-      id: 'crimx',
-      name: 'CRIMX'
+      id: "crimx",
+      name: "CRIMX",
     },
     {
-      id: 'tom',
-      name: 'Tom'
-    }
-  ]
+      id: "tom",
+      name: "Tom",
+    },
+  ];
 }
 
 function timer(delay = 1000) {
-  return new Promise(resolve => setTimeout(resolve, delay))
+  return new Promise(resolve => setTimeout(resolve, delay));
 }

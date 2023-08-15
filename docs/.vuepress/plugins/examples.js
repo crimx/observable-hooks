@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 
 module.exports = {
-  additionalPages: [...examplePages(), ...examplePages('-rxjs7')]
+  additionalPages: [...examplePages()]
 }
 
 function examplePages(suffix = '') {

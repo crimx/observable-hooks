@@ -7,19 +7,35 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Use Node.js ⚙️
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v3
 
-      - name: Install and Build 🔧
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
         run: |
-          yarn install
-          node ./scripts/setup-rxjs7
-          yarn lerna bootstrap
-          yarn run lint
-          yarn run test
-          yarn run build
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build 🔧
+        run: |
+          pnpm run lint
+          pnpm run build
+          pnpm run test

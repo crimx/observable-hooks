@@ -1,2 +1,7 @@
-dist/
 node_modules/
+dist/
+public/
+pnpm-lock.yaml
+scripts/
+jest.config.js
+jest.config.base.js

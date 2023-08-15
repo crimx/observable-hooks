@@ -1,5 +1,5 @@
-import { Observable, BehaviorSubject } from 'rxjs'
-import { useEffect, useRef, useState } from 'react'
+import { Observable, BehaviorSubject } from "rxjs";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * @template TOutput Output value within Observable.
@@ -23,20 +23,20 @@ export function useObservableInternal<TOutput, TInputs extends Readonly<any[]>>(
   // which unlikely coexists with the other one.
   // A warning is also added to the docs.
   if (!inputs) {
-    return useState(init as () => Observable<TOutput>)[0]
+    return useState(init as () => Observable<TOutput>)[0];
   }
 
-  const [inputs$] = useState(() => new BehaviorSubject(inputs))
-  const [source$] = useState(() => init(inputs$))
+  const [inputs$] = useState(() => new BehaviorSubject(inputs));
+  const [source$] = useState(() => init(inputs$));
 
-  const firstEffectRef = useRef(true)
+  const firstEffectRef = useRef(true);
   useCustomEffect(() => {
     if (firstEffectRef.current) {
-      firstEffectRef.current = false
-      return
+      firstEffectRef.current = false;
+      return;
     }
-    inputs$.next(inputs)
-  }, inputs)
+    inputs$.next(inputs);
+  }, inputs);
 
-  return source$
+  return source$;
 }

@@ -1,6 +1,6 @@
-import { BehaviorSubject, Observable } from 'rxjs'
-import { useSubscription } from './use-subscription'
-import { useObservableStateInternal } from './internal/use-observable-state-internal'
+import { BehaviorSubject, Observable } from "rxjs";
+import { useSubscription } from "./use-subscription";
+import { useObservableStateInternal } from "./internal/use-observable-state-internal";
 
 /**
  * A sugar hook for getting values from an Observable.
@@ -44,7 +44,7 @@ import { useObservableStateInternal } from './internal/use-observable-state-inte
  */
 export function useObservableState<TState>(
   input$: BehaviorSubject<TState>
-): TState
+): TState;
 /**
  * @template TState Output state.
  *
@@ -52,7 +52,7 @@ export function useObservableState<TState>(
  */
 export function useObservableState<TState>(
   input$: Observable<TState>
-): TState | undefined
+): TState | undefined;
 /**
  * @template TState Output state.
  *
@@ -63,7 +63,7 @@ export function useObservableState<TState>(
 export function useObservableState<TState>(
   input$: Observable<TState>,
   initialState: TState | (() => TState)
-): TState
+): TState;
 /**
  * @template TState Output state.
  * @template TInput Input values.
@@ -73,7 +73,7 @@ export function useObservableState<TState>(
  */
 export function useObservableState<TState, TInput = TState>(
   init: (input$: Observable<TInput>) => Observable<TState>
-): [TState | undefined, (input: TInput) => void]
+): [TState | undefined, (input: TInput) => void];
 /**
  * Different input output types with initial state.
  *
@@ -91,7 +91,7 @@ export function useObservableState<TState, TInput = TState>(
     initialState: TState
   ) => Observable<TState>,
   initialState: TState | (() => TState)
-): [TState, (input: TInput) => void]
+): [TState, (input: TInput) => void];
 export function useObservableState<TState, TInput = TState>(
   state$OrInit:
     | Observable<TState>
@@ -101,5 +101,9 @@ export function useObservableState<TState, TInput = TState>(
       ) => Observable<TState>),
   initialState?: TState | (() => TState)
 ): TState | undefined | [TState | undefined, (input: TInput) => void] {
-  return useObservableStateInternal(useSubscription, state$OrInit, initialState)
+  return useObservableStateInternal(
+    useSubscription,
+    state$OrInit,
+    initialState
+  );
 }

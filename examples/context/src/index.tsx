@@ -1,12 +1,12 @@
-import React, { FC } from 'react'
-import ReactDOM from 'react-dom'
-import { NormalValueExample, NormalValueDescendant } from './NormalValue'
+import { FC } from "react";
+import ReactDOM from "react-dom/client";
+import { NormalValueExample, NormalValueDescendant } from "./NormalValue";
 import {
   ObservableValueExample,
-  ObservableValueDescendant
-} from './ObservableValue'
+  ObservableValueDescendant,
+} from "./ObservableValue";
 
-import 'bulma/css/bulma.min.css'
+import "bulma/css/bulma.min.css";
 
 const App: FC = () => {
   return (
@@ -22,8 +22,7 @@ const App: FC = () => {
         </ObservableValueExample>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const rootElement = document.getElementById('root')
-ReactDOM.render(<App />, rootElement)
+ReactDOM.createRoot(document.getElementById("root")!).render(<App />);

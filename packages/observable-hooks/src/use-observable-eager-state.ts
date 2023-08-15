@@ -1,6 +1,6 @@
-import { useState, useDebugValue, useEffect, useRef } from 'react'
-import { Observable } from 'rxjs'
-import { useForceUpdate, useIsomorphicLayoutEffect } from './helpers'
+import { useState, useDebugValue, useEffect, useRef } from "react";
+import { Observable } from "rxjs";
+import { useForceUpdate, useIsomorphicLayoutEffect } from "./helpers";
 
 /**
  * Optimized for safely getting synchronous values from hot or pure observables
@@ -20,92 +20,92 @@ import { useForceUpdate, useIsomorphicLayoutEffect } from './helpers'
 export function useObservableEagerState<TState>(
   state$: Observable<TState>
 ): TState {
-  const forceUpdate = useForceUpdate()
+  const forceUpdate = useForceUpdate();
 
-  const state$Ref = useRef(state$)
-  const errorRef = useRef<Error | null>()
-  const isAsyncEmissionRef = useRef(false)
+  const state$Ref = useRef(state$);
+  const errorRef = useRef<Error | null>();
+  const isAsyncEmissionRef = useRef(false);
 
-  const didSyncEmit = useRef(false)
+  const didSyncEmit = useRef(false);
 
   const [state, setState] = useState<TState>(() => {
-    let state: TState
+    let state: TState;
     state$
       .subscribe({
         next: value => {
-          didSyncEmit.current = true
-          state = value
+          didSyncEmit.current = true;
+          state = value;
         },
         error: error => {
-          errorRef.current = error
-        }
+          errorRef.current = error;
+        },
       })
-      .unsubscribe()
-    return state!
-  })
+      .unsubscribe();
+    return state!;
+  });
 
   // update the latest observable
   // synchronously after render being committed
   useIsomorphicLayoutEffect(() => {
-    state$Ref.current = state$
-  })
+    state$Ref.current = state$;
+  });
 
   useEffect(() => {
-    errorRef.current = null
+    errorRef.current = null;
 
     // keep in closure for checking staleness
-    const input$ = state$Ref.current
+    const input$ = state$Ref.current;
 
-    let secondInitialValue = state
+    let secondInitialValue = state;
 
     const subscription = input$.subscribe({
       next: value => {
         if (input$ !== state$Ref.current) {
           // stale observable
-          return
+          return;
         }
         if (isAsyncEmissionRef.current) {
           // ignore synchronous value
           // prevent initial re-rendering
-          setState(value)
+          setState(value);
         } else {
-          secondInitialValue = value
+          secondInitialValue = value;
         }
       },
       error: error => {
         if (input$ !== state$Ref.current) {
           // stale observable
-          return
+          return;
         }
-        errorRef.current = error
-        forceUpdate()
-      }
-    })
+        errorRef.current = error;
+        forceUpdate();
+      },
+    });
 
     if (!isAsyncEmissionRef.current) {
       // fix #86 where sync emission may happen before useEffect
       if (secondInitialValue !== state) {
-        setState(secondInitialValue)
+        setState(secondInitialValue);
       }
     }
 
-    isAsyncEmissionRef.current = true
+    isAsyncEmissionRef.current = true;
 
     return () => {
-      subscription.unsubscribe()
-    }
-  }, [state$])
+      subscription.unsubscribe();
+    };
+  }, [state$]);
 
   if (errorRef.current) {
     // Let error boundary catch the error
-    throw errorRef.current
+    throw errorRef.current;
   }
 
   if (didSyncEmit.current) {
-    useDebugValue(state)
+    useDebugValue(state);
 
-    return state
+    return state;
   } else {
-    throw new Error('Observable did not synchronously emit a value.')
+    throw new Error("Observable did not synchronously emit a value.");
   }
 }

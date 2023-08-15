@@ -18,7 +18,7 @@
 
 .stick::before,
 .stick::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   border: var(--half-width) solid transparent;

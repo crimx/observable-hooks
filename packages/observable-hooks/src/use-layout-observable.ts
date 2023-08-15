@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs'
-import { useIsomorphicLayoutEffect } from './helpers'
-import { useObservableInternal } from './internal/use-observable-internal'
+import { Observable } from "rxjs";
+import { useIsomorphicLayoutEffect } from "./helpers";
+import { useObservableInternal } from "./internal/use-observable-internal";
 
 /**
  * Same as [[useObservable]] excepts using `useLayoutEffect`.
@@ -30,7 +30,7 @@ import { useObservableInternal } from './internal/use-observable-internal'
  */
 export function useLayoutObservable<TOutput>(
   init: () => Observable<TOutput>
-): Observable<TOutput>
+): Observable<TOutput>;
 /**
  * @template TOutput Output value within Observable.
  * @template TInputs A readonly tuple of all dependencies.
@@ -43,12 +43,12 @@ export function useLayoutObservable<TOutput>(
 export function useLayoutObservable<TOutput, TInputs extends Readonly<any[]>>(
   init: (inputs$: Observable<[...TInputs]>) => Observable<TOutput>,
   inputs: [...TInputs]
-): Observable<TOutput>
+): Observable<TOutput>;
 export function useLayoutObservable<TOutput, TInputs extends Readonly<any[]>>(
   init:
     | (() => Observable<TOutput>)
     | ((inputs$: Observable<[...TInputs]>) => Observable<TOutput>),
   inputs?: [...TInputs]
 ): Observable<TOutput> {
-  return useObservableInternal(useIsomorphicLayoutEffect, init, inputs)
+  return useObservableInternal(useIsomorphicLayoutEffect, init, inputs);
 }

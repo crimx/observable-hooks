@@ -1,18 +1,14 @@
 {
-  "editor.tabSize": 4,
-  "editor.detectIndentation": false,
+  "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
-    "source.addMissingImports": true
+    "source.addMissingImports": true,
+    "source.organizeImports": true
   },
-  "svelte.enable-ts-plugin": true,
-  "conventionalCommits.gitmoji": false,
+  "eslint.validate": ["javascript", "javascriptreact", "vue", "svelte"],
   "typescript.tsdk": "node_modules/typescript/lib",
-  // Multiple-language-matcher would be overriden by signle-language-matcher from user settings
-  // so it is unsafe to use.
-  // https://github.com/microsoft/vscode/issues/138076
   "[html]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -33,6 +29,10 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[svelte]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
   "[typescript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -45,9 +45,10 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[svelte]": {
+  "[yaml]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "svelte.svelte-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["Emittery", "valtio"]
+  "conventionalCommits.gitmoji": false,
+  "conventionalCommits.promptFooter": false
 }

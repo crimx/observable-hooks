@@ -1,7 +1,7 @@
-import { Observable, isObservable, Subject, BehaviorSubject } from 'rxjs'
-import { useState, useRef, useDebugValue } from 'react'
-import type { useSubscription as useSubscriptionType } from '../use-subscription'
-import { getEmptySubject } from '../helpers'
+import { Observable, isObservable, Subject, BehaviorSubject } from "rxjs";
+import { useState, useRef, useDebugValue } from "react";
+import type { useSubscription as useSubscriptionType } from "../use-subscription";
+import { getEmptySubject } from "../helpers";
 
 export function useObservableStateInternal<TState, TInput = TState>(
   useSubscription: typeof useSubscriptionType,
@@ -18,38 +18,38 @@ export function useObservableStateInternal<TState, TInput = TState>(
   // which unlikely coexists with the other one.
   // A warning is also added to the docs.
   if (isObservable(state$OrInit)) {
-    const state$ = state$OrInit
+    const state$ = state$OrInit;
     const [state, setState] = useState<TState | undefined>(() => {
       if (
         state$ instanceof BehaviorSubject ||
         (state$ as BehaviorSubject<TState>).value !== undefined
       ) {
-        return (state$ as BehaviorSubject<TState>).value
+        return (state$ as BehaviorSubject<TState>).value;
       }
-      if (typeof initialState === 'function') {
-        return (initialState as () => TState)()
+      if (typeof initialState === "function") {
+        return (initialState as () => TState)();
       }
-      return initialState
-    })
+      return initialState;
+    });
 
-    useSubscription(state$, setState)
+    useSubscription(state$, setState);
 
-    useDebugValue(state)
+    useDebugValue(state);
 
-    return state
+    return state;
   } else {
-    const init = state$OrInit
-    const [state, setState] = useState<TState | undefined>(initialState)
+    const init = state$OrInit;
+    const [state, setState] = useState<TState | undefined>(initialState);
 
-    const [input$] = useState<Subject<TInput>>(getEmptySubject)
+    const [input$] = useState<Subject<TInput>>(getEmptySubject);
 
-    const [state$] = useState(() => init(input$, state))
-    const callback = useRef((state: TInput) => input$.next(state)).current
+    const [state$] = useState(() => init(input$, state));
+    const callback = useRef((state: TInput) => input$.next(state)).current;
 
-    useSubscription(state$, setState)
+    useSubscription(state$, setState);
 
-    useDebugValue(state)
+    useDebugValue(state);
 
-    return [state, callback]
+    return [state, callback];
   }
 }

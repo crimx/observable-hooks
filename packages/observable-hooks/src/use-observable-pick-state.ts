@@ -1,8 +1,8 @@
-import { useDebugValue } from 'react'
-import { Observable } from 'rxjs'
-import { map, distinctUntilChanged } from 'rxjs/operators'
-import { useObservableState } from './use-observable-state'
-import { useObservable } from './use-observable'
+import { useDebugValue } from "react";
+import { Observable } from "rxjs";
+import { map, distinctUntilChanged } from "rxjs/operators";
+import { useObservableState } from "./use-observable-state";
+import { useObservable } from "./use-observable";
 
 /**
  * Creates an object composed of the picked state properties. Similar to lodash `pick`.
@@ -20,14 +20,14 @@ export function useObservablePickState<
   state$: Observable<TState>,
   initialState: TInitial,
   ...keys: TKeys[]
-): { [K in TKeys]: TState[K] } | TInitial
+): { [K in TKeys]: TState[K] } | TInitial;
 export function useObservablePickState<TState, TKeys extends keyof TState>(
   state$: Observable<TState>,
   initialState:
     | { [K in TKeys]: TState[K] }
     | (() => { [K in TKeys]: TState[K] }),
   ...keys: TKeys[]
-): { [K in TKeys]: TState[K] }
+): { [K in TKeys]: TState[K] };
 export function useObservablePickState<TState, TKeys extends keyof TState>(
   state$: Observable<TState>,
   initialState:
@@ -49,7 +49,7 @@ export function useObservablePickState<TState, TKeys extends keyof TState>(
       )
     ),
     initialState
-  )
-  useDebugValue(value)
-  return value
+  );
+  useDebugValue(value);
+  return value;
 }

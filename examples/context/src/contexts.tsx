@@ -1,6 +1,6 @@
-import { createContext } from 'react'
-import { Observable, empty } from 'rxjs'
+import { createContext } from "react";
+import { EMPTY, Observable } from "rxjs";
 
-export const NormalValueContext = createContext(10)
+export const NormalValueContext = createContext(10);
 
-export const ObservableValueContext = createContext<Observable<number>>(empty())
+export const ObservableValueContext = createContext<Observable<number>>(EMPTY);

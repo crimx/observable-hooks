@@ -15,7 +15,7 @@
 
 .colon::before,
 .colon::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   transform: translate(-50%, 50%);

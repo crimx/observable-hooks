@@ -1,19 +1,18 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import styles from './Clock.module.css'
-import { Digit } from './Digit'
+import PropTypes from "prop-types";
+import styles from "./Clock.module.css";
+import { Digit } from "./Digit";
 
 /**
  * Display countdown time.
  */
 export const Clock = ({ seconds }) => {
-  const restMinutes = ~~(seconds / 60) % 60
-  const restSeconds = (seconds - restMinutes * 60) % 60
+  const restMinutes = ~~(seconds / 60) % 60;
+  const restSeconds = (seconds - restMinutes * 60) % 60;
   return (
     <div
       className={styles.clock}
       role="timer"
-      aria-live={restSeconds % 10 === 0 ? 'polite' : 'off'}
+      aria-live={restSeconds % 10 === 0 ? "polite" : "off"}
       aria-atomic="true"
       aria-label={`${restMinutes} minutes ${restSeconds} seconds left`}
     >
@@ -23,10 +22,10 @@ export const Clock = ({ seconds }) => {
       <Digit digit={~~(restSeconds / 10)} />
       <Digit digit={restSeconds % 10} />
     </div>
-  )
-}
+  );
+};
 
 Clock.propTypes = {
   /** how many seconds left */
-  seconds: PropTypes.number.isRequired
-}
+  seconds: PropTypes.number.isRequired,
+};

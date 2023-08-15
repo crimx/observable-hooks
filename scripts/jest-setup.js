@@ -1,1 +1,0 @@
-expect.extend(require('./schedulerTestMatchers'))

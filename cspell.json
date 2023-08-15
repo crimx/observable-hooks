@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "words": [
+    "abortable",
+    "Arraylike",
+    "bulma",
+    "coverallsapp",
+    "CRIMX",
+    "fontawesome",
+    "fortawesome",
+    "lcov",
+    "paambaati",
+    "Parens",
+    "pnpm",
+    "pomodoro",
+    "preinstall",
+    "treeshake",
+    "tsup",
+    "typeahead",
+    "typedoc",
+    "Vals",
+    "vite",
+    "vitest",
+    "vuepress",
+    "wopjs",
+    "yoctocolors"
+  ],
+  "ignorePaths": [
+    "**/coverage/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "cspell.config.js",
+    "pnpm-lock.yaml",
+    "CHANGELOG.md"
+  ]
+}

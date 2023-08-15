@@ -1,7 +1,7 @@
-import { MutableRefObject } from 'react'
-import { Observable, PartialObserver, Subscription } from 'rxjs'
-import { useIsomorphicLayoutEffect } from './helpers'
-import { useSubscriptionInternal } from './internal/use-subscription-internal'
+import { MutableRefObject } from "react";
+import { Observable, PartialObserver, Subscription } from "rxjs";
+import { useIsomorphicLayoutEffect } from "./helpers";
+import { useSubscriptionInternal } from "./internal/use-subscription-internal";
 
 /**
  * Same as [[useSubscription]] except the subscription is established
@@ -21,7 +21,7 @@ import { useSubscriptionInternal } from './internal/use-subscription-internal'
 export function useLayoutSubscription<TInput>(
   input$: Observable<TInput>,
   observer?: PartialObserver<TInput>
-): MutableRefObject<Subscription | undefined>
+): MutableRefObject<Subscription | undefined>;
 /**
  * @template TInput Input value within Observable.
  *
@@ -35,7 +35,7 @@ export function useLayoutSubscription<TInput>(
   next?: ((value: TInput) => void) | null | undefined,
   error?: ((error: any) => void) | null | undefined,
   complete?: (() => void) | null | undefined
-): MutableRefObject<Subscription | undefined>
+): MutableRefObject<Subscription | undefined>;
 export function useLayoutSubscription<TInput>(
   input$: Observable<TInput>,
   observerOrNext$?:
@@ -50,6 +50,6 @@ export function useLayoutSubscription<TInput>(
     input$,
     observerOrNext$,
     error,
-    complete
-  ])
+    complete,
+  ]);
 }

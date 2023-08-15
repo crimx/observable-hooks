@@ -1,18 +1,18 @@
-import React, { Suspense, useState } from 'react'
-import ReactDOM from 'react-dom'
-import { useObservableSuspense } from 'observable-hooks'
+import { Suspense, useState } from "react";
+import ReactDOM from "react-dom";
+import { useObservableSuspense } from "observable-hooks";
 
 import {
   userResource,
   postsResource,
   userListResource,
-  fetchProfileData
-} from './fakeApi'
+  fetchProfileData,
+} from "./fakeApi";
 
-fetchProfileData('crimx')
+fetchProfileData("crimx");
 
 function ProfilePage() {
-  const [userId, setUserId] = useState('crimx')
+  const [userId, setUserId] = useState("crimx");
   return (
     <div>
       <Suspense fallback={<h1>Loading profile...</h1>}>
@@ -23,42 +23,42 @@ function ProfilePage() {
             <ProfileUserList
               user={userId}
               onChange={id => {
-                setUserId(id)
-                fetchProfileData(id)
+                setUserId(id);
+                fetchProfileData(id);
               }}
             />
           </Suspense>
         </Suspense>
       </Suspense>
     </div>
-  )
+  );
 }
 
 function ProfileDetails() {
   // Try to read user info, although it might not have loaded yet
-  const user = useObservableSuspense(userResource)
-  return <h1>{user.name}</h1>
+  const user = useObservableSuspense(userResource);
+  return <h1>{user.name}</h1>;
 }
 
 function ProfileTimeline() {
   // Try to read posts, although they might not have loaded yet
-  const posts = useObservableSuspense(postsResource)
+  const posts = useObservableSuspense(postsResource);
   return (
     <ul>
       {posts.map(post => (
         <li key={post.id}>{post.text}</li>
       ))}
     </ul>
-  )
+  );
 }
 
 interface ProfileUserListProps {
-  user: string
-  onChange: (id: string) => void
+  user: string;
+  onChange: (id: string) => void;
 }
 
 function ProfileUserList(props: ProfileUserListProps) {
-  const userList = useObservableSuspense(userListResource)
+  const userList = useObservableSuspense(userListResource);
 
   return (
     <div>
@@ -74,8 +74,8 @@ function ProfileUserList(props: ProfileUserListProps) {
         ))}
       </select>
     </div>
-  )
+  );
 }
 
-const rootElement = document.getElementById('root')
-ReactDOM.render(<ProfilePage />, rootElement)
+const rootElement = document.getElementById("root");
+ReactDOM.render(<ProfilePage />, rootElement);

@@ -1,6 +1,6 @@
-import * as React from 'react'
-import PropTypes from 'prop-types'
-import styles from './Digit.module.css'
+import * as React from "react";
+import PropTypes from "prop-types";
+import styles from "./Digit.module.css";
 
 /**
  * A timer digit with animation.
@@ -41,15 +41,15 @@ export const Digit = React.memo(function Digit({ digit }) {
         style={getRotation(digit, 5)}
       />
     </div>
-  )
-})
+  );
+});
 
 Digit.propTypes = {
-  digit: PropTypes.number.isRequired
-}
+  digit: PropTypes.number.isRequired,
+};
 
 function getRotation(digit, stick) {
-  let digitMap = window[Symbol.for('digit_map')]
+  let digitMap = window[Symbol.for("digit_map")];
   if (!digitMap) {
     // prettier-ignore
     digitMap = [
@@ -64,7 +64,7 @@ function getRotation(digit, stick) {
       [ 90, 270,  90, 270, 270,  0,  90 ],
       [ 90, 270,  90, 360, 360,  0,  90 ],
     ].map(d => d.map(s => ({ transform: `rotate(${s}deg)` })))
-    window[Symbol.for('digit_map')] = digitMap
+    window[Symbol.for("digit_map")] = digitMap;
   }
-  return digitMap[digit][stick]
+  return digitMap[digit][stick];
 }

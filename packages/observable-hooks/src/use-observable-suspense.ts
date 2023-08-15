@@ -1,7 +1,7 @@
-import { useDebugValue, useState } from 'react'
-import { useSubscription } from './use-subscription'
-import { useForceUpdate } from './helpers'
-import { ObservableResource } from './observable-resource'
+import { useDebugValue, useState } from "react";
+import { useSubscription } from "./use-subscription";
+import { useForceUpdate } from "./helpers";
+import { ObservableResource } from "./observable-resource";
 
 /**
  * Consume the Observable resource.
@@ -14,20 +14,20 @@ import { ObservableResource } from './observable-resource'
 export function useObservableSuspense<TInput, TOutput extends TInput = TInput>(
   resource: ObservableResource<TInput, TOutput>
 ): TOutput {
-  const resourceValue = resource.read()
-  const forceUpdate = useForceUpdate()
-  const [state, setState] = useState<TOutput>(resourceValue)
+  const resourceValue = resource.read();
+  const forceUpdate = useForceUpdate();
+  const [state, setState] = useState<TOutput>(resourceValue);
 
   useSubscription(resource.valueRef$$, valueRef => {
     /* Guard code. Value should always be ready when reaching this far. */
     /* istanbul ignore else */
     if (valueRef) {
-      setState(valueRef.current)
+      setState(valueRef.current);
     }
-  })
+  });
 
-  useSubscription(resource.shouldUpdate$$, forceUpdate)
+  useSubscription(resource.shouldUpdate$$, forceUpdate);
 
-  useDebugValue(state)
-  return state
+  useDebugValue(state);
+  return state;
 }

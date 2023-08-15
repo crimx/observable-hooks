@@ -1,14 +1,14 @@
-import { from } from 'rxjs'
-import { map } from 'rxjs/operators'
-import { SuggestsFetcher } from './Suggests'
+import { from } from "rxjs";
+import { map } from "rxjs/operators";
+import { SuggestsFetcher } from "./Suggests";
 
-type WikipediaResult = [string, string[], string[], string[]]
+type WikipediaResult = [string, string[], string[], string[]];
 
 export const wikipedia: SuggestsFetcher = text =>
   from<Promise<WikipediaResult>>(
     fetch(
       `https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&search=${text}`,
-      { mode: 'cors' }
+      { mode: "cors" }
     ).then(t => t.json())
   ).pipe(
     // parsing can be easily cancelled thanks to RxJS
@@ -16,7 +16,7 @@ export const wikipedia: SuggestsFetcher = text =>
       return titles.map((title, i) => ({
         href: hrefs[i],
         title,
-        content: contents[i]
-      }))
+        content: contents[i],
+      }));
     })
-  )
+  );
