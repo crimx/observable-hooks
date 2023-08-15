@@ -1,6 +1,6 @@
 {
   "name": "example-suspense",
-  "version": "4.2.2",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@types/react": "^18.2.20",

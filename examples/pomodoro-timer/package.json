@@ -1,6 +1,6 @@
 {
   "name": "example-pomodoro-timer",
-  "version": "4.2.2",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
