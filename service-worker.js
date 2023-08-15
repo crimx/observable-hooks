@@ -27,19 +27,19 @@ self.addEventListener('message', (event) => {
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "8274a6af548ba74bb0ce2cef53d7f6d4"
+    "revision": "7289fce9fbbb02afed4381ac601cdcb9"
   },
   {
     "url": "api/helpers.html",
-    "revision": "804a76ce3da699e08eb0a30656c8c227"
+    "revision": "54be0e1fe2aac63fb661d950f5e4e436"
   },
   {
     "url": "api/index.html",
-    "revision": "58f916a13df5afcfbaecd2c1c32a64d9"
+    "revision": "b8de27049d62ec15601fb63e10699d33"
   },
   {
     "url": "api/suspense.html",
-    "revision": "d7804fb62b6fc9fff3c29adbfcfa9aa8"
+    "revision": "ce9d0119f1b96a2bf1f1828ab25a0b12"
   },
   {
     "url": "assets/css/0.styles.d1126fd2.css",
@@ -174,24 +174,24 @@ self.__precacheManifest = [
     "revision": "7201ffd67ff756a177eaf0eb4823725a"
   },
   {
-    "url": "assets/js/38.d36ee677.js",
-    "revision": "393ebead4cfe23124461a55fd4a4689e"
+    "url": "assets/js/38.2c905ce9.js",
+    "revision": "0ec5d2404517b70a73ba00db1a022b4a"
   },
   {
-    "url": "assets/js/39.93c87fad.js",
-    "revision": "366a00ce65bfa746a3121e321fd347c4"
+    "url": "assets/js/39.67ac42ca.js",
+    "revision": "28bf698c530aa847f7a72630af9e3962"
   },
   {
     "url": "assets/js/4.7886ae13.js",
     "revision": "9cca4162496a899c95f224c6691c47f8"
   },
   {
-    "url": "assets/js/40.7471b4e8.js",
-    "revision": "443a9f0e3862849bbb4cd9df3af1ba7d"
+    "url": "assets/js/40.b1d1ee45.js",
+    "revision": "4e67a52f54bb0ca247e3303c57e6b028"
   },
   {
-    "url": "assets/js/41.eb5b2e78.js",
-    "revision": "7117d7ab7e0a89cdb765314774216ccb"
+    "url": "assets/js/41.d36de1c1.js",
+    "revision": "b210dbc05c47ab665074de211b443d01"
   },
   {
     "url": "assets/js/42.1a6f3c48.js",
@@ -254,8 +254,8 @@ self.__precacheManifest = [
     "revision": "ee61095955ca9e69ba18c9f3d41fd53f"
   },
   {
-    "url": "assets/js/app.db3307a8.js",
-    "revision": "c1a8655887b634f45ec9d456d08bd145"
+    "url": "assets/js/app.7467f982.js",
+    "revision": "13c7c0f7591d68649e56a42a5b2a0da6"
   },
   {
     "url": "assets/js/vendors~docsearch.5a4296f1.js",
@@ -263,55 +263,55 @@ self.__precacheManifest = [
   },
   {
     "url": "examples/context.html",
-    "revision": "ffd37b195f5abf16d1fb267d9e890263"
+    "revision": "edf6b35d3bd9c30483616980a057cade"
   },
   {
     "url": "examples/index.html",
-    "revision": "a8e0e73a96199e1f77fa2ec96404c3bd"
+    "revision": "c39dce088e1d191f13cd012cafb0bbb1"
   },
   {
     "url": "examples/pomodoro-timer.html",
-    "revision": "7a46695edc292daa02fc48de65d70e7d"
+    "revision": "7b1a510c72ecff7a535b3adb17c1e32e"
   },
   {
     "url": "examples/suspense.html",
-    "revision": "4ef61d915772350202cb1a38859a0060"
+    "revision": "731005f6e249cbda47231a64afdddf7e"
   },
   {
     "url": "examples/typeahead.html",
-    "revision": "24c8be2a62495613a8002ad3408b2771"
+    "revision": "6fc4a1870b5c9e32748a87f28d9b0b8b"
   },
   {
     "url": "guide/context.html",
-    "revision": "fb5c18e8ee4f31661a4a0c2acb08532d"
+    "revision": "53b7a28d0148cec096c57405469c69b0"
   },
   {
     "url": "guide/core-concepts.html",
-    "revision": "c2a6a66a30f4c9d1299100937bbb7615"
+    "revision": "d079d77c937e1d486e12aed290d57d2c"
   },
   {
     "url": "guide/gotchas.html",
-    "revision": "a07b5e15b25e8f9a8f3f7e4c299c1461"
+    "revision": "d86573851506bf67da6a06d89f3854b4"
   },
   {
     "url": "guide/index.html",
-    "revision": "0158960a4c59f0871e17d5df8d5761f0"
+    "revision": "65c4d87eba2582a8f2210566338d2f2f"
   },
   {
     "url": "guide/migration.html",
-    "revision": "39eadf921c009439405b6802ec13f3e9"
+    "revision": "ff941da877707e0f686657fb9bed8e04"
   },
   {
     "url": "guide/motivation.html",
-    "revision": "d01a8f356c8a4724002430b3ad767c20"
+    "revision": "9f86010a1105cc3abdad247392551541"
   },
   {
     "url": "guide/react-independent-epics.html",
-    "revision": "ea3406276488332fd74d774ba3cc9779"
+    "revision": "e497b6054cf73462d4d099b7b5f5357a"
   },
   {
     "url": "guide/render-as-you-fetch-suspense.html",
-    "revision": "e004eceb315d5d2d151e3f0893535903"
+    "revision": "594801787bd0727865617b4439e4e0e2"
   },
   {
     "url": "icons/android-icon-144x144.png",
@@ -411,7 +411,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "844c849037f78688a4ec778f75f47969"
+    "revision": "f0f4038cf96c20589b4dc17ab33dd8b9"
   },
   {
     "url": "logo.png",
@@ -419,55 +419,55 @@ self.__precacheManifest = [
   },
   {
     "url": "zh-cn/api/helpers.html",
-    "revision": "8d911c52f1876346e3aef377b29b85ee"
+    "revision": "8d2777b73fa58d67c37133a330e171e7"
   },
   {
     "url": "zh-cn/api/index.html",
-    "revision": "90d7340728f6aac7856af344226ae029"
+    "revision": "946b75e79b7ecaf191be83aadd0664f0"
   },
   {
     "url": "zh-cn/api/suspense.html",
-    "revision": "2f80b5fc8aab155acbf4487ce20ca48c"
+    "revision": "8563642f28733f17b2b652692ede6674"
   },
   {
     "url": "zh-cn/examples/index.html",
-    "revision": "03e363936ec2cd5f8f62d7f18898b94c"
+    "revision": "d15053b4bc6433b2bf0e5da2e37ba8d3"
   },
   {
     "url": "zh-cn/guide/context.html",
-    "revision": "12aeabdc519e881d15e21cd6a169d370"
+    "revision": "99af38e62dc773cfa056fc5cf5257865"
   },
   {
     "url": "zh-cn/guide/core-concepts.html",
-    "revision": "ee91c9f54b29c19ec8b3181d85fd708e"
+    "revision": "1ad2ba12ebe516e66ed8340f9b56f70f"
   },
   {
     "url": "zh-cn/guide/gotchas.html",
-    "revision": "4b19e72a3123622186e42fd16940c0d6"
+    "revision": "0e0da256ec3ec249044b673fb067b7ae"
   },
   {
     "url": "zh-cn/guide/index.html",
-    "revision": "644c8ee69b6b74edf958303ec424fe11"
+    "revision": "eb1709b9bfdf882a79e8474a768cd658"
   },
   {
     "url": "zh-cn/guide/migration.html",
-    "revision": "337c5ad4a6c69ee19320eed7f8bdbe56"
+    "revision": "01037ff757dbd224b70a6d5d12354f4d"
   },
   {
     "url": "zh-cn/guide/motivation.html",
-    "revision": "702b1ae7fada62b2e68e739fb86f925f"
+    "revision": "40470cf0b456c101f4a41abdc2054cf8"
   },
   {
     "url": "zh-cn/guide/react-independent-epics.html",
-    "revision": "2d096d6c0b3513a926a445764e9f1c1e"
+    "revision": "6e095356bf24baf1fc9b3f58af048277"
   },
   {
     "url": "zh-cn/guide/render-as-you-fetch-suspense.html",
-    "revision": "71d67dd744eaea7101c60647c6c294af"
+    "revision": "28c976f8bb137165220424ca3613ba98"
   },
   {
     "url": "zh-cn/index.html",
-    "revision": "e9767c9ea8d8155491e0b0ac35669dd1"
+    "revision": "564a9f14805ab714c8f72bd46f4658cd"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
