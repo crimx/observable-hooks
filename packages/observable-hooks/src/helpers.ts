@@ -14,9 +14,7 @@ import { map } from "rxjs/operators";
 /**
  * Returns the first argument it receives.
  */
-export function identity<T>(value: T): T {
-  return value;
-}
+export const identity = <T>(value: T): T => value;
 
 /**
  * Maps an Observable of Arraylike to an Observable
@@ -31,11 +29,9 @@ export function identity<T>(value: T): T {
  * @param inputs$ An Observable of array-like.
  *
  */
-export function pluckFirst<TArr extends ArrayLike<any>>(
+export const pluckFirst = <TArr extends ArrayLike<any>>(
   inputs$: Observable<TArr>
-): Observable<TArr[0]> {
-  return map<TArr, 0>(input => input[0])(inputs$);
-}
+): Observable<TArr[0]> => map<TArr, 0>(input => input[0])(inputs$);
 
 /**
  * Maps an Observable of DOM events to an Observable
@@ -51,13 +47,14 @@ export function pluckFirst<TArr extends ArrayLike<any>>(
  * ```
  *
  */
-export function pluckCurrentTargetValue<
+export const pluckCurrentTargetValue = <
   TEvent extends { currentTarget: { value: any } }
->(event$: Observable<TEvent>): Observable<TEvent["currentTarget"]["value"]> {
-  return map<TEvent, TEvent["currentTarget"]["value"]>(
+>(
+  event$: Observable<TEvent>
+): Observable<TEvent["currentTarget"]["value"]> =>
+  map<TEvent, TEvent["currentTarget"]["value"]>(
     event => event.currentTarget.value
   )(event$);
-}
 
 /**
  * Maps an Observable of DOM events to an Observable
@@ -73,28 +70,27 @@ export function pluckCurrentTargetValue<
  * ```
  *
  */
-export function pluckCurrentTargetChecked<
+export const pluckCurrentTargetChecked = <
   TEvent extends { currentTarget: { checked: any } }
->(event$: Observable<TEvent>): Observable<TEvent["currentTarget"]["checked"]> {
-  return map<TEvent, TEvent["currentTarget"]["checked"]>(
+>(
+  event$: Observable<TEvent>
+): Observable<TEvent["currentTarget"]["checked"]> =>
+  map<TEvent, TEvent["currentTarget"]["checked"]>(
     event => event.currentTarget.checked
   )(event$);
-}
 
 /**
  * Return an empty Subject
  * @ignore
  */
-export function getEmptySubject<T>() {
-  return new Subject<T>();
-}
+export const getEmptySubject = <T>() => new Subject<T>();
 
 /**
  * One-time ref init.
  * @param init A function that returns a value. Will be called only once.
  * @returns A ref object with the returned value.
  */
-export function useRefFn<T>(init: () => T) {
+export const useRefFn = <T>(init: () => T) => {
   const firstRef = useRef(true);
   const ref = useRef<T | null>(null);
   if (firstRef.current) {
@@ -102,27 +98,20 @@ export function useRefFn<T>(init: () => T) {
     ref.current = init();
   }
   return ref as MutableRefObject<T>;
-}
+};
+
+const increment = (n: number): number => (n + 1) | 0;
 
 /**
  * Force re-renders Component.
  */
-export function useForceUpdate(): () => void {
+export const useForceUpdate = (): (() => void) => {
   const updateState = useState(0)[1];
   return useRef(() => updateState(increment)).current;
-}
-
-function increment(n: number): number {
-  return (n + 1) % 1000000;
-}
+};
 
 /**
  * Prevent React warning when using useLayoutEffect on server.
  */
-export const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" &&
-  typeof window.document !== "undefined" &&
-  typeof window.document.createElement !== "undefined"
-    ? useLayoutEffect
-    : /* istanbul ignore next: both are not called on server */
-      useEffect;
+export const useIsomorphicLayoutEffect = /* @__PURE__ */ (() =>
+  typeof window === "undefined" ? useEffect : useLayoutEffect)();

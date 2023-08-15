@@ -1,9 +1,23 @@
-import { BehaviorSubject, Observable, Subject, Subscription } from "rxjs";
+import {
+  BehaviorSubject,
+  Observable,
+  Observer,
+  Subject,
+  Subscription,
+} from "rxjs";
 
 interface Handler<T = any> {
-  suspender: Promise<T>;
-  resolve: (value?: T) => void;
+  suspender_: Promise<T>;
+  resolve_: (value?: T) => void;
 }
+
+const createHandler = (): Handler => {
+  const handler: Partial<Handler> = {};
+  handler.suspender_ = new Promise(resolve => {
+    handler.resolve_ = resolve;
+  });
+  return handler as Handler;
+};
 
 /**
  * Rewires Observable to Relay-like Suspense resource.
@@ -13,27 +27,27 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
    * Unlike Promise, Observable is a multiple push mechanism.
    * Only force update when Suspense needs to restart.
    */
-  readonly shouldUpdate$$ = new Subject<true>();
+  public readonly shouldUpdate$$ = new Subject<true>();
 
-  get isDestroyed(): boolean {
-    return this._isDestroyed;
+  public get isDestroyed(): boolean {
+    return this._isDestroyed_;
   }
 
-  private handler: Handler | null = this.getHandler();
-
-  public valueRef$$ = new BehaviorSubject<{ current: TOutput } | undefined>(
-    undefined
-  );
-
-  private error: unknown = null;
+  public readonly valueRef$$ = new BehaviorSubject<
+    { current: TOutput } | undefined
+  >(undefined);
 
   public input$: Observable<TInput>;
 
-  private subscription: Subscription;
+  private _handler_: Handler | null = createHandler();
 
-  private isSuccess = (_value: TInput): _value is TOutput => true;
+  private _error_: unknown = null;
 
-  private _isDestroyed = false;
+  private _subscription_: Subscription;
+
+  private _isDestroyed_ = false;
+
+  private readonly _observer_: Observer<TInput>;
 
   /**
    * @param input$ An Observable.
@@ -41,38 +55,74 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
    * `input$` is of success state. If false a Suspense is triggered.
    *  Default all true.
    */
-  constructor(
+  public constructor(
     input$: Observable<TInput>,
     isSuccess?: TInput extends TOutput
       ? (value: TInput) => boolean
       : (value: TInput) => value is TOutput
   ) {
-    if (isSuccess) {
-      this.isSuccess = isSuccess as (value: TInput) => value is TOutput;
-    }
-
     this.input$ = input$;
 
-    this.subscription = input$.subscribe({
-      next: this.handleNext,
-      error: this.handleError,
-      complete: this.handleComplete,
-    });
+    this._observer_ = {
+      next: (value: TInput): void => {
+        this._error_ = null;
+        if (!isSuccess || isSuccess(value)) {
+          if (this.valueRef$$.value?.current !== value) {
+            this.valueRef$$.next({ current: value as TOutput });
+          }
+          if (this._handler_) {
+            // This will also remove the initial
+            // suspender if sync values are emitted.
+            const { resolve_: resolve } = this._handler_;
+            this._handler_ = null;
+            resolve();
+          }
+        } else if (!this._handler_) {
+          // start a new Suspense
+          this._handler_ = createHandler();
+          this.shouldUpdate$$.next(true);
+        }
+      },
+      error: (error: unknown): void => {
+        this._error_ = error;
+        if (this._handler_) {
+          const { resolve_: resolve } = this._handler_;
+          this._handler_ = null;
+          // Errors thrown from the request is not catch-able by error boundaries.
+          // Here we resolve the suspender and let this.read throw the error.
+          resolve();
+        } else {
+          this.shouldUpdate$$.next(true);
+        }
+      },
+      complete: (): void => {
+        if (this._handler_) {
+          this._error_ = new Error("Suspender ended unexpectedly.");
+          const { resolve_: resolve } = this._handler_;
+          this._handler_ = null;
+          // Errors thrown from the request is not catch-able by error boundaries.
+          // Here we resolve the suspender and let this.read throw the error.
+          resolve();
+        }
+      },
+    };
+
+    this._subscription_ = input$.subscribe(this._observer_);
   }
 
-  read(): TOutput {
-    if (this.error) {
-      throw this.error;
+  public read(): TOutput {
+    if (this._error_) {
+      throw this._error_;
     }
-    if (this.handler) {
-      throw this.handler.suspender;
+    if (this._handler_) {
+      throw this._handler_.suspender_;
     }
     // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     return this.valueRef$$.value?.current!;
   }
 
-  reload(newInput$?: Observable<TInput>): void {
-    if (this._isDestroyed) {
+  public reload(newInput$?: Observable<TInput>): void {
+    if (this._isDestroyed_) {
       throw new Error("Cannot reload a destroyed Observable Resource");
     }
 
@@ -80,83 +130,27 @@ export class ObservableResource<TInput, TOutput extends TInput = TInput> {
       this.input$ = newInput$;
     }
 
-    this.subscription.unsubscribe();
+    this._subscription_.unsubscribe();
 
-    this.error = null;
+    this._error_ = null;
 
-    if (this.handler) {
-      this.handler.resolve();
-      this.handler = this.getHandler();
+    if (this._handler_) {
+      this._handler_.resolve_();
+      this._handler_ = createHandler();
     }
 
-    this.subscription = this.input$.subscribe({
-      next: this.handleNext,
-      error: this.handleError,
-      complete: this.handleComplete,
-    });
+    this._subscription_ = this.input$.subscribe(this._observer_);
   }
 
-  destroy(): void {
-    this._isDestroyed = true;
-    this.subscription.unsubscribe();
+  public destroy(): void {
+    this._isDestroyed_ = true;
+    this._subscription_.unsubscribe();
     this.shouldUpdate$$.complete();
-    if (this.handler) {
-      this.error = new Error("Resource has been destroyed.");
-      const { resolve } = this.handler;
-      this.handler = null;
+    if (this._handler_) {
+      this._error_ = new Error("Resource has been destroyed.");
+      const { resolve_: resolve } = this._handler_;
+      this._handler_ = null;
       resolve();
     }
-  }
-
-  private handleNext = (value: TInput): void => {
-    this.error = null;
-    if (this.isSuccess(value)) {
-      if (this.valueRef$$.value?.current !== value) {
-        this.valueRef$$.next({ current: value });
-      }
-      if (this.handler) {
-        // This will also remove the initial
-        // suspender if sync values are emitted.
-        const { resolve } = this.handler;
-        this.handler = null;
-        resolve();
-      }
-    } else if (!this.handler) {
-      // start a new Suspense
-      this.handler = this.getHandler();
-      this.shouldUpdate$$.next(true);
-    }
-  };
-
-  private handleError = (error: unknown): void => {
-    this.error = error;
-    if (this.handler) {
-      const { resolve } = this.handler;
-      this.handler = null;
-      // Errors thrown from the request is not catchable by error boundaries.
-      // Here we resolve the suspender and let this.read throw the error.
-      resolve();
-    } else {
-      this.shouldUpdate$$.next(true);
-    }
-  };
-
-  private handleComplete = (): void => {
-    if (this.handler) {
-      this.error = new Error("Suspender ended unexpectedly.");
-      const { resolve } = this.handler;
-      this.handler = null;
-      // Errors thrown from the request is not catchable by error boundaries.
-      // Here we resolve the suspender and let this.read throw the error.
-      resolve();
-    }
-  };
-
-  private getHandler(): Handler {
-    const handler: Partial<Handler> = {};
-    handler.suspender = new Promise(resolve => {
-      handler.resolve = resolve;
-    });
-    return handler as Handler;
   }
 }

@@ -1,4 +1,5 @@
 import { defineConfig } from "tsup";
+import mangleCache from "./mangle-cache.json";
 
 export default defineConfig({
   entry: ["src/index.ts"],
@@ -10,4 +11,8 @@ export default defineConfig({
   splitting: false,
   sourcemap: false,
   minify: Boolean(process.env.MINIFY),
+  esbuildOptions: options => {
+    options.mangleProps = /[^_]_$/;
+    options.mangleCache = mangleCache;
+  },
 });
