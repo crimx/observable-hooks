@@ -12,33 +12,38 @@ jobs:
         uses: actions/checkout@v3
 
       - uses: pnpm/action-setup@v2
-        name: Install pnpm
+        name: Install pnpm 📦
         id: pnpm-install
         with:
           version: 8
           run_install: false
 
-      - name: Get pnpm store directory
+      - name: Get pnpm store directory 📦
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
       - uses: actions/cache@v3
-        name: Setup pnpm cache
+        name: Setup pnpm cache 📦
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
+      - name: Install dependencies 📦
         run: pnpm install
+
+      - name: Lint 🧹
+        run: pnpm run lint
 
       - name: Build 🔧
         run: |
-          pnpm run lint
           pnpm run build
+
+      - name: Test 🧪
+        run: |
           pnpm run test
 
       - name: Upload Coverage
@@ -46,7 +51,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
         with:
-          coverageLocations: ${{github.workspace}}/coverage/clover.xml:clover
+          coverageLocations: ${{github.workspace}}/packages/observable-hooks/coverage/clover.xml:clover
 
       - name: Build Docs 📖
         run: |
