@@ -86,4 +86,24 @@ Examples are in [here](https://github.com/crimx/observable-hooks/tree/main/examp
 
 Note that there are also some useful [utilities](https://observable-hooks.js.org/api/helpers.html) for common use cases to reduce garbage collection.
 
+## Developing
+
+Install dependencies:
+
+```
+pnpm i
+```
+
+Run tests:
+
+```
+pnpm test
+```
+
+Lint code:
+
+```
+pnpm lint
+```
+
 [docs]: https://observable-hooks.js.org
