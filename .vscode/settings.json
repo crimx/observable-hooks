@@ -3,9 +3,9 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.addMissingImports": true,
-    "source.organizeImports": true
+    "source.fixAll": "explicit",
+    "source.addMissingImports": "explicit",
+    "source.organizeImports": "explicit"
   },
   "eslint.validate": ["javascript", "javascriptreact", "vue", "svelte"],
   "typescript.tsdk": "node_modules/typescript/lib",
