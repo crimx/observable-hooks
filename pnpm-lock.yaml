@@ -52,7 +52,7 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.4
-        version: 4.0.4(vite@4.4.12)
+        version: 4.0.4(vite@4.5.2)
       bulma:
         specifier: ^0.7.5
         version: 0.7.5
@@ -73,8 +73,8 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.4.12
-        version: 4.4.12(@types/node@20.1.7)(stylus@0.54.8)
+        specifier: 4.5.2
+        version: 4.5.2(@types/node@20.1.7)(stylus@0.54.8)
 
   examples/pomodoro-timer:
     dependencies:
@@ -95,7 +95,7 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.4
-        version: 4.0.4(vite@4.4.12)
+        version: 4.0.4(vite@4.5.2)
       bulma:
         specifier: ^0.7.5
         version: 0.7.5
@@ -116,8 +116,8 @@ importers:
         version: 7.8.1
     devDependencies:
       vite:
-        specifier: 4.4.12
-        version: 4.4.12(@types/node@20.1.7)(stylus@0.54.8)
+        specifier: 4.5.2
+        version: 4.5.2(@types/node@20.1.7)(stylus@0.54.8)
 
   examples/suspense:
     dependencies:
@@ -129,7 +129,7 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.4
-        version: 4.0.4(vite@4.4.12)
+        version: 4.0.4(vite@4.5.2)
       bulma:
         specifier: ^0.7.5
         version: 0.7.5
@@ -150,8 +150,8 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.4.12
-        version: 4.4.12(@types/node@20.1.7)(stylus@0.54.8)
+        specifier: 4.5.2
+        version: 4.5.2(@types/node@20.1.7)(stylus@0.54.8)
 
   examples/typeahead:
     dependencies:
@@ -163,7 +163,7 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.4
-        version: 4.0.4(vite@4.4.12)
+        version: 4.0.4(vite@4.5.2)
       bulma:
         specifier: ^0.7.5
         version: 0.7.5
@@ -184,8 +184,8 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.4.12
-        version: 4.4.12(@types/node@20.1.7)(stylus@0.54.8)
+        specifier: 4.5.2
+        version: 4.5.2(@types/node@20.1.7)(stylus@0.54.8)
 
   packages/observable-hooks:
     devDependencies:
@@ -2615,7 +2615,7 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@vitejs/plugin-react@4.0.4(vite@4.4.12):
+  /@vitejs/plugin-react@4.0.4(vite@4.5.2):
     resolution: {integrity: sha512-7wU921ABnNYkETiMaZy7XqpueMnpu5VxvVps13MjmCo+utBdD79sZzrApHawHtVX66cCJQQTXFcjH0y9dSUK8g==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -2625,7 +2625,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.10)
       react-refresh: 0.14.0
-      vite: 4.4.12(@types/node@20.1.7)(stylus@0.54.8)
+      vite: 4.5.2(@types/node@20.1.7)(stylus@0.54.8)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -12730,7 +12730,7 @@ packages:
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.12(@types/node@20.1.7)(stylus@0.54.8)
+      vite: 4.5.2(@types/node@20.1.7)(stylus@0.54.8)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -12742,8 +12742,8 @@ packages:
       - terser
     dev: true
 
-  /vite@4.4.12(@types/node@20.1.7)(stylus@0.54.8):
-    resolution: {integrity: sha512-KtPlUbWfxzGVul8Nut8Gw2Qe8sBzWY+8QVc5SL8iRFnpnrcoCaNlzO40c1R6hPmcdTwIPEDkq0Y9+27a5tVbdQ==}
+  /vite@4.5.2(@types/node@20.1.7)(stylus@0.54.8):
+    resolution: {integrity: sha512-tBCZBNSBbHQkaGyhGCDUGqeo2ph8Fstyp6FMSvTtsXeZSPpSMGlviAOav2hxVTqFcx8Hj/twtWKsMJXNY0xI8w==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -12831,7 +12831,7 @@ packages:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.4.12(@types/node@20.1.7)(stylus@0.54.8)
+      vite: 4.5.2(@types/node@20.1.7)(stylus@0.54.8)
       vite-node: 0.31.0(@types/node@20.1.7)(stylus@0.54.8)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
