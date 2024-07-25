@@ -67,7 +67,7 @@ export function useObservableEagerState<TState>(
         if (isAsyncEmissionRef.current) {
           // ignore synchronous value
           // prevent initial re-rendering
-          setState(value);
+          setState(() => value);
         } else {
           secondInitialValue = value;
         }
@@ -85,7 +85,7 @@ export function useObservableEagerState<TState>(
     if (!isAsyncEmissionRef.current) {
       // fix #86 where sync emission may happen before useEffect
       if (secondInitialValue !== state) {
-        setState(secondInitialValue);
+        setState(() => secondInitialValue);
       }
     }
 
