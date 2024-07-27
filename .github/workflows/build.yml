@@ -9,28 +9,17 @@ jobs:
     environment: production
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm 📦
-        id: pnpm-install
+      - name: Install pnpm 📦
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
           run_install: false
 
-      - name: Get pnpm store directory 📦
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        name: Setup pnpm cache 📦
+      - name: Setup pnpm cache 📦
+        uses: actions/setup-node@v4
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          cache: "pnpm"
 
       - name: Install dependencies 📦
         run: pnpm install
@@ -46,8 +35,8 @@ jobs:
         run: |
           pnpm run test
 
-      - name: Upload Coverage
-        uses: paambaati/codeclimate-action@v5.0.0
+      - name: Upload Coverage 📊
+        uses: paambaati/codeclimate-action@v8
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
         with:
@@ -59,7 +48,7 @@ jobs:
           touch 'docs/.vuepress/dist/.nojekyll'
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.5
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: docs/.vuepress/dist
