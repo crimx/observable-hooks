@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.4](https://github.com/crimx/observable-hooks/compare/v4.2.3...v4.2.4) (2024-07-27)
+
+
+### Bug Fixes
+
+* avoid calling functions emitted by observables ([#132](https://github.com/crimx/observable-hooks/issues/132)) ([715a4e1](https://github.com/crimx/observable-hooks/commit/715a4e188c7952194a28e81d8fd466ec4c51f6ea))
+
 ### [4.2.3](https://github.com/crimx/observable-hooks/compare/v4.2.2...v4.2.3) (2023-08-15)
 
 
