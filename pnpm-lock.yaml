@@ -13,7 +13,7 @@ importers:
         version: 20.1.7
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.3.0
-        version: 6.3.0(@typescript-eslint/parser@6.3.0)(eslint@8.47.0)(typescript@4.9.5)
+        version: 6.3.0(@typescript-eslint/parser@6.3.0(eslint@8.47.0)(typescript@4.9.5))(eslint@8.47.0)(typescript@4.9.5)
       '@typescript-eslint/parser':
         specifier: ^6.3.0
         version: 6.3.0(eslint@8.47.0)(typescript@4.9.5)
@@ -37,7 +37,7 @@ importers:
         version: 2.8.4
       vuepress:
         specifier: ^1.9.10
-        version: 1.9.10
+        version: 1.9.10(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
       vuepress-plugin-container:
         specifier: ^2.1.5
         version: 2.1.5
@@ -52,13 +52,13 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.4
-        version: 4.0.4(vite@4.5.3)
+        version: 4.0.4(vite@4.5.13(@types/node@20.1.7)(stylus@0.54.8))
       bulma:
         specifier: ^0.7.5
         version: 0.7.5
       observable-hooks:
         specifier: latest
-        version: link:../../packages/observable-hooks
+        version: 4.2.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rxjs@7.8.1)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -73,8 +73,8 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.5.3
-        version: 4.5.3(@types/node@20.1.7)(stylus@0.54.8)
+        specifier: 4.5.13
+        version: 4.5.13(@types/node@20.1.7)(stylus@0.54.8)
 
   examples/pomodoro-timer:
     dependencies:
@@ -95,13 +95,13 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.4
-        version: 4.0.4(vite@4.5.3)
+        version: 4.0.4(vite@4.5.13(@types/node@20.1.7)(stylus@0.54.8))
       bulma:
         specifier: ^0.7.5
         version: 0.7.5
       observable-hooks:
         specifier: latest
-        version: link:../../packages/observable-hooks
+        version: 4.2.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rxjs@7.8.1)
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -116,8 +116,8 @@ importers:
         version: 7.8.1
     devDependencies:
       vite:
-        specifier: 4.5.3
-        version: 4.5.3(@types/node@20.1.7)(stylus@0.54.8)
+        specifier: 4.5.13
+        version: 4.5.13(@types/node@20.1.7)(stylus@0.54.8)
 
   examples/suspense:
     dependencies:
@@ -129,13 +129,13 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.4
-        version: 4.0.4(vite@4.5.3)
+        version: 4.0.4(vite@4.5.13(@types/node@20.1.7)(stylus@0.54.8))
       bulma:
         specifier: ^0.7.5
         version: 0.7.5
       observable-hooks:
         specifier: latest
-        version: link:../../packages/observable-hooks
+        version: 4.2.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rxjs@7.8.1)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -150,8 +150,8 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.5.3
-        version: 4.5.3(@types/node@20.1.7)(stylus@0.54.8)
+        specifier: 4.5.13
+        version: 4.5.13(@types/node@20.1.7)(stylus@0.54.8)
 
   examples/typeahead:
     dependencies:
@@ -163,13 +163,13 @@ importers:
         version: 18.2.7
       '@vitejs/plugin-react':
         specifier: ^4.0.4
-        version: 4.0.4(vite@4.5.3)
+        version: 4.0.4(vite@4.5.13(@types/node@20.1.7)(stylus@0.54.8))
       bulma:
         specifier: ^0.7.5
         version: 0.7.5
       observable-hooks:
         specifier: latest
-        version: link:../../packages/observable-hooks
+        version: 4.2.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rxjs@7.8.1)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -184,8 +184,8 @@ importers:
         specifier: ^4.9.5
         version: 4.9.5
       vite:
-        specifier: 4.5.3
-        version: 4.5.3(@types/node@20.1.7)(stylus@0.54.8)
+        specifier: 4.5.13
+        version: 4.5.13(@types/node@20.1.7)(stylus@0.54.8)
 
   packages/observable-hooks:
     devDependencies:
@@ -194,7 +194,7 @@ importers:
         version: 29.5.0
       '@testing-library/react-hooks':
         specifier: ^8.0.1
-        version: 8.0.1(@types/react@16.9.19)(react-dom@16.13.1)(react-test-renderer@16.13.1)(react@16.13.1)
+        version: 8.0.1(@types/react@16.9.19)(react-dom@16.13.1(react@16.13.1))(react-test-renderer@16.13.1(react@16.13.1))(react@16.13.1)
       '@types/jest':
         specifier: ^26.0.23
         version: 26.0.23
@@ -254,10 +254,10 @@ importers:
         version: 9.5.0
       ts-jest:
         specifier: ^29.0.5
-        version: 29.0.5(@babel/core@7.22.10)(esbuild@0.18.20)(jest@29.5.0)(typescript@4.9.5)
+        version: 29.0.5(@babel/core@7.22.10)(@jest/types@29.5.0)(babel-jest@29.5.0(@babel/core@7.22.10))(esbuild@0.18.20)(jest@29.5.0(@types/node@20.1.7))(typescript@4.9.5)
       tsup:
         specifier: ^7.2.0
-        version: 7.2.0(typescript@4.9.5)
+        version: 7.2.0(postcss@8.5.3)(typescript@4.9.5)
       typescript:
         specifier: ^4.9.5
         version: 4.9.5
@@ -266,7 +266,7 @@ importers:
         version: 1.4.1(react@16.13.1)
       vitest:
         specifier: ^0.31.0
-        version: 0.31.0(stylus@0.54.8)
+        version: 0.31.0(jsdom@20.0.3)(stylus@0.54.8)
       yoctocolors:
         specifier: ^1.0.0
         version: 1.0.0
@@ -430,18 +430,21 @@ packages:
   '@babel/plugin-proposal-async-generator-functions@7.20.7':
     resolution: {integrity: sha512-xMbiLsn/8RK7Wq7VeVytytS2L6qE69bXPB10YCmMdDZbKF4okCqY74pI/jJQ/8U0b/F6NrT2+14b8/P9/3AMGA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-async-generator-functions instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-class-properties@7.18.6':
     resolution: {integrity: sha512-cumfXOF0+nzZrrN8Rf0t7M+tF6sZc7vhQwYQck9q1/5w2OExlD+b4v4RpMJFaV1Z7WcDRgO6FqvxqxGlwo+RHQ==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-class-static-block@7.21.0':
     resolution: {integrity: sha512-XP5G9MWNUskFuP30IfFSEFB0Z6HzLIUcjYM4bYOPHXl7eiJ9HFv8tWj6TXTN5QODiEhDZAeI4hLok2iHFFV4hw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-static-block instead.
     peerDependencies:
       '@babel/core': ^7.12.0
 
@@ -454,72 +457,84 @@ packages:
   '@babel/plugin-proposal-dynamic-import@7.18.6':
     resolution: {integrity: sha512-1auuwmK+Rz13SJj36R+jqFPMJWyKEDd7lLSdOj4oJK0UTgGueSAtkrCvz9ewmgyU/P941Rv2fQwZJN8s6QruXw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-dynamic-import instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-export-namespace-from@7.18.9':
     resolution: {integrity: sha512-k1NtHyOMvlDDFeb9G5PhUXuGj8m/wiwojgQVEhJ/fsVsMCpLyOP4h0uGEjYJKrRI+EVPlb5Jk+Gt9P97lOGwtA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-export-namespace-from instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-json-strings@7.18.6':
     resolution: {integrity: sha512-lr1peyn9kOdbYc0xr0OdHTZ5FMqS6Di+H0Fz2I/JwMzGmzJETNeOFq2pBySw6X/KFL5EWDjlJuMsUGRFb8fQgQ==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-json-strings instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-logical-assignment-operators@7.20.7':
     resolution: {integrity: sha512-y7C7cZgpMIjWlKE5T7eJwp+tnRYM89HmRvWM5EQuB5BoHEONjmQ8lSNmBUwOyy/GFRsohJED51YBF79hE1djug==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-logical-assignment-operators instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-nullish-coalescing-operator@7.18.6':
     resolution: {integrity: sha512-wQxQzxYeJqHcfppzBDnm1yAY0jSRkUXR2z8RePZYrKwMKgMlE8+Z6LUno+bd6LvbGh8Gltvy74+9pIYkr+XkKA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-numeric-separator@7.18.6':
     resolution: {integrity: sha512-ozlZFogPqoLm8WBr5Z8UckIoE4YQ5KESVcNudyXOR8uqIkliTEgJ3RoketfG6pmzLdeZF0H/wjE9/cCEitBl7Q==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-object-rest-spread@7.20.7':
     resolution: {integrity: sha512-d2S98yCiLxDVmBmE8UjGcfPvNEUbA1U5q5WxaWFUGRzJSVAZqm5W6MbPct0jxnegUZ0niLeNX+IOzEs7wYg9Dg==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-object-rest-spread instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-optional-catch-binding@7.18.6':
     resolution: {integrity: sha512-Q40HEhs9DJQyaZfUjjn6vE8Cv4GmMHCYuMGIWUnlxH6400VGxOuwWsPt4FxXxJkC/5eOzgn0z21M9gMT4MOhbw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-catch-binding instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-optional-chaining@7.21.0':
     resolution: {integrity: sha512-p4zeefM72gpmEe2fkUr/OnOXpWEf8nAgk7ZYVqqfFiyIG7oFfVZcCrU64hWn5xp4tQ9LkV4bTIa5rD0KANpKNA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-private-methods@7.18.6':
     resolution: {integrity: sha512-nutsvktDItsNn4rpGItSNV2sz1XwS+nfU0Rg8aCx3W3NOKVzdMjJRu0O5OkgDp3ZGICSTbgRpxZoWsxoKRvbeA==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-private-property-in-object@7.21.0':
     resolution: {integrity: sha512-ha4zfehbJjc5MmXBlHec1igel5TJXXLDDRbuJ4+XT2TJcyD9/V1919BA8gMvsdHcNMBy4WBUBiRb3nw/EQUtBw==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-property-in-object instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
   '@babel/plugin-proposal-unicode-property-regex@7.18.6':
     resolution: {integrity: sha512-2BShG/d5yoZyXZfVePH91urL5wTG6ASZU9M4o03lKK8u8UW1y08OMttBSOADTcJrnPMpvDXRG3G8fyLh4ovs8w==}
     engines: {node: '>=4'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-unicode-property-regex instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
@@ -1064,6 +1079,7 @@ packages:
   '@humanwhocodes/config-array@0.11.10':
     resolution: {integrity: sha512-KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -1071,6 +1087,7 @@ packages:
 
   '@humanwhocodes/object-schema@1.2.1':
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    deprecated: Use @eslint/object-schema instead
 
   '@hutson/parse-repository-url@3.0.2':
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
@@ -1655,6 +1672,7 @@ packages:
 
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
+    deprecated: Use your platform's native atob() and btoa() methods instead
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -2594,6 +2612,7 @@ packages:
 
   copy-concurrently@1.0.5:
     resolution: {integrity: sha512-f2domd9fsVDFtaFcbaRZuYXwtdmnzqbADSwhSWYxYB/Q8zsdUUFMXVRwXGDMWmbEzAn1kdRrtI1T/KTFOL4X2A==}
+    deprecated: This package is no longer supported.
 
   copy-descriptor@0.1.1:
     resolution: {integrity: sha512-XgZ0pFcakEUlbwQEVNg3+QAis1FyTL3Qel9FYy8pSkQqoG3PNoT0bOCQtOXcOkur21r2Eq2kI+IE+gsmAEVlYw==}
@@ -2967,6 +2986,7 @@ packages:
   domexception@4.0.0:
     resolution: {integrity: sha512-A2is4PLG+eeSfoTMA95/s4pvAoSo2mKtiM5jlHkAVewmiO8ISFTFKZjH7UAM1Atli/OT/7JHOrJRJiMKUZKYBw==}
     engines: {node: '>=12'}
+    deprecated: Use your platform's native DOMException instead
 
   domhandler@4.3.1:
     resolution: {integrity: sha512-GrwoxYN+uWlzO8uhUXRl0P+kHE4GtVPfYzVLcUxPL7KNdHKj66vvlhiweIHqYYXWlw+T8iLMp42Lm67ghw4WMQ==}
@@ -3223,6 +3243,7 @@ packages:
   eslint@8.47.0:
     resolution: {integrity: sha512-spUQWrdPt+pRVP1TTJLmfRNJJHHZryFmptzcafwSvHsceV81djHOdnEeDmkdotZyLNjDhrOasNK8nikkoG1O8Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   espree@9.6.1:
@@ -3351,6 +3372,7 @@ packages:
 
   figgy-pudding@3.5.2:
     resolution: {integrity: sha512-0btnI/H8f2pavGMN8w40mlSKOfTK2SVJmBfBeVIj3kNw0swwgzyRq0d5TJVOwodFmtvpPeWPN/MCcfuWF0Ezbw==}
+    deprecated: This module is no longer supported.
 
   figures@3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
@@ -3473,6 +3495,7 @@ packages:
 
   fs-write-stream-atomic@1.0.10:
     resolution: {integrity: sha512-gehEzmPn2nAwr39eay+x3X34Ra+M2QlVUTLhkXPjWdeO8RF9kszk116avgBJM3ZyNHgHXBNx+VmPaFC36k0PzA==}
+    deprecated: This package is no longer supported.
 
   fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -3481,10 +3504,10 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
+    deprecated: Upgrade to fsevents v2 to mitigate potential security issues
 
-  fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+  fsevents@2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
@@ -3580,9 +3603,11 @@ packages:
 
   glob@7.1.6:
     resolution: {integrity: sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   global-dirs@2.1.0:
     resolution: {integrity: sha512-MG6kdOUh/xBnyo9cJFeIKkLEc1AyFq42QTU4XiX51i2NEdxLxLWXIjEjmqKeSuKR7pAZjTqUVoT2b2huxVLgYQ==}
@@ -3913,6 +3938,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.1:
     resolution: {integrity: sha512-8nWq2nLTAwd02jTqJExUYFSD/fKq6VH9Y/oG2accc/kdI0V98Bag8d5a4gi3XHz73rDWa2PvTtvcWYquKqSENA==}
@@ -3959,10 +3985,12 @@ packages:
   is-accessor-descriptor@0.1.6:
     resolution: {integrity: sha512-e1BM1qnDbMRG3ll2U9dSK0UMHuWOs3pY3AtcFsmvwPtKL3MML/Q86i+GilLfvqEs4GW+ExB91tQ3Ig9noDIZ+A==}
     engines: {node: '>=0.10.0'}
+    deprecated: Please upgrade to v0.1.7
 
   is-accessor-descriptor@1.0.0:
     resolution: {integrity: sha512-m5hnHTkcVsPfqx3AKlyttIPb7J+XykHvJP2B9bZDjlhLIoEq4XoK64Vg7boZlVWYK6LUY94dYPEE7Lh0ZkZKcQ==}
     engines: {node: '>=0.10.0'}
+    deprecated: Please upgrade to v1.0.1
 
   is-arguments@1.1.1:
     resolution: {integrity: sha512-8Q7EARjzEnKpt/PCD7e1cgUS0a6X8u5tdSiMqXhojOdoV9TsMsiO+9VLC5vAmO8N7/GmXn7yjR8qnA6bVAEzfA==}
@@ -4012,10 +4040,12 @@ packages:
   is-data-descriptor@0.1.4:
     resolution: {integrity: sha512-+w9D5ulSoBNlmw9OHn3U2v51SyoCd0he+bB3xMl62oijhrspxowjU+AIcDY0N3iEJbUEkB15IlMASQsxYigvXg==}
     engines: {node: '>=0.10.0'}
+    deprecated: Please upgrade to v0.1.5
 
   is-data-descriptor@1.0.0:
     resolution: {integrity: sha512-jbRXy1FmtAoCjQkVmIVYwuuqDFUbaOeDjmed1tOGPrsMhtJA4rD9tkgA0F1qJ3gRFRXcHYVkdeaP50Q5rE/jLQ==}
     engines: {node: '>=0.10.0'}
+    deprecated: Please upgrade to v1.0.1
 
   is-date-object@1.0.5:
     resolution: {integrity: sha512-9YQaSxsAiSwcvS33MBk3wTCVnWK+HhF8VZR2jRxehM16QcVOdHqPn4VPHmRK4lSr38n9JriurInLcP90xsYNfQ==}
@@ -4593,6 +4623,7 @@ packages:
 
   lodash.template@4.5.0:
     resolution: {integrity: sha512-84vYFxIkmidUiFxidA/KjjH9pAycqW+h980j7Fuz5qxRtO9pgB7MDFTdys1N7A5mcucRiDyEq4fusljItR1T/A==}
+    deprecated: This package is deprecated. Use https://socket.dev/npm/package/eta instead.
 
   lodash.templatesettings@4.2.0:
     resolution: {integrity: sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==}
@@ -4613,6 +4644,7 @@ packages:
 
   loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
+    deprecated: Please upgrade to 2.3.7 which fixes GHSA-4q6p-r6v2-jvc5
 
   lower-case@1.1.4:
     resolution: {integrity: sha512-2Fgx1Ycm599x+WGpIYwJOvsjmXFzTSc34IwDWALRA/8AopUKAVPwfJ+h5+f85BCp0PWmmJcWzEpxOpoXycMpdA==}
@@ -4843,6 +4875,7 @@ packages:
 
   move-concurrently@1.0.1:
     resolution: {integrity: sha512-hdrFxZOycD/g6A6SoI2bB5NA/5NEqD0569+S47WZhPvm46sD50ZHdYaFmnua5lndde9rCHGjmfK7Z8BuCt/PcQ==}
+    deprecated: This package is no longer supported.
 
   ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -4866,8 +4899,8 @@ packages:
   nan@2.17.0:
     resolution: {integrity: sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==}
 
-  nanoid@3.3.6:
-    resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
+  nanoid@3.3.11:
+    resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -5006,6 +5039,13 @@ packages:
   object.values@1.1.6:
     resolution: {integrity: sha512-FVVTkD1vENCsAcwNs9k6jea2uHC/X0+JcjG8YA60FN5CMaJmG95wT9jek/xX9nornqGRrBkKtzuAu2wuHpKqvw==}
     engines: {node: '>= 0.4'}
+
+  observable-hooks@4.2.4:
+    resolution: {integrity: sha512-FdTQgyw1h5bG/QHCBIqctdBSnv9VARJCEilgpV6L2qlw1yeLqFIwPm4U15dMtl5kDmNN0hSt+Nl6iYbLFwEcQA==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+      rxjs: '>=6.0.0'
 
   obuf@1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
@@ -5205,6 +5245,9 @@ packages:
 
   picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
+
+  picocolors@1.1.1:
+    resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
   picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
@@ -5417,8 +5460,8 @@ packages:
     resolution: {integrity: sha512-yioayjNbHn6z1/Bywyb2Y4s3yvDAeXGOyxqD+LnVOinq6Mdmd++SW2wUNVzavyyHxd6+DxzWGIuosg6P1Rj8uA==}
     engines: {node: '>=6.0.0'}
 
-  postcss@8.4.27:
-    resolution: {integrity: sha512-gY/ACJtJPSmUFPDCHtX78+01fHa64FaU4zaaWfuh1MhGJISufJAH4cun6k/8fwsHYeK4UQmENQK+tRLCFJE8JQ==}
+  postcss@8.5.3:
+    resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.1.2:
@@ -5536,6 +5579,10 @@ packages:
   q@1.5.1:
     resolution: {integrity: sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==}
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
+    deprecated: |-
+      You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
+      (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.11.0:
     resolution: {integrity: sha512-MvjoMCJwEarSbUYk5O+nmoSzSutSsTwF85zcHPQ9OrlFoZOYIjaqBAJIqIXjptyD5vThxGq52Xu/MaJzRkIk4Q==}
@@ -5819,10 +5866,12 @@ packages:
 
   rimraf@2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   ripemd160@2.0.2:
@@ -5830,6 +5879,11 @@ packages:
 
   rollup@3.28.0:
     resolution: {integrity: sha512-d7zhvo1OUY2SXSM6pfNjgD5+d0Nz87CUp4mt8l/GgVP3oBsPwzNvSzyu1me6BSG9JIgWNTVcafIXBIyM8yQ3yw==}
+    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
+    hasBin: true
+
+  rollup@3.29.5:
+    resolution: {integrity: sha512-GVsDdsbJzzy4S/v3dqWPJ7EfvZJfCHiDqe80IyrF59LYuP+e6U1LJoUqeuqRbwAWoMNoXivMNeNAOf5E22VA1w==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
 
@@ -6018,8 +6072,8 @@ packages:
   source-list-map@2.0.1:
     resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
 
-  source-map-js@1.0.2:
-    resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
+  source-map-js@1.2.1:
+    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
   source-map-resolve@0.5.3:
@@ -6713,8 +6767,8 @@ packages:
     engines: {node: '>=v14.18.0'}
     hasBin: true
 
-  vite@4.5.3:
-    resolution: {integrity: sha512-kQL23kMeX92v3ph7IauVkXkikdDRsYMGTVl5KY2E9OY4ONLvkHf04MDTbnfo6NKxZiDLWzVpP5oTa8hQD8U3dg==}
+  vite@4.5.13:
+    resolution: {integrity: sha512-Hgp8IF/yZDzKsN1hQWOuQZbrKiaFsbQud+07jJ8h9m9PaHWkpvZ5u55Xw5yYjWRXwRQ4jwFlJvY7T7FUJG9MCA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -6813,6 +6867,7 @@ packages:
 
   vue@2.7.14:
     resolution: {integrity: sha512-b2qkFyOM0kwqWFuQmgd4o+uHGU7T+2z3T+WQp8UBjADfEv2n4FEMffzBmCKNP0IGzOEEfYjvtcC62xaSKeQDrQ==}
+    deprecated: Vue 2 has reached EOL and is no longer actively maintained. See https://v2.vuejs.org/eol/ for more details.
 
   vuepress-html-webpack-plugin@3.2.0:
     resolution: {integrity: sha512-BebAEl1BmWlro3+VyDhIOCY6Gef2MCBllEVAP3NUAtMguiyOwo/dClbwJ167WYmcxHJKLl7b0Chr9H7fpn1d0A==}
@@ -6856,10 +6911,12 @@ packages:
 
   webpack-chain@4.12.1:
     resolution: {integrity: sha512-BCfKo2YkDe2ByqkEWe1Rw+zko4LsyS75LVr29C6xIrxAg9JHJ4pl8kaIZ396SUSNp6b4815dRZPSTAS8LlURRQ==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   webpack-chain@6.5.1:
     resolution: {integrity: sha512-7doO/SRtLu8q5WM0s7vPKPWX580qhi0/yBHkOxNkv50f6qB76Zy9o2wRTrrPULqYTvQlVHuvbA8v+G5ayuUDsA==}
     engines: {node: '>=8'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   webpack-dev-middleware@3.7.3:
     resolution: {integrity: sha512-djelc/zGiz9nZj/U7PTBi2ViorGJXEWo/3ltkPbDyxCXhhEXkW0ce99falaok4TPj+AsxLiXJR0EBOb0zh9fKQ==}
@@ -6993,6 +7050,7 @@ packages:
 
   workbox-google-analytics@4.3.1:
     resolution: {integrity: sha512-xzCjAoKuOb55CBSwQrbyWBKqp35yg1vw9ohIlU2wTy06ZrYfJ8rKochb1MSGlnoBfXGWss3UPzxR5QL5guIFdg==}
+    deprecated: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
 
   workbox-navigation-preload@4.3.1:
     resolution: {integrity: sha512-K076n3oFHYp16/C+F8CwrRqD25GitA6Rkd6+qAmLmMv1QHPI2jfDwYqrytOfKfYq42bYtW8Pr21ejZX7GvALOw==}
@@ -8271,13 +8329,14 @@ snapshots:
     dependencies:
       defer-to-connect: 1.1.3
 
-  '@testing-library/react-hooks@8.0.1(@types/react@16.9.19)(react-dom@16.13.1)(react-test-renderer@16.13.1)(react@16.13.1)':
+  '@testing-library/react-hooks@8.0.1(@types/react@16.9.19)(react-dom@16.13.1(react@16.13.1))(react-test-renderer@16.13.1(react@16.13.1))(react@16.13.1)':
     dependencies:
       '@babel/runtime': 7.21.0
-      '@types/react': 16.9.19
       react: 16.13.1
-      react-dom: 16.13.1(react@16.13.1)
       react-error-boundary: 3.1.4(react@16.13.1)
+    optionalDependencies:
+      '@types/react': 16.9.19
+      react-dom: 16.13.1(react@16.13.1)
       react-test-renderer: 16.13.1(react@16.13.1)
 
   '@tootallnate/once@2.0.0': {}
@@ -8494,7 +8553,7 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.0
 
-  '@typescript-eslint/eslint-plugin@6.3.0(@typescript-eslint/parser@6.3.0)(eslint@8.47.0)(typescript@4.9.5)':
+  '@typescript-eslint/eslint-plugin@6.3.0(@typescript-eslint/parser@6.3.0(eslint@8.47.0)(typescript@4.9.5))(eslint@8.47.0)(typescript@4.9.5)':
     dependencies:
       '@eslint-community/regexpp': 4.6.2
       '@typescript-eslint/parser': 6.3.0(eslint@8.47.0)(typescript@4.9.5)
@@ -8510,6 +8569,7 @@ snapshots:
       natural-compare-lite: 1.4.0
       semver: 7.5.4
       ts-api-utils: 1.0.1(typescript@4.9.5)
+    optionalDependencies:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -8522,6 +8582,7 @@ snapshots:
       '@typescript-eslint/visitor-keys': 6.3.0
       debug: 4.3.4(supports-color@6.1.0)
       eslint: 8.47.0
+    optionalDependencies:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -8538,6 +8599,7 @@ snapshots:
       debug: 4.3.4(supports-color@6.1.0)
       eslint: 8.47.0
       ts-api-utils: 1.0.1(typescript@4.9.5)
+    optionalDependencies:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -8553,6 +8615,7 @@ snapshots:
       is-glob: 4.0.3
       semver: 7.5.4
       ts-api-utils: 1.0.1(typescript@4.9.5)
+    optionalDependencies:
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -8576,13 +8639,13 @@ snapshots:
       '@typescript-eslint/types': 6.3.0
       eslint-visitor-keys: 3.4.3
 
-  '@vitejs/plugin-react@4.0.4(vite@4.5.3)':
+  '@vitejs/plugin-react@4.0.4(vite@4.5.13(@types/node@20.1.7)(stylus@0.54.8))':
     dependencies:
       '@babel/core': 7.22.10
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.22.10)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.10)
       react-refresh: 0.14.0
-      vite: 4.5.3(@types/node@20.1.7)(stylus@0.54.8)
+      vite: 4.5.13(@types/node@20.1.7)(stylus@0.54.8)
     transitivePeerDependencies:
       - supports-color
 
@@ -8659,9 +8722,10 @@ snapshots:
       '@vue/babel-plugin-jsx': 1.1.5(@babel/core@7.22.10)
       '@vue/babel-preset-jsx': 1.4.0(@babel/core@7.22.10)(vue@2.7.14)
       babel-plugin-dynamic-import-node: 2.3.3
-      core-js: 3.30.0
       core-js-compat: 3.30.0
       semver: 6.3.1
+    optionalDependencies:
+      core-js: 3.30.0
       vue: 2.7.14
     transitivePeerDependencies:
       - supports-color
@@ -8677,6 +8741,7 @@ snapshots:
       '@vue/babel-sugar-inject-h': 1.4.0(@babel/core@7.22.10)
       '@vue/babel-sugar-v-model': 1.4.0(@babel/core@7.22.10)
       '@vue/babel-sugar-v-on': 1.4.0(@babel/core@7.22.10)
+    optionalDependencies:
       vue: 2.7.14
 
   '@vue/babel-sugar-composition-api-inject-h@1.4.0(@babel/core@7.22.10)':
@@ -8719,12 +8784,12 @@ snapshots:
   '@vue/compiler-sfc@2.7.14':
     dependencies:
       '@babel/parser': 7.22.10
-      postcss: 8.4.27
+      postcss: 8.5.3
       source-map: 0.6.1
 
-  '@vue/component-compiler-utils@3.3.0':
+  '@vue/component-compiler-utils@3.3.0(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)':
     dependencies:
-      consolidate: 0.15.1
+      consolidate: 0.15.1(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -8789,7 +8854,7 @@ snapshots:
       - walrus
       - whiskers
 
-  '@vuepress/core@1.9.10':
+  '@vuepress/core@1.9.10(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)':
     dependencies:
       '@babel/core': 7.22.10
       '@vue/babel-preset-app': 4.5.19(@babel/core@7.22.10)(core-js@3.30.0)(vue@2.7.14)
@@ -8821,7 +8886,7 @@ snapshots:
       toml: 3.0.0
       url-loader: 1.1.2(webpack@4.46.0)
       vue: 2.7.14
-      vue-loader: 15.10.1(cache-loader@3.0.1)(css-loader@2.1.1)(vue-template-compiler@2.7.14)(webpack@4.46.0)
+      vue-loader: 15.10.1(cache-loader@3.0.1(webpack@4.46.0))(css-loader@2.1.1(webpack@4.46.0))(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(vue-template-compiler@2.7.14)(webpack@4.46.0)
       vue-router: 3.6.5(vue@2.7.14)
       vue-server-renderer: 2.7.14
       vue-template-compiler: 2.7.14
@@ -9766,7 +9831,7 @@ snapshots:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   chownr@1.1.4: {}
 
@@ -9936,9 +10001,15 @@ snapshots:
 
   console-browserify@1.2.0: {}
 
-  consolidate@0.15.1:
+  consolidate@0.15.1(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1):
     dependencies:
       bluebird: 3.7.2
+    optionalDependencies:
+      handlebars: 4.7.7
+      hogan.js: 3.0.2
+      lodash: 4.17.21
+      react: 16.13.1
+      react-dom: 16.13.1(react@16.13.1)
 
   constants-browserify@1.0.0: {}
 
@@ -10327,6 +10398,7 @@ snapshots:
   debug@2.6.9(supports-color@6.1.0):
     dependencies:
       ms: 2.0.0
+    optionalDependencies:
       supports-color: 6.1.0
 
   debug@3.1.0:
@@ -10336,11 +10408,13 @@ snapshots:
   debug@3.2.7(supports-color@6.1.0):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
       supports-color: 6.1.0
 
   debug@4.3.4(supports-color@6.1.0):
     dependencies:
       ms: 2.1.2
+    optionalDependencies:
       supports-color: 6.1.0
 
   decamelize-keys@1.1.1:
@@ -11098,8 +11172,8 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 2.3.8
 
-  follow-redirects@1.15.4(debug@4.3.4):
-    dependencies:
+  follow-redirects@1.15.4(debug@4.3.4(supports-color@6.1.0)):
+    optionalDependencies:
       debug: 4.3.4(supports-color@6.1.0)
 
   for-each@0.3.3:
@@ -11170,7 +11244,7 @@ snapshots:
       nan: 2.17.0
     optional: true
 
-  fsevents@2.3.2:
+  fsevents@2.3.3:
     optional: true
 
   function-bind@1.1.1: {}
@@ -11546,9 +11620,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  http-proxy-middleware@0.19.1(debug@4.3.4)(supports-color@6.1.0):
+  http-proxy-middleware@0.19.1(debug@4.3.4(supports-color@6.1.0))(supports-color@6.1.0):
     dependencies:
-      http-proxy: 1.18.1(debug@4.3.4)
+      http-proxy: 1.18.1(debug@4.3.4(supports-color@6.1.0))
       is-glob: 4.0.3
       lodash: 4.17.21
       micromatch: 3.1.10(supports-color@6.1.0)
@@ -11559,17 +11633,17 @@ snapshots:
   http-proxy-middleware@1.3.1:
     dependencies:
       '@types/http-proxy': 1.17.10
-      http-proxy: 1.18.1(debug@4.3.4)
+      http-proxy: 1.18.1(debug@4.3.4(supports-color@6.1.0))
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
       micromatch: 4.0.5
     transitivePeerDependencies:
       - debug
 
-  http-proxy@1.18.1(debug@4.3.4):
+  http-proxy@1.18.1(debug@4.3.4(supports-color@6.1.0)):
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.4(debug@4.3.4)
+      follow-redirects: 1.15.4(debug@4.3.4(supports-color@6.1.0))
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -11997,7 +12071,6 @@ snapshots:
       '@babel/core': 7.22.10
       '@jest/test-sequencer': 29.5.0
       '@jest/types': 29.5.0
-      '@types/node': 20.1.7
       babel-jest: 29.5.0(@babel/core@7.22.10)
       chalk: 4.1.2
       ci-info: 3.8.0
@@ -12017,6 +12090,8 @@ snapshots:
       pretty-format: 29.5.0
       slash: 3.0.0
       strip-json-comments: 3.1.1
+    optionalDependencies:
+      '@types/node': 20.1.7
     transitivePeerDependencies:
       - supports-color
 
@@ -12088,7 +12163,7 @@ snapshots:
       micromatch: 4.0.5
       walker: 1.0.8
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
 
   jest-leak-detector@29.5.0:
     dependencies:
@@ -12121,7 +12196,7 @@ snapshots:
       jest-util: 29.5.0
 
   jest-pnp-resolver@1.2.3(jest-resolve@29.5.0):
-    dependencies:
+    optionalDependencies:
       jest-resolve: 29.5.0
 
   jest-regex-util@29.4.3: {}
@@ -12777,7 +12852,7 @@ snapshots:
   nan@2.17.0:
     optional: true
 
-  nanoid@3.3.6: {}
+  nanoid@3.3.11: {}
 
   nanomatch@1.2.13(supports-color@6.1.0):
     dependencies:
@@ -12945,6 +13020,12 @@ snapshots:
       call-bind: 1.0.2
       define-properties: 1.2.0
       es-abstract: 1.21.2
+
+  observable-hooks@4.2.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(rxjs@7.8.1):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      rxjs: 7.8.1
 
   obuf@1.1.2: {}
 
@@ -13135,6 +13216,8 @@ snapshots:
 
   picocolors@1.0.0: {}
 
+  picocolors@1.1.1: {}
+
   picomatch@2.3.1: {}
 
   pify@2.3.0: {}
@@ -13215,10 +13298,12 @@ snapshots:
       cosmiconfig: 5.2.1
       import-cwd: 2.1.0
 
-  postcss-load-config@4.0.1:
+  postcss-load-config@4.0.1(postcss@8.5.3):
     dependencies:
       lilconfig: 2.1.0
       yaml: 2.3.1
+    optionalDependencies:
+      postcss: 8.5.3
 
   postcss-loader@3.0.0:
     dependencies:
@@ -13401,11 +13486,11 @@ snapshots:
       picocolors: 0.2.1
       source-map: 0.6.1
 
-  postcss@8.4.27:
+  postcss@8.5.3:
     dependencies:
-      nanoid: 3.3.6
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
+      nanoid: 3.3.11
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
 
   prelude-ls@1.1.2: {}
 
@@ -13452,7 +13537,7 @@ snapshots:
   process@0.11.10: {}
 
   promise-inflight@1.0.1(bluebird@3.7.2):
-    dependencies:
+    optionalDependencies:
       bluebird: 3.7.2
 
   prompts@2.4.2:
@@ -13843,7 +13928,11 @@ snapshots:
 
   rollup@3.28.0:
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
+
+  rollup@3.29.5:
+    optionalDependencies:
+      fsevents: 2.3.3
 
   run-parallel@1.2.0:
     dependencies:
@@ -14076,7 +14165,7 @@ snapshots:
 
   source-list-map@2.0.1: {}
 
-  source-map-js@1.0.2: {}
+  source-map-js@1.2.1: {}
 
   source-map-resolve@0.5.3:
     dependencies:
@@ -14540,11 +14629,9 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  ts-jest@29.0.5(@babel/core@7.22.10)(esbuild@0.18.20)(jest@29.5.0)(typescript@4.9.5):
+  ts-jest@29.0.5(@babel/core@7.22.10)(@jest/types@29.5.0)(babel-jest@29.5.0(@babel/core@7.22.10))(esbuild@0.18.20)(jest@29.5.0(@types/node@20.1.7))(typescript@4.9.5):
     dependencies:
-      '@babel/core': 7.22.10
       bs-logger: 0.2.6
-      esbuild: 0.18.20
       fast-json-stable-stringify: 2.1.0
       jest: 29.5.0(@types/node@20.1.7)
       jest-util: 29.5.0
@@ -14554,10 +14641,15 @@ snapshots:
       semver: 7.5.4
       typescript: 4.9.5
       yargs-parser: 21.1.1
+    optionalDependencies:
+      '@babel/core': 7.22.10
+      '@jest/types': 29.5.0
+      babel-jest: 29.5.0(@babel/core@7.22.10)
+      esbuild: 0.18.20
 
   tslib@2.6.0: {}
 
-  tsup@7.2.0(typescript@4.9.5):
+  tsup@7.2.0(postcss@8.5.3)(typescript@4.9.5):
     dependencies:
       bundle-require: 4.0.1(esbuild@0.18.20)
       cac: 6.7.14
@@ -14567,12 +14659,14 @@ snapshots:
       execa: 5.1.1
       globby: 11.1.0
       joycon: 3.1.1
-      postcss-load-config: 4.0.1
+      postcss-load-config: 4.0.1(postcss@8.5.3)
       resolve-from: 5.0.0
       rollup: 3.28.0
       source-map: 0.8.0-beta.0
       sucrase: 3.32.0
       tree-kill: 1.2.2
+    optionalDependencies:
+      postcss: 8.5.3
       typescript: 4.9.5
     transitivePeerDependencies:
       - supports-color
@@ -14699,7 +14793,7 @@ snapshots:
     dependencies:
       browserslist: 4.21.10
       escalade: 3.1.1
-      picocolors: 1.0.0
+      picocolors: 1.1.1
 
   update-notifier@4.1.3:
     dependencies:
@@ -14811,7 +14905,7 @@ snapshots:
       mlly: 1.4.0
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.5.3(@types/node@20.1.7)(stylus@0.54.8)
+      vite: 4.5.13(@types/node@20.1.7)(stylus@0.54.8)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14822,17 +14916,17 @@ snapshots:
       - supports-color
       - terser
 
-  vite@4.5.3(@types/node@20.1.7)(stylus@0.54.8):
+  vite@4.5.13(@types/node@20.1.7)(stylus@0.54.8):
     dependencies:
-      '@types/node': 20.1.7
       esbuild: 0.18.20
-      postcss: 8.4.27
-      rollup: 3.28.0
-      stylus: 0.54.8
+      postcss: 8.5.3
+      rollup: 3.29.5
     optionalDependencies:
-      fsevents: 2.3.2
+      '@types/node': 20.1.7
+      fsevents: 2.3.3
+      stylus: 0.54.8
 
-  vitest@0.31.0(stylus@0.54.8):
+  vitest@0.31.0(jsdom@20.0.3)(stylus@0.54.8):
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
@@ -14856,9 +14950,11 @@ snapshots:
       strip-literal: 1.0.1
       tinybench: 2.5.0
       tinypool: 0.5.0
-      vite: 4.5.3(@types/node@20.1.7)(stylus@0.54.8)
+      vite: 4.5.13(@types/node@20.1.7)(stylus@0.54.8)
       vite-node: 0.31.0(@types/node@20.1.7)(stylus@0.54.8)
       why-is-node-running: 2.2.2
+    optionalDependencies:
+      jsdom: 20.0.3
     transitivePeerDependencies:
       - less
       - lightningcss
@@ -14872,17 +14968,18 @@ snapshots:
 
   vue-hot-reload-api@2.3.4: {}
 
-  vue-loader@15.10.1(cache-loader@3.0.1)(css-loader@2.1.1)(vue-template-compiler@2.7.14)(webpack@4.46.0):
+  vue-loader@15.10.1(cache-loader@3.0.1(webpack@4.46.0))(css-loader@2.1.1(webpack@4.46.0))(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)(vue-template-compiler@2.7.14)(webpack@4.46.0):
     dependencies:
-      '@vue/component-compiler-utils': 3.3.0
-      cache-loader: 3.0.1(webpack@4.46.0)
+      '@vue/component-compiler-utils': 3.3.0(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
       css-loader: 2.1.1(webpack@4.46.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
       vue-hot-reload-api: 2.3.4
       vue-style-loader: 4.1.3
-      vue-template-compiler: 2.7.14
       webpack: 4.46.0
+    optionalDependencies:
+      cache-loader: 3.0.1(webpack@4.46.0)
+      vue-template-compiler: 2.7.14
     transitivePeerDependencies:
       - arc-templates
       - atpl
@@ -14992,9 +15089,9 @@ snapshots:
     dependencies:
       smoothscroll-polyfill: 0.4.4
 
-  vuepress@1.9.10:
+  vuepress@1.9.10(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1):
     dependencies:
-      '@vuepress/core': 1.9.10
+      '@vuepress/core': 1.9.10(handlebars@4.7.7)(hogan.js@3.0.2)(lodash@4.17.21)(react-dom@16.13.1(react@16.13.1))(react@16.13.1)
       '@vuepress/theme-default': 1.9.10
       '@vuepress/types': 1.9.10
       cac: 6.7.14
@@ -15126,7 +15223,7 @@ snapshots:
       del: 4.1.1
       express: 4.18.2(supports-color@6.1.0)
       html-entities: 1.4.0
-      http-proxy-middleware: 0.19.1(debug@4.3.4)(supports-color@6.1.0)
+      http-proxy-middleware: 0.19.1(debug@4.3.4(supports-color@6.1.0))(supports-color@6.1.0)
       import-local: 2.0.0
       internal-ip: 4.3.0
       ip: 1.1.8
