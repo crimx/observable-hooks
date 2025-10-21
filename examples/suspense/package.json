@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "typescript": "^4.9.5",
-    "vite": "4.5.13"
+    "vite": "5.4.21"
   },
   "scripts": {
     "start": "vite",
