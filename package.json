@@ -25,7 +25,7 @@
     "@typescript-eslint/parser": "^6.3.0",
     "@vuepress/plugin-pwa": "^1.9.10",
     "cross-env": "^7.0.3",
-    "eslint": "^8.47.0",
+    "eslint": "^9.26.0",
     "eslint-config-prettier": "^9.0.0",
     "fs-extra": "^10.0.0",
     "prettier": "^2.8.4",
